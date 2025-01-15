@@ -13,7 +13,9 @@ app.use(compression());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-//connection to mongo db
+//routes
+
+//connection to MONGO DB
 mongoose
   .connect(process.env.MONGO_CLOUD_URL)
   .then(() => {
