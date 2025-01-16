@@ -61,6 +61,37 @@ social links=>linked in,twitter,facebook etc
 
 
 JOB POSTING MODEL
+company
+title
+description
+type
+location=>province,district,municipality,full address
+salary
+expiry date
+
+basic information=>
+no.of vacancy,
+location=>province,district,municipality,full address,
+salary
+job level
+job type
+age
+gender
+education
+experience
+shift
+
+skills=>
+at least one not more than five
+
+personal qualities=>
+at least one not more than five
+
+benefits=>
+
+job description=>
+
+freshers to apply or not
 
 
 
