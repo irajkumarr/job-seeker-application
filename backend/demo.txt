@@ -48,10 +48,21 @@ reference=>reference name,designation,organization name,email,phone number
 
 
 COMPANY MODEL
+user //company employer who creates id as employer or admin of the APPLICATION
+name
+description
+industry
+employees size
+website
+logo
+location=>province,district,municipality,full address 
+social links=>linked in,twitter,facebook etc
 
 
 
 JOB POSTING MODEL
+
+
 
 
 
