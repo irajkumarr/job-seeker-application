@@ -1,10 +1,49 @@
 USER MODEL
+email
+password
+usertype(jobseeker, employer)
+firstname
+lastname
+mobile number
+isactive
+categories user likes at least one not more than five
+skills user has at least one not more than five
+job location=>
+province,district,municipality,full address
+personal details
+age
+work experience
+gender
+education qualification
+expected salary
+working status
+have been in foreign employment or not
+marital status
+nationality
+religion
+current address
+permanent address
+any disablity
+
+job preference=>job level, available for, preferred shift,expected salary,
+working status,career objectives
+
+work expreience=>organization name,industry,job category, location,designation,job level,start date,currently working or not,end date, roles and responsibilities
+
+education
+training =>trianing name,name of institute,duration,completion year
+
+language=>language name,score level
+
+document=>title,document category,document file
+
+social account=>social media, web address,
+
+contact information=>contact person full name,address,relation,phone number
+
+reference=>reference name,designation,organization name,email,phone number
 
 
-
-
-
-JOB SEEKER PROFILE MODEL
 
 
 
