@@ -98,6 +98,13 @@ freshers to apply or not
 
 
 JOB APPLICATION MODEL
+job id
+applicant id
+resume url
+cover letter
+status
+applied at
+notes
 
 
 INDUSTRY MODEL
