@@ -225,21 +225,11 @@ const companySchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-    toJSON: { virtuals: true },
-    toObject: { virtuals: true },
   }
 );
-
 // Indexes
 companySchema.index({ "location.coordinates": "2dsphere" });
 companySchema.index({ name: "text", description: "text" });
-
-// Virtual for jobs posted by company
-companySchema.virtual("jobs", {
-  ref: "Job",
-  localField: "_id",
-  foreignField: "company",
-});
 
 // Method to check if company can post new jobs
 companySchema.methods.canPostJobs = function () {
