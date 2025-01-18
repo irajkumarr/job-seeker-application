@@ -47,6 +47,17 @@ const profileSchema = new mongoose.Schema(
       },
       nationality: { type: String, required: true },
       religion: String,
+      email: {
+        type: String,
+        required: [true, "Email is required"],
+        unique: true,
+        trim: true,
+        lowercase: true,
+        match: [
+          /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+          "Please enter a valid email address",
+        ],
+      },
       disability: {
         hasDisability: Boolean,
         details: String,
@@ -59,8 +70,6 @@ const profileSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-
-
 
 const Profile = mongoose.model("Profile", profileSchema);
 

@@ -1,18 +1,20 @@
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
 const userSchema = new mongoose.Schema(
   {
-    email: {
+    name: {
       type: String,
-      required: [true, "Email is required"],
+      required: [true, "Name is required"],
+    },
+    mobileNumber: {
+      type: String,
+      required: [true, "Mobile number is required"],
       unique: true,
       trim: true,
-      lowercase: true,
-      match: [
-        /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-        "Please enter a valid email address",
-      ],
+      match: [/^\d{10}$/, "Please enter a valid 10-digit phone number"],
     },
+
     password: {
       type: String,
       required: [true, "Password is required"],
@@ -23,15 +25,7 @@ const userSchema = new mongoose.Schema(
       enum: ["jobseeker", "employer", "admin"],
       default: "jobseeker",
     },
-    mobileNumber: {
-      type: String,
-      required: [true, "Mobile number is required"],
-      unique: true,
-      trim: true,
-      match: [/^\d{10}$/, "Please enter a valid 10-digit phone number"],
-    },
-    firstName: { type: String, required: true },
-    lastName: { type: String, required: true },
+
     isActive: { type: Boolean, default: true },
   },
   { timestamps: true }
