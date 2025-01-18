@@ -1,18 +1,19 @@
 const express = require("express");
 
 const { verifyAndAuthorize } = require("../../middlewares/jwt");
+
 const {
-  handleAddLanguage,
-  handleDeleteLanguage,
-  handleUpdateLanguage,
-  handleGetLanguage,
-} = require("../../controllers/User/languageController");
+  handleAddTraining,
+  handleDeleteTraining,
+  handleUpdateTraining,
+  handleGetTraining,
+} = require("../../controllers/User/trainingController");
 
 const router = express.Router();
 
-router.post("/", verifyAndAuthorize, handleAddLanguage);
-router.delete("/:id", verifyAndAuthorize, handleDeleteLanguage);
-router.put("/:id", verifyAndAuthorize, handleUpdateLanguage);
-router.get("/", verifyAndAuthorize, handleGetLanguage);
+router.post("/", verifyAndAuthorize, handleAddTraining);
+router.delete("/:id", verifyAndAuthorize, handleDeleteTraining);
+router.put("/:id", verifyAndAuthorize, handleUpdateTraining);
+router.get("/", verifyAndAuthorize, handleGetTraining);
 
 module.exports = router;

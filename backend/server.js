@@ -18,11 +18,13 @@ const authRoutes = require("./routes/Auth/auth");
 const userRoutes = require("./routes/User/user");
 const userProfileRoutes = require("./routes/User/profile");
 const userLanguageRoutes = require("./routes/User/language");
+const userTrainingRoutes = require("./routes/User/training");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/users/profile", userProfileRoutes);
 app.use("/api/users/language", userLanguageRoutes);
+app.use("/api/users/training", userTrainingRoutes);
 
 //connection to MONGO DB
 mongoose

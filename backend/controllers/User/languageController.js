@@ -12,7 +12,7 @@ const handleAddLanguage = async (req, res) => {
     await newLanguage.save();
     return res.status(201).json({ status: true, message: "Language added!" });
   } catch (error) {
-    return res.status(201).json({ status: false, message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
