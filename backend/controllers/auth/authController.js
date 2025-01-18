@@ -18,7 +18,6 @@ const handleCreateUser = async (req, res) => {
     // Create new user
     const newUser = new User({
       name: user.name,
-      email: user.email,
       mobileNumber: user.mobileNumber,
       password: user.password,
       userType: user.userType,

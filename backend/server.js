@@ -14,9 +14,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-const authRoutes = require("./routes/auth/auth");
+const authRoutes = require("./routes/Auth/auth");
+const userRoutes = require("./routes/User/user");
 
 app.use("/", authRoutes);
+app.use("/api/users", userRoutes);
 
 //connection to MONGO DB
 mongoose
