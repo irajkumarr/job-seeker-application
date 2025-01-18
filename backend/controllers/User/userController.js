@@ -115,10 +115,10 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "socialAccounts", // Collection for documents
+          from: "socialaccounts", // Collection for documents
           localField: "_id",
           foreignField: "userId",
-          as: "socialAccounts",
+          as: "socialaccounts",
         },
       },
       {
@@ -147,10 +147,10 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "emergencyContacts", // Collection for documents
+          from: "emergencycontacts", // Collection for documents
           localField: "_id",
           foreignField: "userId",
-          as: "emergencyContacts",
+          as: "emergencycontacts",
         },
       },
       // Add more lookups as needed for other related collections
