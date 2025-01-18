@@ -7,6 +7,7 @@ const handleCreateProfile = async (req, res) => {
     currentLocation,
     permanentLocation,
     personalDetails,
+    jobPreference,
   } = req.body;
   const userId = req.user.id;
 
@@ -58,6 +59,20 @@ const handleCreateProfile = async (req, res) => {
           "Personal details (age, gender, nationality, email) are required.",
       });
     }
+    if (
+      !jobPreference ||
+      !jobPreference.jobLevel ||
+      !jobPreference.availabilityStatus ||
+      !jobPreference.preferredShift ||
+      !jobPreference.workingStatus ||
+      !jobPreference.careerObjectives
+    ) {
+      return res.status(400).json({
+        status: false,
+        message:
+          "Job Preference (job level, availability status, preferred shift, working status) are required.",
+      });
+    }
 
     const newProfile = new Profile({
       userId,
@@ -66,6 +81,7 @@ const handleCreateProfile = async (req, res) => {
       currentLocation,
       permanentLocation,
       personalDetails,
+      jobPreference,
     });
 
     await newProfile.save();
@@ -175,6 +191,35 @@ const handleUpdateProfile = async (req, res) => {
           updateFields["personalDetails.foreignEmployment.details"] =
             req.body.personalDetails.foreignEmployment.details;
         }
+      }
+    }
+
+    // Handle job preference fields
+    if (req.body.jobPreference) {
+      const jobPreferenceFields = [
+        "jobLevel",
+        "availabilityStatus",
+        "preferredShift",
+        "workingStatus",
+        "careerObjectives",
+      ];
+
+      jobPreferenceFields.forEach((field) => {
+        if (req.body.jobPreference[field] !== undefined) {
+          updateFields[`jobPreference.${field}`] =
+            req.body.jobPreference[field];
+        }
+      });
+
+      // Handle expectedSalary object
+      if (req.body.jobPreference.expectedSalary) {
+        const salaryFields = ["minimum", "maximum", "currency"];
+        salaryFields.forEach((field) => {
+          if (req.body.jobPreference.expectedSalary[field] !== undefined) {
+            updateFields[`jobPreference.expectedSalary.${field}`] =
+              req.body.jobPreference.expectedSalary[field];
+          }
+        });
       }
     }
 
