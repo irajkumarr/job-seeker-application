@@ -17,10 +17,12 @@ app.use(express.urlencoded({ extended: true }));
 const authRoutes = require("./routes/Auth/auth");
 const userRoutes = require("./routes/User/user");
 const userProfileRoutes = require("./routes/User/profile");
+const userLanguageRoutes = require("./routes/User/language");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/users/profile", userProfileRoutes);
+app.use("/api/users/language", userLanguageRoutes);
 
 //connection to MONGO DB
 mongoose

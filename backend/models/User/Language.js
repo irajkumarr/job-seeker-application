@@ -8,9 +8,8 @@ const languagesSchema = new mongoose.Schema(
       required: true,
     },
     name: { type: String, required: true },
-    proficiency: {
-      type: String,
-      enum: ["basic", "intermediate", "fluent", "native"],
+    score: {
+      type: Number,
       required: true,
     },
   },
