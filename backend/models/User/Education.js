@@ -12,7 +12,6 @@ const educationSchema = new mongoose.Schema(
     startDate: Date,
     endDate: Date,
     grade: String,
-    country: String,
   },
   { timestamps: true }
 );

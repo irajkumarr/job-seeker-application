@@ -1,8 +1,4 @@
-//get user
-//delete user
-//update user
-//forgot password todo
-//reset password todo
+
 const User = require("../../models/User/User");
 const handleGetUser = async (req, res) => {
   const userId = req.user.id;

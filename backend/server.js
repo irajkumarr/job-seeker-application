@@ -19,12 +19,14 @@ const userRoutes = require("./routes/User/user");
 const userProfileRoutes = require("./routes/User/profile");
 const userLanguageRoutes = require("./routes/User/language");
 const userTrainingRoutes = require("./routes/User/training");
+const userEducationRoutes = require("./routes/User/education");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/users/profile", userProfileRoutes);
 app.use("/api/users/language", userLanguageRoutes);
 app.use("/api/users/training", userTrainingRoutes);
+app.use("/api/users/education", userEducationRoutes);
 
 //connection to MONGO DB
 mongoose
