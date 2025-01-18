@@ -1,0 +1,228 @@
+const Profile = require("../../models/User/Profile");
+
+const handleCreateProfile = async (req, res) => {
+  const {
+    interestedCategories,
+    skills,
+    currentLocation,
+    permanentLocation,
+    personalDetails,
+  } = req.body;
+  const userId = req.user.id;
+
+  try {
+    if (!userId) {
+      return res.status(400).json({
+        status: false,
+        message: "User ID is required to create a profile.",
+      });
+    }
+
+    if (!interestedCategories || interestedCategories.length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "At least one interested category is required.",
+      });
+    }
+
+    if (!skills || skills.length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "At least one skill is required.",
+      });
+    }
+
+    if (
+      !currentLocation ||
+      !currentLocation.province ||
+      !currentLocation.district ||
+      !currentLocation.municipality ||
+      !currentLocation.fullAddress
+    ) {
+      return res.status(400).json({
+        status: false,
+        message: "Current location fields are required.",
+      });
+    }
+
+    if (
+      !personalDetails ||
+      !personalDetails.age ||
+      !personalDetails.gender ||
+      !personalDetails.nationality ||
+      !personalDetails.email
+    ) {
+      return res.status(400).json({
+        status: false,
+        message:
+          "Personal details (age, gender, nationality, email) are required.",
+      });
+    }
+
+    const newProfile = new Profile({
+      userId,
+      interestedCategories,
+      skills,
+      currentLocation,
+      permanentLocation,
+      personalDetails,
+    });
+
+    await newProfile.save();
+
+    return res
+      .status(201)
+      .json({ status: true, message: "User Profile created successfully!" });
+  } catch (error) {
+    return res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+const handleGetProfile = async (req, res) => {
+  const userId = req.user.id;
+  try {
+    const profile = await Profile.findOne(
+      { userId: userId },
+      { createdAt: 0, updatedAt: 0, __v: 0 }
+    );
+    return res.status(200).json(profile);
+  } catch (error) {
+    return res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+const handleUpdateProfile = async (req, res) => {
+  const userId = req.user.id; // Assuming req.user.id contains the authenticated user's ID
+
+  try {
+    // First check if profile exists
+    const profile = await Profile.findOne({ userId });
+
+    if (!profile) {
+      return res.status(404).json({
+        status: false,
+        message: "Profile not found",
+      });
+    }
+
+    // Create an update object for nested fields
+    const updateFields = {};
+
+    // Handle flat fields (top-level fields)
+    ["interestedCategories", "skills"].forEach((field) => {
+      if (req.body[field]) {
+        updateFields[field] = req.body[field];
+      }
+    });
+
+    // Handle nested location fields
+    ["currentLocation", "permanentLocation"].forEach((locationType) => {
+      if (req.body[locationType]) {
+        const locationFields = [
+          "province",
+          "district",
+          "municipality",
+          "fullAddress",
+        ];
+        locationFields.forEach((field) => {
+          if (req.body[locationType][field]) {
+            updateFields[`${locationType}.${field}`] =
+              req.body[locationType][field];
+          }
+        });
+      }
+    });
+
+    // Handle nested personal details fields
+    if (req.body.personalDetails) {
+      // Handle direct fields in personalDetails
+      [
+        "age",
+        "gender",
+        "maritalStatus",
+        "nationality",
+        "religion",
+        "email",
+      ].forEach((field) => {
+        if (req.body.personalDetails[field] !== undefined) {
+          updateFields[`personalDetails.${field}`] =
+            req.body.personalDetails[field];
+        }
+      });
+
+      // Handle disability object
+      if (req.body.personalDetails.disability) {
+        if (req.body.personalDetails.disability.hasDisability !== undefined) {
+          updateFields["personalDetails.disability.hasDisability"] =
+            req.body.personalDetails.disability.hasDisability;
+        }
+        if (req.body.personalDetails.disability.details !== undefined) {
+          updateFields["personalDetails.disability.details"] =
+            req.body.personalDetails.disability.details;
+        }
+      }
+
+      // Handle foreignEmployment object
+      if (req.body.personalDetails.foreignEmployment) {
+        if (
+          req.body.personalDetails.foreignEmployment.hasWorkedAboroad !==
+          undefined
+        ) {
+          updateFields["personalDetails.foreignEmployment.hasWorkedAboroad"] =
+            req.body.personalDetails.foreignEmployment.hasWorkedAboroad;
+        }
+        if (req.body.personalDetails.foreignEmployment.details !== undefined) {
+          updateFields["personalDetails.foreignEmployment.details"] =
+            req.body.personalDetails.foreignEmployment.details;
+        }
+      }
+    }
+
+    // If updating email, check if it's already in use by another profile
+    if (req.body.personalDetails?.email) {
+      const existingProfileWithEmail = await Profile.findOne({
+        "personalDetails.email": req.body.personalDetails.email,
+        userId: { $ne: userId }, // Exclude current user's profile
+      });
+
+      if (existingProfileWithEmail) {
+        return res.status(400).json({
+          status: false,
+          message: "Email already in use by another profile",
+        });
+      }
+    }
+
+    // Perform the update
+    const updatedUserProfile = await Profile.findOneAndUpdate(
+      { userId },
+      { $set: updateFields },
+      {
+        new: true,
+        runValidators: true, // This ensures schema validations run on update
+        select: "-__v -createdAt -updatedAt",
+      }
+    );
+
+    if (!updatedUserProfile) {
+      return res.status(404).json({
+        status: false,
+        message: "User Profile not updated",
+      });
+    }
+
+    return res.status(200).json({
+      status: true,
+      message: "User profile updated successfully",
+      profile: updatedUserProfile,
+    });
+  } catch (error) {
+    return res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+module.exports = {
+  handleCreateProfile,
+  handleGetProfile,
+  handleUpdateProfile,
+};

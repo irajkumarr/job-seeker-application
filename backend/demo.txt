@@ -114,3 +114,9 @@ INDUSTRY MODEL
 
 
 
+//controllers for user model now
+
+updating
+gettting
+deleteing
+adding
