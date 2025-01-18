@@ -1,5 +1,5 @@
-
 const User = require("../../models/User/User");
+
 const handleGetUser = async (req, res) => {
   const userId = req.user.id;
   try {
@@ -77,8 +77,111 @@ const handleUpdateUser = async (req, res) => {
   }
 };
 
+//getting all user data
+const handleGetAllProfiles = async (req, res) => {
+  try {
+    const userProfiles = await User.aggregate([
+      {
+        $lookup: {
+          from: "profiles", // Collection for profiles
+          localField: "_id", // User's `_id`
+          foreignField: "userId", // Field in profiles referencing the user's ID
+          as: "profile", // Alias for the result
+        },
+      },
+      {
+        $lookup: {
+          from: "experiences", // Collection for experiences
+          localField: "_id",
+          foreignField: "userId",
+          as: "experiences",
+        },
+      },
+      {
+        $lookup: {
+          from: "documents", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "documents",
+        },
+      },
+      {
+        $lookup: {
+          from: "trainings", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "trainings",
+        },
+      },
+      {
+        $lookup: {
+          from: "socialAccounts", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "socialAccounts",
+        },
+      },
+      {
+        $lookup: {
+          from: "references", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "references",
+        },
+      },
+      {
+        $lookup: {
+          from: "languages", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "languages",
+        },
+      },
+      {
+        $lookup: {
+          from: "educations", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "educations",
+        },
+      },
+      {
+        $lookup: {
+          from: "emergencyContacts", // Collection for documents
+          localField: "_id",
+          foreignField: "userId",
+          as: "emergencyContacts",
+        },
+      },
+      // Add more lookups as needed for other related collections
+      {
+        $project: {
+          password: 0, // Exclude sensitive fields like passwords
+          "profile.password": 0, // Exclude nested sensitive fields if necessary
+        },
+      },
+    ]);
+
+    // Check if profiles exist
+    if (!userProfiles.length) {
+      return res.status(404).json({
+        status: false,
+        message: "No profiles found",
+      });
+    }
+
+    return res.status(200).json(userProfiles);
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message,
+    });
+  }
+};
+
 module.exports = {
   handleGetUser,
   handleDeleteUser,
   handleUpdateUser,
+  handleGetAllProfiles,
 };
