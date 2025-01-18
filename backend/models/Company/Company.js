@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const companySchema = new mongoose.Schema(
   {
-    // Company Admin/Employer Reference
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
@@ -115,17 +114,6 @@ const companySchema = new mongoose.Schema(
         type: String,
         required: [true, "Full address is required"],
       },
-      coordinates: {
-        type: {
-          type: String,
-          enum: ["Point"],
-          default: "Point",
-        },
-        coordinates: {
-          type: [Number],
-          default: [0, 0], // [longitude, latitude]
-        },
-      },
     },
 
     // Media
@@ -179,17 +167,12 @@ const companySchema = new mongoose.Schema(
     },
 
     // Additional Company Information
-    benefits: [
+    specialties: [
       {
         type: String,
         trim: true,
       },
     ],
-
-    culture: {
-      type: String,
-      maxLength: [1000, "Culture description cannot exceed 1000 characters"],
-    },
 
     // Verification Status
     isVerified: {
@@ -227,9 +210,6 @@ const companySchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-// Indexes
-companySchema.index({ "location.coordinates": "2dsphere" });
-companySchema.index({ name: "text", description: "text" });
 
 // Method to check if company can post new jobs
 companySchema.methods.canPostJobs = function () {
