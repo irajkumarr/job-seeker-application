@@ -20,6 +20,8 @@ const userProfileRoutes = require("./routes/User/profile");
 const userLanguageRoutes = require("./routes/User/language");
 const userTrainingRoutes = require("./routes/User/training");
 const userEducationRoutes = require("./routes/User/education");
+const userEmergencyContactRoutes = require("./routes/User/emergencyContact");
+const userExperienceRoutes = require("./routes/User/experience");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
@@ -27,6 +29,8 @@ app.use("/api/users/profile", userProfileRoutes);
 app.use("/api/users/language", userLanguageRoutes);
 app.use("/api/users/training", userTrainingRoutes);
 app.use("/api/users/education", userEducationRoutes);
+app.use("/api/users/contact", userEmergencyContactRoutes);
+app.use("/api/users/experience", userExperienceRoutes);
 
 //connection to MONGO DB
 mongoose

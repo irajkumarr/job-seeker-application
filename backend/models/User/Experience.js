@@ -10,11 +10,15 @@ const experienceSchema = new mongoose.Schema(
     industry: { type: String, required: true },
     jobCategory: { type: String, required: true },
     location: {
-      city: String,
-      country: String,
+      type: String,
+      required: true,
     },
     designation: { type: String, required: true },
-    jobLevel: { type: String, required: true },
+    jobLevel: {
+      type: String,
+      enum: ["top-level", "senior-level", "mid-level", "entry-level"],
+      required: true,
+    },
     startDate: { type: Date, required: true },
     currentlyWorking: { type: Boolean, default: false },
     endDate: Date,
