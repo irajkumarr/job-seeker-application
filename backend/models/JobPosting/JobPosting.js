@@ -14,7 +14,6 @@ const jobPostingSchema = new mongoose.Schema(
       trim: true,
     },
 
-
     type: {
       type: String,
       enum: ["Full-Time", "Part-Time", "Contract", "Internship", "Temporary"],
@@ -29,8 +28,7 @@ const jobPostingSchema = new mongoose.Schema(
     },
 
     salary: {
-      min: { type: Number, required: true },
-      max: { type: Number },
+      type: Number,
       currency: { type: String, default: "NPR" },
     },
 
@@ -64,8 +62,8 @@ const jobPostingSchema = new mongoose.Schema(
         required: [true, "Education level is required"],
       },
       experience: {
-        minYears: { type: Number, required: true },
-        maxYears: { type: Number },
+        type: Number,
+        required: true,
       },
       shift: {
         type: String,

@@ -26,6 +26,7 @@ const handleGetCompanies = async (req, res) => {
     if (industry) query.industry = industry;
 
     const companies = await Company.find(query)
+      .populate("industry")
       .skip((page - 1) * limit)
       .limit(parseInt(limit));
     const total = await Company.countDocuments(query);

@@ -1,0 +1,146 @@
+const JobPosting = require("../../models/JobPosting/JobPosting");
+const createJobPosting = async (req, res) => {
+  try {
+    const { company, ...jobData } = req.body;
+
+    if (!company) {
+      return res.status(400).json({ message: "Company reference is required" });
+    }
+
+    const jobPosting = new JobPosting({ company, ...jobData });
+    await jobPosting.save();
+
+    res
+      .status(201)
+      .json({ message: "Job posting created successfully", jobPosting });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+
+const getAllJobPostings = async (req, res) => {
+  try {
+    const jobPostings = await JobPosting.find()
+      .populate("company")
+      .sort({ createdAt: -1 });
+    res.status(200).json(jobPostings);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const getJobPostingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const jobPosting = await JobPosting.findById(id).populate("company");
+
+    if (!jobPosting) {
+      return res.status(404).json({ message: "Job posting not found" });
+    }
+
+    res.status(200).json(jobPosting);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+const updateJobPosting = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const updatedJobPosting = await JobPosting.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!updatedJobPosting) {
+      return res.status(404).json({ message: "Job posting not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Job posting updated successfully", updatedJobPosting });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
+const deleteJobPosting = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const deletedJobPosting = await JobPosting.findByIdAndDelete(id);
+
+    if (!deletedJobPosting) {
+      return res.status(404).json({ message: "Job posting not found" });
+    }
+
+    res.status(200).json({ message: "Job posting deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const filterJobPostings = async (req, res) => {
+  try {
+    const {
+      location,
+      category, // Category from the `Company` model
+      education,
+      salary,
+      experience,
+      industryTitle, // Filter by industry title
+    } = req.query;
+
+    // Build the query dynamically
+    const query = {};
+
+    if (location) {
+      // If location is provided, we will assume it's the district and filter based on that.
+      query["location.district"] = location.trim(); // Directly match the district
+    }
+
+    // Filter by education
+    if (education) {
+      query["basicInformation.education"] = education;
+    }
+
+    // Filter by salary (greater than or equal to specified salary)
+    if (salary) {
+      query.salary = { $gte: parseFloat(salary) }; // Ensure salary is greater than or equal to the specified value
+    }
+
+    // Filter by experience (greater than or equal to specified experience)
+    if (experience) {
+      query["basicInformation.experience"] = { $gte: parseInt(experience) }; // Ensure experience is greater than or equal to the specified value
+    }
+
+    // Fetch and filter job postings with company category and industry title if provided
+    const filteredJobs = await JobPosting.find(query).populate({
+      path: "company",
+      match: {
+        ...(category ? { category } : {}), // Filter by company category if specified
+      },
+      populate: {
+        path: "industry", // Populate the industry reference
+        match: industryTitle ? { name: industryTitle } : {}, // Filter by industry title if specified
+      },
+    });
+
+    // Remove jobs where the company or industry filter did not match
+    const result = filteredJobs.filter(
+      (job) => job.company && job.company.industry
+    );
+
+    res.status(200).json(result);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+module.exports = {
+  createJobPosting,
+  getAllJobPostings,
+  getJobPostingById,
+  updateJobPosting,
+  deleteJobPosting,
+  filterJobPostings,
+};
