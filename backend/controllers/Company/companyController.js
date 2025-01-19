@@ -9,9 +9,11 @@ const handleAddCompany = async (req, res) => {
       user: userId,
     });
     await company.save();
-    res.status(201).json({ message: "Company added successfully", company });
+    res
+      .status(201)
+      .json({ status: true, message: "Company added successfully", company });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -28,9 +30,11 @@ const handleGetCompanies = async (req, res) => {
       .limit(parseInt(limit));
     const total = await Company.countDocuments(query);
 
-    res.status(200).json({ total, page: parseInt(page), companies });
+    return res
+      .status(200)
+      .json({ status: true, total, page: parseInt(page), companies });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -43,7 +47,7 @@ const handleGetCompanyById = async (req, res) => {
     }
     res.status(200).json(company);
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -59,7 +63,7 @@ const handleUpdateCompany = async (req, res) => {
     }
     res.status(200).json({ message: "Company updated successfully", company });
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -72,7 +76,7 @@ const hanldeDeleteCompany = async (req, res) => {
     }
     res.status(200).json({ message: "Company deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -85,7 +89,7 @@ const handleGetVerifiedCompanies = async (req, res) => {
 
     res.status(200).json({ total: companies.length, companies });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
