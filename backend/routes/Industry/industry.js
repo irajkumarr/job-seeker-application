@@ -5,6 +5,7 @@ const {
   handleGetIndustryById,
   handleGetFilteredIndustries,
   handleAddIndustry,
+  handleGetIndustries,
 } = require("../../controllers/Industry/industryController");
 const router = express.Router();
 const { verifyEmployer } = require("../../middlewares/jwt");
@@ -12,6 +13,7 @@ const { verifyEmployer } = require("../../middlewares/jwt");
 router.post("/", verifyEmployer, handleAddIndustry);
 
 router.get("/", handleGetFilteredIndustries);
+router.get("/all", handleGetIndustries);
 
 router.get("/:id", handleGetIndustryById);
 

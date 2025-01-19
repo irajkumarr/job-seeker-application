@@ -4,14 +4,12 @@ const Industry = require("../../models/Industry/Industry");
 const handleAddIndustry = async (req, res) => {
   try {
     const industry = new Industry(req.body);
-    const savedIndustry = await industry.save();
-    res
+    await industry.save();
+    return res
       .status(201)
-      .json({ message: "Industry added successfully", data: savedIndustry });
+      .json({ status: true, message: "Industry added successfully" });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to add industry", details: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -19,13 +17,9 @@ const handleAddIndustry = async (req, res) => {
 const handleGetIndustries = async (req, res) => {
   try {
     const industries = await Industry.find();
-    res
-      .status(200)
-      .json({ message: "Industries retrieved successfully", data: industries });
+    return res.status(200).json(industries);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to retrieve industries", details: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -34,39 +28,34 @@ const handleGetIndustryById = async (req, res) => {
   try {
     const industry = await Industry.findById(req.params.id);
     if (!industry) {
-      return res.status(404).json({ error: "Industry not found" });
+      return res
+        .status(404)
+        .json({ status: false, message: "Industry not found" });
     }
-    res
-      .status(200)
-      .json({ message: "Industry retrieved successfully", data: industry });
+    return res.status(200).json(industry);
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to retrieve industry", details: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
 // Update an industry
 const handleUpdateIndustry = async (req, res) => {
+  const id = req.params.id;
   try {
-    const updatedIndustry = await Industry.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true }
-    );
+    const updatedIndustry = await Industry.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
     if (!updatedIndustry) {
-      return res.status(404).json({ error: "Industry not found" });
+      return res
+        .status(404)
+        .json({ status: false, message: "Industry not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Industry updated successfully",
-        data: updatedIndustry,
-      });
+    return res.status(200).json({
+      status: true,
+      message: "Industry updated successfully",
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to update industry", details: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -75,18 +64,16 @@ const handleDeleteIndustry = async (req, res) => {
   try {
     const deletedIndustry = await Industry.findByIdAndDelete(req.params.id);
     if (!deletedIndustry) {
-      return res.status(404).json({ error: "Industry not found" });
+      return res
+        .status(404)
+        .json({ status: false, message: "Industry not found" });
     }
-    res
-      .status(200)
-      .json({
-        message: "Industry deleted successfully",
-        data: deletedIndustry,
-      });
+    res.status(200).json({
+      status: true,
+      message: "Industry deleted successfully",
+    });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to delete industry", details: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
@@ -136,9 +123,7 @@ const handleGetFilteredIndustries = async (req, res) => {
       },
     });
   } catch (error) {
-    res
-      .status(500)
-      .json({ error: "Failed to retrieve industries", details: error.message });
+    return res.status(500).json({ status: false, message: error.message });
   }
 };
 
