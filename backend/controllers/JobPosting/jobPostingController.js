@@ -1,4 +1,25 @@
 const JobPosting = require("../../models/JobPosting/JobPosting");
+const {
+  handleUpdateJobCount,
+} = require("../../controllers/Industry/industryController");
+// const createJobPosting = async (req, res) => {
+//   try {
+//     const { company, ...jobData } = req.body;
+
+//     if (!company) {
+//       return res.status(400).json({ message: "Company reference is required" });
+//     }
+
+//     const jobPosting = new JobPosting({ company, ...jobData });
+//     await jobPosting.save();
+
+//     res
+//       .status(201)
+//       .json({ message: "Job posting created successfully", jobPosting });
+//   } catch (error) {
+//     res.status(400).json({ message: error.message });
+//   }
+// };
 const createJobPosting = async (req, res) => {
   try {
     const { company, ...jobData } = req.body;
@@ -7,13 +28,28 @@ const createJobPosting = async (req, res) => {
       return res.status(400).json({ message: "Company reference is required" });
     }
 
+    // Create the job posting
     const jobPosting = new JobPosting({ company, ...jobData });
     await jobPosting.save();
+
+    // Populate the company field to access the industry
+    const populatedJobPosting = await jobPosting.populate({
+      path: "company",
+      select: "industry",
+    });
+
+    const industryId = populatedJobPosting.company.industry;
+
+    // Update job count in the industry metadata
+    if (industryId) {
+      await handleUpdateJobCount(industryId, 1); // Increment job count by 1
+    }
 
     res
       .status(201)
       .json({ message: "Job posting created successfully", jobPosting });
   } catch (error) {
+    console.error(error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -136,6 +172,76 @@ const filterJobPostings = async (req, res) => {
   }
 };
 
+const getJobsByDistrict = async (req, res) => {
+  const { district } = req.query; // Expecting the district name from query parameters
+
+  if (!district) {
+    return res.status(400).json({
+      status: false,
+      message: "District query parameter is required",
+    });
+  }
+
+  try {
+    // Find jobs that match the specified district
+    const jobs = await JobPosting.find({ "location.district": district.trim() })
+      .populate("company", "name industry") // Adjust fields as needed
+      .exec();
+
+    if (jobs.length === 0) {
+      return res.status(404).json({
+        status: false,
+        message: `No jobs found in district: ${district}`,
+      });
+    }
+
+    res.status(200).json({
+      status: true,
+      message: `Jobs retrieved successfully for district: ${district}`,
+      jobs,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: "Failed to retrieve jobs",
+      error: error.message,
+    });
+  }
+};
+const getUniqueJobDistricts = async (req, res) => {
+  try {
+    // Aggregate to get unique districts
+    const uniqueDistricts = await JobPosting.aggregate([
+      {
+        $group: {
+          _id: "$location.district", // Group by district
+        },
+      },
+      {
+        $project: {
+          _id: 0,
+          district: "$_id", // Rename _id to district
+        },
+      },
+      {
+        $sort: { district: 1 }, // Optional: Sort districts alphabetically
+      },
+    ]);
+
+    res.status(200).json({
+      status: true,
+      message: "Unique job districts retrieved successfully",
+      districts: uniqueDistricts.map((d) => d.district),
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: false,
+      message: "Failed to retrieve unique job districts",
+      error: error.message,
+    });
+  }
+};
+
 module.exports = {
   createJobPosting,
   getAllJobPostings,
@@ -143,4 +249,6 @@ module.exports = {
   updateJobPosting,
   deleteJobPosting,
   filterJobPostings,
+  getJobsByDistrict,
+  getUniqueJobDistricts,
 };

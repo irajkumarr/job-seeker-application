@@ -1,18 +1,52 @@
 const Company = require("../../models/Company/Company");
-
+const {
+  handleUpdateCompanyCount,
+} = require("../../controllers/Industry/industryController");
 // Add a new company
+// const handleAddCompany = async (req, res) => {
+//   const userId = req.user.id;
+//   try {
+//     const company = new Company({
+//       ...req.body,
+//       user: userId,
+//     });
+//     await company.save();
+//     res
+//       .status(201)
+//       .json({ status: true, message: "Company added successfully", company });
+//   } catch (error) {
+//     return res.status(500).json({ status: false, message: error.message });
+//   }
+// };
+
 const handleAddCompany = async (req, res) => {
   const userId = req.user.id;
   try {
+    // Create the company
     const company = new Company({
       ...req.body,
       user: userId,
     });
     await company.save();
+
+    // Populate industry from the saved company
+    const populatedCompany = await company.populate({
+      path: "industry",
+      select: "_id",
+    });
+
+    const industryId = populatedCompany.industry;
+
+    // Update the company count in the industry's metadata
+    if (industryId) {
+      await handleUpdateCompanyCount(industryId, 1); // Increment company count by 1
+    }
+
     res
       .status(201)
       .json({ status: true, message: "Company added successfully", company });
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ status: false, message: error.message });
   }
 };

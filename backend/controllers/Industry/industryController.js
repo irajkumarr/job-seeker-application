@@ -98,6 +98,27 @@ const handleUpdateJobCount = async (industryId, adjustment) => {
   }
 };
 
+const handleUpdateCompanyCount = async (industryId, adjustment) => {
+  try {
+    const industry = await Industry.findById(industryId);
+    if (!industry) {
+      throw new Error("Industry not found");
+    }
+    industry.metadata.companyCount += adjustment;
+    await industry.save();
+    console.log(
+      `Updated company count for industry ${industryId}: ${industry.metadata.companyCount}`
+    );
+  } catch (error) {
+    console.error(
+      `Failed to update company count for industry ${industryId}:`,
+      error.message
+    );
+    throw error;
+  }
+};
+
+
 // Get industries with pagination and filtering (optional)
 const handleGetFilteredIndustries = async (req, res) => {
   const { name, status, page = 1, limit = 10 } = req.query;
@@ -135,4 +156,5 @@ module.exports = {
   handleUpdateJobCount,
   handleGetFilteredIndustries,
   handleGetIndustryById,
+  handleUpdateCompanyCount,
 };
