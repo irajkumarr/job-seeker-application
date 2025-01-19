@@ -4,7 +4,40 @@ const JobPosting = require("../../models/JobPosting/JobPosting");
 const mongoose = require("mongoose");
 // Create a new job application
 
-exports.createJobApplication = async (req, res) => {
+// const handleCreateJobApplication = async (req, res) => {
+//   try {
+//     const { jobId, coverLetter } = req.body;
+//     const applicantId = req.user.id;
+
+//     // Find the job posting by jobId
+//     const jobPosting = await JobPosting.findById(jobId);
+//     if (!jobPosting) {
+//       return res.status(404).json({ message: "Job posting not found" });
+//     }
+
+//     // Find the user/applicant
+//     const user = await User.findById(applicantId);
+//     if (!user) {
+//       return res.status(404).json({ message: "Applicant not found" });
+//     }
+
+//     // Create a new job application
+//     const newJobApplication = new JobApplication({
+//       job: jobId,
+//       applicant: applicantId,
+//       coverLetter,
+//     });
+
+//     await newJobApplication.save();
+
+//     // Return the created job application
+//     res.status(201).json(newJobApplication);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: "Server error" });
+//   }
+// };
+const handleCreateJobApplication = async (req, res) => {
   try {
     const { jobId, coverLetter } = req.body;
     const applicantId = req.user.id;
@@ -19,6 +52,17 @@ exports.createJobApplication = async (req, res) => {
     const user = await User.findById(applicantId);
     if (!user) {
       return res.status(404).json({ message: "Applicant not found" });
+    }
+
+    // Check if the user has already applied for this job
+    const existingApplication = await JobApplication.findOne({
+      job: jobId,
+      applicant: applicantId,
+    });
+    if (existingApplication) {
+      return res
+        .status(400)
+        .json({ message: "You have already applied for this job" });
     }
 
     // Create a new job application
@@ -39,7 +83,7 @@ exports.createJobApplication = async (req, res) => {
 };
 
 // Get all job applications for a job posting
-exports.getJobApplicationsByJob = async (req, res) => {
+const handleGetJobApplicationsByJob = async (req, res) => {
   try {
     const { jobId } = req.params;
 
@@ -174,7 +218,7 @@ exports.getJobApplicationsByJob = async (req, res) => {
 };
 
 // Get job applications by applicant
-exports.getJobApplicationsByApplicant = async (req, res) => {
+const handleGetJobApplicationsByApplicant = async (req, res) => {
   try {
     const { applicantId } = req.params;
 
@@ -196,7 +240,7 @@ exports.getJobApplicationsByApplicant = async (req, res) => {
 };
 
 // Update job application status
-exports.updateJobApplicationStatus = async (req, res) => {
+const handleUpdateJobApplicationStatus = async (req, res) => {
   try {
     const { applicationId } = req.params;
     const { status } = req.body;
@@ -235,7 +279,7 @@ exports.updateJobApplicationStatus = async (req, res) => {
 };
 
 // Add note to job application
-exports.addNoteToJobApplication = async (req, res) => {
+const handleAddNoteToJobApplication = async (req, res) => {
   try {
     const { applicationId } = req.params;
     const { addedBy, content } = req.body;
@@ -259,7 +303,7 @@ exports.addNoteToJobApplication = async (req, res) => {
 };
 
 // Add feedback to job application
-exports.addFeedbackToJobApplication = async (req, res) => {
+const handleAddFeedbackToJobApplication = async (req, res) => {
   try {
     const { applicationId } = req.params;
     const { feedback } = req.body;
@@ -281,7 +325,7 @@ exports.addFeedbackToJobApplication = async (req, res) => {
 };
 
 // Delete a job application
-exports.deleteJobApplication = async (req, res) => {
+const handleDeleteJobApplication = async (req, res) => {
   try {
     const { applicationId } = req.params;
 
@@ -297,4 +341,14 @@ exports.deleteJobApplication = async (req, res) => {
     console.error(error);
     res.status(500).json({ message: "Server error" });
   }
+};
+
+module.exports = {
+  handleAddFeedbackToJobApplication,
+  handleAddNoteToJobApplication,
+  handleCreateJobApplication,
+  handleDeleteJobApplication,
+  handleUpdateJobApplicationStatus,
+  handleGetJobApplicationsByJob,
+  handleGetJobApplicationsByApplicant,
 };

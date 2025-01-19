@@ -1,14 +1,38 @@
 const express = require("express");
 const router = express.Router();
-const jobApplicationController = require("../../controllers/JobApplication/jobApplicationController");
-const { verifyAndAuthorize } = require("../../middlewares/jwt");
+const {
+  handleAddFeedbackToJobApplication,
+  handleAddNoteToJobApplication,
+  handleCreateJobApplication,
+  handleDeleteJobApplication,
+  handleUpdateJobApplicationStatus,
+  handleGetJobApplicationsByJob,
+  handleGetJobApplicationsByApplicant,
+} = require("../../controllers/JobApplication/jobApplicationController");
+const { verifyAndAuthorize, verifyEmployer } = require("../../middlewares/jwt");
 
-router.post("/",verifyAndAuthorize, jobApplicationController.createJobApplication);
-router.get("/job/:jobId", jobApplicationController.getJobApplicationsByJob);
-router.get("/applicant/:applicantId", jobApplicationController.getJobApplicationsByApplicant);
-router.put("/status/:applicationId", jobApplicationController.updateJobApplicationStatus);
-router.put("/note/:applicationId", jobApplicationController.addNoteToJobApplication);
-router.put("/feedback/:applicationId", jobApplicationController.addFeedbackToJobApplication);
-router.delete("/:applicationId", jobApplicationController.deleteJobApplication);
+router.post("/", verifyAndAuthorize, handleCreateJobApplication);
+router.get("/job/:jobId", verifyEmployer, handleGetJobApplicationsByJob);
+router.get(
+  "/applicant/:applicantId",
+  verifyEmployer,
+  handleGetJobApplicationsByApplicant
+);
+router.put(
+  "/status/:applicationId",
+  verifyEmployer,
+  handleUpdateJobApplicationStatus
+);
+router.put(
+  "/note/:applicationId",
+  verifyEmployer,
+  handleAddNoteToJobApplication
+);
+router.put(
+  "/feedback/:applicationId",
+  verifyEmployer,
+  handleAddFeedbackToJobApplication
+);
+router.delete("/:applicationId", verifyEmployer, handleDeleteJobApplication);
 
 module.exports = router;
