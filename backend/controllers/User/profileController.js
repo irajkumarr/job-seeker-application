@@ -1,5 +1,5 @@
 const Profile = require("../../models/User/Profile");
-
+const JobPosting = require("../../models/JobPosting/JobPosting");
 const handleCreateProfile = async (req, res) => {
   const {
     interestedCategories,
@@ -266,8 +266,70 @@ const handleUpdateProfile = async (req, res) => {
   }
 };
 
+const handleGetMatchedJobs = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    // Fetch the user's profile
+    const profile = await Profile.findOne({ userId });
+    if (!profile) {
+      return res.status(404).json({ message: "Profile not found" });
+    }
+
+    const { interestedCategories, currentLocation } = profile;
+
+    // Fetch jobs that match the user's interested categories
+    const matchedJobs = await JobPosting.find()
+      .populate({
+        path: "company",
+        populate: {
+          path: "industry",
+          match: { name: { $in: interestedCategories } }, // Match based on industry name
+        },
+      })
+      .then((jobs) =>
+        jobs.filter(
+          (job) => job.company && job.company.industry
+          //  &&
+          // job.location.district === currentLocation.district // Match district in job location
+        )
+      );
+
+    res.status(200).json({ matchedJobs });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "An error occurred", error });
+  }
+  // try {
+  //   const { userId } = req.params;
+
+  //   // Find the user's profile
+  //   const profile = await Profile.findOne({ userId });
+  //   if (!profile) {
+  //     return res.status(404).json({ message: "Profile not found" });
+  //   }
+
+  //   // Fetch matched jobs based on the user's interested categories
+  //   const matchedJobs = await JobPosting.find()
+  //     .populate({
+  //       path: "company",
+  //       populate: {
+  //         path: "industry",
+  //         match: { name: { $in: profile.interestedCategories } }, // Match based on industry name
+  //       },
+  //     })
+  //     .then((jobs) => jobs.filter((job) => job.company && job.company.industry)); // Filter jobs with matching industries
+
+  //   res.status(200).json({ matchedJobs });
+  // } catch (error) {
+  //   console.error(error);
+  //   res.status(500).json({ message: "An error occurred", error });
+  // }
+};
+
 module.exports = {
   handleCreateProfile,
   handleGetProfile,
   handleUpdateProfile,
+  handleGetMatchedJobs,
 };
