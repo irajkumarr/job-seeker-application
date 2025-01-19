@@ -1,24 +1,24 @@
 const express = require("express");
 const {
-  createJobPosting,
-  getAllJobPostings,
-  getJobPostingById,
-  updateJobPosting,
-  deleteJobPosting,
-  filterJobPostings,
-  getUniqueJobDistricts,
-  getJobsByDistrict,
+  handleCreateJobPosting,
+  handleGetAllJobPostings,
+  handleGetJobPostingById,
+  handleUpdateJobPosting,
+  handleDeleteJobPosting,
+  handleFilterJobPostings,
+  handleGetJobsByDistrict,
+  handleGetUniqueJobDistricts,
 } = require("../../controllers/JobPosting/jobPostingController");
-
+const { verifyEmployer } = require("../../middlewares/jwt");
 const router = express.Router();
 
-router.post("/", createJobPosting);
-router.get("/", getAllJobPostings);
-router.get("/filter", filterJobPostings);
-router.get("/:id", getJobPostingById);
-router.get("/districts/all", getUniqueJobDistricts);
-router.get("/all/by-district", getJobsByDistrict);
-router.put("/:id", updateJobPosting);
-router.delete("/:id", deleteJobPosting);
+router.post("/", verifyEmployer, handleCreateJobPosting);
+router.get("/", handleGetAllJobPostings);
+router.get("/filter", handleFilterJobPostings);
+router.get("/:id", handleGetJobPostingById);
+router.get("/districts/all", handleGetUniqueJobDistricts);
+router.get("/all/by-district", handleGetJobsByDistrict);
+router.put("/:id", verifyEmployer, handleUpdateJobPosting);
+router.delete("/:id", verifyEmployer, handleDeleteJobPosting);
 
 module.exports = router;

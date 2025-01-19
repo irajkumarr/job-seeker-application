@@ -2,25 +2,8 @@ const JobPosting = require("../../models/JobPosting/JobPosting");
 const {
   handleUpdateJobCount,
 } = require("../../controllers/Industry/industryController");
-// const createJobPosting = async (req, res) => {
-//   try {
-//     const { company, ...jobData } = req.body;
 
-//     if (!company) {
-//       return res.status(400).json({ message: "Company reference is required" });
-//     }
-
-//     const jobPosting = new JobPosting({ company, ...jobData });
-//     await jobPosting.save();
-
-//     res
-//       .status(201)
-//       .json({ message: "Job posting created successfully", jobPosting });
-//   } catch (error) {
-//     res.status(400).json({ message: error.message });
-//   }
-// };
-const createJobPosting = async (req, res) => {
+const handleCreateJobPosting = async (req, res) => {
   try {
     const { company, ...jobData } = req.body;
 
@@ -54,7 +37,7 @@ const createJobPosting = async (req, res) => {
   }
 };
 
-const getAllJobPostings = async (req, res) => {
+const handleGetAllJobPostings = async (req, res) => {
   try {
     const jobPostings = await JobPosting.find()
       .populate("company")
@@ -64,7 +47,7 @@ const getAllJobPostings = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-const getJobPostingById = async (req, res) => {
+const handleGetJobPostingById = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -79,7 +62,7 @@ const getJobPostingById = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-const updateJobPosting = async (req, res) => {
+const handleUpdateJobPosting = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -99,7 +82,7 @@ const updateJobPosting = async (req, res) => {
     res.status(400).json({ message: error.message });
   }
 };
-const deleteJobPosting = async (req, res) => {
+const handleDeleteJobPosting = async (req, res) => {
   try {
     const { id } = req.params;
 
@@ -115,7 +98,7 @@ const deleteJobPosting = async (req, res) => {
   }
 };
 
-const filterJobPostings = async (req, res) => {
+const handleFilterJobPostings = async (req, res) => {
   try {
     const {
       location,
@@ -172,7 +155,7 @@ const filterJobPostings = async (req, res) => {
   }
 };
 
-const getJobsByDistrict = async (req, res) => {
+const handleGetJobsByDistrict = async (req, res) => {
   const { district } = req.query; // Expecting the district name from query parameters
 
   if (!district) {
@@ -208,7 +191,7 @@ const getJobsByDistrict = async (req, res) => {
     });
   }
 };
-const getUniqueJobDistricts = async (req, res) => {
+const handleGetUniqueJobDistricts = async (req, res) => {
   try {
     // Aggregate to get unique districts
     const uniqueDistricts = await JobPosting.aggregate([
@@ -243,12 +226,12 @@ const getUniqueJobDistricts = async (req, res) => {
 };
 
 module.exports = {
-  createJobPosting,
-  getAllJobPostings,
-  getJobPostingById,
-  updateJobPosting,
-  deleteJobPosting,
-  filterJobPostings,
-  getJobsByDistrict,
-  getUniqueJobDistricts,
+  handleCreateJobPosting,
+  handleGetAllJobPostings,
+  handleGetJobPostingById,
+  handleUpdateJobPosting,
+  handleDeleteJobPosting,
+  handleFilterJobPostings,
+  handleGetJobsByDistrict,
+  handleGetUniqueJobDistricts,
 };
