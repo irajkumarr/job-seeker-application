@@ -1,31 +1,25 @@
 const express = require("express");
 const router = express.Router();
 const {
-  addCompany,
-  getCompanies,
-  getCompanyById,
-  updateCompany,
-  deleteCompany,
-  getVerifiedCompanies,
+  handleAddCompany,
+  handleGetCompanies,
+  handleGetCompanyById,
+  handleUpdateCompany,
+  hanldeDeleteCompany,
+  handleGetVerifiedCompanies,
 } = require("../../controllers/Company/companyController");
 const { verifyEmployer } = require("../../middlewares/jwt");
 
-// Add a new company
-router.post("/", verifyEmployer, addCompany);
+router.post("/", verifyEmployer, handleAddCompany);
 
-// Get all companies (with optional filters and pagination)
-router.get("/", getCompanies);
+router.get("/", handleGetCompanies);
 
-// Get a single company by ID
-router.get("/:id", getCompanyById);
+router.get("/:id", handleGetCompanyById);
 
-// Update a company by ID
-router.put("/:id", verifyEmployer, updateCompany);
+router.put("/:id", verifyEmployer, handleUpdateCompany);
 
-// Delete a company by ID
-router.delete("/:id", verifyEmployer, deleteCompany);
+router.delete("/:id", verifyEmployer, hanldeDeleteCompany);
 
-// Get verified or unverified companies
-router.get("/filter/verified", getVerifiedCompanies);
+router.get("/filter/verified", handleGetVerifiedCompanies);
 
 module.exports = router;

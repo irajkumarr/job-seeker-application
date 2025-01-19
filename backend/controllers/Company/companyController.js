@@ -1,9 +1,8 @@
 const Company = require("../../models/Company/Company");
 
 // Add a new company
-const addCompany = async (req, res) => {
+const handleAddCompany = async (req, res) => {
   const userId = req.user.id;
-  console.log(userId);
   try {
     const company = new Company({
       ...req.body,
@@ -17,7 +16,7 @@ const addCompany = async (req, res) => {
 };
 
 // Get all companies (with optional filtering and pagination)
-const getCompanies = async (req, res) => {
+const handleGetCompanies = async (req, res) => {
   try {
     const { page = 1, limit = 10, status, industry } = req.query;
     const query = {};
@@ -36,7 +35,7 @@ const getCompanies = async (req, res) => {
 };
 
 // Get a company by ID
-const getCompanyById = async (req, res) => {
+const handleGetCompanyById = async (req, res) => {
   try {
     const company = await Company.findById(req.params.id);
     if (!company) {
@@ -49,7 +48,7 @@ const getCompanyById = async (req, res) => {
 };
 
 // Update a company by ID
-const updateCompany = async (req, res) => {
+const handleUpdateCompany = async (req, res) => {
   try {
     const company = await Company.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
@@ -65,7 +64,7 @@ const updateCompany = async (req, res) => {
 };
 
 // Delete a company by ID
-const deleteCompany = async (req, res) => {
+const hanldeDeleteCompany = async (req, res) => {
   try {
     const company = await Company.findByIdAndDelete(req.params.id);
     if (!company) {
@@ -78,7 +77,7 @@ const deleteCompany = async (req, res) => {
 };
 
 // Get companies filtered by verification status
-const getVerifiedCompanies = async (req, res) => {
+const handleGetVerifiedCompanies = async (req, res) => {
   try {
     const { isVerified } = req.query;
     const query = { isVerified: isVerified === "true" };
@@ -91,10 +90,10 @@ const getVerifiedCompanies = async (req, res) => {
 };
 
 module.exports = {
-  addCompany,
-  getCompanies,
-  getCompanyById,
-  updateCompany,
-  deleteCompany,
-  getVerifiedCompanies,
+  handleAddCompany,
+  handleGetCompanies,
+  handleGetCompanyById,
+  handleUpdateCompany,
+  hanldeDeleteCompany,
+  handleGetVerifiedCompanies,
 };
