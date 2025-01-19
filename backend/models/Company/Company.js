@@ -26,9 +26,9 @@ const companySchema = new mongoose.Schema(
 
     // Company Details
     industry: {
-      type: String,
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Industry",
       required: [true, "Industry is required"],
-      trim: true,
     },
 
     establishmentDate: {
@@ -217,24 +217,24 @@ companySchema.methods.canPostJobs = function () {
 };
 
 // Pre-save middleware for data cleaning
-companySchema.pre("save", function (next) {
-  // Clean URLs - ensure they start with http:// or https://
-  if (this.website && !this.website.startsWith("http")) {
-    this.website = "https://" + this.website;
-  }
+// companySchema.pre("save", function (next) {
+//   // Clean URLs - ensure they start with http:// or https://
+//   if (this.website && !this.website.startsWith("http")) {
+//     this.website = "https://" + this.website;
+//   }
 
-  // Clean social media links
-  for (let platform in this.socialMedia) {
-    if (
-      this.socialMedia[platform] &&
-      !this.socialMedia[platform].startsWith("http")
-    ) {
-      this.socialMedia[platform] = "https://" + this.socialMedia[platform];
-    }
-  }
+//   // Clean social media links
+//   for (let platform in this.socialMedia) {
+//     if (
+//       this.socialMedia[platform] &&
+//       !this.socialMedia[platform].startsWith("http")
+//     ) {
+//       this.socialMedia[platform] = "https://" + this.socialMedia[platform];
+//     }
+//   }
 
-  next();
-});
+//   next();
+// });
 
 const Company = mongoose.model("Company", companySchema);
 

@@ -14,11 +14,6 @@ const jobPostingSchema = new mongoose.Schema(
       trim: true,
     },
 
-    // description: {
-    //   type: String,
-    //   required: [true, "Job description is required"],
-    //   maxlength: 5000,
-    // },
 
     type: {
       type: String,

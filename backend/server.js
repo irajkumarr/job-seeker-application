@@ -27,6 +27,7 @@ const userSocialAccountRoutes = require("./routes/User/socialAccount");
 const userDocumentRoutes = require("./routes/User/document");
 
 const industryRoutes = require("./routes/Industry/industry");
+const companyRoutes = require("./routes/Company/company");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
@@ -40,6 +41,7 @@ app.use("/api/users/reference", userReferenceRoutes);
 app.use("/api/users/socialAccount", userSocialAccountRoutes);
 app.use("/api/users/document", userDocumentRoutes);
 app.use("/api/industries", industryRoutes);
+app.use("/api/companies", companyRoutes);
 
 //connection to MONGO DB
 mongoose
