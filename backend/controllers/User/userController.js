@@ -155,9 +155,21 @@ const handleGetAllProfiles = async (req, res) => {
       },
       // Add more lookups as needed for other related collections
       {
+        // $project: {
+        //   password: 0, // Exclude sensitive fields like passwords
+        //   "profile.password": 0, // Exclude nested sensitive fields if necessary
+        // },
         $project: {
           password: 0, // Exclude sensitive fields like passwords
           "profile.password": 0, // Exclude nested sensitive fields if necessary
+          "experiences._id": 0, // Optionally, exclude other sensitive fields from subcollections
+          "documents._id": 0, // Exclude _id from documents if not needed
+          "trainings._id": 0,
+          "socialaccounts._id": 0,
+          "references._id": 0,
+          "languages._id": 0,
+          "educations._id": 0,
+          "emergencycontacts._id": 0,
         },
       },
     ]);

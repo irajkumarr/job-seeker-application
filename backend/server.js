@@ -29,6 +29,7 @@ const userDocumentRoutes = require("./routes/User/document");
 const industryRoutes = require("./routes/Industry/industry");
 const companyRoutes = require("./routes/Company/company");
 const jobPostingRoutes = require("./routes/JobPosting/jobPosting");
+const jobApplicationRoutes = require("./routes/JobApplication/jobApplication");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
@@ -44,6 +45,7 @@ app.use("/api/users/document", userDocumentRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/jobs", jobPostingRoutes);
+app.use("/api/applications", jobApplicationRoutes);
 
 //connection to MONGO DB
 mongoose

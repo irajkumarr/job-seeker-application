@@ -1,0 +1,300 @@
+const JobApplication = require("../../models/JobApplication/JobApplication");
+const User = require("../../models/User/User");
+const JobPosting = require("../../models/JobPosting/JobPosting");
+const mongoose = require("mongoose");
+// Create a new job application
+
+exports.createJobApplication = async (req, res) => {
+  try {
+    const { jobId, coverLetter } = req.body;
+    const applicantId = req.user.id;
+
+    // Find the job posting by jobId
+    const jobPosting = await JobPosting.findById(jobId);
+    if (!jobPosting) {
+      return res.status(404).json({ message: "Job posting not found" });
+    }
+
+    // Find the user/applicant
+    const user = await User.findById(applicantId);
+    if (!user) {
+      return res.status(404).json({ message: "Applicant not found" });
+    }
+
+    // Create a new job application
+    const newJobApplication = new JobApplication({
+      job: jobId,
+      applicant: applicantId,
+      coverLetter,
+    });
+
+    await newJobApplication.save();
+
+    // Return the created job application
+    res.status(201).json(newJobApplication);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get all job applications for a job posting
+exports.getJobApplicationsByJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+
+    const jobApplications = await JobApplication.aggregate([
+      {
+        $match: { job: new mongoose.Types.ObjectId(jobId) }, // Match jobId
+      },
+      {
+        $lookup: {
+          from: "users", // Collection for users
+          localField: "applicant", // Field in JobApplication referring to applicant
+          foreignField: "_id", // Field in users collection
+          as: "applicant", // Alias for applicant data
+        },
+      },
+      {
+        $unwind: "$applicant", // Flatten the applicant array since $lookup returns an array
+      },
+      {
+        $lookup: {
+          from: "profiles", // Collection for profiles
+          localField: "applicant._id", // Match user's _id
+          foreignField: "userId", // Field in profiles referencing userId
+          as: "applicant.profile", // Alias for profile data
+        },
+      },
+      {
+        $lookup: {
+          from: "experiences", // Collection for experiences
+          localField: "applicant._id", // Match user's _id
+          foreignField: "userId",
+          as: "applicant.experiences",
+        },
+      },
+      {
+        $lookup: {
+          from: "documents", // Collection for documents
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.documents",
+        },
+      },
+      {
+        $lookup: {
+          from: "trainings", // Collection for trainings
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.trainings",
+        },
+      },
+      {
+        $lookup: {
+          from: "socialaccounts", // Collection for social accounts
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.socialaccounts",
+        },
+      },
+      {
+        $lookup: {
+          from: "references", // Collection for references
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.references",
+        },
+      },
+      {
+        $lookup: {
+          from: "languages", // Collection for languages
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.languages",
+        },
+      },
+      {
+        $lookup: {
+          from: "educations", // Collection for educations
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.educations",
+        },
+      },
+      {
+        $lookup: {
+          from: "emergencycontacts", // Collection for emergency contacts
+          localField: "applicant._id",
+          foreignField: "userId",
+          as: "applicant.emergencycontacts",
+        },
+      },
+      // Optionally, you can use $project to exclude sensitive fields like passwords
+      {
+        $project: {
+          "applicant.password": 0,
+          "applicant._id": 0,
+
+          "applicant.profile._id": 0,
+          "applicant.experiences._id": 0, // Exclude sensitive fields from subcollections
+          "applicant.documents._id": 0,
+          "applicant.trainings._id": 0,
+          "applicant.socialaccounts._id": 0,
+          "applicant.references._id": 0,
+          "applicant.languages._id": 0,
+          "applicant.educations._id": 0,
+          "applicant.emergencycontacts._id": 0,
+        },
+      },
+      {
+        $lookup: {
+          from: "jobpostings", // Populate job details from the job postings collection
+          localField: "job", // Field in JobApplication
+          foreignField: "_id", // Field in JobPosting
+          as: "job", // Alias for job data
+        },
+      },
+      {
+        $unwind: "$job", // Flatten the job data
+      },
+    ]);
+
+    if (jobApplications.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No applications found for this job" });
+    }
+
+    res.status(200).json(jobApplications);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Get job applications by applicant
+exports.getJobApplicationsByApplicant = async (req, res) => {
+  try {
+    const { applicantId } = req.params;
+
+    const jobApplications = await JobApplication.find({
+      applicant: applicantId,
+    }).populate("job", "title description");
+
+    if (jobApplications.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No applications found for this applicant" });
+    }
+
+    res.status(200).json(jobApplications);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Update job application status
+exports.updateJobApplicationStatus = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { status } = req.body;
+
+    if (
+      ![
+        "applied",
+        "under_review",
+        "shortlisted",
+        "interview_scheduled",
+        "interviewed",
+        "offer_extended",
+        "offer_accepted",
+        "offer_declined",
+        "rejected",
+        "withdrawn",
+      ].includes(status)
+    ) {
+      return res.status(400).json({ message: "Invalid status" });
+    }
+
+    const jobApplication = await JobApplication.findById(applicationId);
+    if (!jobApplication) {
+      return res.status(404).json({ message: "Job application not found" });
+    }
+
+    jobApplication.status = status;
+    jobApplication.updatedAt = Date.now();
+    await jobApplication.save();
+
+    res.status(200).json(jobApplication);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Add note to job application
+exports.addNoteToJobApplication = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { addedBy, content } = req.body;
+
+    const jobApplication = await JobApplication.findById(applicationId);
+    if (!jobApplication) {
+      return res.status(404).json({ message: "Job application not found" });
+    }
+
+    jobApplication.notes.push({
+      addedBy,
+      content,
+    });
+
+    await jobApplication.save();
+    res.status(200).json(jobApplication);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Add feedback to job application
+exports.addFeedbackToJobApplication = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+    const { feedback } = req.body;
+
+    const jobApplication = await JobApplication.findById(applicationId);
+    if (!jobApplication) {
+      return res.status(404).json({ message: "Job application not found" });
+    }
+
+    jobApplication.feedback = feedback;
+    jobApplication.updatedAt = Date.now();
+    await jobApplication.save();
+
+    res.status(200).json(jobApplication);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
+
+// Delete a job application
+exports.deleteJobApplication = async (req, res) => {
+  try {
+    const { applicationId } = req.params;
+
+    const jobApplication = await JobApplication.findByIdAndDelete(
+      applicationId
+    );
+    if (!jobApplication) {
+      return res.status(404).json({ message: "Job application not found" });
+    }
+
+    res.status(200).json({ message: "Job application deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
