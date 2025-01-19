@@ -220,11 +220,20 @@ const handleGetJobApplicationsByJob = async (req, res) => {
 // Get job applications by applicant
 const handleGetJobApplicationsByApplicant = async (req, res) => {
   try {
-    const { applicantId } = req.params;
+    const applicantId = req.user.id;
+    const { status } = req.query;
 
-    const jobApplications = await JobApplication.find({
-      applicant: applicantId,
-    }).populate("job", "title description");
+    // Build the query object
+    let query = { applicant: applicantId };
+
+    if (status) {
+      query.status = status;
+    }
+
+    const jobApplications = await JobApplication.find(query)
+      .populate("job", "title description")
+      .select("job coverLetter status")
+      .exec();
 
     if (jobApplications.length === 0) {
       return res
@@ -246,18 +255,9 @@ const handleUpdateJobApplicationStatus = async (req, res) => {
     const { status } = req.body;
 
     if (
-      ![
-        "applied",
-        "under_review",
-        "shortlisted",
-        "interview_scheduled",
-        "interviewed",
-        "offer_extended",
-        "offer_accepted",
-        "offer_declined",
-        "rejected",
-        "withdrawn",
-      ].includes(status)
+      !["pending", "shortlisted", "rejected", "hired", "withdrawn"].includes(
+        status
+      )
     ) {
       return res.status(400).json({ message: "Invalid status" });
     }

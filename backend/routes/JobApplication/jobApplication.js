@@ -13,11 +13,7 @@ const { verifyAndAuthorize, verifyEmployer } = require("../../middlewares/jwt");
 
 router.post("/", verifyAndAuthorize, handleCreateJobApplication);
 router.get("/job/:jobId", verifyEmployer, handleGetJobApplicationsByJob);
-router.get(
-  "/applicant/:applicantId",
-  verifyEmployer,
-  handleGetJobApplicationsByApplicant
-);
+router.get("/applicant", verifyEmployer, handleGetJobApplicationsByApplicant);
 router.put(
   "/status/:applicationId",
   verifyEmployer,

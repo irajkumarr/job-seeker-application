@@ -51,7 +51,7 @@ const jobApplicationSchema = new mongoose.Schema(
       maxlength: 2000, // Optional field for employer feedback
     },
 
-    status: {
+    applicationStatus: {
       type: String,
       enum: [
         "applied",
@@ -65,6 +65,7 @@ const jobApplicationSchema = new mongoose.Schema(
         "rejected",
         "withdrawn",
       ],
+      default: "applied",
     },
   },
   { timestamps: true }
