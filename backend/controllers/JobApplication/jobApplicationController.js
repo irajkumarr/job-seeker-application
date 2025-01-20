@@ -4,39 +4,6 @@ const JobPosting = require("../../models/JobPosting/JobPosting");
 const mongoose = require("mongoose");
 // Create a new job application
 
-// const handleCreateJobApplication = async (req, res) => {
-//   try {
-//     const { jobId, coverLetter } = req.body;
-//     const applicantId = req.user.id;
-
-//     // Find the job posting by jobId
-//     const jobPosting = await JobPosting.findById(jobId);
-//     if (!jobPosting) {
-//       return res.status(404).json({ message: "Job posting not found" });
-//     }
-
-//     // Find the user/applicant
-//     const user = await User.findById(applicantId);
-//     if (!user) {
-//       return res.status(404).json({ message: "Applicant not found" });
-//     }
-
-//     // Create a new job application
-//     const newJobApplication = new JobApplication({
-//       job: jobId,
-//       applicant: applicantId,
-//       coverLetter,
-//     });
-
-//     await newJobApplication.save();
-
-//     // Return the created job application
-//     res.status(201).json(newJobApplication);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
 const handleCreateJobApplication = async (req, res) => {
   try {
     const { jobId, coverLetter } = req.body;

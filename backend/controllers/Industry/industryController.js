@@ -86,9 +86,9 @@ const handleUpdateJobCount = async (industryId, adjustment) => {
     }
     industry.metadata.jobCount += adjustment;
     await industry.save();
-    console.log(
-      `Updated job count for industry ${industryId}: ${industry.metadata.jobCount}`
-    );
+    // console.log(
+    //   `Updated job count for industry ${industryId}: ${industry.metadata.jobCount}`
+    // );
   } catch (error) {
     console.error(
       `Failed to update job count for industry ${industryId}:`,
@@ -106,9 +106,9 @@ const handleUpdateCompanyCount = async (industryId, adjustment) => {
     }
     industry.metadata.companyCount += adjustment;
     await industry.save();
-    console.log(
-      `Updated company count for industry ${industryId}: ${industry.metadata.companyCount}`
-    );
+    // console.log(
+    //   `Updated company count for industry ${industryId}: ${industry.metadata.companyCount}`
+    // );
   } catch (error) {
     console.error(
       `Failed to update company count for industry ${industryId}:`,
@@ -117,7 +117,6 @@ const handleUpdateCompanyCount = async (industryId, adjustment) => {
     throw error;
   }
 };
-
 
 // Get industries with pagination and filtering (optional)
 const handleGetFilteredIndustries = async (req, res) => {

@@ -2,22 +2,6 @@ const Company = require("../../models/Company/Company");
 const {
   handleUpdateCompanyCount,
 } = require("../../controllers/Industry/industryController");
-// Add a new company
-// const handleAddCompany = async (req, res) => {
-//   const userId = req.user.id;
-//   try {
-//     const company = new Company({
-//       ...req.body,
-//       user: userId,
-//     });
-//     await company.save();
-//     res
-//       .status(201)
-//       .json({ status: true, message: "Company added successfully", company });
-//   } catch (error) {
-//     return res.status(500).json({ status: false, message: error.message });
-//   }
-// };
 
 const handleAddCompany = async (req, res) => {
   const userId = req.user.id;
