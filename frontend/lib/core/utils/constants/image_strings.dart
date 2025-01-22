@@ -3,16 +3,9 @@
 /// This class contains all the App Images in String formats.
 class KImages {
   // -- App Logos
-  // static const String darkAppLogo =
-  //     "assets/logos/t-store-splash-logo-black.png";
-  // static const String darkAppLogo = "assets/logos/appLogoDarkk.png";
   static const String darkAppLogo = "assets/logos/logoDark.jpeg";
   static const String logo = "assets/logos/logo.png";
-  // static const String lightAppLogo =
-  //     "assets/logos/t-store-splash-logo-white.png";
-  // static const String lightAppLogo = "assets/logos/appLogoLight.png";
   static const String logoOnly = "assets/logos/logoonly.png";
-  // static const String logoGif = "assets/logos/logogifff.gif";
 
   // -- Social Logos
   static const String facebook = "assets/logos/facebook-icon.png";
@@ -65,8 +58,6 @@ class KImages {
       "assets/images/content/category_placeholder.png";
   static const String banner_placeholder =
       "assets/images/content/banner_placeholder.png";
-  static const String food_placeholder =
-      "assets/images/content/food_placeholder.png";
   static const String chulesi_placeholder =
       "assets/images/content/chulesi_placeholder.png";
   static const String firstOrderBanner =

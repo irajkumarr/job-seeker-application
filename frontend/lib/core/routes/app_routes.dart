@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
+import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 
@@ -16,7 +17,7 @@ class AppRoutes {
         path: "/",
         pageBuilder: (context, state) {
           return MaterialPage(
-            child: Scaffold(),
+            child: SplashScreen(),
           );
         },
       ),
