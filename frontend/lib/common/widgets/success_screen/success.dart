@@ -4,7 +4,6 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:lottie/lottie.dart';
-import 'package:provider/provider.dart';
 
 import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/constants/image_strings.dart';

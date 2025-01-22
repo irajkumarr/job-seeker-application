@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:provider/provider.dart';
 
 class KSnackbar {
   static void Snackbar(

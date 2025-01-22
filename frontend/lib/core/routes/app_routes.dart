@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/common/widgets/success_screen/success.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';

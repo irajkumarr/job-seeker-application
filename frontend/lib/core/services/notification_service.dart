@@ -15,7 +15,7 @@ class NotificationService {
   final FlutterLocalNotificationsPlugin _flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
   final box = GetStorage();
-  final String _notificationsKey = 'notifications';
+  // final String _notificationsKey = 'notifications';
 
   Future<void> _showPermissionDeniedDialog(
       BuildContext context, String title) async {
