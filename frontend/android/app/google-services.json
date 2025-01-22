@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "996189296114",
+    "project_id": "rojgari-app-c4488",
+    "storage_bucket": "rojgari-app-c4488.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:996189296114:android:26bc9ad69fec8ea4eb476b",
+        "android_client_info": {
+          "package_name": "com.rojgari.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZDAKDQlCx5_GUQrgmgjKSJM3pUVrSCek"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
