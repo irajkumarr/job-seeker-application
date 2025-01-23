@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/core/utils/shimmers/categories_vertical_shimmer.dart';
 import 'package:frontend/data/models/category_model.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
@@ -19,7 +20,7 @@ class HomeJobPlacesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final jobProvider = Provider.of<JobProvider>(context);
-    
+
     final l10n = AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,17 +35,20 @@ class HomeJobPlacesList extends StatelessWidget {
           ),
         ),
         SizedBox(height: KSizes.md),
-        Container(
-          height: 110.h,
-          child: ListView.builder(
-              padding: const EdgeInsets.only(left: KSizes.md),
-              scrollDirection: Axis.horizontal,
-              itemCount: jobProvider.jobPlaces?.length ?? 0,
-              itemBuilder: (context, index) {
-                final jobPlace = jobProvider.jobPlaces![index];
-                return JobPlaceWidget(jobPlace: jobPlace);
-              }),
-        ),
+        jobProvider.isLoading
+            ? CategoriesVerticalShimmer()
+            : Container(
+                height: 110.h,
+                child: ListView.builder(
+                    padding: const EdgeInsets.only(left: KSizes.md),
+                    scrollDirection: Axis.horizontal,
+                    physics: NeverScrollableScrollPhysics(),
+                    itemCount: jobProvider.jobPlaces?.length ?? 0,
+                    itemBuilder: (context, index) {
+                      final jobPlace = jobProvider.jobPlaces![index];
+                      return JobPlaceWidget(jobPlace: jobPlace);
+                    }),
+              ),
       ],
     );
   }

@@ -10,10 +10,9 @@ class CatergoriesShimmer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(left: 12),
-      // height: 75.h,
-      height: 115.h,
+      height: 225.h,
       child: ListView.builder(
+          padding: const EdgeInsets.only(left: KSizes.md),
           scrollDirection: Axis.horizontal,
           itemCount: 10,
           itemBuilder: (context, index) {
@@ -22,14 +21,14 @@ class CatergoriesShimmer extends StatelessWidget {
               child: Column(
                 children: [
                   ShimmerWidget(
-                      shimmerWidth: 65.w,
-                      shimmerHeight: 65.h,
+                      shimmerWidth: 170.w,
+                      shimmerHeight: 225.h,
                       shimmerRadius: KSizes.borderRadiusMd),
-                  SizedBox(height: KSizes.sm),
-                  ShimmerWidget(
-                      shimmerWidth: 55.w,
-                      shimmerHeight: 10.h,
-                      shimmerRadius: KSizes.borderRadiusMd),
+                  // SizedBox(height: KSizes.sm),
+                  // ShimmerWidget(
+                  //     shimmerWidth: 55.w,
+                  //     shimmerHeight: 10.h,
+                  //     shimmerRadius: KSizes.borderRadiusMd),
                 ],
               ),
             );

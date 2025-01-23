@@ -1,7 +1,8 @@
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
+import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 
 class JobPlaceWidget extends StatelessWidget {
@@ -30,8 +31,20 @@ class JobPlaceWidget extends StatelessWidget {
             height: 50.h,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
-              child: Image.network(
-                "https://www.neptos.io:3000/public/uploads/watermark-thumb/thumb-nimage-1590553913042.jpg",
+              child:
+                  // Image.network(
+                  //   "https://www.neptos.io:3000/public/uploads/watermark-thumb/thumb-nimage-1590553913042.jpg",
+                  //   fit: BoxFit.cover,
+                  // ),
+                  CachedNetworkImage(
+                imageUrl:
+                    "https://www.neptos.io:3000/public/uploads/watermark-thumb/thumb-nimage-1590553913042.jpg",
+                placeholder: (context, url) => SizedBox(
+                    width: 50.w,
+                    height: 50.h,
+                    child: Image.asset(KImages.defaultBuilding)),
+                errorWidget: (context, url, error) =>
+                    Image.asset(KImages.defaultBuilding),
                 fit: BoxFit.cover,
               ),
             ),

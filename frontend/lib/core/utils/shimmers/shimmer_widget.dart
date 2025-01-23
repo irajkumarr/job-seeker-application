@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:shimmer/shimmer.dart';
 
 class ShimmerWidget extends StatelessWidget {
@@ -30,12 +31,10 @@ class ShimmerWidget extends StatelessWidget {
   Widget _buildShimmerLine(
       {required double height, required double width, required double radius}) {
     return Shimmer.fromColors(
-      baseColor: Color(0xffE6EBF1),
-      highlightColor: Color(0xffffffff),
-      // baseColor: Colors.grey[300]!,
-      // highlightColor: Colors.grey[100]!,
-      // highlightColor: Colors.grey,  #E6EBF1 #F8F9FB #E6EBF1
-      // period: Duration(milliseconds: 5000),
+      // baseColor: Color(0xffE6EBF1),
+      // highlightColor: Color(0xffffffff),
+      baseColor: KColors.primaryContainer,
+      highlightColor: KColors.white,
       child: Container(
         height: height,
         width: width,
