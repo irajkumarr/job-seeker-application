@@ -134,7 +134,6 @@
 //
 //     final blogModel = blogModelFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 BlogModel blogModelFromJson(String str) => BlogModel.fromJson(json.decode(str));

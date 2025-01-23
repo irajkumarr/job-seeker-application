@@ -4,7 +4,6 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 
 import 'package:frontend/core/utils/shimmers/shimmer_widget.dart';
 
-import '../device/device_utility.dart';
 
 class CategoriesVerticalShimmer extends StatelessWidget {
   const CategoriesVerticalShimmer({super.key});

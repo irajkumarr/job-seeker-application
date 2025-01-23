@@ -1,13 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/core/utils/constants/colors.dart';
-import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/shimmers/categories_vertical_shimmer.dart';
-import 'package:frontend/data/models/category_model.dart';
-import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
-import 'package:frontend/features/dashboard/screens/home/widgets/category_widget.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_place_widget.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
