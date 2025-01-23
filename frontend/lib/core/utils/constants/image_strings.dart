@@ -66,6 +66,8 @@ class KImages {
       "assets/images/content/first _order_banner.jpeg";
   static const String defaultBuilding =
       "assets/images/content/defaultBuilding.jpg";
+  static const String bookmark = "assets/images/content/bookmark.png";
+  static const String status = "assets/images/content/control.png";
 
   // -- Payment Methods
   static const String esewa = "assets/icons/esewa.png";

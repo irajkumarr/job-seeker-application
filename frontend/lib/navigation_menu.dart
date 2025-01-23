@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/common/widgets/alert_box/alert_box.dart';
 import 'package:frontend/core/network/connectivity_checker.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
+import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
@@ -51,13 +52,33 @@ class NavigationMenu extends StatelessWidget {
                   activeIcon: Icon(Iconsax.home_25),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.bookmark_outline_outlined),
+                  // icon: Icon(Icons.bookmark_outline_outlined),
+                  icon: Image.asset(
+                    KImages.bookmark,
+                    width: 24,
+                    color: KColors.darkGrey,
+                  ),
                   label: "${l10n.matched_jobs}",
-                  activeIcon: Icon(Icons.bookmark),
+                  // activeIcon: Icon(Icons.bookmark),
+                  activeIcon: Image.asset(
+                    KImages.bookmark,
+                    width: 24,
+                    color: KColors.primary,
+                  ),
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.star_outline),
-                  activeIcon: Icon(Icons.star),
+                  // icon: Icon(Icons.star_outline),
+                  icon: Image.asset(
+                    KImages.status,
+                    width: 24,
+                    color: KColors.darkGrey,
+                  ),
+                  // activeIcon: Icon(Icons.star),
+                  activeIcon: Image.asset(
+                    KImages.status,
+                    width: 24,
+                    color: KColors.primary,
+                  ),
                   label: "${l10n.my_status}",
                 ),
                 BottomNavigationBarItem(
