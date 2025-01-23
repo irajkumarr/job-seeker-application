@@ -6,13 +6,14 @@ class KColors {
   // static const Color primary = Color(0xFF4b68ff);
   // static const Color primary = Color(0xFFfe0000);
   // static const Color primary = Color(0xFFDC143C);
-  static const Color primary = Color(0xff9b1e29);
+  // static const Color primary = Color(0xff9b1e29);
+  static const Color primary = Color(0xffF3A92E);
   // static const Color primary = Color(0xffff0013);
   // static const Color secondary = Color(0xFFf6dde0);
   // static const Color secondary = Color.fromARGB(255, 248, 195, 201);
-  static const Color secondary = Color(0xFFF4869C);
+  static const Color secondary = Color(0xFFFEF5E6);
   // static const Color secondary = Color(0xFFc23844);
-  static const Color accent = Color(0xFFF05C79);
+  static const Color accent = Color(0xFFFDEED6);
 //Color(0xFFb0c7ff);
   // Text colors
   static const Color textPrimary = Color(0xFF333333);
@@ -30,8 +31,9 @@ class KColors {
   //#
 
   // Background Container colors
-  static const Color lightContainer = Color(0xFFF6F6F6);
+  static const Color lightContainer = Color(0xFFEAEAEA);
   static Color darkContainer = KColors.white.withOpacity(0.1);
+  static Color primaryContainer = Color(0xffF2F2F2);
 
   // Button colors
   // static const Color buttonPrimary = Color(0xFF4b68ff);

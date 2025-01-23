@@ -1,8 +1,11 @@
+import 'package:flutter_svg/svg.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/services/notification_service.dart';
+import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -31,7 +34,7 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   void _startSplashTimer() {
-    _splashTimer = Timer(const Duration(seconds: 3), () {
+    _splashTimer = Timer(const Duration(seconds: 2), () {
       if (mounted) {
         setState(() {
           _timerCompleted = true;
@@ -55,6 +58,11 @@ class _SplashScreenState extends State<SplashScreen> {
       // } else {
       //   GoRouter.of(context).go('/navigationMenu');
       // }
+      // context.goNamed(RoutesConstant.navigationMenu);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => NavigationMenu()),
+      );
     }
   }
 
@@ -107,67 +115,55 @@ class _SplashScreenState extends State<SplashScreen> {
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async => false,
-      child: Scaffold(
-        backgroundColor: KColors.primary,
-        body: Center(
-          child: Padding(
-            padding:
-                EdgeInsets.symmetric(vertical: KSizes.spaceBtwSections * 1.5),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
+      child: Stack(
+        children: [
+          Scaffold(
+            backgroundColor: KColors.primary,
+            body: Center(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: KSizes.spaceBtwSections * 1.5),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 85.h),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: KColors.white,
-                        borderRadius: BorderRadius.circular(22.r),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 3,
-                            offset: Offset(0, 2),
+                    Column(
+                      children: [
+                        Container(
+                          height: 75.h,
+                          width: 75.w,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(50),
+                            color: KColors.dark.withAlpha(20),
                           ),
-                        ],
-                      ),
-                      child: ClipRRect(
-                        borderRadius: BorderRadius.circular(22.r),
-                        child: Image.asset(
-                          "assets/icons/mero kirana.png",
-                          height: 150.h,
-                          width: 150.w,
-                          fit: BoxFit.cover,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(22.r),
+                            child: SvgPicture.asset(
+                              "assets/images/content/rojgari_logo_single.svg",
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
-                      ),
+                        Image.asset(
+                          "assets/images/content/rojgari_logo_name.png",
+                          width: 110.w,
+                          fit: BoxFit.contain,
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 27,
-                      width: 27,
-                      child: CircularProgressIndicator(
-                        color: KColors.white,
-                        strokeWidth: 3,
-                      ),
-                    ),
-                    SizedBox(height: KSizes.defaultSpace),
-                    Text(
-                      "Version: 1.0.1",
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleMedium!
-                          .copyWith(color: KColors.white),
-                    ),
-                  ],
-                ),
-              ],
+              ),
             ),
           ),
-        ),
+          // Custom Overlay
+          Container(
+            height: double.infinity,
+            width: double.infinity,
+            // ignore: deprecated_member_use
+            color: KColors.dark.withOpacity(0.7),
+          ),
+        ],
       ),
     );
   }

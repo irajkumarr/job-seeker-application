@@ -15,6 +15,8 @@
   "on_boarding_3_description": "Hungry? Don't wait around! With Chulesi's swift delivery service, your favorite foods are just moments away from your doorstep. Order now and taste the speed!",
   "skip": "SKIP",
   "next": "NEXT",
+  "matched_jobs": "Matched jobs",
+  "my_status": "My Status",
   "get_started": "Get Started",
   "sign_in": "Sign In",
   "sign_up": "Sign Up",

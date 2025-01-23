@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/providers/app_providers.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/theme/theme.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
-
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -18,19 +19,19 @@ class App extends StatelessWidget {
           return MultiProvider(
             providers: AppProviders.providers,
             child: MaterialApp.router(
-              title: "MERO Kirana",
+              title: "Rojgari",
               debugShowCheckedModeBanner: false,
               // locale: languageProvider.locale,
-              // supportedLocales: const [
-              //   Locale('en', ''),
-              //   Locale('ne', ''),
-              // ],
-              // localizationsDelegates: const [
-              //   AppLocalizations.delegate,
-              //   GlobalMaterialLocalizations.delegate,
-              //   GlobalWidgetsLocalizations.delegate,
-              //   GlobalCupertinoLocalizations.delegate,
-              // ],
+              supportedLocales: const [
+                Locale('en', ''),
+                Locale('ne', ''),
+              ],
+              localizationsDelegates: const [
+                AppLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
               theme: KAppTheme.lightTheme,
               routerConfig: AppRoutes().router,
             ),
