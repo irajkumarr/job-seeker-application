@@ -22,6 +22,8 @@ class KImages {
   static const String address = "assets/icons/address.svg";
   static const String order = "assets/icons/order.svg";
   static const String noNotification = "assets/icons/noNotification.svg";
+  static const String flagNepal = "assets/images/content/flag_nepal.png";
+  static const String flagUk = "assets/images/content/flag_uk.png";
 
   // -- Animations
   static const String successfullyRegisterAnimation =

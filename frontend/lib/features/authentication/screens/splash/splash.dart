@@ -58,11 +58,11 @@ class _SplashScreenState extends State<SplashScreen> {
       // } else {
       //   GoRouter.of(context).go('/navigationMenu');
       // }
-      // context.goNamed(RoutesConstant.navigationMenu);
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => NavigationMenu()),
-      );
+      context.goNamed(RoutesConstant.navigationMenu);
+      // Navigator.pushReplacement(
+      //   context,
+      //   MaterialPageRoute(builder: (context) => NavigationMenu()),
+      // );
     }
   }
 
