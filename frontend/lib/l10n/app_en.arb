@@ -25,6 +25,8 @@
   "my_status": "My Status",
   "search_jobs": "Search jobs",
   "jobs": "Jobs",
+  "job":"Job",
+  "expiry_date":"Expiry date",
   "quick_links": "Quick Links",
   "check_out_our_new_blogs_post": "Check out our new blog posts.",
   "blogs": "Blogs",

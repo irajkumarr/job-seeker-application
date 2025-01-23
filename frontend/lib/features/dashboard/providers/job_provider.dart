@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/data/models/error_model.dart';
+import 'package:frontend/data/models/job_model.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -17,6 +18,7 @@ class JobProvider with ChangeNotifier {
 
   JobProvider() {
     fetchJobPlaces();
+    fetchJobs();
   }
 
   Future<void> fetchJobPlaces() async {
@@ -34,7 +36,6 @@ class JobProvider with ChangeNotifier {
         final Map<String, dynamic> data = jsonDecode(response.body);
 
         if (data['status'] == true) {
-          // Map the "districts" array to _jobPlaces
           _jobPlaces = List<String>.from(data['districts']);
           _error = null; // No error
         }
@@ -46,6 +47,36 @@ class JobProvider with ChangeNotifier {
     } catch (e) {
       _error = ErrorModel(status: false, message: e.toString());
       _jobPlaces = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  List<JobModel>? _jobs;
+
+  List<JobModel>? get jobs => _jobs;
+
+  Future<void> fetchJobs() async {
+    _isLoading = true;
+    _error = null;
+
+    notifyListeners();
+
+    try {
+      final response =
+          await http.get(Uri.parse("$kAppBaseUrl/api/jobs/filter/"));
+
+      if (response.statusCode == 200) {
+        _jobs = jobModelFromJson(response.body);
+        _error = null; // No error
+      } else {
+        _error = ErrorModel(status: false, message: "Failed to load jobs.");
+        _jobs = [];
+      }
+    } catch (e) {
+      _error = ErrorModel(status: false, message: e.toString());
+      _jobs = [];
     } finally {
       _isLoading = false;
       notifyListeners();

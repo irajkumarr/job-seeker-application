@@ -9,16 +9,14 @@ class FullShimmer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        padding: const EdgeInsets.all(10),
-        height: 195.h,
-        child: Column(
-          children: [
-            ShimmerWidget(
-                shimmerWidth: MediaQuery.of(context).size.width,
-                shimmerHeight: 175.h,
-                shimmerRadius: KSizes.borderRadiusMd),
-          ],
-        ));
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        ShimmerWidget(
+            shimmerWidth: double.infinity,
+            shimmerHeight: 175.h,
+            shimmerRadius: KSizes.borderRadiusMd),
+      ],
+    );
   }
 }
