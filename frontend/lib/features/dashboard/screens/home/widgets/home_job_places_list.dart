@@ -42,7 +42,6 @@ class HomeJobPlacesList extends StatelessWidget {
                 child: ListView.builder(
                     padding: const EdgeInsets.only(left: KSizes.md),
                     scrollDirection: Axis.horizontal,
-                    physics: NeverScrollableScrollPhysics(),
                     itemCount: jobProvider.jobPlaces?.length ?? 0,
                     itemBuilder: (context, index) {
                       final jobPlace = jobProvider.jobPlaces![index];
