@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/features/dashboard/screens/home/widgets/home_all_jobs_section.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_blogs_section.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_category_list.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_header.dart';
@@ -55,6 +56,9 @@ class HomeScreen extends StatelessWidget {
             //blogs section
             SizedBox(height: KSizes.defaultSpace),
             HomeBlogsSection(),
+            //all jobs section
+            SizedBox(height: KSizes.defaultSpace),
+            HomeAllJobsSection(),
 
             SizedBox(height: KSizes.defaultSpace),
           ],
