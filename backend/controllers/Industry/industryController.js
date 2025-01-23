@@ -16,7 +16,10 @@ const handleAddIndustry = async (req, res) => {
 // Get all industries
 const handleGetIndustries = async (req, res) => {
   try {
-    const industries = await Industry.find();
+    const industries = await Industry.find(
+      {},
+      { __v: 0, createdAt: 0, updatedAt: 0 }
+    );
     return res.status(200).json(industries);
   } catch (error) {
     return res.status(500).json({ status: false, message: error.message });

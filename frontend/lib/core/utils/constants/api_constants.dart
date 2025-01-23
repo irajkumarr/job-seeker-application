@@ -5,8 +5,8 @@ const String kSecretAPIKey = "";
 const String kGoogleMapAPIKey = "AIzaSyB9AWpmcZzFiyTuIZeFTdrrtaNIqmyDM24";
 
 // const String kAppBaseUrl = "http://192.168.100.90:5000";
-// const String kAppBaseUrl = "http://192.168.100.90:4000";
-const String kAppBaseUrl = "https://grocery-application-qwoj.onrender.com";
+const String kAppBaseUrl = "http://192.168.100.90:4000";
+// const String kAppBaseUrl = "https://grocery-application-qwoj.onrender.com";
 // const String kAppBaseUrl = "https://chulesi-backend.onrender.com";
 // const String kAppBaseUrl = "https://chulesi-app-qk9gq.ondigitalocean.app";
 

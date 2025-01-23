@@ -64,6 +64,8 @@ class KImages {
       "assets/images/content/chulesi_placeholder.png";
   static const String firstOrderBanner =
       "assets/images/content/first _order_banner.jpeg";
+  static const String defaultBuilding =
+      "assets/images/content/defaultBuilding.jpg";
 
   // -- Payment Methods
   static const String esewa = "assets/icons/esewa.png";
