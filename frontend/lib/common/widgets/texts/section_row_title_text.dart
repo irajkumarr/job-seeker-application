@@ -27,6 +27,7 @@ class SectionRowTitleText extends StatelessWidget {
             title,
             style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                   fontSize: 15,
+                  fontWeight: FontWeight.w700,
                 ),
           ),
           Row(

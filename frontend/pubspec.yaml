@@ -97,15 +97,28 @@ flutter:
   fonts:
     - family: Roboto
       fonts:
-        - asset: assets/fonts/Roboto-Light.ttf
+        - asset: assets/fonts/Roboto/Roboto-Light.ttf
           weight: 300
-        - asset: assets/fonts/Roboto-Medium.ttf
+        - asset: assets/fonts/Roboto/Roboto-Medium.ttf
           weight: 400
-        - asset: assets/fonts/Roboto-Regular.ttf
+        - asset: assets/fonts/Roboto/Roboto-Regular.ttf
           weight: 500
-        - asset: assets/fonts/Roboto-Thin.ttf
+        - asset: assets/fonts/Roboto/Roboto-Thin.ttf
           weight: 600
-        - asset: assets/fonts/Roboto-Bold.ttf
+        - asset: assets/fonts/Roboto/Roboto-Bold.ttf
+          weight: 800
+
+    - family: Mukta
+      fonts:
+        - asset: assets/fonts/Mukta/Mukta-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Mukta/Mukta-Medium.ttf
+          weight: 400
+        - asset: assets/fonts/Mukta/Mukta-Regular.ttf
+          weight: 500
+        - asset: assets/fonts/Mukta/Mukta-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Mukta/Mukta-Bold.ttf
           weight: 800
   #
   # For details regarding fonts from package dependencies,
