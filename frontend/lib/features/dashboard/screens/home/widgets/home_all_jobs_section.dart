@@ -1,17 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
-import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/shimmers/full_shimmer.dart';
-import 'package:frontend/core/utils/shimmers/foodlist_shimmer.dart';
 import 'package:frontend/data/models/job_model.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/l10n/l10n.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 
 class HomeAllJobsSection extends StatelessWidget {
