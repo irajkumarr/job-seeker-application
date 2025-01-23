@@ -1,0 +1,55 @@
+import 'dart:convert';
+
+import 'package:flutter/material.dart';
+import 'package:frontend/core/utils/constants/api_constants.dart';
+import 'package:frontend/data/models/category_model.dart';
+import 'package:frontend/data/models/error_model.dart';
+
+import 'package:http/http.dart' as http;
+
+class JobProvider with ChangeNotifier {
+  List<String>? _jobPlaces;
+  bool _isLoading = false;
+  ErrorModel? _error;
+
+  List<String>? get jobPlaces => _jobPlaces;
+  bool get isLoading => _isLoading;
+  ErrorModel? get error => _error;
+
+  JobProvider() {
+    fetchJobPlaces();
+  }
+
+  Future<void> fetchJobPlaces() async {
+    _isLoading = true;
+    _error = null;
+
+    notifyListeners();
+
+    try {
+      final response =
+          await http.get(Uri.parse("$kAppBaseUrl/api/jobs/districts/all"));
+
+      if (response.statusCode == 200) {
+        // Decode the JSON response
+        final Map<String, dynamic> data = jsonDecode(response.body);
+
+        if (data['status'] == true) {
+          // Map the "districts" array to _jobPlaces
+          _jobPlaces = List<String>.from(data['districts']);
+          _error = null; // No error
+        }
+      } else {
+        _error =
+            ErrorModel(status: false, message: "Failed to load job places.");
+        _jobPlaces = [];
+      }
+    } catch (e) {
+      _error = ErrorModel(status: false, message: e.toString());
+      _jobPlaces = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+}

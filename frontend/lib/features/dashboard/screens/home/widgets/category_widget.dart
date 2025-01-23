@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/category_model.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
@@ -15,6 +15,7 @@ class CategoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return GestureDetector(
       onTap: () {},
       child: Container(
@@ -24,7 +25,7 @@ class CategoryWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(12),
           image: DecorationImage(
             image: NetworkImage(category.image),
-        
+
             // image: NetworkImage(
             //     "https://api.rojgari.com/media/uploads/job_category/Gent_staff_1.jpg"),
             fit: BoxFit.cover,
@@ -49,20 +50,14 @@ class CategoryWidget extends StatelessWidget {
             children: [
               Text(
                 category.name,
-                style: Theme.of(context)
-                    .textTheme
-                    .headlineSmall!
-                    .copyWith(
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontWeight: FontWeight.w700,
                       color: KColors.white,
                     ),
               ),
               Text(
-                '${category.metadata.jobCount} Jobs',
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(
+                '${category.metadata.jobCount} ${l10n.jobs}',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       color: KColors.white,
                     ),
               ),

@@ -1,5 +1,6 @@
 import 'package:frontend/core/network/connectivity_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:provider/provider.dart';
@@ -12,5 +13,6 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => ConnectivityProvider()),
     ChangeNotifierProvider(create: (_) => NavigationProvider()),
     ChangeNotifierProvider(create: (_) => CategoryProvider()),
+    ChangeNotifierProvider(create: (_) => JobProvider()),
   ];
 }

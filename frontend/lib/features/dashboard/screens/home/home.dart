@@ -12,6 +12,7 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_category_list.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_header.dart';
+import 'package:frontend/features/dashboard/screens/home/widgets/home_job_places_list.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_search_bar.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
@@ -40,9 +41,13 @@ class HomeScreen extends StatelessWidget {
 
             SizedBox(height: KSizes.md),
             HomeSearchBar(),
-            //category
+            //job category
             SizedBox(height: KSizes.defaultSpace),
-            HomeCategoryList()
+            HomeCategoryList(),
+            //job places
+            SizedBox(height: KSizes.defaultSpace),
+            HomeJobPlacesList(),
+            //
           ],
         ),
       ),
