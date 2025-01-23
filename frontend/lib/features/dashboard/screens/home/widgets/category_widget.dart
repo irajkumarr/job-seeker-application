@@ -1,0 +1,75 @@
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/core/utils/constants/colors.dart';
+import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/data/models/category_model.dart';
+
+class CategoryWidget extends StatelessWidget {
+  const CategoryWidget({
+    super.key,
+    required this.category,
+  });
+
+  final CategoryModel category;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () {},
+      child: Container(
+        width: 170.w,
+        margin: EdgeInsets.only(right: KSizes.md - 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(12),
+          image: DecorationImage(
+            image: NetworkImage(category.image),
+        
+            // image: NetworkImage(
+            //     "https://api.rojgari.com/media/uploads/job_category/Gent_staff_1.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(12),
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Colors.transparent,
+                Colors.black.withOpacity(0.7),
+              ],
+            ),
+          ),
+          padding: EdgeInsets.all(KSizes.md),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                category.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .headlineSmall!
+                    .copyWith(
+                      fontWeight: FontWeight.w700,
+                      color: KColors.white,
+                    ),
+              ),
+              Text(
+                '${category.metadata.jobCount} Jobs',
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyLarge!
+                    .copyWith(
+                      color: KColors.white,
+                    ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
