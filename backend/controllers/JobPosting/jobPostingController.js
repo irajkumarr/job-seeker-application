@@ -225,6 +225,8 @@ const handleGetUniqueJobDistricts = async (req, res) => {
   }
 };
 
+
+
 module.exports = {
   handleCreateJobPosting,
   handleGetAllJobPostings,
