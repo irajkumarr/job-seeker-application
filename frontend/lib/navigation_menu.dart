@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
+import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -101,9 +102,7 @@ class NavigationProvider with ChangeNotifier {
     HomeScreen(),
     SavedJobsScreen(),
     StatusScreen(),
-    Container(
-      color: Colors.orange,
-    ),
+    ProfileScreen(),
   ];
   int selectedIndex = 0;
   void onTap(index) {

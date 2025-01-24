@@ -9,7 +9,8 @@ import 'package:frontend/l10n/l10n.dart';
 
 class LoginRedirect extends StatelessWidget {
   const LoginRedirect({
-    super.key, required this.isMatchedJobs,
+    super.key,
+    required this.isMatchedJobs,
   });
   final bool isMatchedJobs;
 
@@ -20,7 +21,7 @@ class LoginRedirect extends StatelessWidget {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
         child: StatusAndSavedJobsAppbar(
-          appbarText:isMatchedJobs? l10n.saved_jobs:l10n.my_status,
+          appbarText: isMatchedJobs ? l10n.saved_jobs : l10n.my_status,
         ),
       ),
       body: Padding(
@@ -33,7 +34,7 @@ class LoginRedirect extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SvgPicture.asset("assets/images/content/rojgari_logo_single.svg"),
+              SvgPicture.asset("assets/images/content/rojgari_icon.svg"),
               SizedBox(height: KSizes.md),
               Column(
                 children: [
