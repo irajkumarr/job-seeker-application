@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
@@ -41,7 +40,7 @@ class BasicInformationSection extends StatelessWidget {
               ),
               InfoRow(
                   label: 'Salary',
-                  value: "Rs. ${job.salary.toStringAsFixed(0)}"),
+                  value: "NRs. ${job.salary.toStringAsFixed(0)} monthly"),
               InfoRow(label: 'Job Level', value: job.basicInformation.jobLevel),
               InfoRow(label: 'Job Type', value: job.type),
               InfoRow(

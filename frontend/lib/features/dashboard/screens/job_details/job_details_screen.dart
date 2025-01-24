@@ -209,7 +209,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 const SizedBox(height: KSizes.md),
                 InfoItem(
                   icon: Icons.money,
-                  text: "Rs. ${job.salary.toStringAsFixed(0)}",
+                  text: "NRs. ${job.salary.toStringAsFixed(0)} monthly",
                 ),
                 SizedBox(height: KSizes.sm),
 
