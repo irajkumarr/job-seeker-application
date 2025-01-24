@@ -7,6 +7,8 @@ import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_appbar.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/profile_header.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/settings_tile.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:iconsax/iconsax.dart';
@@ -33,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
               //profile header
               ProfileHeader(),
 
-              SizedBox(height: KSizes.defaultSpace),
+              SizedBox(height: KSizes.spaceBtwSections),
               //sign in and sign up option
 
               Container(
@@ -163,102 +165,6 @@ class ProfileScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class SettingsTile extends StatelessWidget {
-  const SettingsTile({
-    super.key,
-    required this.text,
-    required this.onTap,
-    this.iconColor = KColors.darkerGrey,
-    this.textColor = KColors.darkerGrey,
-    required this.icon,
-    this.isIconImage = false,
-    this.iconImage,
-  });
-  final String text;
-  final VoidCallback onTap;
-  final Color iconColor;
-  final Color textColor;
-  final IconData icon;
-  final bool isIconImage;
-  final String? iconImage;
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: onTap,
-      horizontalTitleGap: 10,
-      leading: isIconImage
-          ? Image.asset(
-              iconImage!,
-              width: 24.w,
-              height: 24.h,
-            )
-          : Icon(
-              icon,
-              color: iconColor,
-            ),
-      title: Text(
-        text,
-        style: Theme.of(context).textTheme.titleSmall!.copyWith(
-              fontWeight: FontWeight.w500,
-              color: textColor,
-            ),
-      ),
-    );
-  }
-}
-
-class ProfileHeader extends StatelessWidget {
-  const ProfileHeader({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    return Row(
-      children: [
-        //icon
-        Container(
-          width: 80.w,
-          height: 80.h,
-          decoration: BoxDecoration(
-            border: Border.all(
-              color: KColors.black,
-              width: 2,
-            ),
-            borderRadius: BorderRadius.circular(100),
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(100),
-            child: SvgPicture.asset(
-              "assets/images/content/rojgari_icon.svg",
-              fit: BoxFit.contain,
-            ),
-          ),
-        ),
-        SizedBox(width: KSizes.md),
-        //text
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "${l10n.guest}",
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                    fontSize: 22,
-                  ),
-            ),
-            Text(
-              "${l10n.welcome_to} ${l10n.your_business_name}",
-              style: Theme.of(context).textTheme.bodyLarge,
-            ),
-          ],
-        )
-      ],
     );
   }
 }

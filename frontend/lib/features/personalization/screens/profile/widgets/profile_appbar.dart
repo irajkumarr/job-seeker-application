@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/l10n/l10n.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ProfileAppbar extends StatelessWidget {
   const ProfileAppbar({
@@ -25,7 +23,7 @@ class ProfileAppbar extends StatelessWidget {
           IconButton(
             onPressed: () {},
             icon: Icon(
-              Iconsax.buildings,
+              Icons.business_outlined,
             ),
           ),
           SizedBox(width: KSizes.xs),
