@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/core/utils/shimmers/job_detail_shimmer.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_information_section.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
@@ -58,14 +59,24 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   Widget build(BuildContext context) {
     final jobProvider = Provider.of<JobProvider>(context);
 
-    DateTime parsedDate =
-        DateTime.parse(jobProvider.job!.expiryDate.toString()).toLocal();
-
-    String expiryFullDate = DateFormat('MMMM d yyyy').format(parsedDate);
     // Loading and error handling
     if (jobProvider.isLoading) {
-      return const Scaffold(
-        body: Center(child: CircularProgressIndicator()),
+      return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+          child: Material(
+            elevation: 0.2,
+            child: AppBar(
+              title: Text(
+                'Job Details',
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                      fontSize: 22,
+                    ),
+              ),
+            ),
+          ),
+        ),
+        body: SingleChildScrollView(child: JobDetailShimmer()),
       );
     }
 
@@ -93,7 +104,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
         ),
       );
     }
+    DateTime parsedDate =
+        DateTime.parse(jobProvider.job!.expiryDate.toString()).toLocal();
 
+    String expiryFullDate = DateFormat('MMMM d yyyy').format(parsedDate);
     // Main UI
     return Scaffold(
       appBar: PreferredSize(
