@@ -4,6 +4,8 @@ import 'package:frontend/core/network/connectivity_checker.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
+import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
+import 'package:frontend/features/dashboard/screens/status/status.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
@@ -97,12 +99,8 @@ class NavigationMenu extends StatelessWidget {
 class NavigationProvider with ChangeNotifier {
   List<Widget> screens = [
     HomeScreen(),
-    Container(
-      color: Colors.amber,
-    ),
-    Container(
-      color: Colors.pink,
-    ),
+    SavedJobsScreen(),
+    StatusScreen(),
     Container(
       color: Colors.orange,
     ),
