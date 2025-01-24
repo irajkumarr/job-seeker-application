@@ -3,6 +3,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/job_model.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_row.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 class BasicInformationSection extends StatelessWidget {
   const BasicInformationSection({Key? key, required this.job})
@@ -11,6 +12,7 @@ class BasicInformationSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Column(
       children: [
         Container(
@@ -23,7 +25,7 @@ class BasicInformationSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Basic Information",
+                "${l10n.basic_information}",
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -32,26 +34,31 @@ class BasicInformationSection extends StatelessWidget {
               ),
               SizedBox(height: KSizes.sm),
               InfoRow(
-                  label: 'No.Of Vacancy',
+                  label: '${l10n.no_of_vacancy}',
                   value: job.basicInformation.noOfVacancy.toStringAsFixed(0)),
               InfoRow(
-                label: 'Location',
+                label: '${l10n.location}',
                 value: job.location.fullAddress,
               ),
               InfoRow(
-                  label: 'Salary',
-                  value: "NRs. ${job.salary.toStringAsFixed(0)} monthly"),
-              InfoRow(label: 'Job Level', value: job.basicInformation.jobLevel),
-              InfoRow(label: 'Job Type', value: job.type),
+                  label: '${l10n.salary}',
+                  value:
+                      "NRs. ${job.salary.toStringAsFixed(0)} ${l10n.monthly}"),
               InfoRow(
-                  label: 'Age',
+                  label: '${l10n.job_level}',
+                  value: job.basicInformation.jobLevel),
+              InfoRow(label: '${l10n.job_type}', value: job.type),
+              InfoRow(
+                  label: '${l10n.age}',
                   value:
                       "${job.basicInformation.age.min} - ${job.basicInformation.age.max}"),
-              InfoRow(label: 'Gender', value: job.basicInformation.gender),
               InfoRow(
-                  label: 'Education', value: job.basicInformation.education),
+                  label: '${l10n.gender}', value: job.basicInformation.gender),
               InfoRow(
-                  label: 'Experience',
+                  label: '${l10n.education}',
+                  value: job.basicInformation.education),
+              InfoRow(
+                  label: '${l10n.experience}',
                   value:
                       "${job.basicInformation.experience.toStringAsFixed(0)} years"),
               InfoRow(label: 'Shift', value: job.basicInformation.shift),
@@ -71,7 +78,7 @@ class BasicInformationSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Skills",
+                "${l10n.skills}",
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -119,7 +126,7 @@ class BasicInformationSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Personal Qualities",
+                "${l10n.personal_qualities}",
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,
@@ -168,7 +175,7 @@ class BasicInformationSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Benefits",
+                "${l10n.benefits}",
                 style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                       fontSize: 15,
                       fontWeight: FontWeight.w600,

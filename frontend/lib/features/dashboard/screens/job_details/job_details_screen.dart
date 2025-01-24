@@ -11,6 +11,7 @@ import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_information_section.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/job_description_section.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -58,6 +59,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final jobProvider = Provider.of<JobProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
 
     // Loading and error handling
     if (jobProvider.isLoading) {
@@ -68,7 +70,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
             elevation: 0.2,
             child: AppBar(
               title: Text(
-                'Job Details',
+                '${l10n.job_details}',
                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                       fontSize: 22,
                     ),
@@ -116,7 +118,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
           elevation: 0.2,
           child: AppBar(
             title: Text(
-              'Job Details',
+              '${l10n.job_details}',
               style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                     fontSize: 22,
                   ),
@@ -188,7 +190,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
 
                 // Expiry Date
                 Text(
-                  'Expiry date: $expiryFullDate',
+                  '${l10n.expiry_date}: $expiryFullDate',
                   style: Theme.of(context).textTheme.bodySmall!.copyWith(
                         color: KColors.primary,
                         fontSize: 13,
@@ -209,7 +211,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                 const SizedBox(height: KSizes.md),
                 InfoItem(
                   icon: Icons.money,
-                  text: "NRs. ${job.salary.toStringAsFixed(0)} monthly",
+                  text: "NRs. ${job.salary.toStringAsFixed(0)} ${l10n.monthly}",
                 ),
                 SizedBox(height: KSizes.sm),
 
@@ -223,7 +225,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         _scrollTo(_basicInfoKey);
                       },
                       child: Text(
-                        'Basic Information',
+                        '${l10n.basic_information}',
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
@@ -239,7 +241,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                         _scrollTo(_jobDescriptionKey);
                       },
                       child: Text(
-                        'Job Description',
+                        '${l10n.job_description}',
                         style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                               fontSize: 15,
                               fontWeight: FontWeight.w500,
@@ -301,7 +303,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     ),
                   ),
                   const SizedBox(width: KSizes.md),
-                  Expanded(child: CustomButton(text: "Apply Now")),
+                  Expanded(child: CustomButton(text: "${l10n.apply_now}")),
                 ],
               ),
             ),

@@ -1,31 +1,31 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/job_model.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 class JobDescriptionSection extends StatelessWidget {
   const JobDescriptionSection({Key? key, required this.job}) : super(key: key);
   final JobModel job;
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-            color: KColors.secondaryBackground,
+        color: KColors.secondaryBackground,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _buildDescriptionSection(
-            'Job Description',
+            '${l10n.job_description}',
             'We are seeking a professional Receptionist to be the first point of contact for our company. The ideal candidate will have excellent communication skills and a pleasant personality.',
           ),
           const SizedBox(height: 16),
           _buildDescriptionSection(
-            'Responsibilities',
+            '${l10n.responsibilities}',
             '• Welcoming visitors and directing them to the appropriate department\n'
                 '• Managing incoming calls and maintaining call records\n'
                 '• Receiving and sorting daily mail/deliveries\n'
@@ -35,7 +35,7 @@ class JobDescriptionSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildDescriptionSection(
-            'Requirements',
+            '${l10n.requirements}',
             '• +2 / Intermediate Pass in any discipline\n'
                 '• Excellent verbal and written communication skills in English and Nepali\n'
                 '• Proficiency in MS Office applications\n'
@@ -45,7 +45,7 @@ class JobDescriptionSection extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           _buildDescriptionSection(
-            'Benefits',
+            '${l10n.benefits}',
             '• Competitive salary package\n'
                 '• Health insurance\n'
                 '• Paid leaves\n'
@@ -56,7 +56,7 @@ class JobDescriptionSection extends StatelessWidget {
           SizedBox(height: KSizes.md),
           job.allowFreshers
               ? Text(
-                  "Note: Freshers are encouraged to apply",
+                  "${l10n.freshers_are_enrouged_to_apply}",
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         fontWeight: FontWeight.w700,
                         color: KColors.black,
