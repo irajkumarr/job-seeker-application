@@ -30,7 +30,6 @@ class JobProvider with ChangeNotifier {
     try {
       final response =
           await http.get(Uri.parse("$kAppBaseUrl/api/jobs/districts/all"));
-
       if (response.statusCode == 200) {
         // Decode the JSON response
         final Map<String, dynamic> data = jsonDecode(response.body);
@@ -77,6 +76,41 @@ class JobProvider with ChangeNotifier {
     } catch (e) {
       _error = ErrorModel(status: false, message: e.toString());
       _jobs = [];
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  JobModel? _job;
+
+  JobModel? get job => _job;
+
+  Future<void> fetchJobById(String jobId) async {
+    _isLoading = true;
+    _error = null;
+
+    notifyListeners();
+
+    try {
+      final response =
+          await http.get(Uri.parse("$kAppBaseUrl/api/jobs/$jobId"));
+
+      if (response.statusCode == 200) {
+        final jsonData = jsonDecode(response.body);
+        _job = JobModel.fromJson(jsonData);
+        _job = JobModel.fromJson(jsonData);
+
+        _error = null; // No error
+      } else {
+        _error =
+            ErrorModel(status: false, message: "Failed to load job $jobId.");
+        print(_error?.toJson());
+        _job = null;
+      }
+    } catch (e) {
+      _error = ErrorModel(status: false, message: e.toString());
+      _job = null;
     } finally {
       _isLoading = false;
       notifyListeners();

@@ -77,8 +77,8 @@ class ProfileScreen extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     SectionRowTitleText(
-                        title: "Priorities",
-                        subTitle: "Change your priorities",
+                        title: "${l10n.priorities}",
+                        subTitle: "${l10n.change_your_priorities}",
                         isViewAll: false),
                     Consumer<LanguageProvider>(
                         builder: (context, languageProvider, child) {

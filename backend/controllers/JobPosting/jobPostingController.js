@@ -51,7 +51,13 @@ const handleGetJobPostingById = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const jobPosting = await JobPosting.findById(id).populate("company");
+    const jobPosting = await JobPosting.findById(id).populate({
+      path: "company",
+
+      populate: {
+        path: "industry",
+      },
+    });
 
     if (!jobPosting) {
       return res.status(404).json({ message: "Job posting not found" });
@@ -224,8 +230,6 @@ const handleGetUniqueJobDistricts = async (req, res) => {
     });
   }
 };
-
-
 
 module.exports = {
   handleCreateJobPosting,

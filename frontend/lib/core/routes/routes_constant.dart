@@ -1,5 +1,6 @@
 class RoutesConstant {
   static const String home = "home";
+  static const String jobDetails = "jobDetails";
   static const String allCategory = "allCategory";
   static const String category = "category";
   static const String subcategory = "subcategory";
