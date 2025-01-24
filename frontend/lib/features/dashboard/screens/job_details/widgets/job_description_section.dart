@@ -84,8 +84,9 @@ class JobDescriptionSection extends StatelessWidget {
         Text(
           content,
           style: const TextStyle(
-            fontSize: 14,
+            fontSize: 13,
             color: Colors.black87,
+            fontWeight: FontWeight.w400,
             height: 1.5,
           ),
         ),

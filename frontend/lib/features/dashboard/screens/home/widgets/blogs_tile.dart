@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -8,6 +7,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/blog_model.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:intl/intl.dart';
 
 class BlogsTile extends StatelessWidget {
@@ -23,6 +23,8 @@ class BlogsTile extends StatelessWidget {
     DateTime parsedDate = DateTime.parse(blog.createdAt.toString()).toLocal();
 
     String createdFullDate = DateFormat('MMMM d yyyy').format(parsedDate);
+
+    final l10n = AppLocalizations.of(context)!;
     return SizedBox(
       width: 300.w,
       child: Card(
@@ -72,7 +74,7 @@ class BlogsTile extends StatelessWidget {
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                       Text(
-                        "Total Views: ${blog.viewCount.toString()}",
+                        "${l10n.total_views}: ${blog.viewCount.toString()}",
                         style: Theme.of(context).textTheme.labelLarge,
                       ),
                     ],

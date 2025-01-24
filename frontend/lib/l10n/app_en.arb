@@ -27,6 +27,7 @@
   "salary": "Salary",
   "age": "Age",
   "gender": "Gender",
+  "total_views": "Total Views",
   "education": "Education",
   "experience": "Experience",
   "job_level": "Job Level",
