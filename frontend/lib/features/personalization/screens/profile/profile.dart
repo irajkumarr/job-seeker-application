@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/widgets/texts/section_row_title_text.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
@@ -11,7 +9,6 @@ import 'package:frontend/features/personalization/screens/profile/widgets/profil
 import 'package:frontend/features/personalization/screens/profile/widgets/settings_tile.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/l10n/language_provider.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 class ProfileScreen extends StatelessWidget {

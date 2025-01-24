@@ -1,14 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/core/utils/constants/image_strings.dart';
-import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/l10n/l10n.dart';
-import 'package:frontend/l10n/language_provider.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:iconsax/iconsax.dart';
-import 'package:provider/provider.dart';
 
 class StatusScreen extends StatelessWidget {
   const StatusScreen({super.key});

@@ -5,7 +5,6 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/job_model.dart';
-import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -53,7 +52,7 @@ class JobCard extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(KSizes.sm),
                       child: CachedNetworkImage(
-                        imageUrl: job.company!.logo!.url!,
+                        imageUrl: job.company.logo.url,
                         placeholder: (context, url) => SizedBox(
                             child: Image.asset(KImages.defaultBuilding)),
                         errorWidget: (context, url, error) =>
@@ -79,7 +78,7 @@ class JobCard extends StatelessWidget {
                       children: [
                         // Job Title
                         Text(
-                          job.title!,
+                          job.title,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -88,7 +87,7 @@ class JobCard extends StatelessWidget {
                         const SizedBox(height: 4),
                         // Company Name
                         Text(
-                          job.company!.name!,
+                          job.company.name,
                           style: TextStyle(
                             fontSize: 14,
                             color: Colors.black87,
@@ -105,7 +104,7 @@ class JobCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              job!.company!.location!.fullAddress!,
+                              job.company.location.fullAddress,
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600],
@@ -124,7 +123,7 @@ class JobCard extends StatelessWidget {
                             ),
                             const SizedBox(width: 4),
                             Text(
-                              '${job.basicInformation!.noOfVacancy} ${l10n.job} ${l10n.available}',
+                              '${job.basicInformation.noOfVacancy} ${l10n.job} ${l10n.available}',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: Colors.grey[600],
