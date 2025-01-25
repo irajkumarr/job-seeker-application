@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/features/authentication/screens/login/login.dart';
+import 'package:frontend/features/authentication/screens/password_confimation/forgot_password.dart';
 import 'package:frontend/features/authentication/screens/signup/signup.dart';
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
@@ -59,6 +60,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: SignupScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.forgotPassword,
+        path: "/forgotPassword",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ForgetPasswordScreen(),
           );
         },
       ),

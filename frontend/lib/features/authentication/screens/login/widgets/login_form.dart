@@ -99,7 +99,9 @@ class LoginForm extends StatelessWidget {
               ),
               //forget password
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(RoutesConstant.forgotPassword);
+                },
                 child: Text(
                   "${l10n.forgot_password}?",
                   style: TextStyle(

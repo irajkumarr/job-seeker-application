@@ -1,6 +1,7 @@
 import 'package:frontend/core/network/connectivity_provider.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/authentication/providers/password_provider.dart';
+import 'package:frontend/features/authentication/providers/timer_provider.dart';
 import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
@@ -20,5 +21,6 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => BlogProvider()),
     ChangeNotifierProvider(create: (_) => LoginProvider()),
     ChangeNotifierProvider(create: (_) => PasswordProvider()),
+    ChangeNotifierProvider(create: (_) => ResendTimerProvider()),
   ];
 }
