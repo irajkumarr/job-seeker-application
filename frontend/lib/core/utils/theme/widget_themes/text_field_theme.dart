@@ -21,27 +21,27 @@ class KTextFormFieldTheme {
         .copyWith(color: KColors.primary, fontSize: KSizes.fontSizeSm),
     border: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(KSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: KColors.grey),
+      borderSide: const BorderSide(width: 1.3, color: KColors.lightBackground),
     ),
     enabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(KSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: KColors.grey),
+      borderSide: const BorderSide(width: 1.3, color: KColors.lightBackground),
     ),
     disabledBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(KSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: KColors.grey),
+      borderSide: const BorderSide(width: 1.3, color: KColors.lightBackground),
     ),
     focusedBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(KSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: KColors.primary),
+      borderSide: const BorderSide(width: 1.3, color: KColors.primary),
     ),
     errorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(KSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: KColors.error),
+      borderSide: const BorderSide(width: 1.3, color: KColors.error),
     ),
     focusedErrorBorder: const OutlineInputBorder().copyWith(
       borderRadius: BorderRadius.circular(KSizes.inputFieldRadius),
-      borderSide: const BorderSide(width: 1, color: KColors.error),
+      borderSide: const BorderSide(width: 1.3, color: KColors.error),
     ),
   );
 

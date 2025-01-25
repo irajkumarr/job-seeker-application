@@ -1,4 +1,5 @@
 import 'package:frontend/core/network/connectivity_provider.dart';
+import 'package:frontend/features/authentication/providers/password_provider.dart';
 import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
@@ -16,5 +17,6 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => CategoryProvider()),
     ChangeNotifierProvider(create: (_) => JobProvider()),
     ChangeNotifierProvider(create: (_) => BlogProvider()),
+    ChangeNotifierProvider(create: (_) => PasswordProvider()),
   ];
 }

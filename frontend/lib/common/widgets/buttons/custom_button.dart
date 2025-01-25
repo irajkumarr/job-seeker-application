@@ -5,10 +5,11 @@ import 'package:frontend/core/utils/constants/colors.dart';
 class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
-    required this.text,
+    required this.text, required this.onPressed,
   });
 
   final String text;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +17,7 @@ class CustomButton extends StatelessWidget {
       width: double.infinity,
       height: 50.h,
       child: ElevatedButton(
-        onPressed: () {},
+        onPressed:onPressed,
         style: ElevatedButton.styleFrom(
             splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(

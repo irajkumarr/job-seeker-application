@@ -303,7 +303,11 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     ),
                   ),
                   const SizedBox(width: KSizes.md),
-                  Expanded(child: CustomButton(text: "${l10n.apply_now}")),
+                  Expanded(
+                      child: CustomButton(
+                    text: "${l10n.apply_now}",
+                    onPressed: () {},
+                  )),
                 ],
               ),
             ),

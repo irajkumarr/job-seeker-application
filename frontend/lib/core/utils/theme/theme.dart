@@ -18,7 +18,8 @@ class KAppTheme {
         const TextSelectionThemeData(cursorColor: KColors.primary),
     useMaterial3: true,
 
-    fontFamily: 'Roboto',
+    // fontFamily: 'Roboto',
+    fontFamily: 'Mukta',
     colorScheme: ColorScheme.fromSeed(seedColor: KColors.primary),
 
     disabledColor: KColors.grey,
