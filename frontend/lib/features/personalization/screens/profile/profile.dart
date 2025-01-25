@@ -4,6 +4,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/language_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_appbar.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_header.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/settings_tile.dart';
@@ -81,14 +82,16 @@ class ProfileScreen extends StatelessWidget {
                         builder: (context, languageProvider, child) {
                       final flagImage =
                           languageProvider.locale.languageCode == 'ne'
-                              ? KImages.flagUk
-                              : KImages.flagNepal;
+                              ? KImages.flagNepal
+                              : KImages.flagUk;
                       return SettingsTile(
                         text: "${l10n.language}",
                         isIconImage: true,
                         iconImage: flagImage,
                         icon: Icons.language_outlined,
-                        onTap: () {},
+                        onTap: () {
+                          showLanguageBottomSheet(context);
+                        },
                       );
                     }),
                     SettingsTile(
