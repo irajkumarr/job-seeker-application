@@ -3,6 +3,7 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/features/authentication/screens/login/login.dart';
 import 'package:frontend/features/authentication/screens/password_confimation/forgot_password.dart';
 import 'package:frontend/features/authentication/screens/signup/signup.dart';
+import 'package:frontend/features/authentication/screens/signup/signup_password_screen.dart';
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/navigation_menu.dart';
@@ -56,10 +57,19 @@ class AppRoutes {
       ),
       GoRoute(
         name: RoutesConstant.signup,
-        path: "/singup",
+        path: "/signup",
         pageBuilder: (context, state) {
           return MaterialPage(
             child: SignupScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.signupPassword,
+        path: "/signupPassword",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: SignupPasswordScreen(),
           );
         },
       ),

@@ -10,7 +10,7 @@ class RoutesConstant {
   static const String recommendation = "recommendation";
   static const String login = "login";
   static const String signup = "signup";
-  static const String firstSignup = "firstSignup";
+  static const String signupPassword = "signupPassword";
   static const String secondSignup = "secondSignup";
   static const String thirdSignup = "thirdSignup";
   static const String profileSettings = "profileSettings";

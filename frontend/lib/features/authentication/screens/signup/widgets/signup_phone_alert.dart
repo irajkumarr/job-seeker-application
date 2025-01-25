@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
-Future<bool> signupPhoneAlert(BuildContext context, String mobileNumber) async {
+Future<void> signupPhoneAlert(BuildContext context, String mobileNumber) async {
   final l10n = AppLocalizations.of(context)!;
   return await showDialog(
     barrierDismissible: false,
@@ -93,7 +94,7 @@ Future<bool> signupPhoneAlert(BuildContext context, String mobileNumber) async {
                           ),
                           onPressed: () {
                             // Navigator.of(context).pop();
-
+                            context.goNamed(RoutesConstant.signupPassword);
                             // SystemNavigator.pop();
                           },
                         ),
