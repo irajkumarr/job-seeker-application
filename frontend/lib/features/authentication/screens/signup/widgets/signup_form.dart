@@ -7,6 +7,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/authentication/providers/password_provider.dart';
+import 'package:frontend/features/authentication/screens/signup/widgets/signup_phone_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -155,8 +156,11 @@ class _SignupFormState extends State<SignupForm> {
           SizedBox(height: KSizes.defaultSpace),
           CustomButton(
             text: l10n.sign_up,
-            onPressed: () {
-              if (_signupKey.currentState!.validate()) {}
+            onPressed: () async {
+              if (_signupKey.currentState!.validate()) {
+                await signupPhoneAlert(
+                    context, _mobileNumberController.text.trim());
+              }
             },
           ),
 
