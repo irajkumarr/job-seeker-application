@@ -67,7 +67,9 @@ class LoginRedirect extends StatelessWidget {
               ),
               SizedBox(height: KSizes.md - 4),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  context.pushNamed(RoutesConstant.signup);
+                },
                 child: Text(
                   "${l10n.sign_up}",
                   style: Theme.of(context).textTheme.titleMedium!.copyWith(
