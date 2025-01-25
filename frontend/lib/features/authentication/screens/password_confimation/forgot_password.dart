@@ -1,11 +1,9 @@
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/constants/text_strings.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/timer_provider.dart';
 import 'package:frontend/l10n/l10n.dart';

@@ -6,7 +6,6 @@ import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
-import 'package:frontend/features/authentication/providers/password_provider.dart';
 import 'package:frontend/features/authentication/screens/signup/widgets/signup_phone_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
