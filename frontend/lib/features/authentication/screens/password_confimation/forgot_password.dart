@@ -1,15 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/widgets/appbar/appbar.dart';
-import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/constants/text_strings.dart';
-import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/timer_provider.dart';
-import 'package:go_router/go_router.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 class ForgetPasswordScreen extends StatefulWidget {
@@ -34,6 +33,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
     // final authProvider = Provider.of<AuthProvider>(context);
     final timerProvider =
         Provider.of<ResendTimerProvider>(context, listen: false);
+    final l10n = AppLocalizations.of(context)!;
 
     return CustomScreen(
       onPressed: () {
@@ -50,7 +50,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             SizedBox(height: KSizes.defaultSpace),
 
             Text(
-              "Forgot your Password?",
+              "${l10n.forgot_password}?",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -75,8 +75,8 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
                   TextFormField(
                     controller: _emailController,
                     validator: (value) => KValidator.validateEmail(value),
-                    decoration: const InputDecoration(
-                      labelText: KTexts.email,
+                    decoration: InputDecoration(
+                      labelText: "${l10n.email}",
                     ),
                   ),
                   SizedBox(height: KSizes.md),

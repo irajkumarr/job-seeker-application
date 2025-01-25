@@ -1,9 +1,8 @@
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/l10n/l10n.dart';
 
-final l10n = AppLocalizations.of(navigatorKey.currentState!.context)!;
-
 class KValidator {
+  static var l10n = AppLocalizations.of(navigatorKey.currentState!.context)!;
   //empty text validation
   static String? validateEmptyText(String? fieldName, String? value) {
     if (value == null || value.isEmpty) {
