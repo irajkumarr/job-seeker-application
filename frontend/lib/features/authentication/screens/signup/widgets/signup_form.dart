@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
+import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
@@ -10,19 +11,45 @@ import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class SignupForm extends StatelessWidget {
+class SignupForm extends StatefulWidget {
   const SignupForm({
     super.key,
   });
 
   @override
+  State<SignupForm> createState() => _SignupFormState();
+}
+
+class _SignupFormState extends State<SignupForm> {
+  final TextEditingController _mobileNumberController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final _signupKey = GlobalKey<FormState>();
+
+  final FocusNode _mobileNumberFocusNode = FocusNode();
+  @override
+  void initState() {
+    super.initState();
+    _mobileNumberController.addListener(() {
+      setState(() {});
+    });
+    _mobileNumberFocusNode.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    _mobileNumberController.dispose();
+    _mobileNumberFocusNode.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final loginProvider = Provider.of<LoginProvider>(context);
-    final TextEditingController _mobileNumberController =
-        TextEditingController();
-    final TextEditingController _nameController = TextEditingController();
-    final _signupKey = GlobalKey<FormState>();
+    bool showPrefixIcon = _mobileNumberFocusNode.hasFocus ||
+        _mobileNumberController.text.isNotEmpty;
     return Form(
       key: _signupKey,
       child: Column(
@@ -51,6 +78,7 @@ class SignupForm extends StatelessWidget {
             controller: _mobileNumberController,
             textInputAction: TextInputAction.done,
             keyboardType: TextInputType.phone,
+            focusNode: _mobileNumberFocusNode,
             style: Theme.of(context)
                 .textTheme
                 .bodyLarge!
@@ -58,6 +86,41 @@ class SignupForm extends StatelessWidget {
             validator: (value) => KValidator.validatePhoneNumber(value),
             decoration: InputDecoration(
               labelText: "${l10n.mobileNumber}",
+              prefixIcon: showPrefixIcon
+                  ? Padding(
+                      padding: const EdgeInsets.only(left: 8.0, right: 8.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Image.asset(
+                            KImages.flagNepal,
+                            height: 24,
+                            width: 24,
+                          ),
+                          const SizedBox(width: 8),
+                          Text(
+                            "+977",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: KColors.darkerGrey,
+                                ),
+                          ),
+                          const SizedBox(width: 8),
+                          Container(
+                            height: 28, // Match text field height
+                            width: 1, // Set thickness
+                            color: Colors.grey, // Divider color
+                          ),
+                        ],
+                      ),
+                    )
+                  : null,
+              prefixIconConstraints: const BoxConstraints(
+                minWidth: 0,
+                minHeight: 0,
+              ),
             ),
           ),
           SizedBox(

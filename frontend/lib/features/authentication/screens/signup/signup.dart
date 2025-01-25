@@ -26,15 +26,17 @@ class SignupScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
         child: Appbar(isActionRequired: false),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(
-            horizontal: KSizes.md, vertical: KSizes.defaultSpace),
-        child: Column(
-          children: [
-            SignupHeader(),
-            SizedBox(height: KSizes.defaultSpace),
-            SignupForm(),
-          ],
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(
+              horizontal: KSizes.md, vertical: KSizes.defaultSpace),
+          child: Column(
+            children: [
+              SignupHeader(),
+              SizedBox(height: KSizes.defaultSpace),
+              SignupForm(),
+            ],
+          ),
         ),
       ),
     );
