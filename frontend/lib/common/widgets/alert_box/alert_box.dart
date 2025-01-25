@@ -1,8 +1,8 @@
-
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 import '../../../core/utils/constants/colors.dart';
 import '../../../core/utils/device/device_utility.dart';
@@ -154,19 +154,20 @@ class CustomAlertBox {
   //   );
   // }
   static Future<bool> alertCloseApp(BuildContext context) async {
+    final l10n = AppLocalizations.of(context)!;
     return await showDialog(
       barrierDismissible: false,
       context: context,
       builder: (BuildContext context) {
         return PopScope(
-          canPop: false,
+          // canPop: false,
           child: SizedBox(
             width: KDeviceUtils.getScreenWidth(context),
             child: Dialog(
-              insetPadding: EdgeInsets.symmetric(horizontal: 30.w),
+              insetPadding: EdgeInsets.symmetric(horizontal: KSizes.md),
               backgroundColor: KColors.white,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(KSizes.xs),
+                borderRadius: BorderRadius.circular(KSizes.sm),
               ),
               child: Container(
                 width: KDeviceUtils.getScreenWidth(context),
@@ -176,14 +177,26 @@ class CustomAlertBox {
                   mainAxisSize: MainAxisSize.min,
                   children: [
                     Text(
-                      'Do you want to exit?',
-                      style:
-                          Theme.of(context).textTheme.headlineSmall!.copyWith(
-                                color: KColors.primary,
-                              ),
+                      '${l10n.alert_close_app}',
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: KColors.black,
+                            fontWeight: FontWeight.w600,
+                          ),
                       textAlign: TextAlign.center,
                     ),
-                    const SizedBox(height: 20),
+                    SizedBox(height: KSizes.xs),
+                    Text(
+                      "${l10n.press_yes}",
+                      style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                            color: KColors.darkGrey,
+                          ),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: KSizes.xs),
+                    Divider(
+                      color: KColors.grey,
+                    ),
+                    SizedBox(height: KSizes.sm),
                     Row(
                       spacing: KSizes.md,
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -191,18 +204,17 @@ class CustomAlertBox {
                         Expanded(
                           child: TextButton(
                             style: ElevatedButton.styleFrom(
+                              padding:
+                                  EdgeInsets.symmetric(vertical: KSizes.md - 2),
                               backgroundColor: KColors.secondaryBackground,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(KSizes.xs),
-                              ),
                             ),
                             child: Text(
-                              "CANCEL",
+                              "${l10n.no}",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!
+                                  .titleSmall!
                                   .copyWith(
-                                    color: KColors.primary,
+                                    color: KColors.darkerGrey,
                                     fontWeight: FontWeight.w500,
                                   ),
                             ),
@@ -214,16 +226,15 @@ class CustomAlertBox {
                         Expanded(
                           child: TextButton(
                             style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(KSizes.xs),
-                              ),
+                              padding:
+                                  EdgeInsets.symmetric(vertical: KSizes.md - 2),
                               backgroundColor: KColors.primary,
                             ),
                             child: Text(
-                              "YES",
+                              "${l10n.yes}",
                               style: Theme.of(context)
                                   .textTheme
-                                  .bodyMedium!
+                                  .titleSmall!
                                   .copyWith(
                                     color: KColors.white,
                                     fontWeight: FontWeight.w500,

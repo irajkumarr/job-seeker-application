@@ -28,6 +28,8 @@
   "age": "Age",
   "gender": "Gender",
   "total_views": "Total Views",
+  "alert_close_app": "Do you really want to exit from the Rojgari app?",
+  "press_yes": "Press 'Yes' to exit from the app",
   "education": "Education",
   "experience": "Experience",
   "job_level": "Job Level",
