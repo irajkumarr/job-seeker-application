@@ -153,9 +153,19 @@ class _SignupFormState extends State<SignupForm> {
               ),
               SizedBox(width: KSizes.sm),
               Expanded(
-                child: Text(
-                  "${l10n.i_agree_with} ${l10n.terms_and_condition}",
-                  style: Theme.of(context).textTheme.bodyLarge,
+                child: Row(
+                  children: [
+                    Text(
+                      "${l10n.i_agree_with}",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                    Text(
+                      " ${l10n.terms_and_condition}",
+                      style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                            color: KColors.primary,
+                          ),
+                    ),
+                  ],
                 ),
               ),
             ],

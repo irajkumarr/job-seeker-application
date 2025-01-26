@@ -4,6 +4,7 @@ import 'package:frontend/features/authentication/screens/login/login.dart';
 import 'package:frontend/features/authentication/screens/password_confimation/forgot_password.dart';
 import 'package:frontend/features/authentication/screens/signup/signup.dart';
 import 'package:frontend/features/authentication/screens/signup/signup_password_screen.dart';
+import 'package:frontend/features/authentication/screens/signup/signup_preferred_screen.dart';
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/navigation_menu.dart';
@@ -15,7 +16,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/navigationMenu",
+    initialLocation: "/signupPreferred",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -70,6 +71,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: SignupPasswordScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.signupPreferred,
+        path: "/signupPreferred",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: SignupPreferredScreen(),
           );
         },
       ),
