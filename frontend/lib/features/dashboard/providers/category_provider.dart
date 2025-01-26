@@ -15,6 +15,22 @@ class CategoryProvider with ChangeNotifier {
   List<CategoryModel>? get categories => _categories;
   bool get isLoading => _isLoading;
   ErrorModel? get error => _error;
+  final Set<String> _selectedCategories = {};
+  Set<String> get selectedCategories => _selectedCategories;
+
+  bool isMinimizedCategory = false;
+
+  void toggleMinimizedCategory() {
+    isMinimizedCategory = !isMinimizedCategory;
+    notifyListeners();
+  }
+
+  bool isMinimizedSkill = false;
+
+  void toggleMinimizedSkill() {
+    isMinimizedSkill = !isMinimizedSkill;
+    notifyListeners();
+  }
 
   CategoryProvider() {
     fetchCategories();
@@ -47,6 +63,15 @@ class CategoryProvider with ChangeNotifier {
     }
   }
 
+  void toggleCategory(String category) {
+    if (_selectedCategories.contains(category)) {
+      _selectedCategories.remove(category);
+    } else if (_selectedCategories.length < 5) {
+      _selectedCategories.add(category);
+    }
+    notifyListeners();
+  }
+
   CategoryModel? _category;
 
   CategoryModel? get category => _category;
@@ -62,8 +87,8 @@ class CategoryProvider with ChangeNotifier {
           await http.get(Uri.parse("$kAppBaseUrl/api/categories/$categoryId"));
 
       if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body); // Decode the JSON response
-        _category = CategoryModel.fromJson(jsonData); // Convert JSON to model
+        final jsonData = json.decode(response.body);
+        _category = CategoryModel.fromJson(jsonData);
         _error = null;
         _isLoading = false;
         notifyListeners();
@@ -78,5 +103,32 @@ class CategoryProvider with ChangeNotifier {
       _isLoading = false;
       notifyListeners();
     }
+  }
+
+  //for preferred skills
+
+  final List<String> prefferedSkills = [
+    "Computer skill",
+    "Marketing Capability",
+    "Customer Service Management Skills",
+    "Sales Knowledge",
+    "Computer Knowledge",
+    "Public Speaking",
+    "Reporting",
+    "Security",
+    "Reporting",
+    "Flexible",
+  ];
+  final Set<String> _selectedSkills = {};
+
+  Set<String> get selectedSkills => _selectedSkills;
+
+  void toggleSkill(String skill) {
+    if (_selectedSkills.contains(skill)) {
+      _selectedSkills.remove(skill);
+    } else if (_selectedSkills.length < 5) {
+      _selectedSkills.add(skill);
+    }
+    notifyListeners();
   }
 }
