@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
+import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/authentication/screens/signup/widgets/signup_phone_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -24,6 +25,7 @@ class _SignupFormState extends State<SignupForm> {
   final TextEditingController _mobileNumberController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final _signupKey = GlobalKey<FormState>();
+  bool _termsError = false;
 
   final FocusNode _mobileNumberFocusNode = FocusNode();
   @override
@@ -47,7 +49,7 @@ class _SignupFormState extends State<SignupForm> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final loginProvider = Provider.of<LoginProvider>(context);
+    final signupProvider = Provider.of<SignupProvider>(context);
     bool showPrefixIcon = _mobileNumberFocusNode.hasFocus ||
         _mobileNumberController.text.isNotEmpty;
     return Form(
@@ -127,36 +129,63 @@ class _SignupFormState extends State<SignupForm> {
             height: KSizes.defaultSpace,
           ),
 
-          ///remember me and forgot password
+//           // Checkbox with Error
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(
                 width: 24,
                 height: 24,
                 child: Checkbox(
-                  value: loginProvider.rememberMe,
+                  value: signupProvider.termsAndConditions,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(30),
                   ),
                   onChanged: (value) {
-                    loginProvider.toggleRememberMe();
+                    signupProvider.toggleTermsAndConditions();
+                    if (value == true) {
+                      setState(() {
+                        _termsError = false;
+                      });
+                    }
                   },
                 ),
               ),
-              SizedBox(
-                width: KSizes.sm,
-              ),
-              Text(
-                "${l10n.i_agree_with} ${l10n.terms_and_condition}",
-                style: Theme.of(context).textTheme.bodyLarge,
+              SizedBox(width: KSizes.sm),
+              Expanded(
+                child: Text(
+                  "${l10n.i_agree_with} ${l10n.terms_and_condition}",
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
               ),
             ],
           ),
+          if (_termsError) // Conditionally show error
+            Padding(
+              padding: EdgeInsets.only(top: KSizes.xs),
+              child: Text(l10n.agree_terms_and_conditions,
+                  style: Theme.of(context).textTheme.labelSmall!.copyWith(
+                        color: KColors.error,
+                      )),
+            ),
           SizedBox(height: KSizes.defaultSpace),
           CustomButton(
             text: l10n.sign_up,
             onPressed: () async {
+              // if (_signupKey.currentState!.validate()) {
+
+              //   await signupPhoneAlert(
+              //       context, _mobileNumberController.text.trim());
+              // }
               if (_signupKey.currentState!.validate()) {
+                if (!signupProvider.termsAndConditions) {
+                  setState(() {
+                    _termsError = true; // Show error if unchecked
+                  });
+                  return;
+                }
+
+                // Proceed with signup logic
                 await signupPhoneAlert(
                     context, _mobileNumberController.text.trim());
               }

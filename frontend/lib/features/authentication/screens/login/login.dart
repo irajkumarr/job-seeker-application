@@ -10,21 +10,30 @@ class LoginScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-        child: Appbar(isActionRequired: false),
-      ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(
-              horizontal: KSizes.md, vertical: KSizes.defaultSpace),
-          child: Column(
-            children: [
-              LoginHeader(),
-              SizedBox(height: KSizes.defaultSpace),
-              LoginForm(),
-            ],
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+          child: Appbar(isActionRequired: false),
+        ),
+        body: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(
+                horizontal: KSizes.md, vertical: KSizes.defaultSpace),
+            child: Column(
+              children: [
+                LoginHeader(),
+                SizedBox(height: KSizes.defaultSpace),
+                LoginForm(),
+              ],
+            ),
           ),
         ),
       ),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
@@ -56,7 +55,7 @@ class _ForgetPasswordScreenState extends State<ForgetPasswordScreen> {
             ),
             SizedBox(height: KSizes.sm),
             Text(
-              "Enter your mobile number and we will send you OTP number to reset your password.",
+              "${l10n.enter_phone_and_get_otp}",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: KColors.darkerGrey,

@@ -38,7 +38,7 @@ class SignupPasswordScreen extends StatelessWidget {
               ),
               SizedBox(height: KSizes.sm),
               Text(
-                "${l10n.please_enter_password} ${l10n.and} \n${l10n.confirm_password}",
+                "${l10n.please_enter} ${l10n.and} \n${l10n.confirm_your_password}",
                 textAlign: TextAlign.center,
                 style: Theme.of(context).textTheme.titleSmall?.copyWith(
                       color: KColors.darkerGrey,
@@ -67,7 +67,7 @@ class SignupPasswordScreen extends StatelessWidget {
                         obscureText: value.signupPasswordVisible,
                         decoration: InputDecoration(
                           // prefixIcon: const Icon(Iconsax.password_check),
-                          labelText: KTexts.password,
+                          labelText: "${l10n.password}",
                           suffixIcon: IconButton(
                             onPressed: () {
                               value.toggleSignupPasswordVisibility();
@@ -101,17 +101,17 @@ class SignupPasswordScreen extends StatelessWidget {
                             .copyWith(fontSize: KSizes.fontSizeSm),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Please confirm your password';
+                            return "${l10n.please_enter_confirm_password}";
                           }
                           if (value != _passwordController.text) {
-                            return 'Passwords do not match';
+                            return '"${l10n.password_donot_match}"';
                           }
                           return null;
                         },
                         obscureText: value.signupConfirmPasswordVisible,
                         decoration: InputDecoration(
                           // prefixIcon: const Icon(Iconsax.password_check),
-                          labelText: "Confirm Password",
+                          labelText: "${l10n.confirm_password}",
                           suffixIcon: IconButton(
                             onPressed: () {
                               value.toggleSignupConfirmPasswordVisibility();

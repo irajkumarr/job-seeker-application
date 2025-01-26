@@ -19,42 +19,52 @@ class CustomScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-        child: Appbar(isActionRequired: false),
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(child: child),
-          ),
+    return GestureDetector(
+      onTap: () {
+        FocusScopeNode currentFocus = FocusScope.of(context);
+        if (!currentFocus.hasPrimaryFocus &&
+            currentFocus.focusedChild != null) {
+          currentFocus.unfocus();
+        }
+      },
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+          child: Appbar(isActionRequired: false),
+        ),
+        body: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(child: child),
+            ),
 
-          // Divider line
-          Container(
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Colors.grey.shade300,
-                  width: 1,
+            // Divider line
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: Colors.grey.shade300,
+                    width: 1,
+                  ),
                 ),
               ),
             ),
-          ),
 
-          // Next button - always at bottom
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(
-                horizontal: KSizes.md, vertical: KSizes.sm),
-            child: CustomButton(
-              text: buttonText ?? l10n.next,
-              isIconShowed: true,
-              icon: Icons.arrow_forward,
-              onPressed: onPressed,
+            // Next button - always at bottom
+            Container(
+              width: double.infinity,
+              padding: EdgeInsets.symmetric(
+                  horizontal: KSizes.md, vertical: KSizes.sm),
+              child: CustomButton(
+                text: buttonText ?? l10n.next,
+                isIconShowed: true,
+                icon: Icons.arrow_forward,
+                onPressed: onPressed,
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
