@@ -13,6 +13,7 @@ class RoutesConstant {
   static const String signupPassword = "signupPassword";
   static const String signupPreferred = "signupPreferred";
   static const String signupPreferredLocation = "signupPreferredLocation";
+  static const String personalDetails = "personalDetails";
   static const String profileSettings = "profileSettings";
   static const String changePassword = "changePassword";
   static const String forgotPassword = "forgotPassword";

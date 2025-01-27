@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/appbar/appbar.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
+import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/l10n/l10n.dart';
@@ -9,12 +11,14 @@ class CustomScreen extends StatelessWidget {
   final Widget child;
   final String? buttonText;
   final VoidCallback onPressed;
+  final bool isProgressBarShowed;
 
   const CustomScreen(
       {super.key,
       required this.child,
       this.buttonText,
-      required this.onPressed});
+      required this.onPressed,
+      this.isProgressBarShowed = false});
 
   @override
   Widget build(BuildContext context) {
@@ -30,8 +34,31 @@ class CustomScreen extends StatelessWidget {
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: PreferredSize(
-          preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-          child: Appbar(isActionRequired: false),
+          preferredSize: isProgressBarShowed
+              ? Size.fromHeight(KDeviceUtils.getAppBarHeight() + 5.h)
+              : Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+          child: Column(
+            children: [
+              Appbar(isActionRequired: false),
+              !isProgressBarShowed
+                  ? SizedBox()
+                  : Row(
+                      children: [
+                        Container(
+                          color: KColors.primary,
+                          height: 5.h,
+                          width: 225.w,
+                        ),
+                        Expanded(
+                          child: Container(
+                            color: KColors.grey,
+                            height: 5.h,
+                          ),
+                        ),
+                      ],
+                    ),
+            ],
+          ),
         ),
         body: Column(
           children: [

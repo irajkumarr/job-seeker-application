@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/features/authentication/screens/login/login.dart';
 import 'package:frontend/features/authentication/screens/password_confimation/forgot_password.dart';
+import 'package:frontend/features/authentication/screens/signup/personal_details_screen.dart';
 import 'package:frontend/features/authentication/screens/signup/signup.dart';
 import 'package:frontend/features/authentication/screens/signup/signup_password_screen.dart';
 import 'package:frontend/features/authentication/screens/signup/signup_preferred_location_screen.dart';
@@ -17,7 +18,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/signupPreferredLocation",
+    initialLocation: "/personalDetails",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -90,6 +91,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: SignupPreferredLocationScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.personalDetails,
+        path: "/personalDetails",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: PersonalDetailsScreen(),
           );
         },
       ),
