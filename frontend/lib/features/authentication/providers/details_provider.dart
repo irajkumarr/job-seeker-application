@@ -82,4 +82,34 @@ class DetailsProvider with ChangeNotifier {
     selectedSalary = salary;
     notifyListeners();
   }
+
+  //working status
+  final List<String> workingStatus = [
+    "Actively Seeking Employment",
+    "Available For Employment",
+    "Currently Working",
+  ];
+
+  String? selectedWorkingStatus;
+  void setSelectedWorkingStatus(String? workingStatus) {
+    selectedWorkingStatus = workingStatus;
+    notifyListeners();
+  }
+
+  // //foreign employment
+  final List<String> isForeignEmployment = [
+    "Yes",
+    "No",
+  ];
+
+  String? selectedIsForeignEmployment;
+  bool? get foreignEmploymentAsBool {
+    if (selectedIsForeignEmployment == null) return null;
+    return selectedIsForeignEmployment == "Yes";
+  }
+
+  void setSelectedIsForeignEmployment(String? value) {
+    selectedIsForeignEmployment = value;
+    notifyListeners();
+  }
 }

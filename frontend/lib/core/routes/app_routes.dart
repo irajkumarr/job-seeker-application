@@ -7,6 +7,8 @@ import 'package:frontend/features/authentication/screens/signup/signup.dart';
 import 'package:frontend/features/authentication/screens/signup/signup_password_screen.dart';
 import 'package:frontend/features/authentication/screens/signup/signup_preferred_location_screen.dart';
 import 'package:frontend/features/authentication/screens/signup/signup_preferred_screen.dart';
+import 'package:frontend/features/authentication/screens/signup/signup_status_last_screen.dart';
+import 'package:frontend/features/authentication/screens/signup/widgets/signup_form_completed_screen.dart';
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/navigation_menu.dart';
@@ -18,7 +20,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/personalDetails",
+    initialLocation: "/signupFormCompleted",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -100,6 +102,24 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: PersonalDetailsScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.statusDetails,
+        path: "/statusDetails",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: SignupStatusLastScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.signupFormCompleted,
+        path: "/signupFormCompleted",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: SignupFormCompletedScreen(),
           );
         },
       ),

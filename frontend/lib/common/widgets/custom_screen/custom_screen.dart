@@ -12,13 +12,15 @@ class CustomScreen extends StatelessWidget {
   final String? buttonText;
   final VoidCallback onPressed;
   final bool isProgressBarShowed;
+  final double? progressBarWidth;
 
   const CustomScreen(
       {super.key,
       required this.child,
       this.buttonText,
       required this.onPressed,
-      this.isProgressBarShowed = false});
+      this.isProgressBarShowed = false,
+      this.progressBarWidth});
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +49,7 @@ class CustomScreen extends StatelessWidget {
                         Container(
                           color: KColors.primary,
                           height: 5.h,
-                          width: 225.w,
+                          width: progressBarWidth,
                         ),
                         Expanded(
                           child: Container(
