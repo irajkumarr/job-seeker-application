@@ -90,7 +90,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
       if (!mounted) return;
 
       if (data['status'] == 'OK') {
-        final result = data['results'][0];
+        // final result = data['results'][0];
 
         widget.locationProvider.setSelectedStreet(address);
       } else {

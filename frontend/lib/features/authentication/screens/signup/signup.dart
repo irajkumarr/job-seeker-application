@@ -2,19 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:frontend/common/widgets/appbar/appbar.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
-import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/authentication/screens/signup/widgets/signup_form.dart';
 import 'package:frontend/features/authentication/screens/signup/widgets/signup_header.dart';
-import 'package:frontend/l10n/l10n.dart';
-import 'package:provider/provider.dart';
+
 
 class SignupScreen extends StatelessWidget {
   const SignupScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final l10n = AppLocalizations.of(context)!;
-    final loginProvider = Provider.of<LoginProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
