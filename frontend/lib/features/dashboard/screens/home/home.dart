@@ -58,6 +58,8 @@ class HomeScreen extends StatelessWidget {
         ),
       ),
       body: RefreshIndicator(
+        backgroundColor: KColors.white,
+        color: KColors.primary,
         onRefresh: () async {
           await retryFetchData();
         },
