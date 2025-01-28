@@ -3,6 +3,7 @@ import 'package:frontend/common/widgets/texts/section_row_title_text.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/http/url_launch.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/change_password_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/language_bottom_sheet.dart';
@@ -20,12 +21,18 @@ class ProfileSettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "${l10n.settings}",
-          style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                fontSize: 22,
-              ),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+        child: Material(
+          elevation: 0.2,
+          child: AppBar(
+            title: Text(
+              "${l10n.settings}",
+              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    fontSize: 22,
+                  ),
+            ),
+          ),
         ),
       ),
       body: SingleChildScrollView(
