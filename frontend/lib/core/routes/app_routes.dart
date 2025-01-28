@@ -12,6 +12,7 @@ import 'package:frontend/features/authentication/screens/signup/widgets/signup_f
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/features/dashboard/widgets/employer_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/profile_setting.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/navigationMenu",
+    initialLocation: "/profileSettings",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -139,6 +140,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: EmployerScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.profileSettings,
+        path: "/profileSettings",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ProfileSettingsScreen(),
           );
         },
       ),
