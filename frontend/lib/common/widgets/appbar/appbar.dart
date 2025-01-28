@@ -5,7 +5,6 @@ import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/widgets/employer_bottom_sheet.dart';
 import 'package:frontend/l10n/language_provider.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
 class Appbar extends StatelessWidget {
