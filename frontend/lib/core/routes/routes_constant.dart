@@ -3,6 +3,7 @@ class RoutesConstant {
   static const String jobDetails = "jobDetails";
   static const String allCategory = "allCategory";
   static const String category = "category";
+  static const String employer = "employer";
   static const String subcategory = "subcategory";
   static const String similarProducts = "similarProducts";
   static const String featured = "featured";

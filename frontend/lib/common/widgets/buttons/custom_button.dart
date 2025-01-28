@@ -10,12 +10,14 @@ class CustomButton extends StatelessWidget {
     required this.onPressed,
     this.isIconShowed = false,
     this.icon,
+    this.color = KColors.primary,
   });
 
   final String text;
   final VoidCallback onPressed;
   final bool isIconShowed;
   final IconData? icon;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +27,7 @@ class CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
+            backgroundColor: color,
             splashFactory: NoSplash.splashFactory,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(50),

@@ -1207,6 +1207,8 @@
   "please_enter_last_name" : "Please enter last name",
   "please_enter_email" : "Please enter email",
   "please_enter_confirm_password" : "Please enter confirm password",
+  "are_you_seeking_for_an_employee" : "Are you seeking for an employee?",
+  "switch_to_employer" : "Switch To Employer",
   "i_agree_with_all_the" : "I agree with all the",
   "enter_first_name" : "Enter First Name",
   "enter_last_name" : "Enter Last Name",
