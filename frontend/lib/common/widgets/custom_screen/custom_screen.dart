@@ -13,6 +13,7 @@ class CustomScreen extends StatelessWidget {
   final VoidCallback onPressed;
   final bool isProgressBarShowed;
   final double? progressBarWidth;
+  final bool showAppBar;
 
   const CustomScreen(
       {super.key,
@@ -20,7 +21,8 @@ class CustomScreen extends StatelessWidget {
       this.buttonText,
       required this.onPressed,
       this.isProgressBarShowed = false,
-      this.progressBarWidth});
+      this.progressBarWidth,
+      this.showAppBar = true});
 
   @override
   Widget build(BuildContext context) {
@@ -35,33 +37,35 @@ class CustomScreen extends StatelessWidget {
       },
       child: Scaffold(
         resizeToAvoidBottomInset: false,
-        appBar: PreferredSize(
-          preferredSize: isProgressBarShowed
-              ? Size.fromHeight(KDeviceUtils.getAppBarHeight() + 5.h)
-              : Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-          child: Column(
-            children: [
-              Appbar(isActionRequired: false),
-              !isProgressBarShowed
-                  ? SizedBox()
-                  : Row(
-                      children: [
-                        Container(
-                          color: KColors.primary,
-                          height: 5.h,
-                          width: progressBarWidth,
-                        ),
-                        Expanded(
-                          child: Container(
-                            color: KColors.grey,
-                            height: 5.h,
+        appBar: !showAppBar
+            ? null
+            : PreferredSize(
+                preferredSize: isProgressBarShowed
+                    ? Size.fromHeight(KDeviceUtils.getAppBarHeight() + 5.h)
+                    : Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+                child: Column(
+                  children: [
+                    Appbar(isActionRequired: false),
+                    !isProgressBarShowed
+                        ? SizedBox()
+                        : Row(
+                            children: [
+                              Container(
+                                color: KColors.primary,
+                                height: 5.h,
+                                width: progressBarWidth,
+                              ),
+                              Expanded(
+                                child: Container(
+                                  color: KColors.grey,
+                                  height: 5.h,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-            ],
-          ),
-        ),
+                  ],
+                ),
+              ),
         body: Column(
           children: [
             Expanded(
