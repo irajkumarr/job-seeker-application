@@ -7,7 +7,7 @@ const profileSchema = new mongoose.Schema(
       required: true,
       unique: true,
     },
-    interestedCategories: {
+    preferredCategories: {
       type: [String],
       validate: [
         (array) => array.length <= 5,
@@ -22,20 +22,15 @@ const profileSchema = new mongoose.Schema(
       required: true,
       min: 1,
     },
-    currentLocation: {
+    preferredJobLocation: {
       province: { type: String, required: true },
       district: { type: String, required: true },
       municipality: { type: String, required: true },
       fullAddress: { type: String, required: true },
     },
-    permanentLocation: {
-      province: String,
-      district: String,
-      municipality: String,
-      fullAddress: String,
-    },
     personalDetails: {
       age: { type: Number, required: true },
+      experience: { type: Number, required: true },
       gender: {
         type: String,
         enum: ["male", "female", "other"],
@@ -45,11 +40,13 @@ const profileSchema = new mongoose.Schema(
         type: String,
         enum: ["single", "married", "divorced", "widowed"],
       },
-      nationality: { type: String, required: true },
+      nationality: {
+        type: String,
+      },
       religion: String,
       email: {
         type: String,
-        required: [true, "Email is required"],
+        // required: [true, "Email is required"],
         trim: true,
         lowercase: true,
         match: [
@@ -61,6 +58,14 @@ const profileSchema = new mongoose.Schema(
         hasDisability: Boolean,
         details: String,
       },
+      workingStatus: {
+        type: String,
+        enum: [
+          "Actively Seeking Employment",
+          "Available For Employment",
+          "Currently Working",
+        ],
+      },
       foreignEmployment: {
         hasWorkedAboroad: Boolean,
         details: String,
@@ -71,26 +76,22 @@ const profileSchema = new mongoose.Schema(
       jobLevel: {
         type: String,
         enum: ["entry", "mid", "senior", "executive"],
-        required: true,
+        // required: true,
       },
       availabilityStatus: {
         type: String,
         enum: ["immediate", "15days", "30days", "custom"],
-        required: true,
+        // required: true,
       },
       preferredShift: {
         type: String,
         enum: ["day", "night", "any"],
       },
       expectedSalary: {
-        minimum: Number,
-        maximum: Number,
-        currency: { type: String, default: "NPR" },
-      },
-      workingStatus: {
         type: String,
-        enum: ["employed", "unemployed", "freelancing"],
+        required: true,
       },
+
       careerObjectives: { type: String, maxlength: 500 },
     },
   },

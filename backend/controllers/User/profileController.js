@@ -2,10 +2,9 @@ const Profile = require("../../models/User/Profile");
 const JobPosting = require("../../models/JobPosting/JobPosting");
 const handleCreateProfile = async (req, res) => {
   const {
-    interestedCategories,
+    preferredCategories,
     skills,
-    currentLocation,
-    permanentLocation,
+    preferredJobLocation,
     personalDetails,
     jobPreference,
   } = req.body;
@@ -19,10 +18,10 @@ const handleCreateProfile = async (req, res) => {
       });
     }
 
-    if (!interestedCategories || interestedCategories.length === 0) {
+    if (!preferredCategories || preferredCategories.length === 0) {
       return res.status(400).json({
         status: false,
-        message: "At least one interested category is required.",
+        message: "At least one preferred category is required.",
       });
     }
 
@@ -34,11 +33,11 @@ const handleCreateProfile = async (req, res) => {
     }
 
     if (
-      !currentLocation ||
-      !currentLocation.province ||
-      !currentLocation.district ||
-      !currentLocation.municipality ||
-      !currentLocation.fullAddress
+      !preferredJobLocation ||
+      !preferredJobLocation.province ||
+      !preferredJobLocation.district ||
+      !preferredJobLocation.municipality ||
+      !preferredJobLocation.fullAddress
     ) {
       return res.status(400).json({
         status: false,
@@ -64,7 +63,6 @@ const handleCreateProfile = async (req, res) => {
       !jobPreference.jobLevel ||
       !jobPreference.availabilityStatus ||
       !jobPreference.preferredShift ||
-      !jobPreference.workingStatus ||
       !jobPreference.careerObjectives
     ) {
       return res.status(400).json({
@@ -76,10 +74,9 @@ const handleCreateProfile = async (req, res) => {
 
     const newProfile = new Profile({
       userId,
-      interestedCategories,
+      preferredCategories,
       skills,
-      currentLocation,
-      permanentLocation,
+      preferredJobLocation,
       personalDetails,
       jobPreference,
     });
