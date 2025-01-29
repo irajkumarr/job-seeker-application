@@ -197,7 +197,7 @@ class PreferredSkillSection extends StatelessWidget {
                             ? CustomButton(
                                 text: "Next",
                                 onPressed: () {
-                                  categoryProvider.toggleMinimizedSkill();
+
                                 },
                               )
                             : SizedBox(),
