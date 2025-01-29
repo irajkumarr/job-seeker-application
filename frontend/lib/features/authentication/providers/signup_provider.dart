@@ -8,6 +8,8 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/data/models/error_model.dart';
 import 'package:frontend/data/models/login_model.dart';
+import 'package:frontend/data/models/user_profile_request.dart';
+import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -103,6 +105,54 @@ class SignupProvider with ChangeNotifier {
     } catch (e) {
       setLoading = false;
       showToast(e.toString());
+    }
+  }
+
+  String? _errorMessage;
+
+  String? get errorMessage => _errorMessage;
+  //create profile forms
+  Future<bool> createProfile(UserProfileRequest profile) async {
+    setLoading = true;
+    _errorMessage = null;
+    notifyListeners();
+
+    try {
+      final String? token = box.read("token");
+      if (token == null) {
+        _isLoading = false;
+        _errorMessage = "User not authenticated";
+        notifyListeners();
+        return false;
+      }
+
+      final url = Uri.parse("$kAppBaseUrl/api/users/profile/");
+      final response = await http.post(
+        url,
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer $token",
+        },
+        body: jsonEncode(profile.toJson()),
+      );
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 201) {
+        setLoading = false;
+        notifyListeners();
+        return true;
+      } else {
+        setLoading = false;
+        _errorMessage = data["message"] ?? "Something went wrong";
+        notifyListeners();
+        return false;
+      }
+    } catch (e) {
+      setLoading = false;
+      _errorMessage = e.toString();
+      notifyListeners();
+      return false;
     }
   }
 }

@@ -37,16 +37,19 @@ class SignupPreferredScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            // Category section
-            PreferredCategorySection(),
-            SizedBox(height: KSizes.defaultSpace),
-            // Skill section
-            PreferredSkillSection(),
-          ],
+      body: PopScope(
+        canPop: false,
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // Category section
+              PreferredCategorySection(),
+              SizedBox(height: KSizes.defaultSpace),
+              // Skill section
+              PreferredSkillSection(),
+            ],
+          ),
         ),
       ),
     );

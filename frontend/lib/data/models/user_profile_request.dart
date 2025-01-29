@@ -10,7 +10,6 @@ UserProfileRequest userProfileRequestFromJson(String str) => UserProfileRequest.
 String userProfileRequestToJson(UserProfileRequest data) => json.encode(data.toJson());
 
 class UserProfileRequest {
-    final String userId;
     final List<String> preferredCategories;
     final List<String> skills;
     final PreferredJobLocation preferredJobLocation;
@@ -18,7 +17,6 @@ class UserProfileRequest {
     final JobPreference jobPreference;
 
     UserProfileRequest({
-        required this.userId,
         required this.preferredCategories,
         required this.skills,
         required this.preferredJobLocation,
@@ -27,7 +25,7 @@ class UserProfileRequest {
     });
 
     factory UserProfileRequest.fromJson(Map<String, dynamic> json) => UserProfileRequest(
-        userId: json["userId"],
+
         preferredCategories: List<String>.from(json["preferredCategories"].map((x) => x)),
         skills: List<String>.from(json["skills"].map((x) => x)),
         preferredJobLocation: PreferredJobLocation.fromJson(json["preferredJobLocation"]),
@@ -36,7 +34,7 @@ class UserProfileRequest {
     );
 
     Map<String, dynamic> toJson() => {
-        "userId": userId,
+       
         "preferredCategories": List<dynamic>.from(preferredCategories.map((x) => x)),
         "skills": List<dynamic>.from(skills.map((x) => x)),
         "preferredJobLocation": preferredJobLocation.toJson(),

@@ -41,72 +41,76 @@ class SignupPreferredLocationScreen extends StatelessWidget {
           ],
         ),
       ),
-      body: Consumer<LocationProvider>(
-        builder: (context, locationProvider, _) {
-          return SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: KSizes.md),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  // Header Section
-                  Column(
-                    children: [
-                      SizedBox(height: KSizes.defaultSpace),
-                      Text(
-                        "Where are you looking for work?",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineMedium
-                            ?.copyWith(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black,
-                            ),
-                      ),
-                      SizedBox(height: KSizes.xs),
-                      Text(
-                        "Select a location by priority",
-                        textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                              color: KColors.darkerGrey,
-                              fontSize: 17.sp,
-                            ),
-                      ),
-                      SizedBox(height: KSizes.defaultSpace),
-                    ],
-                  ),
+      body: PopScope(
+        canPop: false,
+        child: Consumer<LocationProvider>(
+          builder: (context, locationProvider, _) {
+            return SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: KSizes.md),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    // Header Section
+                    Column(
+                      children: [
+                        SizedBox(height: KSizes.defaultSpace),
+                        Text(
+                          "Where are you looking for work?",
+                          style: Theme.of(context)
+                              .textTheme
+                              .headlineMedium
+                              ?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                        ),
+                        SizedBox(height: KSizes.xs),
+                        Text(
+                          "Select a location by priority",
+                          textAlign: TextAlign.center,
+                          style:
+                              Theme.of(context).textTheme.titleSmall?.copyWith(
+                                    color: KColors.darkerGrey,
+                                    fontSize: 17.sp,
+                                  ),
+                        ),
+                        SizedBox(height: KSizes.defaultSpace),
+                      ],
+                    ),
 
-                  // Province Selection Section
-                  ProvinceSelectionSection(
-                    locationProvider: locationProvider,
-                  ),
+                    // Province Selection Section
+                    ProvinceSelectionSection(
+                      locationProvider: locationProvider,
+                    ),
 
-                  // District Selection Section (only shown when province is minimized)
+                    // District Selection Section (only shown when province is minimized)
 
-                  SizedBox(height: KSizes.md),
-                  DistrictSelectionSection(
-                    locationProvider: locationProvider,
-                  ),
-                  // ],
+                    SizedBox(height: KSizes.md),
+                    DistrictSelectionSection(
+                      locationProvider: locationProvider,
+                    ),
+                    // ],
 
-                  // Municipality Selection Section (only shown when district is minimized)
+                    // Municipality Selection Section (only shown when district is minimized)
 
-                  SizedBox(height: KSizes.md),
-                  MunicipalitySelectionSection(
-                    locationProvider: locationProvider,
-                  ),
+                    SizedBox(height: KSizes.md),
+                    MunicipalitySelectionSection(
+                      locationProvider: locationProvider,
+                    ),
 
-                  // Address Selection Section (only shown when Municipality is minimized)
+                    // Address Selection Section (only shown when Municipality is minimized)
 
-                  SizedBox(height: KSizes.md),
-                  AddressSelectionSection(
-                    locationProvider: locationProvider,
-                  ),
-                ],
+                    SizedBox(height: KSizes.md),
+                    AddressSelectionSection(
+                      locationProvider: locationProvider,
+                    ),
+                  ],
+                ),
               ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }

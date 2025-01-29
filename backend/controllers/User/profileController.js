@@ -58,19 +58,19 @@ const handleCreateProfile = async (req, res) => {
           "Personal details (age, gender, nationality, email) are required.",
       });
     }
-    if (
-      !jobPreference ||
-      !jobPreference.jobLevel ||
-      !jobPreference.availabilityStatus ||
-      !jobPreference.preferredShift ||
-      !jobPreference.careerObjectives
-    ) {
-      return res.status(400).json({
-        status: false,
-        message:
-          "Job Preference (job level, availability status, preferred shift, working status) are required.",
-      });
-    }
+    // if (
+    //   !jobPreference ||
+    //   !jobPreference.jobLevel ||
+    //   !jobPreference.availabilityStatus ||
+    //   !jobPreference.preferredShift ||
+    //   !jobPreference.careerObjectives
+    // ) {
+    //   return res.status(400).json({
+    //     status: false,
+    //     message:
+    //       "Job Preference (job level, availability status, preferred shift, working status) are required.",
+    //   });
+    // }
 
     const newProfile = new Profile({
       userId,

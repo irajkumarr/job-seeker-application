@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class AddressSelectionSection extends StatefulWidget {
@@ -142,105 +144,144 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
             if (!widget.locationProvider.isMinimizedAddress &&
                 widget.locationProvider.isMinimizedMunicipality) ...[
               SizedBox(height: KSizes.md),
-              TextField(
-                controller: _addressSearchController,
-                decoration: InputDecoration(
-                  hintText: 'Search address',
-                  suffixIcon: Padding(
-                    padding: EdgeInsets.all(KSizes.sm),
-                    child: GestureDetector(
-                      onTap: () async {
-                        await _getAddressSuggestions(
-                            _addressSearchController.text);
-                      },
-                      child: Container(
-                        width: 40.w,
-                        height: 40.h,
-                        decoration: BoxDecoration(
-                          color: KColors.primary,
-                          borderRadius: BorderRadius.circular(100),
+              // TextField(
+              //   controller: _addressSearchController,
+              //   decoration: InputDecoration(
+              //     hintText: 'Search address',
+              //     suffixIcon: Padding(
+              //       padding: EdgeInsets.all(KSizes.sm),
+              //       child: GestureDetector(
+              //         onTap: () async {
+              //           await _getAddressSuggestions(
+              //               _addressSearchController.text);
+              //         },
+              //         child: Container(
+              //           width: 40.w,
+              //           height: 40.h,
+              //           decoration: BoxDecoration(
+              //             color: KColors.primary,
+              //             borderRadius: BorderRadius.circular(100),
+              //           ),
+              //           child: Icon(
+              //             AntDesign.search1,
+              //             color: KColors.white,
+              //           ),
+              //         ),
+              //       ),
+              //     ),
+              //     border: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(50),
+              //       borderSide:
+              //           BorderSide(width: 1, color: KColors.lightBackground),
+              //     ),
+              //     enabledBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(50),
+              //       borderSide:
+              //           BorderSide(width: 1, color: KColors.lightBackground),
+              //     ),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderRadius: BorderRadius.circular(50),
+              //       borderSide: BorderSide(width: 1, color: KColors.primary),
+              //     ),
+              //     contentPadding:
+              //         EdgeInsets.symmetric(horizontal: KSizes.defaultSpace),
+              //   ),
+              //   onChanged: (value) {
+              //     if (value.length > 5) {
+              //       Future.delayed(Duration(milliseconds: 1000), () {
+              //         if (_addressSearchController.text == value) {
+              //           _getAddressSuggestions(value);
+              //         }
+              //       });
+              //     } else {
+              //       setState(() => _predictions = []);
+              //     }
+              //   },
+              // ),
+              // if (_predictions.isNotEmpty) ...[
+              //   SizedBox(height: KSizes.md),
+              //   Wrap(
+              //     spacing: 10,
+              //     runSpacing: 10,
+              //     children: _predictions.map((prediction) {
+              //       final isSelected =
+              //           _selectedAddressId == prediction['place_id'];
+
+              //       return GestureDetector(
+              //         onTap: () => _handleAddressSelection(prediction),
+              //         child: Container(
+              //           padding: EdgeInsets.symmetric(
+              //             horizontal: 16.0,
+              //             vertical: 8.0,
+              //           ),
+              //           decoration: BoxDecoration(
+              //             color: isSelected ? KColors.secondary : Colors.white,
+              //             borderRadius: BorderRadius.circular(20),
+              //             border: Border.all(
+              //               color: isSelected ? KColors.primary : KColors.grey,
+              //             ),
+              //           ),
+              //           child: (prediction['structured_formatting']
+              //                       ['secondary_text'] !=
+              //                   null)
+              //               ? Text(
+              //                   prediction['structured_formatting']
+              //                       ['secondary_text'],
+              //                   style: TextStyle(
+              //                     color: KColors.black,
+              //                   ),
+              //                 )
+              //               : SizedBox(),
+              //         ),
+              //       );
+              //     }).toList(),
+              //   ),
+              // ],
+
+              Wrap(
+                spacing: 10,
+                runSpacing: 10,
+                children: widget.locationProvider.selectedMunicipality!.streets
+                    .map((street) {
+                  final isSelected =
+                      widget.locationProvider.selectedStreet == street;
+
+                  return GestureDetector(
+                    onTap: () {
+                      if (widget.locationProvider.selectedStreet == street) {
+                        widget.locationProvider.setSelectedStreet(null);
+                      } else {
+                        widget.locationProvider.setSelectedStreet(street);
+                      }
+                    },
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0,
+                        vertical: 8.0,
+                      ),
+                      decoration: BoxDecoration(
+                        color: isSelected ? KColors.secondary : Colors.white,
+                        borderRadius: BorderRadius.circular(20),
+                        border: Border.all(
+                          color: isSelected ? KColors.primary : KColors.grey,
                         ),
-                        child: Icon(
-                          AntDesign.search1,
-                          color: KColors.white,
+                      ),
+                      child: Text(
+                        street,
+                        style: TextStyle(
+                          color: Colors.black,
                         ),
                       ),
                     ),
-                  ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide:
-                        BorderSide(width: 1, color: KColors.lightBackground),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide:
-                        BorderSide(width: 1, color: KColors.lightBackground),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(50),
-                    borderSide: BorderSide(width: 1, color: KColors.primary),
-                  ),
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: KSizes.defaultSpace),
-                ),
-                onChanged: (value) {
-                  if (value.length > 5) {
-                    Future.delayed(Duration(milliseconds: 1000), () {
-                      if (_addressSearchController.text == value) {
-                        _getAddressSuggestions(value);
-                      }
-                    });
-                  } else {
-                    setState(() => _predictions = []);
-                  }
-                },
+                  );
+                }).toList(),
               ),
-              if (_predictions.isNotEmpty) ...[
-                SizedBox(height: KSizes.md),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: _predictions.map((prediction) {
-                    final isSelected =
-                        _selectedAddressId == prediction['place_id'];
-
-                    return GestureDetector(
-                      onTap: () => _handleAddressSelection(prediction),
-                      child: Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 16.0,
-                          vertical: 8.0,
-                        ),
-                        decoration: BoxDecoration(
-                          color: isSelected ? KColors.secondary : Colors.white,
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: isSelected ? KColors.primary : KColors.grey,
-                          ),
-                        ),
-                        child: (prediction['structured_formatting']
-                                    ['secondary_text'] !=
-                                null)
-                            ? Text(
-                                prediction['structured_formatting']
-                                    ['secondary_text'],
-                                style: TextStyle(
-                                  color: KColors.black,
-                                ),
-                              )
-                            : SizedBox(),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
               if (widget.locationProvider.selectedStreet != null) ...[
                 SizedBox(height: KSizes.md),
                 CustomButton(
                   text: "Next",
                   onPressed: () {
-                    widget.locationProvider.toggleMinimizedAddress();
+                    context.goNamed(RoutesConstant.personalDetails);
                   },
                 ),
               ],
@@ -251,42 +292,3 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
     );
   }
 }
-
-
- // Wrap(
-              //   spacing: 10,
-              //   runSpacing: 10,
-              //   children: widget.locationProvider.selectedMunicipality!.streets
-              //       .map((street) {
-              //     final isSelected = widget.locationProvider.selectedStreet == street;
-
-              //     return GestureDetector(
-              //       onTap: () {
-              //         if (widget.locationProvider.selectedStreet == street) {
-              //           widget.locationProvider.setSelectedStreet(null);
-              //         } else {
-              //           widget.locationProvider.setSelectedStreet(street);
-              //         }
-              //       },
-              //       child: Container(
-              //         padding: const EdgeInsets.symmetric(
-              //           horizontal: 16.0,
-              //           vertical: 8.0,
-              //         ),
-              //         decoration: BoxDecoration(
-              //           color: isSelected ? KColors.secondary : Colors.white,
-              //           borderRadius: BorderRadius.circular(20),
-              //           border: Border.all(
-              //             color: isSelected ? KColors.primary : KColors.grey,
-              //           ),
-              //         ),
-              //         child: Text(
-              //           street,
-              //           style: TextStyle(
-              //             color: Colors.black,
-              //           ),
-              //         ),
-              //       ),
-              //     );
-              //   }).toList(),
-              // ),
