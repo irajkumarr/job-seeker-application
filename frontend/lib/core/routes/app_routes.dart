@@ -75,8 +75,14 @@ class AppRoutes {
         name: RoutesConstant.signupPassword,
         path: "/signupPassword",
         pageBuilder: (context, state) {
+          final extraData = state.extra as Map<String, String>;
+          final name = extraData["name"];
+          final mobileNumber = extraData["mobileNumber"];
           return MaterialPage(
-            child: SignupPasswordScreen(),
+            child: SignupPasswordScreen(
+              mobileNumber: mobileNumber!,
+              name: name!,
+            ),
           );
         },
       ),

@@ -6,7 +6,7 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
-Future<void> signupPhoneAlert(BuildContext context, String mobileNumber) async {
+Future<void> signupPhoneAlert(BuildContext context, String mobileNumber,String name) async {
   final l10n = AppLocalizations.of(context)!;
   return await showDialog(
     barrierDismissible: false,
@@ -94,7 +94,10 @@ Future<void> signupPhoneAlert(BuildContext context, String mobileNumber) async {
                           ),
                           onPressed: () {
                             // Navigator.of(context).pop();
-                            context.goNamed(RoutesConstant.signupPassword);
+                            context.goNamed(RoutesConstant.signupPassword,extra: {
+                              "name":name,
+                              "mobileNumber":mobileNumber,
+                            });
                             // SystemNavigator.pop();
                           },
                         ),

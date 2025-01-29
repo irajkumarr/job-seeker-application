@@ -189,14 +189,14 @@ class _SignupFormState extends State<SignupForm> {
               if (_signupKey.currentState!.validate()) {
                 if (!signupProvider.termsAndConditions) {
                   setState(() {
-                    _termsError = true; // Show error if unchecked
+                    _termsError = true;
                   });
                   return;
                 }
 
                 // Proceed with signup logic
-                await signupPhoneAlert(
-                    context, _mobileNumberController.text.trim());
+                await signupPhoneAlert(context,
+                    _mobileNumberController.text.trim(), _nameController.text);
               }
             },
           ),
