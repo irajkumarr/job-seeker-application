@@ -2,7 +2,6 @@
 //
 //     final registerRequest = registerRequestFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 RegisterRequest registerRequestFromJson(String str) => RegisterRequest.fromJson(json.decode(str));

@@ -11,7 +11,6 @@ import 'package:frontend/features/authentication/providers/details_provider.dart
 import 'package:frontend/features/authentication/providers/location_provider.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
-import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

@@ -7,11 +7,9 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/data/models/error_model.dart';
 import 'package:frontend/data/models/login_model.dart';
-import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class LoginProvider with ChangeNotifier {
   //variables

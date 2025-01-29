@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
-import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
@@ -10,7 +9,6 @@ import 'package:frontend/data/models/register_request.dart';
 import 'package:frontend/features/authentication/providers/password_provider.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SignupPasswordScreen extends StatelessWidget {
