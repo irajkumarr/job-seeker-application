@@ -5,6 +5,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
+import 'package:frontend/data/models/login_request.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/authentication/providers/password_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
@@ -25,9 +26,32 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _passwordController = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
   final FocusNode _mobileNumberFocusNode = FocusNode();
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _mobileNumberController.addListener(() {
+  //     setState(() {});
+  //   });
+  //   _mobileNumberFocusNode.addListener(() {
+  //     setState(() {});
+  //   });
+  // }
+
   @override
   void initState() {
     super.initState();
+
+    /// **Retrieve Saved Credentials**
+    final loginProvider = Provider.of<LoginProvider>(context, listen: false);
+    final savedCredentials = loginProvider.getSavedCredentials();
+
+    if (savedCredentials["mobile"] != null) {
+      _mobileNumberController.text = savedCredentials["mobile"]!;
+    }
+    if (savedCredentials["password"] != null) {
+      _passwordController.text = savedCredentials["password"]!;
+    }
+
     _mobileNumberController.addListener(() {
       setState(() {});
     });
@@ -177,8 +201,19 @@ class _LoginFormState extends State<LoginForm> {
             text: l10n.sign_in,
             isIconShowed: true,
             icon: Icons.arrow_forward,
-            onPressed: () {
-              if (_loginKey.currentState!.validate()) {}
+            onPressed: () async {
+              if (_loginKey.currentState!.validate()) {
+                LoginRequest model = LoginRequest(
+                  mobileNumber: _mobileNumberController.text.trim(),
+                  password: _passwordController.text,
+                );
+                String data = loginRequestToJson(model);
+                await loginProvider.login(
+                    context,
+                    data,
+                    _mobileNumberController.text.trim(),
+                    _passwordController.text.trim());
+              }
             },
           ),
 
