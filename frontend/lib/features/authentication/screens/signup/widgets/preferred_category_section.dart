@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
@@ -146,19 +147,8 @@ class PreferredCategorySection extends StatelessWidget {
                                               .selectedCategories.length >=
                                           5 &&
                                       !isSelected) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        elevation: 0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(KSizes.md),
-                                        ),
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: KColors.error,
-                                        content: Text("Max limit reached"),
-                                        duration: Duration(seconds: 2),
-                                      ),
-                                    );
+                                    KSnackbar.CustomSnackbar(context,
+                                        "Max limit reached", KColors.error);
                                   } else {
                                     categoryProvider
                                         .toggleCategory(category.name);

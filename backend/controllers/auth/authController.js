@@ -47,6 +47,42 @@ const handleCreateUser = async (req, res) => {
   }
 };
 
+const handleCheckMobileNumber = async (req, res) => {
+  const { mobileNumber } = req.body;
+
+  try {
+    // Validate request body
+    if (!mobileNumber) {
+      return res.status(400).json({
+        status: false,
+        message: "Mobile number is required!"
+      });
+    }
+
+    // Check if user exists with this mobile number
+    const existingUser = await User.findOne({ mobileNumber });
+
+    if (existingUser) {
+      return res.status(400).json({
+        status: false,
+        message: "Mobile number already registered!"
+      });
+    }
+
+    // If no user found with this mobile number
+    return res.status(200).json({
+      status: true,
+      message: "Mobile number is available"
+    });
+
+  } catch (error) {
+    return res.status(500).json({
+      status: false,
+      message: error.message
+    });
+  }
+};
+
 //login user controller
 const handleLoginUser = async (req, res) => {
   // fcmToken if necessary if the device changes with same account
@@ -90,5 +126,6 @@ const handleLoginUser = async (req, res) => {
 
 module.exports = {
   handleCreateUser,
+  handleCheckMobileNumber,
   handleLoginUser,
 };

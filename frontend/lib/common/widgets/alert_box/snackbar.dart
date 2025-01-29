@@ -1,7 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 
 class KSnackbar {
+  static void CustomSnackbar(BuildContext context, String text, Color color) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        elevation: 0,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(KSizes.md),
+        ),
+        behavior: SnackBarBehavior.floating,
+        backgroundColor: color,
+        content: Text(text),
+        duration: Duration(seconds: 2),
+      ),
+    );
+  }
+
   static void Snackbar(
       BuildContext context, String text, bool isButtonShowed, Color? color) {
     final overlay = Overlay.of(context);

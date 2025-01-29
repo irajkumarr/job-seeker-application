@@ -1,13 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-Future<void> signupPhoneAlert(BuildContext context, String mobileNumber,String name) async {
+Future<void> signupPhoneAlert(
+    BuildContext context, String mobileNumber, String name) async {
   final l10n = AppLocalizations.of(context)!;
+
+  final signupProvider = Provider.of<SignupProvider>(context, listen: false);
   return await showDialog(
     barrierDismissible: false,
     context: context,
@@ -92,13 +98,30 @@ Future<void> signupPhoneAlert(BuildContext context, String mobileNumber,String n
                                   fontWeight: FontWeight.w500,
                                 ),
                           ),
-                          onPressed: () {
-                            // Navigator.of(context).pop();
-                            context.goNamed(RoutesConstant.signupPassword,extra: {
-                              "name":name,
-                              "mobileNumber":mobileNumber,
-                            });
-                            // SystemNavigator.pop();
+                          onPressed: () async {
+                            if (context.mounted) {
+                              Navigator.pop(context);
+                            }
+                            // Check if mobile number exists
+                            final isValid = await signupProvider
+                                .checkMobileNumber(mobileNumber);
+
+                            if (isValid) {
+                              // Navigate to password screen if mobile number doesn't exist
+                              if (context.mounted) {
+                                context.goNamed(RoutesConstant.signupPassword,
+                                    extra: {
+                                      "name": name,
+                                      "mobileNumber": mobileNumber,
+                                    });
+                              }
+                            } else {
+                              // Show error if mobile number exists
+                              if (context.mounted) {
+                                KSnackbar.CustomSnackbar(context,
+                                    signupProvider.error, KColors.error);
+                              }
+                            }
                           },
                         ),
                       ),

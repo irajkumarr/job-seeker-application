@@ -22,6 +22,10 @@ class SignupProvider with ChangeNotifier {
   bool get isLoading => _isLoading;
   LoginModel? user;
 
+  String _error = '';
+
+  String get error => _error;
+
   set setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -32,6 +36,38 @@ class SignupProvider with ChangeNotifier {
   void toggleTermsAndConditions() {
     termsAndConditions = !termsAndConditions;
     notifyListeners();
+  }
+
+  // Check if mobile number exists
+  Future<bool> checkMobileNumber(String mobileNumber) async {
+    try {
+      setLoading = true;
+      _error = '';
+      notifyListeners();
+
+      final response = await http.post(
+        Uri.parse('$kAppBaseUrl/check-mobile'),
+        headers: {'Content-Type': 'application/json'},
+        body: json.encode({'mobileNumber': mobileNumber}),
+      );
+
+      final data = json.decode(response.body);
+
+      if (response.statusCode == 400) {
+        _error = data['message'] ?? 'Mobile number already exists';
+        notifyListeners();
+        return false;
+      }
+
+      return true;
+    } catch (e) {
+      _error = 'Something went wrong. Please try again.';
+      notifyListeners();
+      return false;
+    } finally {
+      setLoading = false;
+      notifyListeners();
+    }
   }
 
 //signup
@@ -54,16 +90,15 @@ class SignupProvider with ChangeNotifier {
 
         setLoading = false;
 
-        // showToast(" Registered Sucessfully!");
-        KSnackbar.Snackbar(
-            context, "Registered Sucessfully!", false, Colors.green);
+        // KSnackbar.Snackbar(
+        //     context, "Registered Sucessfully!", false, Colors.green);
         context.goNamed(RoutesConstant.signupPreferred);
       } else {
         setLoading = false;
         var error = errorModelFromJson(response.body);
 
         // showToast(error.message);
-        KSnackbar.Snackbar(context, error.message, false, KColors.error);
+        KSnackbar.CustomSnackbar(context, error.message, KColors.error);
       }
     } catch (e) {
       setLoading = false;
