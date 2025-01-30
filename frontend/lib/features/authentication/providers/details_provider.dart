@@ -112,4 +112,15 @@ class DetailsProvider with ChangeNotifier {
     selectedIsForeignEmployment = value;
     notifyListeners();
   }
+
+  //resetting method
+   void reset() {
+    ageCounter = 16;
+    experienceCounter = 0;
+    selectedGender = null;
+    selectedWorkingStatus = null;
+    selectedIsForeignEmployment = null;
+    selectedSalary = null;
+    notifyListeners();
+  }
 }

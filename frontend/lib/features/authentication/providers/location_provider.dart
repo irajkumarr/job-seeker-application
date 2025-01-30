@@ -61,6 +61,14 @@ class LocationProvider with ChangeNotifier {
     selectedStreet = street;
     notifyListeners();
   }
+
+  void reset() {
+    selectedProvince = null;
+    selectedDistrict = null;
+    selectedMunicipality = null;
+    selectedStreet = null;
+    notifyListeners();
+  }
 }
 
 class Province {

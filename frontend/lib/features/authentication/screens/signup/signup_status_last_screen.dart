@@ -147,6 +147,9 @@ class SignupStatusLastScreen extends StatelessWidget {
 
       if (success) {
         context.goNamed(RoutesConstant.signupFormCompleted);
+        detailProvider.reset();
+        locationProvider.reset();
+        categoryProvider.reset();
       }
     }
 
