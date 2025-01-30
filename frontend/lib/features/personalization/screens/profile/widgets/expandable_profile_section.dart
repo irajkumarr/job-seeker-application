@@ -13,134 +13,13 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 
-// class ExpandableProfileSection extends StatelessWidget {
-//   const ExpandableProfileSection({
-//     super.key,
-//     required this.sectionId,
-//     required this.title,
-//     required this.leadingIcon,
-//     required this.leadingIconColor,
-//     required this.user,
-//   });
+class SectionData {
+  final String label;
+  final String value;
+  final IconData icon;
 
-//   final String sectionId;
-//   final String title;
-//   final IconData leadingIcon;
-//   final Color leadingIconColor;
-//   final LoginModel user; // Replace with your User model type
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Consumer<ProfileProvider>(
-//       builder: (context, provider, child) {
-//         final isExpanded = provider.isExpanded(sectionId);
-
-//         return Column(
-//           children: [
-//             ListTile(
-//               onTap: () => provider.toggleSection(sectionId),
-//               horizontalTitleGap: 10.w,
-//               contentPadding: EdgeInsets.symmetric(
-//                   vertical: KSizes.xs, horizontal: KSizes.md),
-//               tileColor: KColors.secondaryBackground,
-//               shape: RoundedRectangleBorder(
-//                 borderRadius: !isExpanded
-//                     ? BorderRadius.circular(KSizes.sm + 3)
-//                     : BorderRadius.vertical(
-//                         top: Radius.circular(KSizes.sm + 3)),
-//               ),
-//               leading: Icon(
-//                 leadingIcon,
-//                 color: leadingIconColor,
-//               ),
-//               title: Text(
-//                 title,
-//                 style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-//                       fontSize: 18.sp,
-//                     ),
-//               ),
-//               trailing: AnimatedRotation(
-//                 duration: const Duration(milliseconds: 200),
-//                 turns: isExpanded ? 0.5 : 0,
-//                 child: const Icon(Icons.keyboard_arrow_down_sharp),
-//               ),
-//             ),
-//             // Add the Divider here
-//             !isExpanded
-//                 ? SizedBox()
-//                 : Divider(
-//                     height: 1,
-//                     thickness: 1,
-//                     color: KColors.grey,
-//                   ),
-//             AnimatedContainer(
-//               duration: const Duration(milliseconds: 500),
-//               height: isExpanded ? 250 : 0,
-//               child: SingleChildScrollView(
-//                 // physics: const NeverScrollableScrollPhysics(),
-//                 child: Container(
-//                   // margin: EdgeInsets.symmetric(horizontal: KSizes.md),
-//                   padding: EdgeInsets.all(KSizes.md),
-//                   decoration: BoxDecoration(
-//                     color: KColors.secondaryBackground,
-//                     borderRadius: BorderRadius.only(
-//                       bottomLeft: Radius.circular(KSizes.sm),
-//                       bottomRight: Radius.circular(KSizes.sm),
-//                     ),
-//                   ),
-//                   child: ClipRRect(
-//                     borderRadius: BorderRadius.only(
-//                       bottomLeft: Radius.circular(KSizes.sm),
-//                       bottomRight: Radius.circular(KSizes.sm),
-//                     ),
-//                     child: Column(
-//                       crossAxisAlignment: CrossAxisAlignment.start,
-//                       children: [
-//                         _buildInfoRow('Full Name', user.name),
-//                         SizedBox(height: KSizes.sm),
-//                         _buildInfoRow('Mobile', '977-${user.mobileNumber}'),
-//                         SizedBox(height: KSizes.sm),
-//                         _buildInfoRow('Email', user.userToken),
-//                         SizedBox(height: KSizes.sm),
-//                         _buildInfoRow('Address', user.id),
-//                       ],
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ],
-//         );
-//       },
-//     );
-//   }
-
-//   Widget _buildInfoRow(String label, String value) {
-//     return Row(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         SizedBox(
-//           width: 100.w,
-//           child: Text(
-//             label,
-//             style: TextStyle(
-//               color: KColors.grey,
-//               fontSize: 14.sp,
-//             ),
-//           ),
-//         ),
-//         Expanded(
-//           child: Text(
-//             value,
-//             style: TextStyle(
-//               fontSize: 14.sp,
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
+  SectionData({required this.icon, required this.label, required this.value});
+}
 
 class ExpandableProfileSection extends StatelessWidget {
   const ExpandableProfileSection({
@@ -150,7 +29,7 @@ class ExpandableProfileSection extends StatelessWidget {
     required this.leadingIcon,
     required this.leadingIconColor,
     required this.data,
-    required this.height, // List of data to display in this section
+    required this.height,
   });
 
   final String sectionId;
@@ -160,12 +39,35 @@ class ExpandableProfileSection extends StatelessWidget {
   final List<SectionData> data;
   final double height;
 
+  /// Check if all required data fields are completed
+  // Check if section is complete
+  bool isSectionComplete() {
+    // Filter out empty or null values
+    final nonEmptyFields = data.where((item) {
+      final value = item.value.trim();
+      return value.isNotEmpty && value != "_ _ _" && value != "null";
+    }).length;
+
+    // Consider section complete if all fields have valid values
+    return nonEmptyFields == data.length;
+  }
+
+  // Get appropriate icon and color based on completion status
+  IconData get sectionIcon {
+    return isSectionComplete() ? Icons.check_circle : Icons.error_outline;
+  }
+
+  Color get sectionIconColor {
+    return isSectionComplete()
+        ? Colors.green
+        : KColors.primary; // or any warning color you prefer
+  }
+
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         final isExpanded = provider.isExpanded(sectionId);
-
         return Column(
           children: [
             ListTile(
@@ -180,9 +82,14 @@ class ExpandableProfileSection extends StatelessWidget {
                     : BorderRadius.vertical(
                         top: Radius.circular(KSizes.sm + 3)),
               ),
+              // leading: Icon(
+              //   leadingIcon,
+              //   color: leadingIconColor,
+              // ),
               leading: Icon(
-                leadingIcon,
-                color: leadingIconColor,
+                sectionIcon,
+                color: sectionIconColor,
+                size: 24.sp,
               ),
               title: Text(
                 title,
@@ -196,7 +103,6 @@ class ExpandableProfileSection extends StatelessWidget {
                 child: const Icon(Icons.keyboard_arrow_down_sharp),
               ),
             ),
-            // Add the Divider here
             if (isExpanded)
               Divider(
                 height: 1,
@@ -204,10 +110,11 @@ class ExpandableProfileSection extends StatelessWidget {
                 color: KColors.grey,
               ),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
               height: isExpanded ? height : 0,
               child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 child: Container(
                   padding: EdgeInsets.all(KSizes.md),
                   decoration: BoxDecoration(
@@ -257,7 +164,6 @@ class ExpandableProfileSection extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // SizedBox(height: KSizes.md),
                     ],
                   ),
                 ),
@@ -311,18 +217,8 @@ class ExpandableProfileSection extends StatelessWidget {
   }
 }
 
-class SectionData {
-  final String label;
-  final String value;
-  final IconData icon;
-
-  SectionData({required this.icon, required this.label, required this.value});
-}
-
-//extra
-
-class ExpandableCategoryAndSkillSection extends StatelessWidget {
-  const ExpandableCategoryAndSkillSection({
+class ExpandablePreferredJobLocationSection extends StatelessWidget {
+  const ExpandablePreferredJobLocationSection({
     super.key,
     required this.sectionId,
     required this.title,
@@ -336,7 +232,7 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
   final String title;
   final IconData leadingIcon;
   final Color leadingIconColor;
-  final List<String> data;
+  final List<SectionData> data;
   final double height;
 
   @override
@@ -375,7 +271,6 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
                 child: const Icon(Icons.keyboard_arrow_down_sharp),
               ),
             ),
-            // Add the Divider here
             if (isExpanded)
               Divider(
                 height: 1,
@@ -383,11 +278,11 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
                 color: KColors.grey,
               ),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 500),
-              // height: isExpanded ? height : 0,
-              height: isExpanded ? null : 0,
+              duration: const Duration(milliseconds: 300),
+              curve: Curves.easeInOut,
+              height: isExpanded ? height : 0,
               child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
+                physics: const NeverScrollableScrollPhysics(),
                 child: Container(
                   padding: EdgeInsets.all(KSizes.md),
                   decoration: BoxDecoration(
@@ -398,56 +293,21 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
                     ),
                   ),
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ClipRRect(
                         borderRadius: BorderRadius.only(
                           bottomLeft: Radius.circular(KSizes.sm),
                           bottomRight: Radius.circular(KSizes.sm),
                         ),
-                        child:
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: data
-                            //       .map((item) => _buildInfoRow(
-                            //           context, item.label, item.value, item.icon))
-                            //       .toList(),
-                            // ),
-                            Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
-                          children: data.map((data) {
-                            return GestureDetector(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0,
-                                  vertical: 8.0,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: KColors.lightBackground,
-
-                                  borderRadius: BorderRadius.circular(20),
-                                  // border: Border.all(
-                                  //   color: isSelected
-                                  //       ? KColors.primary
-                                  //       : KColors.grey,
-                                  // ),
-                                ),
-                                child: Text(
-                                  data,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }).toList(),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: data
+                              .map((item) => _buildInfoRow(
+                                  context, item.label, item.value, item.icon))
+                              .toList(),
                         ),
                       ),
-                      SizedBox(height: KSizes.sm),
-                      Divider(
-                        color: KColors.grey,
-                      ),
+                      Divider(),
                       SizedBox(height: KSizes.sm),
                       InkWell(
                         onTap: () {},
@@ -472,7 +332,6 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // SizedBox(height: KSizes.md),
                     ],
                   ),
                 ),
@@ -481,6 +340,60 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
           ],
         );
       },
+    );
+  }
+
+  Widget _buildInfoRow(
+      BuildContext context, String label, String value, IconData icon) {
+    return Row(
+      children: [
+        Icon(
+          icon,
+          size: 24,
+          color: Colors.grey[600],
+        ),
+        const SizedBox(width: 12),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Delete Button
+        TextButton(
+          onPressed: () {},
+          style: TextButton.styleFrom(
+            foregroundColor: Colors.red,
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+          ),
+          child: const Text(
+            'Delete',
+            style: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

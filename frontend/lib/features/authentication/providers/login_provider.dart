@@ -7,9 +7,11 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/data/models/error_model.dart';
 import 'package:frontend/data/models/login_model.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class LoginProvider with ChangeNotifier {
   //variables
@@ -44,7 +46,6 @@ class LoginProvider with ChangeNotifier {
     box.write("remember_me", _rememberMe); // Save state to GetStorage
     notifyListeners();
   }
-
 
   /// **Save Credentials if Remember Me is Checked**
   void saveCredentials(String mobile, String password) {
@@ -92,7 +93,8 @@ class LoginProvider with ChangeNotifier {
 
         saveCredentials(
             mobile, password); // Save credentials if Remember Me is checked
-
+        Provider.of<ProfileProvider>(context, listen: false)
+            .fetchProfile(forceRefresh: true);
         setLoading = false;
         context.pop();
         // context.read<NavigationProvider>().onTap(3);
@@ -100,7 +102,7 @@ class LoginProvider with ChangeNotifier {
       } else {
         setLoading = false;
         var error = errorModelFromJson(response.body);
-        KSnackbar.Snackbar(context, error.message, false, KColors.error);
+        KSnackbar.CustomSnackbar(context, error.message, KColors.error);
       }
     } catch (e) {
       setLoading = false;
@@ -120,6 +122,8 @@ class LoginProvider with ChangeNotifier {
       String? savedPassword = box.read("saved_password");
 
       await box.erase(); // Clear all stored data
+      user = null;
+      Provider.of<ProfileProvider>(context, listen: false).profile == null;
 
       if (isRemembered) {
         // Restore saved credentials
@@ -158,7 +162,10 @@ class LoginProvider with ChangeNotifier {
     user = null;
     notifyListeners();
   }
+
+  Future<void> clearRememberMeData() async {
+    await box.remove("saved_mobile");
+    await box.remove("saved_password");
+    await box.write("remember_me", false);
+  }
 }
-
-
-  
