@@ -295,12 +295,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: KSizes.sm),
 
                           //more sections experience education come here
-                          ProfileDetailListTile(
-                            title: title,
-                            leadingIcon: leadingIcon,
-                            onTap: onTap,
-                            leadingIconColor: leadingIconColor,
-                          ),
+                          // ProfileDetailListTile(
+                          //   title: "title",
+                          //   leadingIcon: leadingIcon,
+                          //   onTap: onTap,
+                          //   leadingIconColor: leadingIconColor,
+                          // ),
                         ],
                       ),
                     ),
