@@ -12,7 +12,13 @@ import 'package:frontend/features/authentication/screens/signup/widgets/signup_f
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/features/dashboard/widgets/employer_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/document_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/education_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/language_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
+import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/social_account_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/training_screen.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -22,7 +28,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/navigationMenu",
+    initialLocation: "/document",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -155,6 +161,60 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: ProfileSettingsScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.socialAccount,
+        path: "/socialAccount",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: SocialAccountScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.language,
+        path: "/language",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: LanguageScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.training,
+        path: "/training",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: TrainingScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.education,
+        path: "/education",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: EducationScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.reference,
+        path: "/reference",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ReferenceScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.document,
+        path: "/document",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: DocumentScreen(),
           );
         },
       ),

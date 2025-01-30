@@ -67,6 +67,10 @@ dependencies:
 
   uuid: any
   flutter_cache_manager: any
+  flutter_dash: ^1.0.0
+  file_picker: ^8.3.1
+  image_picker: ^1.1.2
+  device_info_plus: ^11.2.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

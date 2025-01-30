@@ -18,14 +18,14 @@ class RoutesConstant {
   static const String statusDetails = "statusDetails";
   static const String signupFormCompleted = "signupFormCompleted";
   static const String profileSettings = "profileSettings";
-  static const String changePassword = "changePassword";
+  static const String socialAccount = "socialAccount";
   static const String forgotPassword = "forgotPassword";
   static const String resetPassword = "resetPassword";
-  static const String setAddress = "setAddress";
-  static const String checkout = "checkout";
-  static const String payment = "payment";
+  static const String training = "training";
+  static const String education = "education";
+  static const String reference = "reference";
   static const String success = "success";
-  static const String orders = "orders";
+  static const String document = "document";
   static const String orderDetail = "orderDetail";
   static const String search = "search";
 

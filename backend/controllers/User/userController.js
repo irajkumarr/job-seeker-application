@@ -1,5 +1,5 @@
 const User = require("../../models/User/User");
-
+const mongoose = require("mongoose");
 const handleGetUser = async (req, res) => {
   const userId = req.user.id;
   try {
@@ -78,20 +78,152 @@ const handleUpdateUser = async (req, res) => {
 };
 
 //getting all user data
+// const handleGetAllProfiles = async (req, res) => {
+//   try {
+//     const userId = req.user.id;
+//     const userProfiles = await User.aggregate([
+//       {
+//         $match: { _id: userId },
+//       },
+//       {
+//         $lookup: {
+//           from: "profiles", // Collection for profiles
+//           localField: "_id", // User's `_id`
+//           foreignField: "userId", // Field in profiles referencing the user's ID
+//           as: "profile", // Alias for the result
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "experiences", // Collection for experiences
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "experiences",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "documents", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "documents",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "trainings", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "trainings",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "socialaccounts", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "socialaccounts",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "references", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "references",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "languages", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "languages",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "educations", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "educations",
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "emergencycontacts", // Collection for documents
+//           localField: "_id",
+//           foreignField: "userId",
+//           as: "emergencycontacts",
+//         },
+//       },
+//       // Add more lookups as needed for other related collections
+//       {
+//         // $project: {
+//         //   password: 0, // Exclude sensitive fields like passwords
+//         //   "profile.password": 0, // Exclude nested sensitive fields if necessary
+//         // },
+//         $project: {
+//           password: 0, // Exclude sensitive fields like passwords
+//           "profile.password": 0, // Exclude nested sensitive fields if necessary
+//           "experiences._id": 0, // Optionally, exclude other sensitive fields from subcollections
+//           "documents._id": 0, // Exclude _id from documents if not needed
+//           "trainings._id": 0,
+//           "socialaccounts._id": 0,
+//           "references._id": 0,
+//           "languages._id": 0,
+//           "educations._id": 0,
+//           "emergencycontacts._id": 0,
+//         },
+//       },
+//     ]);
+
+//     // Check if profiles exist
+//     if (!userProfiles.length) {
+//       return res.status(404).json({
+//         status: false,
+//         message: "No profiles found",
+//       });
+//     }
+
+//     return res.status(200).json(userProfiles);
+
+//   } catch (error) {
+//     return res.status(500).json({
+//       status: false,
+//       message: error.message,
+//     });
+//   }
+// };
+
 const handleGetAllProfiles = async (req, res) => {
   try {
-    const userProfiles = await User.aggregate([
+    if (!req.user || !req.user.id) {
+      return res.status(400).json({
+        status: false,
+        message: "User ID not found in request",
+      });
+    }
+
+    const userId = new mongoose.Types.ObjectId(req.user.id); // Ensure it's an ObjectId
+
+    // console.log("User ID from token:", userId); // Debugging
+
+    const userProfile = await User.aggregate([
+      {
+        $match: { _id: userId },
+      },
       {
         $lookup: {
-          from: "profiles", // Collection for profiles
-          localField: "_id", // User's `_id`
-          foreignField: "userId", // Field in profiles referencing the user's ID
-          as: "profile", // Alias for the result
+          from: "profiles",
+          localField: "_id",
+          foreignField: "userId",
+          as: "profile",
         },
       },
       {
         $lookup: {
-          from: "experiences", // Collection for experiences
+          from: "experiences",
           localField: "_id",
           foreignField: "userId",
           as: "experiences",
@@ -99,7 +231,7 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "documents", // Collection for documents
+          from: "documents",
           localField: "_id",
           foreignField: "userId",
           as: "documents",
@@ -107,7 +239,7 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "trainings", // Collection for documents
+          from: "trainings",
           localField: "_id",
           foreignField: "userId",
           as: "trainings",
@@ -115,7 +247,7 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "socialaccounts", // Collection for documents
+          from: "socialaccounts",
           localField: "_id",
           foreignField: "userId",
           as: "socialaccounts",
@@ -123,7 +255,7 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "references", // Collection for documents
+          from: "references",
           localField: "_id",
           foreignField: "userId",
           as: "references",
@@ -131,7 +263,7 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "languages", // Collection for documents
+          from: "languages",
           localField: "_id",
           foreignField: "userId",
           as: "languages",
@@ -139,7 +271,7 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "educations", // Collection for documents
+          from: "educations",
           localField: "_id",
           foreignField: "userId",
           as: "educations",
@@ -147,23 +279,18 @@ const handleGetAllProfiles = async (req, res) => {
       },
       {
         $lookup: {
-          from: "emergencycontacts", // Collection for documents
+          from: "emergencycontacts",
           localField: "_id",
           foreignField: "userId",
           as: "emergencycontacts",
         },
       },
-      // Add more lookups as needed for other related collections
       {
-        // $project: {
-        //   password: 0, // Exclude sensitive fields like passwords
-        //   "profile.password": 0, // Exclude nested sensitive fields if necessary
-        // },
         $project: {
-          password: 0, // Exclude sensitive fields like passwords
-          "profile.password": 0, // Exclude nested sensitive fields if necessary
-          "experiences._id": 0, // Optionally, exclude other sensitive fields from subcollections
-          "documents._id": 0, // Exclude _id from documents if not needed
+          password: 0,
+          "profile.password": 0,
+          "experiences._id": 0,
+          "documents._id": 0,
           "trainings._id": 0,
           "socialaccounts._id": 0,
           "references._id": 0,
@@ -174,15 +301,14 @@ const handleGetAllProfiles = async (req, res) => {
       },
     ]);
 
-    // Check if profiles exist
-    if (!userProfiles.length) {
+    if (!userProfile.length) {
       return res.status(404).json({
         status: false,
-        message: "No profiles found",
+        message: "User profile not found",
       });
     }
 
-    return res.status(200).json(userProfiles);
+    return res.status(200).json(userProfile[0]);
   } catch (error) {
     return res.status(500).json({
       status: false,
