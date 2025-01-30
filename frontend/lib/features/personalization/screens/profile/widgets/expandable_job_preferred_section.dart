@@ -3,18 +3,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/expandable_profile_section.dart';
 import 'package:provider/provider.dart';
 
-class SectionData {
-  final String label;
-  final String value;
-  final IconData icon;
-
-  SectionData({required this.icon, required this.label, required this.value});
-}
-
-class ExpandableProfileSection extends StatelessWidget {
-  const ExpandableProfileSection({
+class ExpandablePreferredJobLocationSection extends StatelessWidget {
+  const ExpandablePreferredJobLocationSection({
     super.key,
     required this.sectionId,
     required this.title,
@@ -31,35 +24,12 @@ class ExpandableProfileSection extends StatelessWidget {
   final List<SectionData> data;
   final double height;
 
-  /// Check if all required data fields are completed
-  // Check if section is complete
-  bool isSectionComplete() {
-    // Filter out empty or null values
-    final nonEmptyFields = data.where((item) {
-      final value = item.value.trim();
-      return value.isNotEmpty && value != "_ _ _" && value != "null";
-    }).length;
-
-    // Consider section complete if all fields have valid values
-    return nonEmptyFields == data.length;
-  }
-
-  // Get appropriate icon and color based on completion status
-  IconData get sectionIcon {
-    return isSectionComplete() ? Icons.check_circle : Icons.error_outline;
-  }
-
-  Color get sectionIconColor {
-    return isSectionComplete()
-        ? Colors.green
-        : KColors.primary; // or any warning color you prefer
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         final isExpanded = provider.isExpanded(sectionId);
+
         return Column(
           children: [
             ListTile(
@@ -74,14 +44,9 @@ class ExpandableProfileSection extends StatelessWidget {
                     : BorderRadius.vertical(
                         top: Radius.circular(KSizes.sm + 3)),
               ),
-              // leading: Icon(
-              //   leadingIcon,
-              //   color: leadingIconColor,
-              // ),
               leading: Icon(
-                sectionIcon,
-                color: sectionIconColor,
-                size: 24.sp,
+                leadingIcon,
+                color: leadingIconColor,
               ),
               title: Text(
                 title,
@@ -139,13 +104,13 @@ class ExpandableProfileSection extends StatelessWidget {
                         child: Row(
                           children: [
                             Icon(
-                              Icons.edit,
+                              Icons.add_circle,
                               color: KColors.black.withOpacity(0.7),
                               size: KSizes.iconSm + 4,
                             ),
                             SizedBox(width: KSizes.md),
                             Text(
-                              "Edit ${title}",
+                              "Add ${title}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!
@@ -169,44 +134,55 @@ class ExpandableProfileSection extends StatelessWidget {
 
   Widget _buildInfoRow(
       BuildContext context, String label, String value, IconData icon) {
-    return Column(
+    return Row(
       children: [
-        Row(
-          spacing: KSizes.md,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(
-              icon,
-              color: KColors.black.withOpacity(0.7),
-              size: KSizes.iconSm + 4,
-            ),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    label,
-                    style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                          fontSize: 14.sp,
-                        ),
-                  ),
-                  Text(
-                    value,
-                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                          fontSize: 14.sp,
-                          fontWeight: FontWeight.w700,
-                        ),
-                  ),
-                ],
-              ),
-            ),
-          ],
+        Icon(
+          icon,
+          size: 24,
+          color: Colors.grey[600],
         ),
-        SizedBox(height: KSizes.md),
+        const SizedBox(width: 12),
+
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+        ),
+
+        // Delete Button
+        // TextButton(
+        //   onPressed: () {},
+        //   style: TextButton.styleFrom(
+        //     foregroundColor: Colors.red,
+        //     padding: const EdgeInsets.symmetric(horizontal: 8),
+        //   ),
+        //   child: const Text(
+        //     'Delete',
+        //     style: TextStyle(
+        //       fontSize: 14,
+        //       fontWeight: FontWeight.w400,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
 }
-
-

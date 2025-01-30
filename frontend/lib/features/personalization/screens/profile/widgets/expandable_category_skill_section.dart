@@ -66,98 +66,101 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
                 thickness: 1,
                 color: KColors.grey,
               ),
-            AnimatedContainer(
+            AnimatedSize(
               duration: const Duration(milliseconds: 500),
-              // height: isExpanded ? height : 0,
-              height: isExpanded ? null : 0,
-              child: SingleChildScrollView(
-                physics: NeverScrollableScrollPhysics(),
-                child: Container(
-                  padding: EdgeInsets.all(KSizes.md),
-                  decoration: BoxDecoration(
-                    color: KColors.secondaryBackground,
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(KSizes.sm),
-                      bottomRight: Radius.circular(KSizes.sm),
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 500),
+                // height: isExpanded ? height : 0,
+                height: isExpanded ? null : 0,
+                child: SingleChildScrollView(
+                  physics: NeverScrollableScrollPhysics(),
+                  child: Container(
+                    padding: EdgeInsets.all(KSizes.md),
+                    decoration: BoxDecoration(
+                      color: KColors.secondaryBackground,
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(KSizes.sm),
+                        bottomRight: Radius.circular(KSizes.sm),
+                      ),
                     ),
-                  ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(KSizes.sm),
-                          bottomRight: Radius.circular(KSizes.sm),
-                        ),
-                        child:
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: data
-                            //       .map((item) => _buildInfoRow(
-                            //           context, item.label, item.value, item.icon))
-                            //       .toList(),
-                            // ),
-                            Wrap(
-                          spacing: 10,
-                          runSpacing: 10,
-                          children: data.map((data) {
-                            return GestureDetector(
-                              child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                  horizontal: 16.0,
-                                  vertical: 8.0,
-                                ),
-                                decoration: BoxDecoration(
-                                  color: KColors.lightBackground,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(KSizes.sm),
+                            bottomRight: Radius.circular(KSizes.sm),
+                          ),
+                          child:
+                              // Column(
+                              //   crossAxisAlignment: CrossAxisAlignment.start,
+                              //   children: data
+                              //       .map((item) => _buildInfoRow(
+                              //           context, item.label, item.value, item.icon))
+                              //       .toList(),
+                              // ),
+                              Wrap(
+                            spacing: 10,
+                            runSpacing: 10,
+                            children: data.map((data) {
+                              return GestureDetector(
+                                child: Container(
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                    vertical: 8.0,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    color: KColors.lightBackground,
 
-                                  borderRadius: BorderRadius.circular(20),
-                                  // border: Border.all(
-                                  //   color: isSelected
-                                  //       ? KColors.primary
-                                  //       : KColors.grey,
-                                  // ),
-                                ),
-                                child: Text(
-                                  data,
-                                  style: TextStyle(
-                                    color: Colors.black,
+                                    borderRadius: BorderRadius.circular(20),
+                                    // border: Border.all(
+                                    //   color: isSelected
+                                    //       ? KColors.primary
+                                    //       : KColors.grey,
+                                    // ),
+                                  ),
+                                  child: Text(
+                                    data,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                    ),
                                   ),
                                 ),
+                              );
+                            }).toList(),
+                          ),
+                        ),
+                        SizedBox(height: KSizes.sm),
+                        Divider(
+                          color: KColors.grey,
+                        ),
+                        SizedBox(height: KSizes.sm),
+                        InkWell(
+                          onTap: () {},
+                          borderRadius: BorderRadius.circular(KSizes.sm + 4),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.add_circle,
+                                color: KColors.black.withOpacity(0.7),
+                                size: KSizes.iconSm + 4,
                               ),
-                            );
-                          }).toList(),
+                              SizedBox(width: KSizes.md),
+                              Text(
+                                "Add ${title}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      fontSize: 14.sp,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
-                      SizedBox(height: KSizes.sm),
-                      Divider(
-                        color: KColors.grey,
-                      ),
-                      SizedBox(height: KSizes.sm),
-                      InkWell(
-                        onTap: () {},
-                        borderRadius: BorderRadius.circular(KSizes.sm + 4),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.add_circle,
-                              color: KColors.black.withOpacity(0.7),
-                              size: KSizes.iconSm + 4,
-                            ),
-                            SizedBox(width: KSizes.md),
-                            Text(
-                              "Add ${title}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                    fontSize: 14.sp,
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      // SizedBox(height: KSizes.md),
-                    ],
+                        // SizedBox(height: KSizes.md),
+                      ],
+                    ),
                   ),
                 ),
               ),
