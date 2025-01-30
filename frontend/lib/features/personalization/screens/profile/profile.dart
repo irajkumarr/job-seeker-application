@@ -15,6 +15,7 @@ import 'package:frontend/features/personalization/screens/profile/widgets/profil
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -295,66 +296,228 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: KSizes.sm),
 
                           //more sections experience education come here
+                          // !profile.experiences!.isEmpty
+                          //     ? ProfileDetailsWidget(
+                          //         height: 400.h,
+                          //         sectionId: 'experience_info',
+                          //         title: 'Experience',
+                          //         leadingIcon: Icons.check_circle,
+                          //         leadingIconColor: Colors.green,
+                          //         data: profile.experiences != null
+                          //             ? profile.experiences!.map((experience) {
+                          //                 return SectionData(
+                          //                   icon: Icons.radio_button_checked,
+                          //                   label: experience.startDate?.year
+                          //                           .toString() ??
+                          //                       "",
+                          //                   value: experience.industry ?? "",
+                          //                 );
+                          //               }).toList()
+                          //             : [],
+                          //       )
+                          //     : ProfileDetailListTile(
+                          //         title: "Work Experience",
+                          //         onAdd: () {},
+                          //       ),
                           !profile.experiences!.isEmpty
                               ? ProfileDetailsWidget(
-                                  height: 400.h,
-                                  sectionId: 'experience_info',
-                                  title: 'Experience',
+                                  sectionId: "experience_section",
+                                  title: "Work Experience",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
-                                  data: [
-                                    SectionData(
-                                      icon: Icons.radio_button_checked,
-                                      label: profile.profile![0]
-                                              .preferredJobLocation?.district ??
-                                          "",
-                                      value: profile
-                                              .profile![0]
-                                              .preferredJobLocation
-                                              ?.fullAddress ??
-                                          "",
-                                    ),
-                                  ],
+                                  height: 160.h,
+                                  data: profile.experiences!.map((exp) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label':
+                                          exp.organizationName ?? "Unknown",
+                                      'value':
+                                          "${exp.designation ?? ""} (${exp.startDate?.year} - ${exp.currentlyWorking == true ? "Present" : exp.endDate?.year})",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Work Experience",
                                   onAdd: () {},
                                 ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Education",
-                            onAdd: () {},
-                          ),
+                          !profile.educations!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "education_section",
+                                  title: "Education",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  data: profile.educations!.map((education) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label': education.level ?? "Unknown",
+                                      'value':
+                                          "${education.institution ?? ""} - ${education.major ?? ""} (${education.startDate?.year} - ${education.endDate?.year})",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Education",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Training",
-                            onAdd: () {},
-                          ),
+                          !profile.trainings!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "training_section",
+                                  title: "Training",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  data: profile.trainings!.map((training) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label': training.name ?? "Unknown",
+                                      'value':
+                                          "${training.institute ?? ""} - ${training.duration?.value ?? ""} ${training.duration?.unit ?? ""} (${training.completionYear})",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Training",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Language",
-                            onAdd: () {},
-                          ),
+                          !profile.languages!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "language_section",
+                                  title: "Language",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  isRating: true,
+                                  data: profile.languages!.map((language) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label': language.name ?? "Unknown",
+                                      // 'value':
+                                      //  "${language.score ?? ""}",
+                                      'value': language.score ?? "",
+
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Language",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Document",
-                            onAdd: () {},
-                          ),
+                          !profile.documents!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "document_section",
+                                  title: "Document",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  isImage: true,
+                                  data: profile.documents!.map((document) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label': document.category ?? "Unknown",
+                                      'value': "${document.file ?? ""}",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Document",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Social Account",
-                            onAdd: () {},
-                          ),
+                          !profile.socialaccounts!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "social_account_section",
+                                  title: "Social Account",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  data: profile.socialaccounts!
+                                      .map((socialaccount) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label':
+                                          socialaccount.platform ?? "Unknown",
+                                      'value': "${socialaccount.url ?? ""}",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Social Account",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Contact Information",
-                            onAdd: () {},
-                          ),
+                          !profile.emergencycontacts!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "emergency_contact_section",
+                                  title: "Contact Information",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  data: profile.emergencycontacts!
+                                      .map((emergencycontact) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label': emergencycontact.relation ??
+                                          "Unknown",
+                                      'value':
+                                          "${emergencycontact.fullName ?? ""} - ${emergencycontact.phoneNumber ?? ""} (${emergencycontact.address ?? ""})",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Contact Information",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.sm),
-                          ProfileDetailListTile(
-                            title: "Reference",
-                            onAdd: () {},
-                          ),
+                          !profile.references!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  sectionId: "reference_section",
+                                  title: "Reference",
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  height: 160.h,
+                                  data: profile.references!.map((reference) {
+                                    return {
+                                      'icon': Icons.radio_button_checked,
+                                      'label':
+                                          reference.organization ?? "Unknown",
+                                      'value':
+                                          "${reference.name ?? ""} \n ${reference.phoneNumber ?? ""}\n (${reference.designation ?? ""})",
+                                      'onEdit': () {},
+                                      'onDelete': () {},
+                                    };
+                                  }).toList(),
+                                  onAdd: () {}, // Define add function
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Reference",
+                                  onAdd: () {},
+                                ),
                           SizedBox(height: KSizes.defaultSpace),
                         ],
                       ),
