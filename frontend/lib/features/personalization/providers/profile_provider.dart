@@ -34,4 +34,19 @@ class ProfileProvider extends ChangeNotifier {
     user = null;
     notifyListeners();
   }
+
+  //
+    Map<String, bool> _expandedSections = {};
+  
+  bool isExpanded(String sectionId) => _expandedSections[sectionId] ?? false;
+  
+  void toggleSection(String sectionId) {
+    _expandedSections[sectionId] = !isExpanded(sectionId);
+    notifyListeners();
+  }
+  
+  void collapseAll() {
+    _expandedSections.clear();
+    notifyListeners();
+  }
 }
