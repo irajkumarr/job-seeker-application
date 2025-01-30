@@ -230,7 +230,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               data: profile.profile![0].skills!),
                           SizedBox(height: KSizes.sm),
                           ExpandablePreferredJobLocationSection(
-                              height: 300.h,
+                              height: 135.h,
                               sectionId: 'preferred_job_location_info',
                               title: 'Preferred Job Location',
                               leadingIcon: Icons.check_circle,
@@ -244,11 +244,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   value: profile.profile![0]
                                           .preferredJobLocation?.fullAddress ??
                                       "",
-                                )
+                                ),
                               ]),
                           SizedBox(height: KSizes.sm),
                           ExpandableProfileSection(
-                            height: 500.h,
+                            height: 400.h,
                             sectionId: 'job_preference_info',
                             title: 'Job Preference',
                             leadingIcon: Icons.error_outline_outlined,
@@ -295,12 +295,67 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: KSizes.sm),
 
                           //more sections experience education come here
-                          // ProfileDetailListTile(
-                          //   title: "title",
-                          //   leadingIcon: leadingIcon,
-                          //   onTap: onTap,
-                          //   leadingIconColor: leadingIconColor,
-                          // ),
+                          !profile.experiences!.isEmpty
+                              ? ProfileDetailsWidget(
+                                  height: 400.h,
+                                  sectionId: 'experience_info',
+                                  title: 'Experience',
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  data: [
+                                    SectionData(
+                                      icon: Icons.radio_button_checked,
+                                      label: profile.profile![0]
+                                              .preferredJobLocation?.district ??
+                                          "",
+                                      value: profile
+                                              .profile![0]
+                                              .preferredJobLocation
+                                              ?.fullAddress ??
+                                          "",
+                                    ),
+                                  ],
+                                )
+                              : ProfileDetailListTile(
+                                  title: "Work Experience",
+                                  onAdd: () {},
+                                ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Education",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Training",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Language",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Document",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Social Account",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Contact Information",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.sm),
+                          ProfileDetailListTile(
+                            title: "Reference",
+                            onAdd: () {},
+                          ),
+                          SizedBox(height: KSizes.defaultSpace),
                         ],
                       ),
                     ),

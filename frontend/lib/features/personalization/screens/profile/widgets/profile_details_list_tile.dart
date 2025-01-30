@@ -7,52 +7,51 @@ class ProfileDetailListTile extends StatelessWidget {
   const ProfileDetailListTile({
     super.key,
     required this.title,
-    required this.leadingIcon,
-    required this.onTap,
-    required this.leadingIconColor,
+    // required this.leadingIcon,
+    required this.onAdd,
+    // required this.leadingIconColor,
   });
   final String title;
-  final IconData leadingIcon;
-  final Color leadingIconColor;
-  final VoidCallback onTap;
+  // final Color leadingIconColor;
+  final VoidCallback onAdd;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: const Color(0xFFFFF8F0), // Light peach background
+        color: KColors.secondary,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Work Experience',
-            style: TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w600,
-              color: Color(0xFF1A1A1A),
-            ),
+          Text(
+            title,
+            style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                  fontSize: 18.sp,
+                ),
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: KSizes.sm),
+          Divider(
+            color: KColors.grey,
+          ),
+          SizedBox(height: KSizes.sm),
           InkWell(
-            onTap: () {},
+            onTap: onAdd,
             child: Row(
               children: [
                 Icon(
-                  Icons.add_circle_outline,
-                  color: KColors.secondary,
+                  Icons.add_circle,
+                  color: KColors.primary,
                   size: 20,
                 ),
-                const SizedBox(width: 8),
+                const SizedBox(width: KSizes.md),
                 Text(
                   'Add Work Experience',
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.orange[400],
-                  ),
+                  style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                        color: KColors.primary,
+                      ),
                 ),
               ],
             ),
