@@ -12,6 +12,7 @@ import 'package:frontend/features/authentication/screens/signup/widgets/signup_f
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
 import 'package:frontend/features/dashboard/widgets/employer_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/contact_information_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/document_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/education_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/language_screen.dart';
@@ -28,7 +29,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/document",
+    initialLocation: "/contactInformation",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -215,6 +216,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: DocumentScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.contactInformation,
+        path: "/contactInformation",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ContactInformationScreen(),
           );
         },
       ),

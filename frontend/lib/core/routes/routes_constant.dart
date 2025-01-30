@@ -26,7 +26,7 @@ class RoutesConstant {
   static const String reference = "reference";
   static const String success = "success";
   static const String document = "document";
-  static const String orderDetail = "orderDetail";
+  static const String contactInformation = "contactInformation";
   static const String search = "search";
 
   static const String language = "language";

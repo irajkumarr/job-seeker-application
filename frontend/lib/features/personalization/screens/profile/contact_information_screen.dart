@@ -1,36 +1,46 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:image_picker/image_picker.dart';
 
-class ReferenceScreen extends StatefulWidget {
-  const ReferenceScreen({super.key});
+class ContactInformationScreen extends StatefulWidget {
+  const ContactInformationScreen({super.key});
 
   @override
-  State<ReferenceScreen> createState() => _ReferenceScreenState();
+  _ContactInformationScreenState createState() =>
+      _ContactInformationScreenState();
 }
 
-class _ReferenceScreenState extends State<ReferenceScreen> {
-  final TextEditingController _referenceNameController =
+class _ContactInformationScreenState extends State<ContactInformationScreen> {
+  final TextEditingController _contactFullNameController =
       TextEditingController();
-  final TextEditingController _designationController = TextEditingController();
-  final TextEditingController _organizationNameController =
-      TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _addressController = TextEditingController();
   final TextEditingController _phoneNumberController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
+
+  final List<String> _relation = [
+    "Mother",
+    "Father",
+    "Friend",
+  ];
+
+  String? _selectedRelation;
 
   // Dropdown values
   String? _selectedNumberType;
 
-  final List<String> _numberTypes = ["Mobile","Home", "Office", ];
-
+  final List<String> _numberTypes = [
+    "Mobile",
+    "Home",
+    "Office",
+  ];
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -38,7 +48,11 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
     return CustomScreen(
       onPressed: () {
         if (_formKey.currentState!.validate()) {
-          // Handle form submission
+          if (_selectedRelation == null) {
+            // Show an error message
+            KSnackbar.CustomSnackbar(
+                context, "Please select a relation", KColors.error);
+          }
         }
       },
       buttonText: l10n.submit,
@@ -48,7 +62,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
         child: Column(
           children: [
             Text(
-              "Reference",
+              "Contact Information",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -61,34 +75,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   TextFormField(
-                    controller: _referenceNameController,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(fontSize: KSizes.fontSizeSm),
-                    validator: (value) =>
-                        KValidator.validateEmptyText("Reference name", value),
-                    decoration:
-                        const InputDecoration(labelText: "Reference name"),
-                  ),
-                  SizedBox(height: KSizes.defaultSpace),
-                  TextFormField(
-                    controller: _designationController,
-                    textInputAction: TextInputAction.next,
-                    keyboardType: TextInputType.text,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyLarge!
-                        .copyWith(fontSize: KSizes.fontSizeSm),
-                    validator: (value) =>
-                        KValidator.validateEmptyText("Designation", value),
-                    decoration: const InputDecoration(labelText: "Designation"),
-                  ),
-                  SizedBox(height: KSizes.defaultSpace),
-                  TextFormField(
-                    controller: _organizationNameController,
+                    controller: _contactFullNameController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.text,
                     style: Theme.of(context)
@@ -96,13 +83,14 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                         .bodyLarge!
                         .copyWith(fontSize: KSizes.fontSizeSm),
                     validator: (value) => KValidator.validateEmptyText(
-                        "Organization Name", value),
-                    decoration:
-                        const InputDecoration(labelText: "Organization Name"),
+                        "Contact Person Full Name", value),
+                    decoration: InputDecoration(
+                      labelText: "Contact Person Full Name",
+                    ),
                   ),
                   SizedBox(height: KSizes.defaultSpace),
                   TextFormField(
-                    controller: _emailController,
+                    controller: _addressController,
                     textInputAction: TextInputAction.next,
                     keyboardType: TextInputType.text,
                     style: Theme.of(context)
@@ -110,15 +98,69 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                         .bodyLarge!
                         .copyWith(fontSize: KSizes.fontSizeSm),
                     validator: (value) =>
-                        KValidator.validateEmptyText("Email", value),
-                    decoration: const InputDecoration(labelText: "Email"),
+                        KValidator.validateEmptyText("Address", value),
+                    decoration: InputDecoration(
+                      labelText: "Address",
+                    ),
                   ),
-
                   SizedBox(height: KSizes.sm),
                   DottedDivider(),
-                  SizedBox(height: KSizes.sm),
+                  SizedBox(height: KSizes.md),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Relation",
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 18.sp,
+                            ),
+                      ),
+                      SizedBox(height: KSizes.sm),
+                      Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: _relation.map((relation) {
+                          final isSelected = _selectedRelation == relation;
 
-                  // Duration Section
+                          return GestureDetector(
+                            onTap: () {
+                              setState(() {
+                                if (_selectedRelation == relation) {
+                                  _selectedRelation = null;
+                                } else {
+                                  _selectedRelation = relation;
+                                }
+                              });
+                            },
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 16.0, vertical: 8.0),
+                              decoration: BoxDecoration(
+                                color: isSelected
+                                    ? KColors.secondary
+                                    : Colors.white,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: isSelected
+                                      ? KColors.primary
+                                      : KColors.grey,
+                                ),
+                              ),
+                              child: Text(
+                                relation,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: KSizes.md),
+                  DottedDivider(),
+                  SizedBox(height: KSizes.md),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -135,6 +177,9 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                               icon: Icon(Icons.keyboard_arrow_down_outlined),
                               value: _selectedNumberType,
                               dropdownColor: KColors.white,
+                              validator: (value) =>
+                                  KValidator.validateEmptyText(
+                                      "Number Type", value),
                               onChanged: (value) {
                                 setState(() {
                                   _selectedNumberType = value;
@@ -159,8 +204,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                                   .bodyLarge!
                                   .copyWith(fontSize: KSizes.fontSizeSm),
                               validator: (value) =>
-                                  KValidator.validateEmptyText(
-                                      "Phone Number", value),
+                                  KValidator.validatePhoneNumber(value),
                               decoration: const InputDecoration(
                                   labelText: "Phone Number"),
                             ),
@@ -169,6 +213,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                       ),
                     ],
                   ),
+                  SizedBox(height: KSizes.defaultSpace),
                 ],
               ),
             )
