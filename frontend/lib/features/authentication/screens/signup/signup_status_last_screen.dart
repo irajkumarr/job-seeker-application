@@ -23,59 +23,7 @@ class SignupStatusLastScreen extends StatelessWidget {
     final signupProvider = Provider.of<SignupProvider>(context);
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final locationProvider = Provider.of<LocationProvider>(context);
-    // void _submitProfile(BuildContext context) async {
-    //   final profile = UserProfileRequest(
-    //     preferredCategories: categoryProvider.selectedCategories.toList(),
-    //     skills: categoryProvider.selectedSkills.toList(),
-    //     preferredJobLocation: PreferredJobLocation(
-    //       province: locationProvider.selectedProvince?.name ?? '',
-    //       district: locationProvider.selectedDistrict?.name ?? '',
-    //       municipality: locationProvider.selectedMunicipality?.name ?? '',
-    //       fullAddress: locationProvider.selectedStreet ?? '',
-    //     ),
-    //     personalDetails: PersonalDetails(
-    //       age: detailProvider.ageCounter,
-    //       experience: detailProvider.experienceCounter,
-    //       gender: detailProvider.selectedGender ?? "",
-    //       maritalStatus: "Single",
-    //       nationality: "Nepali",
-    //       religion: "Hindu",
-    //       email: "test@example.com",
-    //       disability: Disability(hasDisability: false, details: ""),
-    //       workingStatus: detailProvider.selectedWorkingStatus ?? "",
-    //       foreignEmployment: ForeignEmployment(
-    //           hasWorkedAboroad: detailProvider.foreignEmploymentAsBool ?? false,
-    //           details: ""),
-    //     ),
-    //     jobPreference: JobPreference(
-    //       jobLevel: "",
-    //       availabilityStatus: "",
-    //       preferredShift: "",
-    //       expectedSalary: detailProvider.selectedSalary ?? "",
-    //       careerObjectives: "",
-    //     ),
-    //   );
-
-    //   final success = await signupProvider.createProfile(profile);
-    //   if (!context.mounted) return;
-    //   if (success) {
-    //     // ScaffoldMessenger.of(context).showSnackBar(
-    //     //   SnackBar(content: Text("Profile created successfully!")),
-    //     // );
-    //     // KSnackbar.CustomSnackbar(
-    //     //     context, "Profile created successfully!", Colors.green);
-    //   } else {
-    //     // ScaffoldMessenger.of(context).showSnackBar(
-    //     //   SnackBar(
-    //     //       content: Text(
-    //     //           signupProvider.errorMessage ?? "Profile creation failed")),
-    //     // );
-    //     // KSnackbar.CustomSnackbar(
-    //     //     context,
-    //     //     signupProvider.errorMessage ?? "Profile creation failed",
-    //     //     KColors.error);
-    //   }
-    // }
+  
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
       if (detailProvider.selectedIsForeignEmployment == null ||
           detailProvider.selectedWorkingStatus == null) {
@@ -114,23 +62,23 @@ class SignupStatusLastScreen extends StatelessWidget {
           age: detailProvider.ageCounter,
           experience: detailProvider.experienceCounter,
           gender: detailProvider.selectedGender!.toLowerCase(),
-          maritalStatus: "single",
-          nationality: "Nepali",
-          religion: "Hindu",
-          email: "test@example.com",
-          disability: Disability(hasDisability: false, details: ""),
+          // maritalStatus: "single",
+          // nationality: "Nepali",
+          // religion: "Hindu",
+          // email: "test@example.com",
+          // disability: Disability(hasDisability: false, details: ""),
           workingStatus: detailProvider.selectedWorkingStatus ?? "",
           foreignEmployment: ForeignEmployment(
             hasWorkedAboroad: detailProvider.foreignEmploymentAsBool ?? false,
-            details: "",
+            // details: "",
           ),
         ),
         jobPreference: JobPreference(
-          jobLevel: "entry",
-          availabilityStatus: "immediate",
-          preferredShift: "any",
+          // jobLevel: "entry",
+          // availabilityStatus: "immediate",
+          // preferredShift: "any",
           expectedSalary: detailProvider.selectedSalary ?? "",
-          careerObjectives: "",
+          // careerObjectives: "",
         ),
       );
 
@@ -158,16 +106,7 @@ class SignupStatusLastScreen extends StatelessWidget {
       child: FullScreenOverlay(
         isLoading: signupProvider.isLoading,
         child: CustomScreen(
-          // onPressed: () {
-          //   if (detailProvider.selectedIsForeignEmployment == null ||
-          //       detailProvider.selectedWorkingStatus == null) {
-          //     KSnackbar.CustomSnackbar(
-          //         context, "Please select required fields", KColors.error);
-          //   }
-          //   //api calling
-          //   _submitProfile(context);
-          //   context.goNamed(RoutesConstant.signupFormCompleted);
-          // },
+         
           onPressed: () => _submitProfile(context),
           isProgressBarShowed: true,
           progressBarWidth: 300.w,

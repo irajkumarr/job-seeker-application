@@ -132,9 +132,12 @@ class CategoryProvider with ChangeNotifier {
     notifyListeners();
   }
 
-   void reset() {
+  void reset() {
     selectedCategories.clear();
     selectedSkills.clear();
+    isMinimizedCategory = false;
+
+    isMinimizedSkill = false;
     notifyListeners();
   }
 }

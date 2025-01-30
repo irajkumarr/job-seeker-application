@@ -43,7 +43,6 @@ class SignupProvider with ChangeNotifier {
       setLoading = true;
       _error = '';
       notifyListeners();
-
       final response = await http.post(
         Uri.parse('$kAppBaseUrl/check-mobile'),
         headers: {'Content-Type': 'application/json'},

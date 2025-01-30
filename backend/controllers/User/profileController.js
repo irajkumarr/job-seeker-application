@@ -49,13 +49,14 @@ const handleCreateProfile = async (req, res) => {
       !personalDetails ||
       !personalDetails.age ||
       !personalDetails.gender ||
-      !personalDetails.nationality ||
-      !personalDetails.email
+      !personalDetails.experience ||
+      !personalDetails.workingStatus ||
+      !personalDetails.foreignEmployment
     ) {
       return res.status(400).json({
         status: false,
         message:
-          "Personal details (age, gender, nationality, email) are required.",
+          "Personal details (age, gender, experience, expected salary) are required.",
       });
     }
     // if (

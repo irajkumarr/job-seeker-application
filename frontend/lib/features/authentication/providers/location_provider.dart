@@ -63,12 +63,19 @@ class LocationProvider with ChangeNotifier {
   }
 
   void reset() {
-    selectedProvince = null;
-    selectedDistrict = null;
-    selectedMunicipality = null;
-    selectedStreet = null;
-    notifyListeners();
-  }
+  selectedProvince = null;
+  selectedDistrict = null;
+  selectedMunicipality = null;
+  selectedStreet = null;
+
+  isMinimizedProvince = false;
+  isMinimizedDistrict = false;
+  isMinimizedMunicipality = false;
+  isMinimizedAddress = false;
+
+  notifyListeners();
+}
+
 }
 
 class Province {

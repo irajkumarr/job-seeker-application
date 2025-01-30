@@ -26,16 +26,7 @@ class _LoginFormState extends State<LoginForm> {
   final TextEditingController _passwordController = TextEditingController();
   final _loginKey = GlobalKey<FormState>();
   final FocusNode _mobileNumberFocusNode = FocusNode();
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _mobileNumberController.addListener(() {
-  //     setState(() {});
-  //   });
-  //   _mobileNumberFocusNode.addListener(() {
-  //     setState(() {});
-  //   });
-  // }
+
 
   @override
   void initState() {
@@ -63,6 +54,7 @@ class _LoginFormState extends State<LoginForm> {
   @override
   void dispose() {
     _mobileNumberController.dispose();
+    _passwordController.dispose();
     _mobileNumberFocusNode.dispose();
     super.dispose();
   }
@@ -162,26 +154,31 @@ class _LoginFormState extends State<LoginForm> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                children: [
-                  SizedBox(
-                    width: 24,
-                    height: 24,
-                    child: Checkbox(
-                      value: loginProvider.rememberMe,
-                      onChanged: (value) {
-                        loginProvider.toggleRememberMe();
-                      },
+              InkWell(
+                onTap: () {
+                  loginProvider.toggleRememberMe();
+                },
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 24,
+                      height: 24,
+                      child: Checkbox(
+                        value: loginProvider.rememberMe,
+                        onChanged: (value) {
+                          loginProvider.toggleRememberMe();
+                        },
+                      ),
                     ),
-                  ),
-                  SizedBox(
-                    width: KSizes.sm,
-                  ),
-                  Text(
-                    "${l10n.remember_me}",
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                ],
+                    SizedBox(
+                      width: KSizes.sm,
+                    ),
+                    Text(
+                      "${l10n.remember_me}",
+                      style: Theme.of(context).textTheme.bodyLarge,
+                    ),
+                  ],
+                ),
               ),
               //forget password
               GestureDetector(
