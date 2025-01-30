@@ -10,6 +10,7 @@ import 'package:frontend/data/models/error_model.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/user_profile_request.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 
@@ -87,7 +88,10 @@ class SignupProvider with ChangeNotifier {
         box.write(userId, userData);
         box.write("token", data.userToken);
         box.write("userId", data.id);
-        Provider.of<LoginProvider>(context).clearRememberMeData();
+        Provider.of<LoginProvider>(context, listen: false)
+            .clearRememberMeData();
+        Provider.of<ProfileProvider>(context, listen: false)
+            .fetchProfile(forceRefresh: true);
         setLoading = false;
 
         // KSnackbar.Snackbar(

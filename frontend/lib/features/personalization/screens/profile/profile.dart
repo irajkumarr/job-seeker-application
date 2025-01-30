@@ -5,7 +5,6 @@ import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.d
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
-import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
@@ -17,7 +16,6 @@ import 'package:frontend/features/personalization/screens/profile/widgets/profil
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 

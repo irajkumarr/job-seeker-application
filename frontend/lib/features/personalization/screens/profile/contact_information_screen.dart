@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
@@ -8,7 +7,6 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/l10n/l10n.dart';
-import 'package:image_picker/image_picker.dart';
 
 class ContactInformationScreen extends StatefulWidget {
   const ContactInformationScreen({super.key});

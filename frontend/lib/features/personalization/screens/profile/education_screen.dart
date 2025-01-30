@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
-import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/details_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
-import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class EducationScreen extends StatelessWidget {
   const EducationScreen({super.key});

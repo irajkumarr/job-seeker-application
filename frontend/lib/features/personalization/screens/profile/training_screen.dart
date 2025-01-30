@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_dash/flutter_dash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/l10n/l10n.dart';
