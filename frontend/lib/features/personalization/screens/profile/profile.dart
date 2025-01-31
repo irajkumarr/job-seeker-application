@@ -16,6 +16,7 @@ import 'package:frontend/features/personalization/screens/profile/widgets/profil
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -296,29 +297,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: KSizes.sm),
 
                           //more sections experience education come here
-                          // !profile.experiences!.isEmpty
-                          //     ? ProfileDetailsWidget(
-                          //         height: 400.h,
-                          //         sectionId: 'experience_info',
-                          //         title: 'Experience',
-                          //         leadingIcon: Icons.check_circle,
-                          //         leadingIconColor: Colors.green,
-                          //         data: profile.experiences != null
-                          //             ? profile.experiences!.map((experience) {
-                          //                 return SectionData(
-                          //                   icon: Icons.radio_button_checked,
-                          //                   label: experience.startDate?.year
-                          //                           .toString() ??
-                          //                       "",
-                          //                   value: experience.industry ?? "",
-                          //                 );
-                          //               }).toList()
-                          //             : [],
-                          //       )
-                          //     : ProfileDetailListTile(
-                          //         title: "Work Experience",
-                          //         onAdd: () {},
-                          //       ),
+
                           !profile.experiences!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "experience_section",
@@ -330,18 +309,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     return {
                                       'icon': Icons.radio_button_checked,
                                       'label':
-                                          exp.organizationName ?? "Unknown",
+                                          "${exp.startDate?.year}, ${DateFormat('MMMM').format(exp.startDate!)}",
                                       'value':
-                                          "${exp.designation ?? ""} (${exp.startDate?.year} - ${exp.currentlyWorking == true ? "Present" : exp.endDate?.year})",
+                                          "${exp.industry ?? ""}\n${exp.organizationName}\n${exp.designation}\n${exp.jobLevel}\n${exp.jobCategory}\n${exp.location}",
                                       'onEdit': () {},
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.education);
+                                  },
                                 )
                               : ProfileDetailListTile(
                                   title: "Work Experience",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.education);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.educations!.isEmpty
@@ -356,16 +339,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'icon': Icons.radio_button_checked,
                                       'label': education.level ?? "Unknown",
                                       'value':
-                                          "${education.institution ?? ""} - ${education.major ?? ""} (${education.startDate?.year} - ${education.endDate?.year})",
+                                          "${education.institution ?? ""}\n${education.major ?? ""}\n(${education.startDate?.year} - ${education.endDate?.year})",
                                       'onEdit': () {},
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.education);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Education",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.education);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.trainings!.isEmpty
@@ -378,18 +365,22 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   data: profile.trainings!.map((training) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': training.name ?? "Unknown",
+                                      'label': "${training.completionYear}",
                                       'value':
-                                          "${training.institute ?? ""} - ${training.duration?.value ?? ""} ${training.duration?.unit ?? ""} (${training.completionYear})",
+                                          "${training.name ?? ""}\n${training.institute ?? ""}\n${training.duration?.value ?? ""} ${training.duration?.unit ?? ""}",
                                       'onEdit': () {},
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.training);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Training",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.training);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.languages!.isEmpty
@@ -412,11 +403,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.language);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Language",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.language);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.documents!.isEmpty
@@ -436,11 +431,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.document);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Document",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.document);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.socialaccounts!.isEmpty
@@ -461,11 +460,17 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(
+                                        RoutesConstant.socialAccount);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Social Account",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(
+                                        RoutesConstant.socialAccount);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.emergencycontacts!.isEmpty
@@ -479,19 +484,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .map((emergencycontact) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': emergencycontact.relation ??
+                                      'label': emergencycontact.fullName ??
                                           "Unknown",
                                       'value':
-                                          "${emergencycontact.fullName ?? ""} - ${emergencycontact.phoneNumber ?? ""} (${emergencycontact.address ?? ""})",
+                                          "${emergencycontact.phoneNumber ?? ""}\n${emergencycontact.relation ?? ""}\n${emergencycontact.address ?? ""}",
                                       'onEdit': () {},
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(
+                                        RoutesConstant.contactInformation);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Contact Information",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(
+                                        RoutesConstant.contactInformation);
+                                  },
                                 ),
                           SizedBox(height: KSizes.sm),
                           !profile.references!.isEmpty
@@ -507,16 +518,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'label':
                                           reference.organization ?? "Unknown",
                                       'value':
-                                          "${reference.name ?? ""} \n ${reference.phoneNumber ?? ""}\n (${reference.designation ?? ""})",
+                                          "${reference.name ?? ""}\n${reference.email ?? ""}\n${reference.phoneNumber ?? ""}",
                                       'onEdit': () {},
                                       'onDelete': () {},
                                     };
                                   }).toList(),
-                                  onAdd: () {}, // Define add function
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.reference);
+                                  }, // Define add function
                                 )
                               : ProfileDetailListTile(
                                   title: "Reference",
-                                  onAdd: () {},
+                                  onAdd: () {
+                                    context.pushNamed(RoutesConstant.reference);
+                                  },
                                 ),
                           SizedBox(height: KSizes.defaultSpace),
                         ],

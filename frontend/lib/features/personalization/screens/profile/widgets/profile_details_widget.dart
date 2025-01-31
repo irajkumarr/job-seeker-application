@@ -1,8 +1,8 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
+import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:provider/provider.dart';
 
@@ -57,57 +57,70 @@ class ProfileDetailsWidget extends StatelessWidget {
                     ),
               ),
               trailing: AnimatedRotation(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 500),
                 turns: isExpanded ? 0.5 : 0,
                 child: const Icon(Icons.keyboard_arrow_down_sharp),
               ),
             ),
             if (isExpanded)
-              const Divider(height: 1, thickness: 1, color: Colors.grey),
-            AnimatedSize(
-              duration: const Duration(milliseconds: 500),
-              curve: Curves.linear,
-              child: AnimatedContainer(
-                duration: const Duration(milliseconds: 500),
-                curve: Curves.easeInOut,
-                height: isExpanded ? null : 0,
-                child: SingleChildScrollView(
-                  physics: const NeverScrollableScrollPhysics(),
-                  child: Container(
-                    padding: EdgeInsets.all(16.w),
-                    decoration: BoxDecoration(
-                      color: KColors.secondaryBackground,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(8.r),
-                        bottomRight: Radius.circular(8.r),
-                      ),
-                    ),
-                    child: Column(
-                      children: [
-                        ...data
-                            .map((item) => _buildInfoRow(context, item))
-                            .toList(),
-                        const Divider(),
-                        SizedBox(height: 8.h),
-                        InkWell(
-                          onTap: onAdd, // Handle Add button
-                          borderRadius: BorderRadius.circular(8.r),
-                          child: Row(
-                            children: [
-                              const Icon(Icons.add_circle,
-                                  color: Colors.black54),
-                              SizedBox(width: 8.w),
-                              Text(
-                                "Add $title",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .bodyLarge!
-                                    .copyWith(fontSize: 14.sp),
-                              ),
-                            ],
-                          ),
+              Container(
+                color: KColors.secondaryBackground,
+                child: const Divider(
+                  height: 1,
+                  indent: KSizes.md + 4,
+                  endIndent: KSizes.md + 4,
+                  color: KColors.grey,
+                ),
+              ),
+            AnimatedSlide(
+              duration: const Duration(milliseconds: 700),
+              offset: isExpanded ? Offset.zero : const Offset(0, -0.1),
+              child: AnimatedOpacity(
+                duration: const Duration(milliseconds: 700),
+                opacity: isExpanded ? 1.0 : 0.0,
+                child: ClipRect(
+                  child: AnimatedSize(
+                    duration: const Duration(milliseconds: 700),
+                    curve: Curves.easeInOut,
+                    child: Container(
+                      height: isExpanded ? null : 0,
+                      padding: EdgeInsets.all(16.w),
+                      decoration: BoxDecoration(
+                        color: KColors.secondaryBackground,
+                        borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(8.r),
+                          bottomRight: Radius.circular(8.r),
                         ),
-                      ],
+                      ),
+                      child: Column(
+                        children: [
+                          ...data
+                              .map((item) => _buildInfoRow(context, item))
+                              .toList(),
+                          const Divider(
+                            color: KColors.grey,
+                          ),
+                          SizedBox(height: 8.h),
+                          InkWell(
+                            onTap: onAdd,
+                            borderRadius: BorderRadius.circular(8.r),
+                            child: Row(
+                              children: [
+                                const Icon(Icons.add_circle,
+                                    color: Colors.black54),
+                                SizedBox(width: 8.w),
+                                Text(
+                                  "Add $title",
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontSize: 14.sp),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -167,8 +180,12 @@ class ProfileDetailsWidget extends StatelessWidget {
                             )
                           : Text(
                               item['value'],
-                              style: TextStyle(
-                                  fontSize: 14, color: Colors.grey[600]),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleSmall!
+                                  .copyWith(
+                                    fontSize: 14.sp,
+                                  ),
                             ),
                 ]
               ],
