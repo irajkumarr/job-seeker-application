@@ -8,6 +8,7 @@ import 'package:frontend/features/authentication/providers/timer_provider.dart';
 import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
+import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:frontend/navigation_menu.dart';
@@ -28,6 +29,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => ProfileProvider()),
     ChangeNotifierProvider(create: (_) => LocationProvider()),
     ChangeNotifierProvider(create: (_) => DetailsProvider()),
+    ChangeNotifierProvider(create: (_) => DocumentProvider()),
     ChangeNotifierProvider(create: (_) => PasswordProvider()),
     ChangeNotifierProvider(create: (_) => ResendTimerProvider()),
   ];

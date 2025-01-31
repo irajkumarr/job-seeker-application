@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
@@ -17,6 +18,7 @@ class DocumentProvider with ChangeNotifier {
     required String category,
     required File file,
     required BuildContext context,
+    required VoidCallback onSuccess,
   }) async {
     try {
       final box = GetStorage();
@@ -41,6 +43,8 @@ class DocumentProvider with ChangeNotifier {
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
             context, "Document added successfully", KColors.success);
+
+        onSuccess();
       } else {
         KSnackbar.CustomSnackbar(
             context, "Upload failed: $responseBody", KColors.error);
@@ -60,6 +64,7 @@ class DocumentProvider with ChangeNotifier {
     required String category,
     File? file, // Optional file for update
     required BuildContext context,
+    required VoidCallback onSuccess,
   }) async {
     try {
       final box = GetStorage();
@@ -87,6 +92,8 @@ class DocumentProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
             context, "Document updated successfully", KColors.success);
+
+        onSuccess();
       } else {
         KSnackbar.CustomSnackbar(
             context, "Update failed: $responseBody", KColors.error);
@@ -120,6 +127,8 @@ class DocumentProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
             context, "Document deleted successfully", KColors.success);
+
+        context.pop();
       } else {
         KSnackbar.CustomSnackbar(
             context, "Delete failed: ${response.body}", KColors.error);

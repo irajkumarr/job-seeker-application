@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
+import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/authentication/screens/login/login.dart';
 import 'package:frontend/features/authentication/screens/password_confimation/forgot_password.dart';
 import 'package:frontend/features/authentication/screens/signup/personal_details_screen.dart';
@@ -214,8 +215,9 @@ class AppRoutes {
         name: RoutesConstant.document,
         path: "/document",
         pageBuilder: (context, state) {
+          final document = state.extra as Document?;
           return MaterialPage(
-            child: DocumentScreen(),
+            child: DocumentScreen(document: document),
           );
         },
       ),

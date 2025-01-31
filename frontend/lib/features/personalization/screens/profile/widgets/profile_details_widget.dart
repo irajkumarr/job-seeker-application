@@ -158,9 +158,21 @@ class ProfileDetailsWidget extends StatelessWidget {
                   ),
                 ),
                 if (item['value'] != null) ...[
-                  const SizedBox(height: 4),
+                  const SizedBox(height: KSizes.md),
                   isImage
-                      ? Image.network(item['value'])
+                      ? GestureDetector(
+                          onTap: () {},
+                          child: GestureDetector(
+                            onTap: () {
+                              showImagePreview(context, item['value']);
+                            },
+                            child: Center(
+                              child: Image.network(
+                                item['value'],
+                              ),
+                            ),
+                          ),
+                        )
                       : isRating
                           ? RatingBar.builder(
                               initialRating: item["value"],
@@ -203,4 +215,54 @@ class ProfileDetailsWidget extends StatelessWidget {
       ),
     );
   }
+}
+
+void showImagePreview(
+  BuildContext context,
+  String image,
+) {
+  showModalBottomSheet(
+    context: context,
+    isScrollControlled: true, // Allow the sheet to be as large as needed
+    builder: (context) => Container(
+      height: MediaQuery.of(context).size.height * 0.8, // 80% of screen height
+      padding: const EdgeInsets.all(16.0),
+      child: Stack(
+        children: [
+          // Image preview
+          Center(
+            child: InteractiveViewer(
+              minScale: 0.5,
+              maxScale: 4,
+              child: Image.network(
+                image,
+                fit: BoxFit.contain,
+              ),
+            ),
+          ),
+
+          // Close button (cross icon)
+          Positioned(
+            top: 16,
+            right: 16,
+            child: GestureDetector(
+              onTap: () => Navigator.pop(context), // Close the bottom sheet
+              child: Container(
+                padding: EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.black.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.close,
+                  color: Colors.white,
+                  size: 24,
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

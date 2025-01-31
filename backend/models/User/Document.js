@@ -9,7 +9,7 @@ const documentSchema = new mongoose.Schema(
     title: { type: String, required: true },
     category: {
       type: String,
-      enum: ["resume", "cv", "citizenship", "other"],
+      enum: ["Resume", "Citizenship", "CV", "Other"],
       required: true,
     },
     file: { type: String, required: true },

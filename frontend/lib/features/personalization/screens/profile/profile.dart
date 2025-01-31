@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
+import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_job_preferred_section.dart';
@@ -13,6 +14,7 @@ import 'package:frontend/features/personalization/screens/profile/widgets/expand
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_details_list_tile.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_details_widget.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_without_login.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/show_logout_alert.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -312,9 +314,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           "${exp.startDate?.year}, ${DateFormat('MMMM').format(exp.startDate!)}",
                                       'value':
                                           "${exp.industry ?? ""}\n${exp.organizationName}\n${exp.designation}\n${exp.jobLevel}\n${exp.jobCategory}\n${exp.location}",
-                                      'onEdit': () {
-                                        
-                                      },
+                                      'onEdit': () {},
                                       'onDelete': () {},
                                     };
                                   }).toList(),
@@ -429,8 +429,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'icon': Icons.radio_button_checked,
                                       'label': document.category ?? "Unknown",
                                       'value': "${document.file ?? ""}",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                          RoutesConstant.document,
+                                          extra:
+                                              document, // Pass the document to edit
+                                        );
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<DocumentProvider>(context,
+                                                  listen: false)
+                                              .deleteDocument(
+                                            documentId: document.id!,
+                                            context: context,
+                                          );
+                                        });
+                                        await profileProvider.fetchProfile(
+                                            forceRefresh: true);
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {
