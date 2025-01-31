@@ -488,12 +488,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   listen: false)
                                               .deleteSocialAccount(
                                                   context, socialaccount.id!,
-                                                  () async {
-                                            await profileProvider.fetchProfile(
-                                                forceRefresh: true);
-                                            context.pop();
-                                          });
+                                                 );
                                         });
+                                              await profileProvider.fetchProfile(
+                                                forceRefresh: true);
                                       },
                                     };
                                   }).toList(),

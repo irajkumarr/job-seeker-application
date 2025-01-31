@@ -130,8 +130,45 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Web Address", value),
+                      // validator: (value) =>
+                      //     KValidator.validateEmptyText("Web Address", value),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return "Web Address cannot be empty";
+                        }
+
+                        // Define platform-specific URL patterns
+                        final Map<String, String> platformPatterns = {
+                          "Facebook":
+                              r'^(https?:\/\/)?(www\.)?facebook\.com\/[A-Za-z0-9._%-]+\/?$',
+                          "Instagram":
+                              r'^(https?:\/\/)?(www\.)?instagram\.com\/[A-Za-z0-9._%-]+\/?$',
+                          "Twitter":
+                              r'^(https?:\/\/)?(www\.)?twitter\.com\/[A-Za-z0-9._%-]+\/?$',
+                          "LinkedIn":
+                              r'^(https?:\/\/)?(www\.)?linkedin\.com\/in\/[A-Za-z0-9._%-]+\/?$',
+                          "Snapchat":
+                              r'^(https?:\/\/)?(www\.)?snapchat\.com\/add\/[A-Za-z0-9._%-]+\/?$',
+                          "TikTok":
+                              r'^(https?:\/\/)?(www\.)?tiktok\.com\/@?[A-Za-z0-9._%-]+\/?$',
+                        };
+
+                        if (_selectedSocialMedia != null &&
+                            platformPatterns
+                                .containsKey(_selectedSocialMedia)) {
+                          final pattern =
+                              platformPatterns[_selectedSocialMedia]!;
+                          final isValidUrl =
+                              RegExp(pattern, caseSensitive: false)
+                                  .hasMatch(value);
+
+                          if (!isValidUrl) {
+                            return "Enter a valid $_selectedSocialMedia URL";
+                          }
+                        }
+
+                        return null;
+                      },
                       decoration: InputDecoration(
                         labelText: "Web Address",
                       ),

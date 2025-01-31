@@ -4,6 +4,7 @@ import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class SocialAccountProvider with ChangeNotifier {
@@ -79,7 +80,9 @@ class SocialAccountProvider with ChangeNotifier {
   }
 
   Future<void> deleteSocialAccount(
-      BuildContext context, String accountId, VoidCallback onSuccess) async {
+    BuildContext context,
+    String accountId,
+  ) async {
     setLoading(true);
     try {
       final box = GetStorage();
@@ -94,7 +97,8 @@ class SocialAccountProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
             context, "Social Account deleted successfully", KColors.success);
-        onSuccess();
+
+        context.pop();
       } else {
         var error = jsonDecode(response.body)['message'];
 
