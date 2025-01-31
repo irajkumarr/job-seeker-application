@@ -130,8 +130,6 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      // validator: (value) =>
-                      //     KValidator.validateEmptyText("Web Address", value),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return "Web Address cannot be empty";

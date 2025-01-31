@@ -6,6 +6,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
+import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
@@ -433,8 +434,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'onEdit': () {
                                         context.pushNamed(
                                           RoutesConstant.document,
-                                          extra:
-                                              document, // Pass the document to edit
+                                          extra: document,
                                         );
                                       },
                                       'onDelete': () async {
@@ -487,11 +487,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   context,
                                                   listen: false)
                                               .deleteSocialAccount(
-                                                  context, socialaccount.id!,
-                                                 );
+                                            context,
+                                            socialaccount.id!,
+                                          );
                                         });
-                                              await profileProvider.fetchProfile(
-                                                forceRefresh: true);
+                                        await profileProvider.fetchProfile(
+                                            forceRefresh: true);
                                       },
                                     };
                                   }).toList(),
@@ -523,8 +524,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           "Unknown",
                                       'value':
                                           "${emergencycontact.phoneNumber ?? ""}\n${emergencycontact.relation ?? ""}\n${emergencycontact.address ?? ""}",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                            RoutesConstant.contactInformation,
+                                            extra: emergencycontact);
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<ContactInformationProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteContactInformation(
+                                            context,
+                                            emergencycontact.id!,
+                                          );
+                                        });
+                                        await profileProvider.fetchProfile(
+                                            forceRefresh: true);
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {

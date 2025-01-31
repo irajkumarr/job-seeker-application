@@ -226,8 +226,10 @@ class AppRoutes {
         name: RoutesConstant.contactInformation,
         path: "/contactInformation",
         pageBuilder: (context, state) {
+          
+          final contact = state.extra as Emergencycontact?;
           return MaterialPage(
-            child: ContactInformationScreen(),
+            child: ContactInformationScreen(contact: contact,),
           );
         },
       ),

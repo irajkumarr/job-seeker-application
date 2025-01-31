@@ -1045,7 +1045,7 @@ class Emergencycontact {
   final String? fullName;
   final String? address;
   final String? relation;
-  final String? phoneNumber;
+  final PhoneNumber? phoneNumber;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -1069,7 +1069,9 @@ class Emergencycontact {
         fullName: json["fullName"],
         address: json["address"],
         relation: json["relation"],
-        phoneNumber: json["phoneNumber"],
+        phoneNumber: json["phoneNumber"] == null
+            ? null
+            : PhoneNumber.fromJson(json["phoneNumber"]),
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -1085,10 +1087,30 @@ class Emergencycontact {
         "fullName": fullName,
         "address": address,
         "relation": relation,
-        "phoneNumber": phoneNumber,
+        "phoneNumber": phoneNumber?.toJson(),
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
+      };
+}
+
+class PhoneNumber {
+  final String? numberType;
+  final String? mobileNumber;
+
+  PhoneNumber({
+    this.numberType,
+    this.mobileNumber,
+  });
+
+  factory PhoneNumber.fromJson(Map<String, dynamic> json) => PhoneNumber(
+        numberType: json["numberType"],
+        mobileNumber: json["mobileNumber"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "numberType": numberType,
+        "mobileNumber": mobileNumber,
       };
 }
 

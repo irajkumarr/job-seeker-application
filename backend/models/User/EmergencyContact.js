@@ -10,7 +10,17 @@ const emergencyContactSchema = new mongoose.Schema(
     fullName: { type: String, required: true },
     address: String,
     relation: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: {
+      numberType: {
+        type: String,
+        enum: ["Mobile", "Home", "Office"],
+        required: true,
+      },
+      mobileNumber: {
+        type: String,
+        required: true,
+      },
+    },
   },
 
   { timestamps: true }
