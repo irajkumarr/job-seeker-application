@@ -103,6 +103,5 @@ class EducationScreen extends StatelessWidget {
         ),
       ),
     );
-   
   }
 }

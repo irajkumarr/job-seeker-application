@@ -312,7 +312,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           "${exp.startDate?.year}, ${DateFormat('MMMM').format(exp.startDate!)}",
                                       'value':
                                           "${exp.industry ?? ""}\n${exp.organizationName}\n${exp.designation}\n${exp.jobLevel}\n${exp.jobCategory}\n${exp.location}",
-                                      'onEdit': () {},
+                                      'onEdit': () {
+                                        
+                                      },
                                       'onDelete': () {},
                                     };
                                   }).toList(),

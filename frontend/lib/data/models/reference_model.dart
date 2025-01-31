@@ -1,0 +1,41 @@
+// To parse this JSON data, do
+//
+//     final referenceModel = referenceModelFromJson(jsonString);
+
+import 'dart:convert';
+
+ReferenceModel referenceModelFromJson(String str) => ReferenceModel.fromJson(json.decode(str));
+
+String referenceModelToJson(ReferenceModel data) => json.encode(data.toJson());
+
+class ReferenceModel {
+    final String? name;
+    final String? designation;
+    final String? organization;
+    final String? email;
+    final String? phoneNumber;
+
+    ReferenceModel({
+        this.name,
+        this.designation,
+        this.organization,
+        this.email,
+        this.phoneNumber,
+    });
+
+    factory ReferenceModel.fromJson(Map<String, dynamic> json) => ReferenceModel(
+        name: json["name"],
+        designation: json["designation"],
+        organization: json["organization"],
+        email: json["email"],
+        phoneNumber: json["phoneNumber"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "name": name,
+        "designation": designation,
+        "organization": organization,
+        "email": email,
+        "phoneNumber": phoneNumber,
+    };
+}
