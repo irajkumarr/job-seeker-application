@@ -170,8 +170,9 @@ class AppRoutes {
         name: RoutesConstant.socialAccount,
         path: "/socialAccount",
         pageBuilder: (context, state) {
+          final socialaccount = state.extra as Socialaccount?;
           return MaterialPage(
-            child: SocialAccountScreen(),
+            child: SocialAccountScreen(socialaccount: socialaccount),
           );
         },
       ),

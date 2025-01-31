@@ -4,6 +4,7 @@ import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
+import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/data/models/social_account_model.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
@@ -12,8 +13,8 @@ import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SocialAccountScreen extends StatefulWidget {
-  const SocialAccountScreen({super.key});
-
+  const SocialAccountScreen({super.key, this.socialaccount});
+  final Socialaccount? socialaccount;
   @override
   _SocialAccountScreenState createState() => _SocialAccountScreenState();
 }
@@ -35,6 +36,16 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
   String? _selectedSocialMedia;
 
   @override
+  void initState() {
+    super.initState();
+
+    if (widget.socialaccount != null) {
+      _socialMediaController.text = widget.socialaccount!.platform ?? "";
+      _webAddressController.text = widget.socialaccount!.url ?? "";
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
@@ -45,15 +56,28 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
       child: CustomScreen(
         onPressed: () {
           if (_formKey.currentState!.validate()) {
-            SocialAccountModel model = SocialAccountModel(
-              platform: _socialMediaController.text.trim(),
-              url: _webAddressController.text.trim(),
-            );
-            String data = socialAccountModelToJson(model);
-            socialAccountProvider.addSocialAccount(context, data, () async {
-              await profileProvider.fetchProfile(forceRefresh: true);
-              context.pop();
-            });
+            if (widget.socialaccount == null) {
+              SocialAccountModel model = SocialAccountModel(
+                platform: _socialMediaController.text.trim(),
+                url: _webAddressController.text.trim(),
+              );
+              String data = socialAccountModelToJson(model);
+              socialAccountProvider.addSocialAccount(context, data, () async {
+                await profileProvider.fetchProfile(forceRefresh: true);
+                context.pop();
+              });
+            } else {
+              SocialAccountModel model = SocialAccountModel(
+                platform: _socialMediaController.text.trim(),
+                url: _webAddressController.text.trim(),
+              );
+              String data = socialAccountModelToJson(model);
+              socialAccountProvider.updateSocialAccount(
+                  context, widget.socialaccount!.id!, data, () async {
+                await profileProvider.fetchProfile(forceRefresh: true);
+                context.pop();
+              });
+            }
           }
         },
         buttonText: l10n.submit,

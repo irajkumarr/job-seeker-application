@@ -8,6 +8,7 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/providers/social_account_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_job_preferred_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_profile_section.dart';
@@ -475,8 +476,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'label':
                                           socialaccount.platform ?? "Unknown",
                                       'value': "${socialaccount.url ?? ""}",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                            RoutesConstant.socialAccount,
+                                            extra: socialaccount);
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<SocialAccountProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteSocialAccount(
+                                                  context, socialaccount.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                            context.pop();
+                                          });
+                                        });
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {
