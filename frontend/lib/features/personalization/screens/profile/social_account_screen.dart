@@ -41,6 +41,7 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
 
     if (widget.socialaccount != null) {
       _socialMediaController.text = widget.socialaccount!.platform ?? "";
+      _selectedSocialMedia = widget.socialaccount!.platform ?? "";
       _webAddressController.text = widget.socialaccount!.url ?? "";
     }
   }
