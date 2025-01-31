@@ -3,7 +3,6 @@ import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/data/models/social_account_model.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
