@@ -523,7 +523,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'label': emergencycontact.fullName ??
                                           "Unknown",
                                       'value':
-                                          "${emergencycontact.phoneNumber ?? ""}\n${emergencycontact.relation ?? ""}\n${emergencycontact.address ?? ""}",
+                                          "${emergencycontact.phoneNumber?.mobileNumber ?? ""}\n${emergencycontact.relation ?? ""}\n${emergencycontact.address ?? ""}",
                                       'onEdit': () {
                                         context.pushNamed(
                                             RoutesConstant.contactInformation,

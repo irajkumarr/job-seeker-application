@@ -8,11 +8,13 @@ const handleAddEmergencyContact = async (req, res) => {
       userId: userId,
       fullName: emergencyContact.fullName,
       address: emergencyContact.address,
-      relation:emergencyContact.relation,
-      phoneNumber:emergencyContact.phoneNumber,
+      relation: emergencyContact.relation,
+      phoneNumber: emergencyContact.phoneNumber,
     });
     await newEmergencyContact.save();
-    return res.status(201).json({ status: true, message: "EmergencyContact added!" });
+    return res
+      .status(201)
+      .json({ status: true, message: "EmergencyContact added!" });
   } catch (error) {
     return res.status(500).json({ status: false, message: error.message });
   }
@@ -37,7 +39,10 @@ const handleUpdateEmergencyContact = async (req, res) => {
     );
     return res
       .status(200)
-      .json({ status: true, message: "EmergencyContact updated successfully!" });
+      .json({
+        status: true,
+        message: "EmergencyContact updated successfully!",
+      });
   } catch (error) {
     return res.status(500).json({ status: false, message: error.message });
   }
@@ -53,9 +58,10 @@ const handleDeleteEmergencyContact = async (req, res) => {
         .json({ status: false, message: "EmergencyContact not found" });
     }
     await EmergencyContact.findByIdAndDelete(id);
-    return res
-      .status(200)
-      .json({ status: true, message: "EmergencyContact deleted successfully!" });
+    return res.status(200).json({
+      status: true,
+      message: "EmergencyContact deleted successfully!",
+    });
   } catch (error) {
     return res.status(500).json({ status: false, message: error.message });
   }

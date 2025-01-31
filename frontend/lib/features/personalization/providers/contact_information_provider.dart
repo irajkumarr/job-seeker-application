@@ -48,27 +48,30 @@ class ContactInformationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> updateContactInformation(BuildContext context, String accountId,
-      String data, VoidCallback onSuccess) async {
+  Future<void> updateContactInformation(BuildContext context, String contactId,
+      String updatedata, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.put(
-        Uri.parse('$kAppBaseUrl/api/users/contact/$accountId'),
+        Uri.parse('$kAppBaseUrl/api/users/contact/$contactId'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
         },
-        body: data,
+        body: updatedata,
       );
-
+      print(token);
+      print(response.statusCode);
+      print(response.body);
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(context,
             "Contact Information updated successfully", KColors.success);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
+        print(error.toString());
 
         KSnackbar.CustomSnackbar(context, error.toString(), KColors.error);
       }

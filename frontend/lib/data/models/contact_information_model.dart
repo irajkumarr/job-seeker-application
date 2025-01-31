@@ -49,14 +49,12 @@ String contactInformationModelToJson(ContactInformationModel data) =>
     json.encode(data.toJson());
 
 class ContactInformationModel {
-  final String? userId;
   final String? fullName;
   final String? address;
   final String? relation;
   final PhoneNumber? phoneNumber;
 
   ContactInformationModel({
-    this.userId,
     this.fullName,
     this.address,
     this.relation,
@@ -65,7 +63,6 @@ class ContactInformationModel {
 
   factory ContactInformationModel.fromJson(Map<String, dynamic> json) =>
       ContactInformationModel(
-        userId: json["userId"],
         fullName: json["fullName"],
         address: json["address"],
         relation: json["relation"],
@@ -75,7 +72,6 @@ class ContactInformationModel {
       );
 
   Map<String, dynamic> toJson() => {
-        "userId": userId,
         "fullName": fullName,
         "address": address,
         "relation": relation,
