@@ -199,11 +199,42 @@ class AppRoutes {
       GoRoute(
         name: RoutesConstant.education,
         path: "/education",
-        pageBuilder: (context, state) {
-          return MaterialPage(
-            child: EducationScreen(),
-          );
-        },
+        // pageBuilder: (context, state) {
+        //   final extra = state.extra as Map<String, dynamic>;
+        //   final education = extra["education"] as Education?;
+        //   final isRemoved = extra["isRemoved"] as bool;
+        //   return MaterialPage(
+        //     child: EducationScreen(
+        //       education: education,
+        //       isRemoved: isRemoved,
+        //     ),
+        //   );
+        // },
+         pageBuilder: (context, state) {
+    // Safely extract the 'extra' parameter, ensuring it's non-null and of the correct type
+    final extra = state.extra as Map<String, dynamic>?;
+
+    // Check if 'extra' is not null and contains the required keys
+    if (extra != null) {
+      final education = extra["education"] as Education?;
+      final isRemoved = extra["isRemoved"] as bool? ?? false; // Default to false if isRemoved is not provided
+
+      return MaterialPage(
+        child: EducationScreen(
+          education: education,
+          isRemoved: isRemoved,
+        ),
+      );
+    } else {
+      // Handle the case where 'extra' is null or not provided
+      return MaterialPage(
+        child: EducationScreen(
+          education: null,
+          isRemoved: false, // Default to false if isRemoved is not provided
+        ),
+      );
+    }
+  },
       ),
       GoRoute(
         name: RoutesConstant.reference,

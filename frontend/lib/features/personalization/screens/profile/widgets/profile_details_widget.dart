@@ -17,7 +17,8 @@ class ProfileDetailsWidget extends StatelessWidget {
     this.isImage = false,
     this.isRating = false,
     required this.height,
-    required this.onAdd, // Callback for adding data
+    required this.onAdd,
+    this.isEditShowed = true, // Callback for adding data
   });
 
   final String sectionId;
@@ -26,6 +27,7 @@ class ProfileDetailsWidget extends StatelessWidget {
   final Color leadingIconColor;
   final bool isImage;
   final bool isRating;
+  final bool isEditShowed;
   final List<Map<String, dynamic>> data; // Generic list of data maps
   final double height;
   final VoidCallback onAdd; // Function to handle "Add" button
@@ -204,13 +206,16 @@ class ProfileDetailsWidget extends StatelessWidget {
             ),
           ),
           TextButton(
-            onPressed: item['onEdit'] ?? () {},
-            child: const Text("Edit", style: TextStyle(color: Colors.blue)),
-          ),
-          TextButton(
             onPressed: item['onDelete'] ?? () {},
-            child: const Text("Delete", style: TextStyle(color: Colors.red)),
+            child: const Text("Delete", style: TextStyle(color: KColors.error)),
           ),
+          !isEditShowed
+              ? SizedBox()
+              : TextButton(
+                  onPressed: item['onEdit'] ?? () {},
+                  child: const Text("Edit",
+                      style: TextStyle(color: KColors.primary)),
+                ),
         ],
       ),
     );

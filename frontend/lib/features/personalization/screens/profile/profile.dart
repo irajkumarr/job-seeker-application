@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
@@ -8,6 +9,7 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
+import 'package:frontend/features/personalization/providers/education_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
@@ -338,26 +340,184 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 ),
                           SizedBox(height: KSizes.sm),
+                          // !profile.educations!.isEmpty
+                          //     ? ProfileDetailsWidget(
+                          //         sectionId: "education_section",
+                          //         title: "Education",
+                          //         leadingIcon: Icons.check_circle,
+                          //         leadingIconColor: Colors.green,
+                          //         height: 160.h,
+                          //         data: profile.educations!.map((education) {
+                          //           return {
+                          //             'icon': Icons.radio_button_checked,
+                          //             'label': (education.startDate == null
+                          //                     ? education.graduationYear?.year
+                          //                     : education.startDate?.year) ??
+                          //                 "N/A",
+                          //             'value':
+                          //                 "${education.institution ?? "N/A"}\n${education.educationProgram ?? "N/A"}\n(${education.startDate?.year ?? "N/A"} - ${education.graduationYear?.year == null ? "Present" : education.graduationYear?.year ?? "N/A"})",
+                          //             'onEdit': () {
+                          //               context.pushNamed(
+                          //                   RoutesConstant.education,
+                          //                   extra: education);
+                          //             },
+                          //             'onDelete': () async {
+                          //               await alertDelete(context, () {
+                          //                 Provider.of<EducationProvider>(
+                          //                         context,
+                          //                         listen: false)
+                          //                     .deleteEducation(
+                          //                         context, education.id!,
+                          //                         () async {
+                          //                   await profileProvider.fetchProfile(
+                          //                       forceRefresh: true);
+                          //                 });
+                          //               });
+                          //             },
+                          //           };
+                          //         }).toList(),
+                          //         onAdd: () {
+                          //           context.pushNamed(RoutesConstant.education);
+                          //         }, // Define add function
+                          //       )
                           !profile.educations!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "education_section",
                                   title: "Education",
                                   leadingIcon: Icons.check_circle,
-                                  leadingIconColor: Colors.green,
+                                  leadingIconColor: KColors.success,
+                                  isEditShowed: profile.educations!.any(
+                                      (education) =>
+                                          education.level !=
+                                              "Cannot Read and Write" &&
+                                          education.level !=
+                                              "Can Read and Write"),
                                   height: 160.h,
                                   data: profile.educations!.map((education) {
+                                    // Ensure empty or null values are handled properly
+                                    final String startYear = (education
+                                                .startDate?.year
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.startDate!.year!;
+
+                                    final String graduationYear = (education
+                                                .graduationYear?.year
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.graduationYear!.year!;
+
+                                    final String institution = (education
+                                                .institution
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.institution!;
+                                    final String level =
+                                        (education.level?.trim().isEmpty ??
+                                                true)
+                                            ? "N/A"
+                                            : education.level!;
+                                    final String board = (education
+                                                .educationBoard
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.educationBoard!;
+
+                                    final String program = (education
+                                                .educationProgram
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.educationProgram!;
+                                    final String grade = (education.grade?.marks
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? ""
+                                        : education.grade!.marks!;
+                                    final String gradeType = (education
+                                                .grade?.type
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? ""
+                                        : education.grade!.type!;
+
+                                    final bool isRestricted =
+                                        level == "Cannot Read and Write" ||
+                                            level == "Can Read and Write";
+
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': education.level ?? "Unknown",
+                                      // Show start date if available, otherwise graduation date, else "N/A"
+                                      'label': startYear != "N/A"
+                                          ? "$startYear"
+                                          : (graduationYear != "N/A"
+                                              ? "$graduationYear"
+                                              : "N/A"),
+
+                                      // Show institution, program, and duration correctly
                                       'value':
-                                          "${education.institution ?? ""}\n${education.educationProgram ?? ""}\n(${education.startDate?.year} - ${education.graduationYear?.year})",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                          "$level\n$program\n$board\n$institution\n$grade $gradeType",
+
+                                      // 'onEdit': () {
+                                      //   context.pushNamed(
+                                      //       RoutesConstant.education,
+                                      //       extra: education);
+                                      // },
+                                      if (!isRestricted)
+                                        'onEdit': () {
+                                          context.pushNamed(
+                                              RoutesConstant.education,
+                                              extra: {
+                                                "education": education,
+                                              });
+                                        },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<EducationProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteEducation(
+                                                  context, education.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
+                                        });
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {
-                                    context.pushNamed(RoutesConstant.education);
-                                  }, // Define add function
+                                    bool hasRestrictedEducation =
+                                        profile.educations!.any((education) =>
+                                            education.level ==
+                                                "Cannot Read and Write" ||
+                                            education.level ==
+                                                "Can Read and Write");
+
+                                    if (hasRestrictedEducation) {
+                                      // Show a snackbar to inform the user
+                                      KSnackbar.CustomSnackbar(
+                                          context,
+                                          "You cannot add more education details with this qualification. Please change your education level first.",
+                                          KColors.darkerGrey);
+                                      return;
+                                    }
+                                    context.pushNamed(RoutesConstant.education,
+                                        extra: {
+                                          "isRemoved": !hasRestrictedEducation,
+                                        });
+                                  },
                                 )
                               : ProfileDetailListTile(
                                   title: "Education",

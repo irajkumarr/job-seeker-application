@@ -6,10 +6,22 @@ const educationSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    level: { type: String, required: true },
-    educationProgram: { type: String, required: true },
-    educationBoard: { type: String, required: true },
-    institution: { type: String, required: true },
+    level: {
+      type: String,
+      //  required: true ,
+    },
+    educationProgram: {
+      type: String,
+      //  required: true
+    },
+    educationBoard: {
+      type: String,
+      // required: true
+    },
+    institution: {
+      type: String,
+      //  required: true
+    },
     startDate: {
       year: String,
       month: String,
