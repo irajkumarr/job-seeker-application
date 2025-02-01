@@ -7,11 +7,24 @@ const educationSchema = new mongoose.Schema(
       required: true,
     },
     level: { type: String, required: true },
+    educationProgram: { type: String, required: true },
+    educationBoard: { type: String, required: true },
     institution: { type: String, required: true },
-    major: String,
-    startDate: Date,
-    endDate: Date,
-    grade: String,
+    startDate: {
+      year: String,
+      month: String,
+    },
+    graduationYear: {
+      year: String,
+      month: String,
+    },
+    grade: {
+      type: {
+        type: String,
+        enum: ["CGPA", "Percentage"],
+      },
+      marks: String,
+    },
   },
   { timestamps: true }
 );

@@ -350,7 +350,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'icon': Icons.radio_button_checked,
                                       'label': education.level ?? "Unknown",
                                       'value':
-                                          "${education.institution ?? ""}\n${education.major ?? ""}\n(${education.startDate?.year} - ${education.endDate?.year})",
+                                          "${education.institution ?? ""}\n${education.educationProgram ?? ""}\n(${education.startDate?.year} - ${education.graduationYear?.year})",
                                       'onEdit': () {},
                                       'onDelete': () {},
                                     };

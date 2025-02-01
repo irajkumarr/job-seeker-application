@@ -3,16 +3,19 @@ const Education = require("../../models/User/Education");
 const handleAddEducation = async (req, res) => {
   const education = req.body;
   const userId = req.user.id;
+
   try {
     const newEducation = new Education({
       userId: userId,
-      level: education.level,
+      level:education.level,
+      educationProgram: education.educationProgram,
+      educationBoard: education.educationBoard,
       institution: education.institution,
-      major: education.major,
       startDate: education.startDate,
-      endDate: education.endDate,
+      graduationYear: education.graduationYear,
       grade: education.grade,
     });
+
     await newEducation.save();
     return res.status(201).json({ status: true, message: "Education added!" });
   } catch (error) {
