@@ -11,7 +11,17 @@ const referenceSchema = new mongoose.Schema(
     designation: { type: String, required: true },
     organization: { type: String, required: true },
     email: { type: String, required: true },
-    phoneNumber: { type: String, required: true },
+    phoneNumber: {
+      numberType: {
+        type: String,
+        enum: ["Mobile", "Home", "Office"],
+        required: true,
+      },
+      mobileNumber: {
+        type: String,
+        required: true,
+      },
+    },
   },
   { timestamps: true }
 );

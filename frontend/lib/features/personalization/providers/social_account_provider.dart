@@ -80,9 +80,7 @@ class SocialAccountProvider with ChangeNotifier {
   }
 
   Future<void> deleteSocialAccount(
-    BuildContext context,
-    String accountId,
-  ) async {
+      BuildContext context, String accountId, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
@@ -97,7 +95,7 @@ class SocialAccountProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
             context, "Social Account deleted successfully", KColors.success);
-
+        onSuccess();
         context.pop();
       } else {
         var error = jsonDecode(response.body)['message'];

@@ -1449,7 +1449,7 @@ class Reference {
   final String? designation;
   final String? organization;
   final String? email;
-  final String? phoneNumber;
+  final PhoneNumber? phoneNumber;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -1474,7 +1474,9 @@ class Reference {
         designation: json["designation"],
         organization: json["organization"],
         email: json["email"],
-        phoneNumber: json["phoneNumber"],
+         phoneNumber: json["phoneNumber"] == null
+            ? null
+            : PhoneNumber.fromJson(json["phoneNumber"]),
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -1491,7 +1493,7 @@ class Reference {
         "designation": designation,
         "organization": organization,
         "email": email,
-        "phoneNumber": phoneNumber,
+        "phoneNumber": phoneNumber?.toJson(),
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,

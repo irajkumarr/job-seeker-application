@@ -9,6 +9,7 @@ import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_job_preferred_section.dart';
@@ -442,12 +443,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           Provider.of<DocumentProvider>(context,
                                                   listen: false)
                                               .deleteDocument(
-                                            documentId: document.id!,
-                                            context: context,
-                                          );
+                                                  documentId: document.id!,
+                                                  context: context,
+                                                  onSuccess: () async {
+                                                    await profileProvider
+                                                        .fetchProfile(
+                                                            forceRefresh: true);
+                                                  });
                                         });
-                                        await profileProvider.fetchProfile(
-                                            forceRefresh: true);
                                       },
                                     };
                                   }).toList(),
@@ -487,12 +490,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   context,
                                                   listen: false)
                                               .deleteSocialAccount(
-                                            context,
-                                            socialaccount.id!,
-                                          );
+                                                  context, socialaccount.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
                                         });
-                                        await profileProvider.fetchProfile(
-                                            forceRefresh: true);
                                       },
                                     };
                                   }).toList(),
@@ -535,12 +538,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   context,
                                                   listen: false)
                                               .deleteContactInformation(
-                                            context,
-                                            emergencycontact.id!,
-                                          );
+                                                  context, emergencycontact.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
                                         });
-                                        await profileProvider.fetchProfile(
-                                            forceRefresh: true);
                                       },
                                     };
                                   }).toList(),
@@ -570,9 +573,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'label':
                                           reference.organization ?? "Unknown",
                                       'value':
-                                          "${reference.name ?? ""}\n${reference.email ?? ""}\n${reference.phoneNumber ?? ""}",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                          "${reference.name ?? ""}\n${reference.email ?? ""}\n${reference.phoneNumber?.mobileNumber ?? ""}",
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                            RoutesConstant.reference,
+                                            extra: reference);
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<ReferenceProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteReference(
+                                                  context, reference.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
+                                        });
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {

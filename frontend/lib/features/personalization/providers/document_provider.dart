@@ -109,6 +109,7 @@ class DocumentProvider with ChangeNotifier {
   Future<void> deleteDocument({
     required String documentId,
     required BuildContext context,
+    required VoidCallback onSuccess,
   }) async {
     try {
       final box = GetStorage();
@@ -126,7 +127,7 @@ class DocumentProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
             context, "Document deleted successfully", KColors.success);
-
+        onSuccess();
         context.pop();
       } else {
         KSnackbar.CustomSnackbar(

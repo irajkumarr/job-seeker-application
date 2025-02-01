@@ -83,15 +83,13 @@ class ContactInformationProvider with ChangeNotifier {
   }
 
   Future<void> deleteContactInformation(
-    BuildContext context,
-    String accountId,
-  ) async {
+      BuildContext context, String contactId, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.delete(
-        Uri.parse('$kAppBaseUrl/api/users/contact/$accountId'),
+        Uri.parse('$kAppBaseUrl/api/users/contact/$contactId'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -100,7 +98,7 @@ class ContactInformationProvider with ChangeNotifier {
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(context,
             "Contact Information deleted successfully", KColors.success);
-
+        onSuccess();
         context.pop();
       } else {
         var error = jsonDecode(response.body)['message'];

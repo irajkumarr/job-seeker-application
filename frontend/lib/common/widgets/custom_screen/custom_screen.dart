@@ -69,7 +69,8 @@ class CustomScreen extends StatelessWidget {
         body: Column(
           children: [
             Expanded(
-              child: SingleChildScrollView(child: child),
+              child: SingleChildScrollView(
+                  physics: AlwaysScrollableScrollPhysics(), child: child),
             ),
 
             // Divider line

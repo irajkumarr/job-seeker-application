@@ -11,6 +11,7 @@ import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:frontend/navigation_menu.dart';
@@ -34,6 +35,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => DocumentProvider()),
     ChangeNotifierProvider(create: (_) => SocialAccountProvider()),
     ChangeNotifierProvider(create: (_) => ContactInformationProvider()),
+    ChangeNotifierProvider(create: (_) => ReferenceProvider()),
     ChangeNotifierProvider(create: (_) => PasswordProvider()),
     ChangeNotifierProvider(create: (_) => ResendTimerProvider()),
   ];

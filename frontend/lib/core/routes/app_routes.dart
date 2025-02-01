@@ -207,8 +207,9 @@ class AppRoutes {
         name: RoutesConstant.reference,
         path: "/reference",
         pageBuilder: (context, state) {
+          final reference = state.extra as Reference?;
           return MaterialPage(
-            child: ReferenceScreen(),
+            child: ReferenceScreen(reference: reference),
           );
         },
       ),
@@ -226,10 +227,11 @@ class AppRoutes {
         name: RoutesConstant.contactInformation,
         path: "/contactInformation",
         pageBuilder: (context, state) {
-          
           final contact = state.extra as Emergencycontact?;
           return MaterialPage(
-            child: ContactInformationScreen(contact: contact,),
+            child: ContactInformationScreen(
+              contact: contact,
+            ),
           );
         },
       ),
