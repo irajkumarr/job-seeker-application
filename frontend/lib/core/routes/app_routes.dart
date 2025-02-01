@@ -180,8 +180,9 @@ class AppRoutes {
         name: RoutesConstant.language,
         path: "/language",
         pageBuilder: (context, state) {
+          final language = state.extra as Language?;
           return MaterialPage(
-            child: LanguageScreen(),
+            child: LanguageScreen(language: language),
           );
         },
       ),

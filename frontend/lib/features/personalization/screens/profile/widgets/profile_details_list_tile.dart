@@ -39,6 +39,7 @@ class ProfileDetailListTile extends StatelessWidget {
           SizedBox(height: KSizes.sm),
           InkWell(
             onTap: onAdd,
+            borderRadius: BorderRadius.circular(KSizes.md),
             child: Row(
               children: [
                 Icon(
@@ -48,7 +49,7 @@ class ProfileDetailListTile extends StatelessWidget {
                 ),
                 const SizedBox(width: KSizes.md),
                 Text(
-                  'Add Work Experience',
+                  'Add $title',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: KColors.primary,
                       ),
