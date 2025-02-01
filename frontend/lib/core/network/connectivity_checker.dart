@@ -35,60 +35,68 @@ class ConnectivityChecker extends StatelessWidget {
             onWillPop: () async {
               return await CustomAlertBox.alertCloseApp(context);
             },
-            child: SafeArea(
-              child: Scaffold(
-                backgroundColor: KColors.white,
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                          height: 200.h,
-                          width: 200.w,
-                          child: Image.asset(KImages.noInternet)),
-                      const SizedBox(height: KSizes.md),
-                      Text(
-                        'Ooops!',
-                        style: TextStyle(fontSize: 30.sp, color: Colors.black),
-                      ),
-                      SizedBox(height: KSizes.sm),
-                      Text(
-                        'No internet connection Found\n Check your Connection',
-                        style: TextStyle(fontSize: 12.sp, color: Colors.black),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: KSizes.spaceBtwSections),
-                      GestureDetector(
-                        onTap: () async {
-                          try {
-                            // showToast("You're not connected");
-                            KSnackbar.Snackbar(
-                                context,
-                                "You're not connected...",
-                                false,
-                                KColors.error);
-                            // showCustomToast(context, "You're not connected");
+            child: Scaffold(
+              backgroundColor: KColors.white,
+              body: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    SizedBox(
+                        height: 200.h,
+                        width: 200.w,
+                        child: Image.asset(KImages.noInternet)),
+                    const SizedBox(height: KSizes.md),
+                    Text(
+                      'Ooops!',
+                      style: TextStyle(fontSize: 30.sp, color: Colors.black),
+                    ),
+                    SizedBox(height: KSizes.sm),
+                    Text(
+                      'No internet connection Found\n Check your Connection',
+                      style: Theme.of(context).textTheme.titleSmall,
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: KSizes.spaceBtwSections),
+                    InkWell(
+                      borderRadius: BorderRadius.circular(50),
+                      onTap: () async {
+                        try {
+                          // showToast("You're not connected");
+                          // KSnackbar.Snackbar(
+                          //     context,
+                          //     "You're not connected...",
+                          //     false,
+                          //     KColors.error);
+                          // showCustomToast(context, "You're not connected");
 
-                            await connectivityProvider.checkConnectivity();
-                          } catch (e) {
-                            showToast("Server Error");
-                          }
-                        },
-                        child: Container(
+                          await connectivityProvider.checkConnectivity();
+                        } catch (e) {
+                          // showToast("Server Error");
+                        }
+                      },
+                      child: Container(
                           padding: EdgeInsets.all(KSizes.sm),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: KColors.primary,
+                            // color: KColors.primary,
                           ),
-                          child: Icon(
-                            Icons.refresh_outlined,
-                            size: 35.sp,
-                            color: KColors.white,
+                          child: Text(
+                            "Try Again",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                  color: KColors.primary,
+                                ),
+                          )
+                          // child: Icon(
+                          //   Icons.refresh_outlined,
+                          //   size: 35.sp,
+                          //   color: KColors.primary,
+                          // ),
                           ),
-                        ),
-                      )
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),

@@ -6,20 +6,66 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
+import 'package:frontend/data/models/language_model.dart';
+import 'package:frontend/data/models/profile_detail_model.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/providers/user_language_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
-class LanguageScreen extends StatelessWidget {
-  const LanguageScreen({super.key});
+class LanguageScreen extends StatefulWidget {
+  const LanguageScreen({super.key, this.language});
+  final Language? language;
+  @override
+  State<LanguageScreen> createState() => _LanguageScreenState();
+}
+
+class _LanguageScreenState extends State<LanguageScreen> {
+  final TextEditingController _languageController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+  double? _languageScore;
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.language != null) {
+      _languageController.text = widget.language!.name ?? "";
+      _languageScore = widget.language!.score ?? 0;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-
-    final TextEditingController _languageController = TextEditingController();
-    final _formKey = GlobalKey<FormState>();
+    final userLanguageProvider = Provider.of<UserLanguageProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(context);
     return CustomScreen(
       onPressed: () {
-        if (_formKey.currentState!.validate()) {}
+        if (_formKey.currentState!.validate()) {
+          if (widget.language == null) {
+            LanguageModel model = LanguageModel(
+              name: _languageController.text.trim(),
+              score: _languageScore,
+            );
+            String data = languageModelToJson(model);
+            userLanguageProvider.addLanguage(context, data, () async {
+              await profileProvider.fetchProfile(forceRefresh: true);
+              context.pop();
+            });
+          } else {
+            LanguageModel model = LanguageModel(
+              name: _languageController.text.trim(),
+              score: _languageScore,
+            );
+            String data = languageModelToJson(model);
+            userLanguageProvider
+                .updateLanguage(context, widget.language!.id!, data, () async {
+              await profileProvider.fetchProfile(forceRefresh: true);
+              context.pop();
+            });
+          }
+        }
       },
       buttonText: l10n.submit,
       child: Padding(
@@ -73,7 +119,7 @@ class LanguageScreen extends StatelessWidget {
                     height: KSizes.sm,
                   ),
                   RatingBar.builder(
-                    initialRating: 0,
+                    initialRating: _languageScore ?? 0,
                     minRating: 1,
                     direction: Axis.horizontal,
                     allowHalfRating: true,
@@ -86,7 +132,10 @@ class LanguageScreen extends StatelessWidget {
                       Icons.star_border_rounded,
                       color: KColors.primary,
                     ),
-                    onRatingUpdate: (rating) {},
+                    onRatingUpdate: (rating) {
+                      _languageScore = rating;
+                      setState(() {});
+                    },
                   ),
                   SizedBox(
                     height: KSizes.md,

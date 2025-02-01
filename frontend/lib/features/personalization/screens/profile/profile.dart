@@ -11,6 +11,7 @@ import 'package:frontend/features/personalization/providers/document_provider.da
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
+import 'package:frontend/features/personalization/providers/user_language_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_job_preferred_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_profile_section.dart';
@@ -69,7 +70,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
             // final user = profileProvider.user!;
             final profile = profileProvider.profile;
             if (profile == null) {
-              return Center(child: Text("No profile data found"));
+              return Center(
+                  child: Text(
+                "Profile Data not found",
+                style: Theme.of(context).textTheme.titleSmall,
+              ));
             }
 
             return Scaffold(
@@ -404,8 +409,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       //  "${language.score ?? ""}",
                                       'value': language.score ?? "",
 
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                          RoutesConstant.language,
+                                          extra: language,
+                                        );
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<UserLanguageProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteLanguage(
+                                                  context, language.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
+                                        });
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {

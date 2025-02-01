@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
-class LanguageProvider with ChangeNotifier {
+class UserLanguageProvider with ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -17,14 +17,14 @@ class LanguageProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addReference(
+  Future<void> addLanguage(
       BuildContext context, String data, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.post(
-        Uri.parse('$kAppBaseUrl/api/users/reference'),
+        Uri.parse('$kAppBaseUrl/api/users/language'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ class LanguageProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
-            context, "Reference added successfully", KColors.success);
+            context, "Language added successfully", KColors.success);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -48,14 +48,14 @@ class LanguageProvider with ChangeNotifier {
     }
   }
 
-  Future<void> updateReference(BuildContext context, String referenceId,
+  Future<void> updateLanguage(BuildContext context, String languageId,
       String updatedata, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.put(
-        Uri.parse('$kAppBaseUrl/api/users/reference/$referenceId'),
+        Uri.parse('$kAppBaseUrl/api/users/language/$languageId'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ class LanguageProvider with ChangeNotifier {
       print(response.body);
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
-            context, "Reference updated successfully", KColors.success);
+            context, "Language updated successfully", KColors.success);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -82,9 +82,9 @@ class LanguageProvider with ChangeNotifier {
     }
   }
 
-  Future<void> deleteReference(
+  Future<void> deleteLanguage(
     BuildContext context,
-    String referenceId,
+    String languageId,
     VoidCallback onSuccess,
   ) async {
     setLoading(true);
@@ -92,7 +92,7 @@ class LanguageProvider with ChangeNotifier {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.delete(
-        Uri.parse('$kAppBaseUrl/api/users/reference/$referenceId'),
+        Uri.parse('$kAppBaseUrl/api/users/language/$languageId'),
         headers: {
           'Authorization': 'Bearer $token',
         },
@@ -100,7 +100,7 @@ class LanguageProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
-            context, "Reference deleted successfully", KColors.success);
+            context, "Language deleted successfully", KColors.success);
         onSuccess();
         context.pop();
       } else {
