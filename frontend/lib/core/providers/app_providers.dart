@@ -13,6 +13,7 @@ import 'package:frontend/features/personalization/providers/document_provider.da
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
+import 'package:frontend/features/personalization/providers/training_provider.dart';
 import 'package:frontend/features/personalization/providers/user_language_provider.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:frontend/navigation_menu.dart';
@@ -38,6 +39,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => ContactInformationProvider()),
     ChangeNotifierProvider(create: (_) => ReferenceProvider()),
     ChangeNotifierProvider(create: (_) => UserLanguageProvider()),
+    ChangeNotifierProvider(create: (_) => TrainingProvider()),
     ChangeNotifierProvider(create: (_) => PasswordProvider()),
     ChangeNotifierProvider(create: (_) => ResendTimerProvider()),
   ];

@@ -11,6 +11,7 @@ import 'package:frontend/features/personalization/providers/document_provider.da
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
+import 'package:frontend/features/personalization/providers/training_provider.dart';
 import 'package:frontend/features/personalization/providers/user_language_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_job_preferred_section.dart';
@@ -375,11 +376,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   data: profile.trainings!.map((training) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': "${training.completionYear}",
+                                      'label':
+                                          "${training.completionYear?.year}, ${training.completionYear?.month}",
                                       'value':
                                           "${training.name ?? ""}\n${training.institute ?? ""}\n${training.duration?.value ?? ""} ${training.duration?.unit ?? ""}",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                            RoutesConstant.training,
+                                            extra: training);
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<TrainingProvider>(context,
+                                                  listen: false)
+                                              .deleteTraining(
+                                                  context, training.id!,
+                                                  () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
+                                        });
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {

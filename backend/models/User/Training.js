@@ -10,10 +10,13 @@ const trainingSchema = new mongoose.Schema(
     name: { type: String, required: true },
     institute: { type: String, required: true },
     duration: {
-      value: Number,
-      unit: { type: String, enum: ["months", "years"] },
+      value: String,
+      unit: { type: String, enum: ["Days", "Months", "Years"] },
     },
-    completionYear: Number,
+    completionYear: {
+      year: String,
+      month: String,
+    },
   },
   { timestamps: true }
 );

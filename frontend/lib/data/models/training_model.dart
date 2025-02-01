@@ -12,7 +12,7 @@ class TrainingModel {
     final String? name;
     final String? institute;
     final Duration? duration;
-    final int? completionYear;
+    final CompletionYear? completionYear;
 
     TrainingModel({
         this.name,
@@ -25,19 +25,19 @@ class TrainingModel {
         name: json["name"],
         institute: json["institute"],
         duration: json["duration"] == null ? null : Duration.fromJson(json["duration"]),
-        completionYear: json["completionYear"],
+        completionYear: json["completionYear"] == null ? null : CompletionYear.fromJson(json["completionYear"]),
     );
 
     Map<String, dynamic> toJson() => {
         "name": name,
         "institute": institute,
         "duration": duration?.toJson(),
-        "completionYear": completionYear,
+        "completionYear": completionYear?.toJson(),
     };
 }
 
 class Duration {
-    final int? value;
+    final String? value;
     final String? unit;
 
     Duration({
@@ -53,5 +53,26 @@ class Duration {
     Map<String, dynamic> toJson() => {
         "value": value,
         "unit": unit,
+    };
+}
+
+
+class CompletionYear {
+    final String? year;
+    final String? month;
+
+    CompletionYear({
+        this.year,
+        this.month,
+    });
+
+    factory CompletionYear.fromJson(Map<String, dynamic> json) => CompletionYear(
+        year: json["year"],
+        month: json["month"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "year": year,
+        "month": month,
     };
 }

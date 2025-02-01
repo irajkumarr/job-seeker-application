@@ -190,8 +190,9 @@ class AppRoutes {
         name: RoutesConstant.training,
         path: "/training",
         pageBuilder: (context, state) {
+          final training = state.extra as Training?;
           return MaterialPage(
-            child: TrainingScreen(),
+            child: TrainingScreen(training: training),
           );
         },
       ),

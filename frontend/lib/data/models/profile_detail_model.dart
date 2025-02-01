@@ -1474,7 +1474,7 @@ class Reference {
         designation: json["designation"],
         organization: json["organization"],
         email: json["email"],
-         phoneNumber: json["phoneNumber"] == null
+        phoneNumber: json["phoneNumber"] == null
             ? null
             : PhoneNumber.fromJson(json["phoneNumber"]),
         createdAt: json["createdAt"] == null
@@ -1550,7 +1550,7 @@ class Training {
   final String? name;
   final String? institute;
   final Duration? duration;
-  final int? completionYear;
+  final CompletionYear? completionYear;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final int? v;
@@ -1575,7 +1575,9 @@ class Training {
         duration: json["duration"] == null
             ? null
             : Duration.fromJson(json["duration"]),
-        completionYear: json["completionYear"],
+        completionYear: json["completionYear"] == null
+            ? null
+            : CompletionYear.fromJson(json["completionYear"]),
         createdAt: json["createdAt"] == null
             ? null
             : DateTime.parse(json["createdAt"]),
@@ -1591,7 +1593,7 @@ class Training {
         "name": name,
         "institute": institute,
         "duration": duration?.toJson(),
-        "completionYear": completionYear,
+        "completionYear": completionYear?.toJson(),
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
@@ -1599,7 +1601,7 @@ class Training {
 }
 
 class Duration {
-  final int? value;
+  final String? value;
   final String? unit;
 
   Duration({
@@ -1615,5 +1617,25 @@ class Duration {
   Map<String, dynamic> toJson() => {
         "value": value,
         "unit": unit,
+      };
+}
+
+class CompletionYear {
+  final String? year;
+  final String? month;
+
+  CompletionYear({
+    this.year,
+    this.month,
+  });
+
+  factory CompletionYear.fromJson(Map<String, dynamic> json) => CompletionYear(
+        year: json["year"],
+        month: json["month"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "year": year,
+        "month": month,
       };
 }

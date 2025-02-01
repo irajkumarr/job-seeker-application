@@ -7,7 +7,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
-class ContactInformationProvider with ChangeNotifier {
+class TrainingProvider with ChangeNotifier {
   bool _isLoading = false;
 
   bool get isLoading => _isLoading;
@@ -17,14 +17,14 @@ class ContactInformationProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> addContactInformation(
+  Future<void> addTraining(
       BuildContext context, String data, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.post(
-        Uri.parse('$kAppBaseUrl/api/users/contact'),
+        Uri.parse('$kAppBaseUrl/api/users/training'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -34,7 +34,7 @@ class ContactInformationProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
-            context, "Contact Information added successfully", KColors.success);
+            context, "Training added successfully", KColors.success);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -48,14 +48,14 @@ class ContactInformationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> updateContactInformation(BuildContext context, String contactId,
+  Future<void> updateTraining(BuildContext context, String trainingId,
       String updatedata, VoidCallback onSuccess) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.put(
-        Uri.parse('$kAppBaseUrl/api/users/contact/$contactId'),
+        Uri.parse('$kAppBaseUrl/api/users/training/$trainingId'),
         headers: {
           'Authorization': 'Bearer $token',
           'Content-Type': 'application/json',
@@ -63,8 +63,8 @@ class ContactInformationProvider with ChangeNotifier {
         body: updatedata,
       );
       if (response.statusCode == 200) {
-        KSnackbar.CustomSnackbar(context,
-            "Contact Information updated successfully", KColors.success);
+        KSnackbar.CustomSnackbar(
+            context, "Training updated successfully", KColors.success);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -78,22 +78,25 @@ class ContactInformationProvider with ChangeNotifier {
     }
   }
 
-  Future<void> deleteContactInformation(
-      BuildContext context, String contactId, VoidCallback onSuccess) async {
+  Future<void> deleteTraining(
+    BuildContext context,
+    String trainingId,
+    VoidCallback onSuccess,
+  ) async {
     setLoading(true);
     try {
       final box = GetStorage();
       String? token = box.read('token');
       final response = await http.delete(
-        Uri.parse('$kAppBaseUrl/api/users/contact/$contactId'),
+        Uri.parse('$kAppBaseUrl/api/users/training/$trainingId'),
         headers: {
           'Authorization': 'Bearer $token',
         },
       );
 
       if (response.statusCode == 200) {
-        KSnackbar.CustomSnackbar(context,
-            "Contact Information deleted successfully", KColors.success);
+        KSnackbar.CustomSnackbar(
+            context, "Training deleted successfully", KColors.success);
         onSuccess();
         context.pop();
       } else {
