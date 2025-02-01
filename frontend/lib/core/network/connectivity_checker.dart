@@ -1,14 +1,12 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 
 import 'package:provider/provider.dart';
 import '../../common/widgets/alert_box/alert_box.dart';
 import '../utils/constants/colors.dart';
 import '../utils/constants/image_strings.dart';
 import '../utils/constants/sizes.dart';
-import '../utils/popups/toast.dart';
 import 'connectivity_provider.dart';
 
 class ConnectivityChecker extends StatelessWidget {
