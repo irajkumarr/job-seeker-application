@@ -238,6 +238,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               title: 'Category',
                               leadingIcon: Icons.check_circle,
                               leadingIconColor: Colors.green,
+                              onTap: () {
+                                context
+                                    .pushNamed(RoutesConstant.profileCategory);
+                              },
                               data: profile.profile![0].preferredCategories!),
                           SizedBox(height: KSizes.sm),
                           ExpandableCategoryAndSkillSection(
@@ -245,6 +249,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               sectionId: 'skill_info',
                               title: 'Skill',
                               leadingIcon: Icons.check_circle,
+                              onTap: () {},
                               leadingIconColor: Colors.green,
                               data: profile.profile![0].skills!),
                           SizedBox(height: KSizes.sm),

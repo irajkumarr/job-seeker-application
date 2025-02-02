@@ -153,6 +153,7 @@ class CustomAlertBox {
   //     },
   //   );
   // }
+  
   static Future<bool> alertCloseApp(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
     return await showDialog(
@@ -258,6 +259,7 @@ class CustomAlertBox {
       },
     );
   }
+
 
   static showAlertDialog(BuildContext context) {
     // set up the buttons

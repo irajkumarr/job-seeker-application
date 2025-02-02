@@ -123,29 +123,29 @@ const handleUpdateProfile = async (req, res) => {
     const updateFields = {};
 
     // Handle flat fields (top-level fields)
-    ["interestedCategories", "skills"].forEach((field) => {
+    ["preferredCategories", "skills"].forEach((field) => {
       if (req.body[field]) {
         updateFields[field] = req.body[field];
       }
     });
 
     // Handle nested location fields
-    ["currentLocation", "permanentLocation"].forEach((locationType) => {
-      if (req.body[locationType]) {
-        const locationFields = [
-          "province",
-          "district",
-          "municipality",
-          "fullAddress",
-        ];
-        locationFields.forEach((field) => {
-          if (req.body[locationType][field]) {
-            updateFields[`${locationType}.${field}`] =
-              req.body[locationType][field];
-          }
-        });
-      }
-    });
+    // ["currentLocation", "permanentLocation"].forEach((locationType) => {
+    //   if (req.body[locationType]) {
+    //     const locationFields = [
+    //       "province",
+    //       "district",
+    //       "municipality",
+    //       "fullAddress",
+    //     ];
+    //     locationFields.forEach((field) => {
+    //       if (req.body[locationType][field]) {
+    //         updateFields[`${locationType}.${field}`] =
+    //           req.body[locationType][field];
+    //       }
+    //     });
+    //   }
+    // });
 
     // Handle nested personal details fields
     if (req.body.personalDetails) {

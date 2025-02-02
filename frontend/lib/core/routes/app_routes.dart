@@ -20,6 +20,7 @@ import 'package:frontend/features/personalization/screens/profile/document_scree
 import 'package:frontend/features/personalization/screens/profile/education_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/experience_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/language_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/profile_category.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
 import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/social_account_screen.dart';
@@ -35,7 +36,7 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    // initialLocation: "/uploadProfile",
+    // initialLocation: "/profileCategory",
     initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
@@ -292,6 +293,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: UploadProfileScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.profileCategory,
+        path: "/profileCategory",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ProfileCategory(),
           );
         },
       ),

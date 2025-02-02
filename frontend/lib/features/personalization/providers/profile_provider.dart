@@ -8,6 +8,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileProvider extends ChangeNotifier {
@@ -140,6 +141,57 @@ class ProfileProvider extends ChangeNotifier {
       }
     } catch (e) {
       rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //preferred categories
+  Future<void> updatePreferredCategories(
+    BuildContext context,
+    List<String> preferredCategories,
+    VoidCallback onSuccess,
+  ) async {
+    _isLoading = true;
+    _errorMessage = '';
+    notifyListeners();
+
+    try {
+      final storage = GetStorage();
+      String? token = storage.read('token');
+
+      if (token == null) {
+        throw Exception("User token not found");
+      }
+
+      final response = await http.put(
+        Uri.parse('$kAppBaseUrl/api/users/profile'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'preferredCategories': preferredCategories,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // final data = json.decode(response.body);
+        KSnackbar.CustomSnackbar(
+            context, "Successfully updated!", KColors.primary);
+
+      
+        onSuccess();
+      } else {
+        _errorMessage = json.decode(response.body)['message'] ??
+            "Failed to update categories";
+
+        KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+      }
+    } catch (error) {
+      _errorMessage = error.toString();
+      KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
     } finally {
       _isLoading = false;
       notifyListeners();
