@@ -8,6 +8,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
@@ -19,6 +20,9 @@ class NavigationMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+
+    // final profileProvider =
+    //     Provider.of<ProfileProvider>(context, listen: false);
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -103,7 +107,23 @@ class NavigationMenu extends StatelessWidget {
                         color: KColors.darkGrey,
                       ),
                     ),
-                    child: Icon(
+                    child:
+                        //  profileProvider.profile!.profileImage != null
+                        //     ? SizedBox(
+                        //         height: 16.h,
+                        //         width: 16.w,
+                        //         child: ClipRRect(
+                        //           borderRadius: BorderRadius.circular(100),
+                        //           child: Image.network(
+                        //             profileProvider.profile!.profileImage!,
+                        //             height: 16.h,
+                        //             width: 16.w,
+                        //             fit: BoxFit.cover,
+                        //           ),
+                        //         ),
+                        //       )
+                        //     :
+                        Icon(
                       Iconsax.user,
                       size: 16.sp,
                       color: KColors.black,

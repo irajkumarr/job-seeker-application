@@ -797,6 +797,7 @@ class ProfileDetailModel {
   final String? name;
   final String? mobileNumber;
   final String? userType;
+  final String? profileImage;
   final bool? isActive;
   final DateTime? createdAt;
   final DateTime? updatedAt;
@@ -816,6 +817,7 @@ class ProfileDetailModel {
     this.name,
     this.mobileNumber,
     this.userType,
+    this.profileImage,
     this.isActive,
     this.createdAt,
     this.updatedAt,
@@ -837,6 +839,7 @@ class ProfileDetailModel {
         name: json["name"],
         mobileNumber: json["mobileNumber"],
         userType: json["userType"],
+        profileImage: json["profileImage"],
         isActive: json["isActive"],
         createdAt: json["createdAt"] == null
             ? null
@@ -888,6 +891,7 @@ class ProfileDetailModel {
         "name": name,
         "mobileNumber": mobileNumber,
         "userType": userType,
+        "profileImage": profileImage,
         "isActive": isActive,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
@@ -1042,52 +1046,59 @@ class Document {
 //
 //     final education = educationFromJson(jsonString);
 
-
 class Education {
-    final String? id;
-    final String? userId;
-    final String? level;
-    final String? educationProgram;
-    final String? educationBoard;
-    final String? institution;
-    final GraduationYear? startDate;
-    final GraduationYear? graduationYear;
-    final Grade? grade;
-    final DateTime? createdAt;
-    final DateTime? updatedAt;
-    final int? v;
+  final String? id;
+  final String? userId;
+  final String? level;
+  final String? educationProgram;
+  final String? educationBoard;
+  final String? institution;
+  final GraduationYear? startDate;
+  final GraduationYear? graduationYear;
+  final Grade? grade;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
 
-    Education({
-        this.id,
-        this.userId,
-        this.level,
-        this.educationProgram,
-        this.educationBoard,
-        this.institution,
-        this.startDate,
-        this.graduationYear,
-        this.grade,
-        this.createdAt,
-        this.updatedAt,
-        this.v,
-    });
+  Education({
+    this.id,
+    this.userId,
+    this.level,
+    this.educationProgram,
+    this.educationBoard,
+    this.institution,
+    this.startDate,
+    this.graduationYear,
+    this.grade,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+  });
 
-    factory Education.fromJson(Map<String, dynamic> json) => Education(
+  factory Education.fromJson(Map<String, dynamic> json) => Education(
         id: json["_id"],
         userId: json["userId"],
         level: json["level"],
         educationProgram: json["educationProgram"],
         educationBoard: json["educationBoard"],
         institution: json["institution"],
-        startDate: json["startDate"] == null ? null : GraduationYear.fromJson(json["startDate"]),
-        graduationYear: json["graduationYear"] == null ? null : GraduationYear.fromJson(json["graduationYear"]),
+        startDate: json["startDate"] == null
+            ? null
+            : GraduationYear.fromJson(json["startDate"]),
+        graduationYear: json["graduationYear"] == null
+            ? null
+            : GraduationYear.fromJson(json["graduationYear"]),
         grade: json["grade"] == null ? null : Grade.fromJson(json["grade"]),
-        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "_id": id,
         "userId": userId,
         "level": level,
@@ -1100,49 +1111,48 @@ class Education {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-    };
+      };
 }
 
 class Grade {
-    final String? type;
-    final String? marks;
+  final String? type;
+  final String? marks;
 
-    Grade({
-        this.type,
-        this.marks,
-    });
+  Grade({
+    this.type,
+    this.marks,
+  });
 
-    factory Grade.fromJson(Map<String, dynamic> json) => Grade(
+  factory Grade.fromJson(Map<String, dynamic> json) => Grade(
         type: json["type"],
         marks: json["marks"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "type": type,
         "marks": marks,
-    };
+      };
 }
 
 class GraduationYear {
-    final String? year;
-    final String? month;
+  final String? year;
+  final String? month;
 
-    GraduationYear({
-        this.year,
-        this.month,
-    });
+  GraduationYear({
+    this.year,
+    this.month,
+  });
 
-    factory GraduationYear.fromJson(Map<String, dynamic> json) => GraduationYear(
+  factory GraduationYear.fromJson(Map<String, dynamic> json) => GraduationYear(
         year: json["year"],
         month: json["month"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "year": year,
         "month": month,
-    };
+      };
 }
-
 
 class Emergencycontact {
   final String? id;
@@ -1297,43 +1307,42 @@ class PhoneNumber {
 //       };
 // }
 
-
 class Experience {
-    final String? id;
-    final String? userId;
-    final String? organizationName;
-    final String? industry;
-    final String? jobCategory;
-    final String? location;
-    final String? designation;
-    final String? jobLevel;
-    final Date? startDate;
-    final bool? currentlyWorking;
-    final Date? endDate;
-    final String? rolesAndResponsibilities;
-    final DateTime? createdAt;
-    final DateTime? updatedAt;
-    final int? v;
+  final String? id;
+  final String? userId;
+  final String? organizationName;
+  final String? industry;
+  final String? jobCategory;
+  final String? location;
+  final String? designation;
+  final String? jobLevel;
+  final Date? startDate;
+  final bool? currentlyWorking;
+  final Date? endDate;
+  final String? rolesAndResponsibilities;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
 
-    Experience({
-        this.id,
-        this.userId,
-        this.organizationName,
-        this.industry,
-        this.jobCategory,
-        this.location,
-        this.designation,
-        this.jobLevel,
-        this.startDate,
-        this.currentlyWorking,
-        this.endDate,
-        this.rolesAndResponsibilities,
-        this.createdAt,
-        this.updatedAt,
-        this.v,
-    });
+  Experience({
+    this.id,
+    this.userId,
+    this.organizationName,
+    this.industry,
+    this.jobCategory,
+    this.location,
+    this.designation,
+    this.jobLevel,
+    this.startDate,
+    this.currentlyWorking,
+    this.endDate,
+    this.rolesAndResponsibilities,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+  });
 
-    factory Experience.fromJson(Map<String, dynamic> json) => Experience(
+  factory Experience.fromJson(Map<String, dynamic> json) => Experience(
         id: json["_id"],
         userId: json["userId"],
         organizationName: json["organizationName"],
@@ -1342,16 +1351,22 @@ class Experience {
         location: json["location"],
         designation: json["designation"],
         jobLevel: json["jobLevel"],
-        startDate: json["startDate"] == null ? null : Date.fromJson(json["startDate"]),
+        startDate:
+            json["startDate"] == null ? null : Date.fromJson(json["startDate"]),
         currentlyWorking: json["currentlyWorking"],
-        endDate: json["endDate"] == null ? null : Date.fromJson(json["endDate"]),
+        endDate:
+            json["endDate"] == null ? null : Date.fromJson(json["endDate"]),
         rolesAndResponsibilities: json["rolesAndResponsibilities"],
-        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "_id": id,
         "userId": userId,
         "organizationName": organizationName,
@@ -1367,29 +1382,28 @@ class Experience {
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-    };
+      };
 }
 
 class Date {
-    final String? year;
-    final String? month;
+  final String? year;
+  final String? month;
 
-    Date({
-        this.year,
-        this.month,
-    });
+  Date({
+    this.year,
+    this.month,
+  });
 
-    factory Date.fromJson(Map<String, dynamic> json) => Date(
+  factory Date.fromJson(Map<String, dynamic> json) => Date(
         year: json["year"],
         month: json["month"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "year": year,
         "month": month,
-    };
+      };
 }
-
 
 class Language {
   final String? id;

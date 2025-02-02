@@ -10,6 +10,7 @@ import 'package:go_router/go_router.dart';
 void showImagePreview(
   BuildContext context,
   File image,
+  VoidCallback onPressed,
 ) {
   showModalBottomSheet(
     context: context,
@@ -119,7 +120,7 @@ void showImagePreview(
                   child: CustomButton(
                     text: "Upload Photo",
                     isIconShowed: false,
-                    onPressed: () {},
+                    onPressed: onPressed,
                   ),
                 ),
               ],

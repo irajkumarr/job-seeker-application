@@ -1,5 +1,7 @@
 const User = require("../../models/User/User");
 const mongoose = require("mongoose");
+
+const cloudinary = require("../../utils/cloudinary");
 const handleGetUser = async (req, res) => {
   const userId = req.user.id;
   try {
@@ -74,6 +76,57 @@ const handleUpdateUser = async (req, res) => {
       .json({ status: true, message: "User updated successfully" });
   } catch (error) {
     return res.status(500).json({ status: false, message: error.message });
+  }
+};
+
+// Update User Profile Image (File Upload)
+const handleUpdateProfileImage = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    if (!req.file) {
+      return res
+        .status(400)
+        .json({ success: false, message: "No image file uploaded" });
+    }
+
+    // Upload file to Cloudinary
+    const result = await cloudinary.uploader.upload_stream(
+      { folder: "profile_images", resource_type: "auto" },
+      async (error, result) => {
+        if (error) {
+          return res.status(500).json({
+            success: false,
+            message: "Cloudinary upload failed",
+            error,
+          });
+        }
+
+        // Update user profile image
+        const user = await User.findByIdAndUpdate(
+          { _id: userId },
+          { profileImage: result.secure_url },
+          { new: true, runValidators: true }
+        );
+
+        if (!user) {
+          return res
+            .status(404)
+            .json({ success: false, message: "User not found" });
+        }
+
+        res.status(200).json({
+          success: true,
+          message: "Profile image updated successfully",
+          data: user,
+        });
+      }
+    );
+
+    // Pipe the file buffer to Cloudinary
+    result.end(req.file.buffer);
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
   }
 };
 
@@ -322,4 +375,5 @@ module.exports = {
   handleDeleteUser,
   handleUpdateUser,
   handleGetAllProfiles,
+  handleUpdateProfileImage,
 };

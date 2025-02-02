@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       enum: ["jobseeker", "employer", "admin"],
       default: "jobseeker",
     },
+    profileImage: {
+      type: String,
+      default: null, 
+    },
 
     isActive: { type: Boolean, default: true },
   },

@@ -123,7 +123,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       width: double.infinity,
                       child: Column(
                         children: [
-                          UserIconWithAddButton(),
+                          UserIconWithAddButton(
+                            profileImage: profile.profileImage,
+                          ),
                           SizedBox(height: KSizes.md),
                           Text(
                             "${profile.name}",

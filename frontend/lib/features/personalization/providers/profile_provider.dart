@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/app_routes.dart';
@@ -7,6 +8,7 @@ import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 import 'package:provider/provider.dart';
 
@@ -94,41 +96,50 @@ class ProfileProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Future<void> fetchProfile() async {
-  //   _isLoading = true;
-  //   _errorMessage = '';
-  //   notifyListeners();
+  String? _profileImage;
+  String? get profileImage => _profileImage;
+  Future<void> updateProfileImage(BuildContext context, File imageFile) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      String? token = box.read("token");
 
-  //   try {
-  //     final storage = GetStorage();
-  //     String? token = storage.read('token'); // Get token from storage
+      if (token == null) {
+        throw Exception("User not logged in.");
+      }
 
-  //     if (token == null) {
-  //       throw Exception("User token not found");
-  //     }
+      var request = http.MultipartRequest(
+        "PUT",
+        Uri.parse("$kAppBaseUrl/api/users/profileImage/"),
+      );
 
-  //     final response = await http.get(
-  //       Uri.parse('$kAppBaseUrl/api/users/profiles'),
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token', // Send token in headers
-  //       },
-  //     );
+      request.headers["Authorization"] = "Bearer $token";
+      request.files.add(
+        await http.MultipartFile.fromPath("profileImage", imageFile.path),
+      );
 
-  //     if (response.statusCode == 200) {
-  //       final data = json.decode(response.body);
-  //       _profile = ProfileDetailModel.fromJson(data);
-  //     } else {
-  //       _errorMessage =
-  //           json.decode(response.body)['message'] ?? "Failed to load profile";
-  //     }
-  //   } catch (error) {
-  //     _errorMessage = error.toString();
-  //   }
+      var response = await request.send();
 
-  //   _isLoading = false;
-  //   notifyListeners();
-  // }
+      if (response.statusCode == 200) {
+        var responseBody = await response.stream.bytesToString();
+        var jsonResponse = jsonDecode(responseBody);
+
+        if (jsonResponse["success"]) {
+          _profileImage = jsonResponse["data"]["profileImage"];
+          box.write("profileImage", _profileImage);
+          notifyListeners();
+        } else {
+          throw Exception(jsonResponse["message"] ?? "Failed to update image");
+        }
+      } else {
+        throw Exception("Error: ${response.statusCode}");
+      }
+    } catch (e) {
+      rethrow;
+    }
+    _isLoading = false;
+    notifyListeners();
+  }
 
   //for expandable profile sections
   Map<String, bool> _expandedSections = {};
