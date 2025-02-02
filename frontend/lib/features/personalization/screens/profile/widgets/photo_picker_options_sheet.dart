@@ -80,13 +80,23 @@ class _PhotoPickerOptionsBottomSheetState
           ),
           SizedBox(height: KSizes.md),
           ListTile(
-            leading: Icon(Icons.photo_library),
+            leading: Icon(Icons.photo_library_outlined),
             title: Text('Upload from Gallery'),
+            trailing: Icon(
+              Icons.arrow_forward_ios_outlined,
+              size: KSizes.iconXs,
+              color: KColors.darkGrey,
+            ),
             onTap: () => _pickProfile(ImageSource.gallery),
           ),
           ListTile(
-            leading: Icon(Icons.camera_alt),
+            leading: Icon(Icons.camera_alt_outlined),
             title: Text('Take a Photo'),
+            trailing: Icon(
+              Icons.arrow_forward_ios_outlined,
+              size: KSizes.iconXs,
+              color: KColors.darkGrey,
+            ),
             onTap: () => _pickProfile(ImageSource.camera),
           ),
         ],
