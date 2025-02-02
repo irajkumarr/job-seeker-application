@@ -175,27 +175,6 @@ class ImagePreview extends StatelessWidget {
                       ),
               ),
             ),
-
-            // Close button (cross icon)
-            // Positioned(
-            //   top: 16,
-            //   right: 16,
-            //   child: GestureDetector(
-            //     onTap: () => Navigator.pop(context), // Close the bottom sheet
-            //     child: Container(
-            //       padding: EdgeInsets.all(8),
-            //       decoration: BoxDecoration(
-            //         color: Colors.black.withOpacity(0.5),
-            //         shape: BoxShape.circle,
-            //       ),
-            //       child: Icon(
-            //         Icons.close,
-            //         color: Colors.white,
-            //         size: 24,
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
