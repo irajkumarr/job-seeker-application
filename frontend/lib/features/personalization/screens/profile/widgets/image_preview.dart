@@ -155,25 +155,27 @@ class ImagePreview extends StatelessWidget {
         ),
       ),
       body: Container(
-        height:
-            MediaQuery.of(context).size.height * 0.8, // 80% of screen height
-        padding: const EdgeInsets.all(16.0),
+        height: MediaQuery.of(context).size.height * 0.9,
+        padding: EdgeInsets.all(KSizes.sm),
         child: Stack(
           children: [
             // Image preview
             Center(
-              child: InteractiveViewer(
-                minScale: 0.5,
-                maxScale: 4,
-                child: isFile
-                    ? Image.file(
-                        file!,
-                        fit: BoxFit.contain,
-                      )
-                    : Image.network(
-                        image!,
-                        fit: BoxFit.contain,
-                      ),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(KSizes.md),
+                child: InteractiveViewer(
+                  minScale: 0.5,
+                  maxScale: 4,
+                  child: isFile
+                      ? Image.file(
+                          file!,
+                          fit: BoxFit.contain,
+                        )
+                      : Image.network(
+                          image!,
+                          fit: BoxFit.contain,
+                        ),
+                ),
               ),
             ),
           ],
