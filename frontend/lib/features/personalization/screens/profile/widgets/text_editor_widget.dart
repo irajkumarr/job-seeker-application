@@ -1,9 +1,9 @@
-
 // Track the active list type
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/core/utils/validators/validation.dart';
 
 enum ListType { none, bullet, numbered, numberedRtl }
 
@@ -125,13 +125,16 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
               // Text Area
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
-                child: TextField(
+                child: TextFormField(
                   controller: widget.rolesController,
                   maxLines: 8,
+                  validator: (value) => KValidator.validateEmptyText(
+                      "Roles and Responsibilities", value),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,
                     focusedBorder: InputBorder.none,
+                    focusedErrorBorder: InputBorder.none,
                     errorBorder: InputBorder.none,
                     disabledBorder: InputBorder.none,
                     contentPadding:

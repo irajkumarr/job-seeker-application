@@ -330,13 +330,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     };
                                   }).toList(),
                                   onAdd: () {
-                                    context.pushNamed(RoutesConstant.education);
+                                    context
+                                        .pushNamed(RoutesConstant.experience);
                                   },
                                 )
                               : ProfileDetailListTile(
                                   title: "Work Experience",
                                   onAdd: () {
-                                    context.pushNamed(RoutesConstant.education);
+                                    context
+                                        .pushNamed(RoutesConstant.experience);
                                   },
                                 ),
                           SizedBox(height: KSizes.sm),
