@@ -16,6 +16,7 @@ import 'package:frontend/features/dashboard/widgets/employer_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/contact_information_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/document_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/education_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/experience_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/language_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
 import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
@@ -30,7 +31,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/navigationMenu",
+    initialLocation: "/experience",
+    // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -210,31 +212,33 @@ class AppRoutes {
         //     ),
         //   );
         // },
-         pageBuilder: (context, state) {
-    // Safely extract the 'extra' parameter, ensuring it's non-null and of the correct type
-    final extra = state.extra as Map<String, dynamic>?;
+        pageBuilder: (context, state) {
+          // Safely extract the 'extra' parameter, ensuring it's non-null and of the correct type
+          final extra = state.extra as Map<String, dynamic>?;
 
-    // Check if 'extra' is not null and contains the required keys
-    if (extra != null) {
-      final education = extra["education"] as Education?;
-      final isRemoved = extra["isRemoved"] as bool? ?? false; // Default to false if isRemoved is not provided
+          // Check if 'extra' is not null and contains the required keys
+          if (extra != null) {
+            final education = extra["education"] as Education?;
+            final isRemoved = extra["isRemoved"] as bool? ??
+                false; // Default to false if isRemoved is not provided
 
-      return MaterialPage(
-        child: EducationScreen(
-          education: education,
-          isRemoved: isRemoved,
-        ),
-      );
-    } else {
-      // Handle the case where 'extra' is null or not provided
-      return MaterialPage(
-        child: EducationScreen(
-          education: null,
-          isRemoved: false, // Default to false if isRemoved is not provided
-        ),
-      );
-    }
-  },
+            return MaterialPage(
+              child: EducationScreen(
+                education: education,
+                isRemoved: isRemoved,
+              ),
+            );
+          } else {
+            // Handle the case where 'extra' is null or not provided
+            return MaterialPage(
+              child: EducationScreen(
+                education: null,
+                isRemoved:
+                    false, // Default to false if isRemoved is not provided
+              ),
+            );
+          }
+        },
       ),
       GoRoute(
         name: RoutesConstant.reference,
@@ -243,6 +247,16 @@ class AppRoutes {
           final reference = state.extra as Reference?;
           return MaterialPage(
             child: ReferenceScreen(reference: reference),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.experience,
+        path: "/experience",
+        pageBuilder: (context, state) {
+          // final reference = state.extra as Reference?;
+          return MaterialPage(
+            child: ExperienceScreen(),
           );
         },
       ),
