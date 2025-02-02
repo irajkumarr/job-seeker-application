@@ -254,9 +254,9 @@ class AppRoutes {
         name: RoutesConstant.experience,
         path: "/experience",
         pageBuilder: (context, state) {
-          // final reference = state.extra as Reference?;
+          final experience = state.extra as Experience?;
           return MaterialPage(
-            child: ExperienceScreen(),
+            child: ExperienceScreen(experience:experience),
           );
         },
       ),

@@ -6,9 +6,10 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
-import 'package:frontend/data/models/education_model.dart' as educationModel;
+import 'package:frontend/data/models/experience_model.dart' as experienceModel;
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/personalization/providers/education_provider.dart';
+import 'package:frontend/features/personalization/providers/experience_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/text_editor_widget.dart';
 import 'package:frontend/l10n/l10n.dart';
@@ -68,42 +69,75 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
     'December'
   ];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   if (widget.experience != null) {
-  //     _selectedEducationQualification = widget.education!.level;
-  //     _educationProgramController.text =
-  //         widget.education!.educationProgram ?? '';
-  //     _educationBoardController.text = widget.education!.educationBoard ?? '';
-  //     _instituteNameController.text = widget.education!.institution ?? '';
+  @override
+  void initState() {
+    super.initState();
 
-  //     // Determine if the user is currently studying (graduationYear == null)
-  //     _isCurrentlyStudying = widget.education!.graduationYear == null;
+    if (widget.experience != null) {
+      _organizationNameController.text =
+          widget.experience!.organizationName ?? '';
+      _industryController.text = widget.experience!.industry ?? '';
+      _jobCategoryController.text = widget.experience!.jobCategory ?? '';
+      _locationController.text = widget.experience!.location ?? '';
+      _designationController.text = widget.experience!.designation ?? '';
+      _rolesController.text = widget.experience!.rolesAndResponsibilities ?? '';
+      _selectedJobLevel = widget.experience!.jobLevel;
+      _isCurrentlyWorking = widget.experience!.currentlyWorking ?? false;
+      _selectedStartYear = widget.experience!.startDate?.year ?? "";
+      _selectedStartMonth = widget.experience!.startDate?.month ?? "";
+      // _selectedEndYear = widget.experience!.endDate?.year ?? "";
+      // _selectedEndMonth = widget.experience!.endDate?.month ?? "";
+      if (_isCurrentlyWorking) {
+        _selectedEndYear = null;
+        _selectedEndMonth = null;
+      } else {
+        _selectedEndYear = widget.experience!.endDate?.year;
+        _selectedEndMonth = widget.experience!.endDate?.month;
+      }
+    }
+  }
 
-  //     if (_isCurrentlyStudying) {
-  //       // If currently studying, set start date
-  //       _selectedYear = widget.education!.startDate?.year;
-  //       _selectedMonth = widget.education!.startDate?.month;
-  //     } else {
-  //       // If not currently studying, set graduation year
-  //       _selectedYear = widget.education!.graduationYear?.year;
-  //       _selectedMonth = widget.education!.graduationYear?.month;
+  String? validateEndDate(String? value) {
+    if (_isCurrentlyWorking) return null; // No validation needed
 
-  //       // Set grade details
-  //       _selectedGradeType = widget.education!.grade?.type;
-  //       _marksController.text = widget.education!.grade?.marks ?? '';
-  //     }
-  //   }
-  // }
+    if (_selectedStartYear == null || _selectedStartMonth == null) {
+      return "Select start date first";
+    }
+
+    if (_selectedEndYear == null || _selectedEndMonth == null) {
+      return "Select end date";
+    }
+
+    try {
+      int startYear = int.parse(_selectedStartYear!);
+      int startMonth =
+          _months.indexOf(_selectedStartMonth!) + 1; // Convert to number
+      int endYear = int.parse(_selectedEndYear!);
+      int endMonth =
+          _months.indexOf(_selectedEndMonth!) + 1; // Convert to number
+
+      if (startMonth == 0 || endMonth == 0) return "Invalid month selection";
+
+      DateTime startDate = DateTime(startYear, startMonth);
+      DateTime endDate = DateTime(endYear, endMonth);
+
+      if (!endDate.isAfter(startDate)) {
+        return "End date must be after start date";
+      }
+
+      return null; // Valid
+    } catch (e) {
+      return "Invalid date format";
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final educationProvider = Provider.of<EducationProvider>(context);
+    final experienceProvider = Provider.of<ExperienceProvider>(context);
     final profileProvider = Provider.of<ProfileProvider>(context);
     return FullScreenOverlay(
-      isLoading: educationProvider.isLoading,
+      isLoading: experienceProvider.isLoading,
       child: CustomScreen(
         onPressed: () {
           if (_selectedJobLevel == null) {
@@ -112,84 +146,62 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
             return;
           }
           if (_formKey.currentState!.validate()) {
-            //   if (widget.experience == null) {
-            //     educationModel.EducationModel model =
-            //         educationModel.EducationModel(
-            //       level: _selectedEducationQualification?.trim(),
-            //       educationProgram: _educationProgramController.text.trim(),
-            //       educationBoard: _educationBoardController.text.trim(),
-            //       institution: _instituteNameController.text.trim(),
+            if (widget.experience == null) {
+              experienceModel.ExperienceModel model =
+                  experienceModel.ExperienceModel(
+                organizationName: _organizationNameController.text.trim(),
+                industry: _industryController.text.trim(),
+                jobCategory: _jobCategoryController.text.trim(),
+                location: _locationController.text.trim(),
+                designation: _designationController.text.trim(),
+                rolesAndResponsibilities: _rolesController.text.trim(),
+                jobLevel: _selectedJobLevel?.trim() ?? "",
+                currentlyWorking: _isCurrentlyWorking,
+                startDate: experienceModel.Date(
+                  year: _selectedStartYear?.trim() ?? '',
+                  month: _selectedStartMonth?.trim() ?? '',
+                ),
+                endDate: !_isCurrentlyWorking
+                    ? experienceModel.Date(
+                        year: _selectedEndYear?.trim() ?? '',
+                        month: _selectedEndMonth?.trim() ?? '',
+                      )
+                    : null,
+              );
 
-            //       // Set startDate only if user is currently studying
-            //       startDate: _isCurrentlyStudying
-            //           ? educationModel.GraduationYear(
-            //               year: _selectedYear?.trim() ?? '',
-            //               month: _selectedMonth?.trim() ?? '',
-            //             )
-            //           : null,
+              String data = experienceModel.experienceModelToJson(model);
+              experienceProvider.addExperience(context, data, () async {
+                await profileProvider.fetchProfile(forceRefresh: true);
+                context.pop();
+              });
+            } else {
+              experienceModel.ExperienceModel model =
+                  experienceModel.ExperienceModel(
+                organizationName: _organizationNameController.text.trim(),
+                industry: _industryController.text.trim(),
+                jobCategory: _jobCategoryController.text.trim(),
+                location: _locationController.text.trim(),
+                designation: _designationController.text.trim(),
+                rolesAndResponsibilities: _rolesController.text.trim(),
+                jobLevel: _selectedJobLevel?.trim() ?? "",
+                currentlyWorking: _isCurrentlyWorking,
+                startDate: experienceModel.Date(
+                  year: _selectedStartYear?.trim() ?? '',
+                  month: _selectedStartMonth?.trim() ?? '',
+                ),
+                endDate: experienceModel.Date(
+                  year: _selectedEndYear?.trim() ?? '',
+                  month: _selectedEndMonth?.trim() ?? '',
+                ),
+              );
 
-            //       // Set graduationYear only if user is NOT currently studying
-            //       graduationYear: !_isCurrentlyStudying
-            //           ? educationModel.GraduationYear(
-            //               year: _selectedYear?.trim() ?? '',
-            //               month: _selectedMonth?.trim() ?? '',
-            //             )
-            //           : null,
-
-            //       // Set grade only if user is NOT currently studying
-            //       grade: !_isCurrentlyStudying
-            //           ? educationModel.Grade(
-            //               type: _selectedGradeType?.trim(),
-            //               marks: _marksController.text.trim(),
-            //             )
-            //           : null,
-            //     );
-
-            //     String data = educationModel.educationModelToJson(model);
-            //     educationProvider.addEducation(context, data, () async {
-            //       await profileProvider.fetchProfile(forceRefresh: true);
-            //       context.pop();
-            //     });
-            //   } else {
-            //     educationModel.EducationModel model =
-            //         educationModel.EducationModel(
-            //       level: _selectedEducationQualification?.trim(),
-            //       educationProgram: _educationProgramController.text.trim(),
-            //       educationBoard: _educationBoardController.text.trim(),
-            //       institution: _instituteNameController.text.trim(),
-
-            //       // Set startDate only if user is currently studying
-            //       startDate: _isCurrentlyStudying
-            //           ? educationModel.GraduationYear(
-            //               year: _selectedYear?.trim() ?? '',
-            //               month: _selectedMonth?.trim() ?? '',
-            //             )
-            //           : null,
-
-            //       // Set graduationYear only if user is NOT currently studying
-            //       graduationYear: !_isCurrentlyStudying
-            //           ? educationModel.GraduationYear(
-            //               year: _selectedYear?.trim() ?? '',
-            //               month: _selectedMonth?.trim() ?? '',
-            //             )
-            //           : null,
-
-            //       // Set grade only if user is NOT currently studying
-            //       grade: !_isCurrentlyStudying
-            //           ? educationModel.Grade(
-            //               type: _selectedGradeType?.trim(),
-            //               marks: _marksController.text.trim(),
-            //             )
-            //           : null,
-            //     );
-
-            //     String data = educationModel.educationModelToJson(model);
-            //     educationProvider.updateEducation(
-            //         context, widget.education!.id!, data, () async {
-            //       await profileProvider.fetchProfile(forceRefresh: true);
-            //       context.pop();
-            //     });
-            //   }
+              String data = experienceModel.experienceModelToJson(model);
+              experienceProvider.updateExperience(
+                  context, widget.experience!.id!, data, () async {
+                await profileProvider.fetchProfile(forceRefresh: true);
+                context.pop();
+              });
+            }
           }
         },
         buttonText: l10n.submit,
@@ -446,9 +458,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   icon:
                                       Icon(Icons.keyboard_arrow_down_outlined),
                                   hint: Text('Year'),
-                                  validator: (value) =>
-                                      KValidator.validateEmptyText(
-                                          "Year", value),
+                                  // validator: (value) =>
+                                  //     KValidator.validateEmptyText(
+                                  //         "Year", value),
+                                  validator: validateEndDate,
                                   items: _years
                                       .map((year) => DropdownMenuItem(
                                             value: year,
@@ -477,9 +490,11 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   icon:
                                       Icon(Icons.keyboard_arrow_down_outlined),
                                   hint: Text('Month'),
-                                  validator: (value) =>
-                                      KValidator.validateEmptyText(
-                                          "Month", value),
+                                  // validator: (value) =>
+                                  //     KValidator.validateEmptyText(
+                                  //         "Month", value),
+
+                                  validator: validateEndDate,
                                   items: _months
                                       .map((month) => DropdownMenuItem(
                                             value: month,

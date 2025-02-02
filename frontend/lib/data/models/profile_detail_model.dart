@@ -1219,42 +1219,121 @@ class PhoneNumber {
       };
 }
 
+// class Experience {
+//   final String? id;
+//   final String? userId;
+//   final String? organizationName;
+//   final String? industry;
+//   final String? jobCategory;
+//   final String? location;
+//   final String? designation;
+//   final String? jobLevel;
+//   final DateTime? startDate;
+//   final bool? currentlyWorking;
+//   final dynamic endDate;
+//   final String? rolesAndResponsibilities;
+//   final DateTime? createdAt;
+//   final DateTime? updatedAt;
+//   final int? v;
+
+//   Experience({
+//     this.id,
+//     this.userId,
+//     this.organizationName,
+//     this.industry,
+//     this.jobCategory,
+//     this.location,
+//     this.designation,
+//     this.jobLevel,
+//     this.startDate,
+//     this.currentlyWorking,
+//     this.endDate,
+//     this.rolesAndResponsibilities,
+//     this.createdAt,
+//     this.updatedAt,
+//     this.v,
+//   });
+
+//   factory Experience.fromJson(Map<String, dynamic> json) => Experience(
+//         id: json["_id"],
+//         userId: json["userId"],
+//         organizationName: json["organizationName"],
+//         industry: json["industry"],
+//         jobCategory: json["jobCategory"],
+//         location: json["location"],
+//         designation: json["designation"],
+//         jobLevel: json["jobLevel"],
+//         startDate: json["startDate"] == null
+//             ? null
+//             : DateTime.parse(json["startDate"]),
+//         currentlyWorking: json["currentlyWorking"],
+//         endDate: json["endDate"],
+//         rolesAndResponsibilities: json["rolesAndResponsibilities"],
+//         createdAt: json["createdAt"] == null
+//             ? null
+//             : DateTime.parse(json["createdAt"]),
+//         updatedAt: json["updatedAt"] == null
+//             ? null
+//             : DateTime.parse(json["updatedAt"]),
+//         v: json["__v"],
+//       );
+
+//   Map<String, dynamic> toJson() => {
+//         "_id": id,
+//         "userId": userId,
+//         "organizationName": organizationName,
+//         "industry": industry,
+//         "jobCategory": jobCategory,
+//         "location": location,
+//         "designation": designation,
+//         "jobLevel": jobLevel,
+//         "startDate": startDate?.toIso8601String(),
+//         "currentlyWorking": currentlyWorking,
+//         "endDate": endDate,
+//         "rolesAndResponsibilities": rolesAndResponsibilities,
+//         "createdAt": createdAt?.toIso8601String(),
+//         "updatedAt": updatedAt?.toIso8601String(),
+//         "__v": v,
+//       };
+// }
+
+
 class Experience {
-  final String? id;
-  final String? userId;
-  final String? organizationName;
-  final String? industry;
-  final String? jobCategory;
-  final String? location;
-  final String? designation;
-  final String? jobLevel;
-  final DateTime? startDate;
-  final bool? currentlyWorking;
-  final dynamic endDate;
-  final String? rolesAndResponsibilities;
-  final DateTime? createdAt;
-  final DateTime? updatedAt;
-  final int? v;
+    final String? id;
+    final String? userId;
+    final String? organizationName;
+    final String? industry;
+    final String? jobCategory;
+    final String? location;
+    final String? designation;
+    final String? jobLevel;
+    final Date? startDate;
+    final bool? currentlyWorking;
+    final Date? endDate;
+    final String? rolesAndResponsibilities;
+    final DateTime? createdAt;
+    final DateTime? updatedAt;
+    final int? v;
 
-  Experience({
-    this.id,
-    this.userId,
-    this.organizationName,
-    this.industry,
-    this.jobCategory,
-    this.location,
-    this.designation,
-    this.jobLevel,
-    this.startDate,
-    this.currentlyWorking,
-    this.endDate,
-    this.rolesAndResponsibilities,
-    this.createdAt,
-    this.updatedAt,
-    this.v,
-  });
+    Experience({
+        this.id,
+        this.userId,
+        this.organizationName,
+        this.industry,
+        this.jobCategory,
+        this.location,
+        this.designation,
+        this.jobLevel,
+        this.startDate,
+        this.currentlyWorking,
+        this.endDate,
+        this.rolesAndResponsibilities,
+        this.createdAt,
+        this.updatedAt,
+        this.v,
+    });
 
-  factory Experience.fromJson(Map<String, dynamic> json) => Experience(
+    factory Experience.fromJson(Map<String, dynamic> json) => Experience(
         id: json["_id"],
         userId: json["userId"],
         organizationName: json["organizationName"],
@@ -1263,22 +1342,16 @@ class Experience {
         location: json["location"],
         designation: json["designation"],
         jobLevel: json["jobLevel"],
-        startDate: json["startDate"] == null
-            ? null
-            : DateTime.parse(json["startDate"]),
+        startDate: json["startDate"] == null ? null : Date.fromJson(json["startDate"]),
         currentlyWorking: json["currentlyWorking"],
-        endDate: json["endDate"],
+        endDate: json["endDate"] == null ? null : Date.fromJson(json["endDate"]),
         rolesAndResponsibilities: json["rolesAndResponsibilities"],
-        createdAt: json["createdAt"] == null
-            ? null
-            : DateTime.parse(json["createdAt"]),
-        updatedAt: json["updatedAt"] == null
-            ? null
-            : DateTime.parse(json["updatedAt"]),
+        createdAt: json["createdAt"] == null ? null : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null ? null : DateTime.parse(json["updatedAt"]),
         v: json["__v"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
         "_id": id,
         "userId": userId,
         "organizationName": organizationName,
@@ -1287,15 +1360,36 @@ class Experience {
         "location": location,
         "designation": designation,
         "jobLevel": jobLevel,
-        "startDate": startDate?.toIso8601String(),
+        "startDate": startDate?.toJson(),
         "currentlyWorking": currentlyWorking,
-        "endDate": endDate,
+        "endDate": endDate?.toJson(),
         "rolesAndResponsibilities": rolesAndResponsibilities,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
-      };
+    };
 }
+
+class Date {
+    final String? year;
+    final String? month;
+
+    Date({
+        this.year,
+        this.month,
+    });
+
+    factory Date.fromJson(Map<String, dynamic> json) => Date(
+        year: json["year"],
+        month: json["month"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "year": year,
+        "month": month,
+    };
+}
+
 
 class Language {
   final String? id;

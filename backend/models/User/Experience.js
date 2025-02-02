@@ -16,12 +16,18 @@ const experienceSchema = new mongoose.Schema(
     designation: { type: String, required: true },
     jobLevel: {
       type: String,
-      enum: ["top-level", "senior-level", "mid-level", "entry-level"],
+      enum: ["Top Level", "Senior Level", "Mid Level", "Entry Level"],
       required: true,
     },
-    startDate: { type: Date, required: true },
+    startDate: {
+      year: String,
+      month: String,
+    },
     currentlyWorking: { type: Boolean, default: false },
-    endDate: Date,
+    endDate: {
+      year: String,
+      month: String,
+    },
     rolesAndResponsibilities: { type: String, required: true },
   },
   { timestamps: true }

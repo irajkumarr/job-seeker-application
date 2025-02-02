@@ -10,6 +10,7 @@ import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/education_provider.dart';
+import 'package:frontend/features/personalization/providers/experience_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/reference_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
@@ -322,11 +323,26 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     return {
                                       'icon': Icons.radio_button_checked,
                                       'label':
-                                          "${exp.startDate?.year}, ${DateFormat('MMMM').format(exp.startDate!)}",
+                                          "${exp.startDate?.year}, ${exp.startDate?.month}",
                                       'value':
                                           "${exp.industry ?? ""}\n${exp.organizationName}\n${exp.designation}\n${exp.jobLevel}\n${exp.jobCategory}\n${exp.location}",
-                                      'onEdit': () {},
-                                      'onDelete': () {},
+                                      'onEdit': () {
+                                        context.pushNamed(
+                                            RoutesConstant.experience,
+                                            extra: exp);
+                                      },
+                                      'onDelete': () async {
+                                        await alertDelete(context, () {
+                                          Provider.of<ExperienceProvider>(
+                                                  context,
+                                                  listen: false)
+                                              .deleteExperience(
+                                                  context, exp.id!, () async {
+                                            await profileProvider.fetchProfile(
+                                                forceRefresh: true);
+                                          });
+                                        });
+                                      },
                                     };
                                   }).toList(),
                                   onAdd: () {
