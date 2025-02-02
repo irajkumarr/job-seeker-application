@@ -5,7 +5,6 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/image_preview.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

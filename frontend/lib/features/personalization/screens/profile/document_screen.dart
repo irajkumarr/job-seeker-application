@@ -12,7 +12,6 @@ import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/image_preview.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';

@@ -8,7 +8,6 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
-import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';

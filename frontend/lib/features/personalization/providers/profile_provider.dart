@@ -8,7 +8,6 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileProvider extends ChangeNotifier {

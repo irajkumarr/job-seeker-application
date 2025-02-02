@@ -26,7 +26,6 @@ import 'package:frontend/features/personalization/screens/profile/widgets/show_l
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 

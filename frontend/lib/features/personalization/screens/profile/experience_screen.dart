@@ -8,7 +8,6 @@ import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/data/models/experience_model.dart' as experienceModel;
 import 'package:frontend/data/models/profile_detail_model.dart';
-import 'package:frontend/features/personalization/providers/education_provider.dart';
 import 'package:frontend/features/personalization/providers/experience_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/text_editor_widget.dart';
