@@ -1,11 +1,14 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
+import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final box = GetStorage();
@@ -16,7 +19,7 @@ class ProfileProvider extends ChangeNotifier {
 
   ProfileProvider() {
     _init();
-    fetchProfile();
+    fetchProfile(forceRefresh: true);
   }
 
   Future<void> _init() async {
@@ -57,6 +60,11 @@ class ProfileProvider extends ChangeNotifier {
 
     try {
       final storage = GetStorage();
+      // String? token =
+      //     Provider.of<LoginProvider>(navigatorKey.currentState!.context)
+      //         .box
+      //         .read("token");
+      // print(token);
       String? token = storage.read('token');
 
       if (token == null) {

@@ -93,8 +93,10 @@ class LoginProvider with ChangeNotifier {
 
         saveCredentials(
             mobile, password); // Save credentials if Remember Me is checked
-        Provider.of<ProfileProvider>(context, listen: false)
+        await Provider.of<ProfileProvider>(context, listen: false)
             .fetchProfile(forceRefresh: true);
+
+        // Provider.of<ProfileProvider>(context, listen: false).user = data;
         setLoading = false;
         context.pop();
         // context.read<NavigationProvider>().onTap(3);
@@ -123,7 +125,7 @@ class LoginProvider with ChangeNotifier {
 
       await box.erase(); // Clear all stored data
       user = null;
-      Provider.of<ProfileProvider>(context, listen: false).profile == null;
+      // Provider.of<ProfileProvider>(context, listen: false).user = null;
 
       if (isRemembered) {
         // Restore saved credentials

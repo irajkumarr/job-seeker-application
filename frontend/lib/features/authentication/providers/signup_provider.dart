@@ -90,8 +90,7 @@ class SignupProvider with ChangeNotifier {
         box.write("userId", data.id);
         Provider.of<LoginProvider>(context, listen: false)
             .clearRememberMeData();
-        Provider.of<ProfileProvider>(context, listen: false)
-            .fetchProfile(forceRefresh: true);
+        Provider.of<ProfileProvider>(context).fetchProfile(forceRefresh: true);
         setLoading = false;
 
         // KSnackbar.Snackbar(
