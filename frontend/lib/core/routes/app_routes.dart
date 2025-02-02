@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
@@ -22,6 +24,8 @@ import 'package:frontend/features/personalization/screens/profile/profile_settin
 import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/social_account_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/training_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/upload_profile_screen.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/image_preview.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -31,8 +35,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    // initialLocation: "/experience",
-    initialLocation: "/navigationMenu",
+    initialLocation: "/uploadProfile",
+    // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -256,7 +260,7 @@ class AppRoutes {
         pageBuilder: (context, state) {
           final experience = state.extra as Experience?;
           return MaterialPage(
-            child: ExperienceScreen(experience:experience),
+            child: ExperienceScreen(experience: experience),
           );
         },
       ),
@@ -279,6 +283,28 @@ class AppRoutes {
             child: ContactInformationScreen(
               contact: contact,
             ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.uploadProfile,
+        path: "/uploadProfile",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: UploadProfileScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.imagePreview,
+        path: "/imagePreview",
+        pageBuilder: (context, state) {
+          final extra = state.extra as Map<String, dynamic>;
+          final file = extra['file'] as File?;
+          final image = extra['image'] as String?;
+          final isFile = extra['isFile'] as bool;
+          return MaterialPage(
+            child: ImagePreview(file: file, image: image, isFile: isFile),
           );
         },
       ),

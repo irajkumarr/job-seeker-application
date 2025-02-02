@@ -28,6 +28,8 @@ class RoutesConstant {
   static const String document = "document";
   static const String contactInformation = "contactInformation";
   static const String experience = "experience";
+  static const String uploadProfile = "uploadProfile";
+  static const String imagePreview = "imagePreview";
   static const String search = "search";
 
   static const String language = "language";

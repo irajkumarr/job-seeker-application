@@ -11,6 +11,7 @@ class CustomButton extends StatelessWidget {
     this.isIconShowed = false,
     this.icon,
     this.color = KColors.primary,
+    this.textColor = KColors.white,
   });
 
   final String text;
@@ -18,6 +19,7 @@ class CustomButton extends StatelessWidget {
   final bool isIconShowed;
   final IconData? icon;
   final Color color;
+  final Color textColor;
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +41,7 @@ class CustomButton extends StatelessWidget {
             Text(
               text,
               style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: KColors.white,
+                    color: textColor,
                   ),
             ),
             isIconShowed

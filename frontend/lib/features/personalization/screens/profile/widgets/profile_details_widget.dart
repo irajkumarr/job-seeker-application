@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/image_preview.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class ProfileDetailsWidget extends StatelessWidget {
@@ -166,7 +169,15 @@ class ProfileDetailsWidget extends StatelessWidget {
                           onTap: () {},
                           child: GestureDetector(
                             onTap: () {
-                              showImagePreview(context, item['value']);
+                              // showImagePreview(context, item['value']);
+                              context.pushNamed(
+                                RoutesConstant.imagePreview,
+                                extra: {
+                                  'file': null,
+                                  'image': item['value'],
+                                  'isFile': false,
+                                },
+                              );
                             },
                             child: Center(
                               child: Image.network(
@@ -220,54 +231,4 @@ class ProfileDetailsWidget extends StatelessWidget {
       ),
     );
   }
-}
-
-void showImagePreview(
-  BuildContext context,
-  String image,
-) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true, // Allow the sheet to be as large as needed
-    builder: (context) => Container(
-      height: MediaQuery.of(context).size.height * 0.8, // 80% of screen height
-      padding: const EdgeInsets.all(16.0),
-      child: Stack(
-        children: [
-          // Image preview
-          Center(
-            child: InteractiveViewer(
-              minScale: 0.5,
-              maxScale: 4,
-              child: Image.network(
-                image,
-                fit: BoxFit.contain,
-              ),
-            ),
-          ),
-
-          // Close button (cross icon)
-          Positioned(
-            top: 16,
-            right: 16,
-            child: GestureDetector(
-              onTap: () => Navigator.pop(context), // Close the bottom sheet
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.5),
-                  shape: BoxShape.circle,
-                ),
-                child: Icon(
-                  Icons.close,
-                  color: Colors.white,
-                  size: 24,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
 }

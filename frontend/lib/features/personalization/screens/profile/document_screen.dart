@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
@@ -11,6 +12,7 @@ import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/image_preview.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
@@ -286,7 +288,17 @@ class _DocumentScreenState extends State<DocumentScreen> {
                     if (_selectedFile != null) ...[
                       SizedBox(height: KSizes.md),
                       GestureDetector(
-                        onTap: _showImagePreview,
+                        // onTap: _showImagePreview,
+                        onTap: () {
+                          context.pushNamed(
+                            RoutesConstant.imagePreview,
+                            extra: {
+                              'file': _selectedFile,
+                              'image': null,
+                              'isFile': true,
+                            },
+                          );
+                        },
                         child: ClipRRect(
                           borderRadius: BorderRadius.circular(8),
                           child: Image.file(
