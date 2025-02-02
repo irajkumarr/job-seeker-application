@@ -5,6 +5,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/features/dashboard/widgets/employer_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/language_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_appbar.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_header.dart';
@@ -13,6 +14,7 @@ import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
 class ProfileWithoutLogin extends StatelessWidget {
   const ProfileWithoutLogin({
     super.key,
@@ -103,7 +105,9 @@ class ProfileWithoutLogin extends StatelessWidget {
                     SettingsTile(
                       text: "${l10n.employer_zone}",
                       icon: Icons.business_outlined,
-                      onTap: () {},
+                      onTap: () async {
+                        await EmployerBottomSheet();
+                      },
                     ),
                   ],
                 ),

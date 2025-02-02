@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/alert_box/alert_box.dart';
 import 'package:frontend/core/network/connectivity_checker.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
+import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
@@ -31,7 +33,9 @@ class NavigationMenu extends StatelessWidget {
             bottomNavigationBar: BottomNavigationBar(
               backgroundColor: KColors.white,
               elevation: 1,
-              iconSize: 24,
+              // iconSize: 24,
+              iconSize: 18,
+
               currentIndex: navigationProvider.selectedIndex,
               selectedItemColor: KColors.primary,
               unselectedItemColor: KColors.darkGrey,
@@ -39,10 +43,12 @@ class NavigationMenu extends StatelessWidget {
               selectedLabelStyle: TextStyle(
                 color: KColors.primary,
                 fontSize: 10,
+                height: 2,
                 fontWeight: FontWeight.w500,
               ),
               unselectedLabelStyle: const TextStyle(
                 fontSize: 10,
+                height: 2,
                 fontWeight: FontWeight.w500,
               ),
               onTap: (value) {
@@ -60,14 +66,14 @@ class NavigationMenu extends StatelessWidget {
                   // icon: Icon(Icons.bookmark_outline_outlined),
                   icon: Image.asset(
                     KImages.bookmark,
-                    width: 24,
+                    width: 18,
                     color: KColors.darkGrey,
                   ),
                   label: "${l10n.matched_jobs}",
                   // activeIcon: Icon(Icons.bookmark),
                   activeIcon: Image.asset(
                     KImages.bookmark,
-                    width: 24,
+                    width: 18,
                     color: KColors.primary,
                   ),
                 ),
@@ -75,13 +81,13 @@ class NavigationMenu extends StatelessWidget {
                   // icon: Icon(Icons.star_outline),
                   icon: Image.asset(
                     KImages.status,
-                    width: 24,
+                    width: 18,
                     color: KColors.darkGrey,
                   ),
                   // activeIcon: Icon(Icons.star),
                   activeIcon: Image.asset(
                     KImages.status,
-                    width: 24,
+                    width: 18,
                     color: KColors.primary,
                   ),
                   label: "${l10n.my_status}",
@@ -89,6 +95,21 @@ class NavigationMenu extends StatelessWidget {
                 BottomNavigationBarItem(
                   icon: Icon(Iconsax.user),
                   label: "${l10n.profile}",
+                  activeIcon: Container(
+                    padding: EdgeInsets.all(KSizes.xs - 2),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(50),
+                      border: Border.all(
+                        color: KColors.darkGrey,
+                      ),
+                    ),
+                    child: Icon(
+                      Iconsax.user,
+                      size: 16.sp,
+                      color: KColors.black,
+                      weight: 3,
+                    ),
+                  ),
                 ),
               ],
             ),
