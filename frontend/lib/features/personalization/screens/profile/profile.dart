@@ -340,46 +340,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 ),
                           SizedBox(height: KSizes.sm),
-                          // !profile.educations!.isEmpty
-                          //     ? ProfileDetailsWidget(
-                          //         sectionId: "education_section",
-                          //         title: "Education",
-                          //         leadingIcon: Icons.check_circle,
-                          //         leadingIconColor: Colors.green,
-                          //         height: 160.h,
-                          //         data: profile.educations!.map((education) {
-                          //           return {
-                          //             'icon': Icons.radio_button_checked,
-                          //             'label': (education.startDate == null
-                          //                     ? education.graduationYear?.year
-                          //                     : education.startDate?.year) ??
-                          //                 "N/A",
-                          //             'value':
-                          //                 "${education.institution ?? "N/A"}\n${education.educationProgram ?? "N/A"}\n(${education.startDate?.year ?? "N/A"} - ${education.graduationYear?.year == null ? "Present" : education.graduationYear?.year ?? "N/A"})",
-                          //             'onEdit': () {
-                          //               context.pushNamed(
-                          //                   RoutesConstant.education,
-                          //                   extra: education);
-                          //             },
-                          //             'onDelete': () async {
-                          //               await alertDelete(context, () {
-                          //                 Provider.of<EducationProvider>(
-                          //                         context,
-                          //                         listen: false)
-                          //                     .deleteEducation(
-                          //                         context, education.id!,
-                          //                         () async {
-                          //                   await profileProvider.fetchProfile(
-                          //                       forceRefresh: true);
-                          //                 });
-                          //               });
-                          //             },
-                          //           };
-                          //         }).toList(),
-                          //         onAdd: () {
-                          //           context.pushNamed(RoutesConstant.education);
-                          //         }, // Define add function
-                          //       )
                           !profile.educations!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "education_section",
@@ -402,6 +362,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             true)
                                         ? "N/A"
                                         : education.startDate!.year!;
+                                    final String startMonth = (education
+                                                .startDate?.month
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.startDate!.month!;
 
                                     final String graduationYear = (education
                                                 .graduationYear?.year
@@ -410,6 +377,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             true)
                                         ? "N/A"
                                         : education.graduationYear!.year!;
+                                    final String graduationMonth = (education
+                                                .graduationYear?.month
+                                                ?.trim()
+                                                .isEmpty ??
+                                            true)
+                                        ? "N/A"
+                                        : education.graduationYear!.month!;
 
                                     final String institution = (education
                                                 .institution
@@ -460,9 +434,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'icon': Icons.radio_button_checked,
                                       // Show start date if available, otherwise graduation date, else "N/A"
                                       'label': startYear != "N/A"
-                                          ? "$startYear"
+                                          ? "$startYear, $startMonth"
                                           : (graduationYear != "N/A"
-                                              ? "$graduationYear"
+                                              ? "$graduationYear, $graduationMonth"
                                               : "N/A"),
 
                                       // Show institution, program, and duration correctly
@@ -480,6 +454,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               RoutesConstant.education,
                                               extra: {
                                                 "education": education,
+                                                "isRemoved": !isRestricted,
                                               });
                                         },
                                       'onDelete': () async {
