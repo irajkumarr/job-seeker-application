@@ -197,6 +197,56 @@ class ProfileProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+  //preferred skills
+  Future<void> updateSkills(
+    BuildContext context,
+    List<String> skills,
+    VoidCallback onSuccess,
+  ) async {
+    _isLoading = true;
+    _errorMessage = '';
+    notifyListeners();
+
+    try {
+      final storage = GetStorage();
+      String? token = storage.read('token');
+
+      if (token == null) {
+        throw Exception("User token not found");
+      }
+
+      final response = await http.put(
+        Uri.parse('$kAppBaseUrl/api/users/profile'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({
+          'skills': skills,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // final data = json.decode(response.body);
+        KSnackbar.CustomSnackbar(
+            context, "Successfully updated!", KColors.primary);
+
+      
+        onSuccess();
+      } else {
+        _errorMessage = json.decode(response.body)['message'] ??
+            "Failed to update skills";
+
+        KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+      }
+    } catch (error) {
+      _errorMessage = error.toString();
+      KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
 
   //for expandable profile sections
   Map<String, bool> _expandedSections = {};

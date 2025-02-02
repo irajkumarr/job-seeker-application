@@ -116,7 +116,7 @@ class CategoryProvider with ChangeNotifier {
     "Public Speaking",
     "Reporting",
     "Security",
-    "Reporting",
+    "Knowledge of customer services",
     "Flexible",
   ];
   final Set<String> _selectedSkills = {};

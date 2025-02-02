@@ -31,6 +31,7 @@ class RoutesConstant {
   static const String uploadProfile = "uploadProfile";
   static const String imagePreview = "imagePreview";
   static const String profileCategory = "profileCategory";
+  static const String profileSkill = "profileSkill";
   static const String search = "search";
 
   static const String language = "language";

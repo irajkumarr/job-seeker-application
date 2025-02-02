@@ -22,6 +22,7 @@ import 'package:frontend/features/personalization/screens/profile/experience_scr
 import 'package:frontend/features/personalization/screens/profile/language_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_category.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
+import 'package:frontend/features/personalization/screens/profile/profile_skill.dart';
 import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/social_account_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/training_screen.dart';
@@ -302,6 +303,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: ProfileCategory(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.profileSkill,
+        path: "/profileSkill",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ProfileSkill(),
           );
         },
       ),

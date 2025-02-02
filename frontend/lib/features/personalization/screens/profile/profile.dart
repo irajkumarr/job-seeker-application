@@ -249,7 +249,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               sectionId: 'skill_info',
                               title: 'Skill',
                               leadingIcon: Icons.check_circle,
-                              onTap: () {},
+                              onTap: () {
+                                context.pushNamed(RoutesConstant.profileSkill);
+                              },
                               leadingIconColor: Colors.green,
                               data: profile.profile![0].skills!),
                           SizedBox(height: KSizes.sm),
