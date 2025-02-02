@@ -14,7 +14,7 @@ class ExpandablePreferredJobLocationSection extends StatelessWidget {
     required this.leadingIcon,
     required this.leadingIconColor,
     required this.data,
-    required this.height,
+    required this.height, required this.onTap,
   });
 
   final String sectionId;
@@ -23,6 +23,7 @@ class ExpandablePreferredJobLocationSection extends StatelessWidget {
   final Color leadingIconColor;
   final List<SectionData> data;
   final double height;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +100,7 @@ class ExpandablePreferredJobLocationSection extends StatelessWidget {
                       Divider(),
                       SizedBox(height: KSizes.sm),
                       InkWell(
-                        onTap: () {},
+                        onTap: onTap,
                         borderRadius: BorderRadius.circular(KSizes.sm + 4),
                         child: Row(
                           children: [

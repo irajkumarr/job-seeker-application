@@ -260,6 +260,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               sectionId: 'preferred_job_location_info',
                               title: 'Preferred Job Location',
                               leadingIcon: Icons.check_circle,
+                              onTap: () {
+                                // context.pushNamed(
+                                //     RoutesConstant.signupPreferredLocation);
+                              },
                               leadingIconColor: Colors.green,
                               data: [
                                 SectionData(
