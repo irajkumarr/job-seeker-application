@@ -42,7 +42,7 @@ class JobPlaceWidget extends StatelessWidget {
                       // ),
                       CachedNetworkImage(
                     imageUrl:
-                        "https://www.neptos.io:3000/public/uploads/watermark-thumb/thumb-nimage-1590553913042.jpg",
+                        "https://media-cdn.tripadvisor.com/media/photo-s/06/81/d8/6b/tempio-di-swayambhunath.jpg",
                     placeholder: (context, url) => SizedBox(
                         width: 50.w,
                         height: 50.h,

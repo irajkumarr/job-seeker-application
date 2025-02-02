@@ -2,15 +2,13 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:frontend/core/routes/app_routes.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
+import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
-import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
-import 'package:provider/provider.dart';
 
 class ProfileProvider extends ChangeNotifier {
   final box = GetStorage();
@@ -129,16 +127,23 @@ class ProfileProvider extends ChangeNotifier {
           box.write("profileImage", _profileImage);
           notifyListeners();
         } else {
+          KSnackbar.CustomSnackbar(
+              context,
+              jsonResponse["message"] ?? "Failed to update image",
+              KColors.error);
           throw Exception(jsonResponse["message"] ?? "Failed to update image");
         }
       } else {
-        throw Exception("Error: ${response.statusCode}");
+        KSnackbar.CustomSnackbar(
+            context, "Error: ${response.statusCode}", KColors.error);
+        throw Exception("Error: ${response.statusCode}${response.stream}");
       }
     } catch (e) {
       rethrow;
+    } finally {
+      _isLoading = false;
+      notifyListeners();
     }
-    _isLoading = false;
-    notifyListeners();
   }
 
   //for expandable profile sections

@@ -8,6 +8,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:flutter_image_compress/flutter_image_compress.dart';
 
 class PhotoPickerOptionsBottomSheet extends StatefulWidget {
   final Function(File) onImagePicked;
