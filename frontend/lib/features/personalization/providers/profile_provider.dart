@@ -8,6 +8,8 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:get_storage/get_storage.dart';
+
+import 'package:frontend/data/models/user_profile_request.dart' as userProfile;
 import 'package:http/http.dart' as http;
 
 class ProfileProvider extends ChangeNotifier {
@@ -235,6 +237,54 @@ class ProfileProvider extends ChangeNotifier {
       } else {
         _errorMessage = json.decode(response.body)['message'] ??
             "Failed to update skills";
+
+        KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+      }
+    } catch (error) {
+      _errorMessage = error.toString();
+      KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+  //job preferecnes
+  Future<void> updateJobPreference(
+    BuildContext context,
+    userProfile.JobPreference data,
+    VoidCallback onSuccess,
+  ) async {
+    _isLoading = true;
+    _errorMessage = '';
+    notifyListeners();
+
+    try {
+      final storage = GetStorage();
+      String? token = storage.read('token');
+
+      if (token == null) {
+        throw Exception("User token not found");
+      }
+
+      final response = await http.put(
+        Uri.parse('$kAppBaseUrl/api/users/profile'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(data.toJson())
+      );
+
+      if (response.statusCode == 200) {
+        // final data = json.decode(response.body);
+        KSnackbar.CustomSnackbar(
+            context, "Successfully updated!", KColors.primary);
+
+      
+        onSuccess();
+      } else {
+        _errorMessage = json.decode(response.body)['message'] ??
+            "Failed to update";
 
         KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
       }

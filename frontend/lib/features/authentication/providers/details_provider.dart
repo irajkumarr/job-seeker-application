@@ -168,7 +168,9 @@ class DetailsProvider with ChangeNotifier {
     experienceCounter = 0;
     selectedGender = null;
     selectedWorkingStatus = null;
-    selectedIsForeignEmployment = null;
+    selectedAvailableFor = null;
+    selectedJobLevel = null;
+    selectedPreferredShift = null;
     selectedSalary = null;
     notifyListeners();
   }

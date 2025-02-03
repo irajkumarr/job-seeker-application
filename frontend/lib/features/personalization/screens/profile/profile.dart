@@ -197,8 +197,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   icon: Iconsax.user),
                               SectionData(
                                   label: 'Gender',
-                                  value: profile.profile?[0].personalDetails
-                                          ?.gender ??
+                                  value: profile
+                                          .profile?[0].personalDetails?.gender
+                                          .toString() ??
                                       "_ _ _",
                                   icon: Icons.call_missed_outgoing_outlined),
                               SectionData(
@@ -287,7 +288,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               ]),
                           SizedBox(height: KSizes.sm),
                           ExpandableProfileSection(
-                            height: 400.h,
+                            height: 455.h,
                             sectionId: 'job_preference_info',
                             title: 'Job Preference',
                             leadingIcon: Icons.error_outline_outlined,
@@ -309,6 +310,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           ?.availabilityStatus ??
                                       "_ _ _",
                                   icon: Icons.watch_later_outlined),
+                              SectionData(
+                                  label: 'Working Status',
+                                  value: profile.profile?[0].jobPreference
+                                          ?.workingStatus ??
+                                      "_ _ _",
+                                  icon: Icons.work_history_outlined),
                               SectionData(
                                   label: 'Preferred Shift',
                                   value: profile.profile?[0].jobPreference

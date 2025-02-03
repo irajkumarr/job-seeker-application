@@ -52,8 +52,10 @@ class JobPreference {
   final String? preferredShift;
   final String? expectedSalary;
   final String? careerObjectives;
+  
+  final String? workingStatus;
 
-  JobPreference({
+  JobPreference({this.workingStatus, 
     this.jobLevel,
     this.availabilityStatus,
     this.preferredShift,
@@ -67,6 +69,7 @@ class JobPreference {
         preferredShift: json["preferredShift"],
         expectedSalary: json["expectedSalary"],
         careerObjectives: json["careerObjectives"],
+        workingStatus: json["workingStatus"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -75,6 +78,7 @@ class JobPreference {
         "preferredShift": preferredShift,
         "expectedSalary": expectedSalary,
         "careerObjectives": careerObjectives,
+        "workingStatus": workingStatus,
       };
 }
 
@@ -87,7 +91,6 @@ class PersonalDetails {
   final String? religion;
   final String? email;
   final Disability? disability;
-  final String? workingStatus;
   final ForeignEmployment? foreignEmployment;
 
   PersonalDetails({
@@ -99,7 +102,6 @@ class PersonalDetails {
     this.religion,
     this.email,
     this.disability,
-    this.workingStatus,
     this.foreignEmployment,
   });
 
@@ -115,7 +117,6 @@ class PersonalDetails {
         disability: json["disability"] == null
             ? null
             : Disability.fromJson(json["disability"]),
-        workingStatus: json["workingStatus"],
         foreignEmployment: json["foreignEmployment"] == null
             ? null
             : ForeignEmployment.fromJson(json["foreignEmployment"]),
@@ -130,7 +131,6 @@ class PersonalDetails {
         "religion": religion,
         "email": email,
         "disability": disability?.toJson(),
-        "workingStatus": workingStatus,
         "foreignEmployment": foreignEmployment?.toJson(),
       };
 }

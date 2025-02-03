@@ -50,7 +50,6 @@ const handleCreateProfile = async (req, res) => {
       !personalDetails.age ||
       !personalDetails.gender ||
       !personalDetails.experience ||
-      !personalDetails.workingStatus ||
       !personalDetails.foreignEmployment
     ) {
       return res.status(400).json({
@@ -104,12 +103,10 @@ const handleGetProfile = async (req, res) => {
     return res.status(500).json({ status: false, message: error.message });
   }
 };
-
 const handleUpdateProfile = async (req, res) => {
-  const userId = req.user.id; // Assuming req.user.id contains the authenticated user's ID
+  const userId = req.user.id;
 
   try {
-    // First check if profile exists
     const profile = await Profile.findOne({ userId });
 
     if (!profile) {
@@ -119,39 +116,33 @@ const handleUpdateProfile = async (req, res) => {
       });
     }
 
-    // Create an update object for nested fields
     const updateFields = {};
 
-    // Handle flat fields (top-level fields)
+    // Handle top-level fields
     ["preferredCategories", "skills"].forEach((field) => {
       if (req.body[field]) {
         updateFields[field] = req.body[field];
       }
     });
 
-    // Handle nested location fields
-    // ["currentLocation", "permanentLocation"].forEach((locationType) => {
-    //   if (req.body[locationType]) {
-    //     const locationFields = [
-    //       "province",
-    //       "district",
-    //       "municipality",
-    //       "fullAddress",
-    //     ];
-    //     locationFields.forEach((field) => {
-    //       if (req.body[locationType][field]) {
-    //         updateFields[`${locationType}.${field}`] =
-    //           req.body[locationType][field];
-    //       }
-    //     });
-    //   }
-    // });
+    // Handle preferred job location
+    if (req.body.preferredJobLocation) {
+      ["province", "district", "municipality", "fullAddress"].forEach(
+        (field) => {
+          if (req.body.preferredJobLocation[field]) {
+            updateFields[`preferredJobLocation.${field}`] =
+              req.body.preferredJobLocation[field];
+          }
+        }
+      );
+    }
 
-    // Handle nested personal details fields
+    // Handle personal details fields
     if (req.body.personalDetails) {
-      // Handle direct fields in personalDetails
+      // Handle basic personal details fields
       [
         "age",
+        "experience",
         "gender",
         "maritalStatus",
         "nationality",
@@ -176,7 +167,7 @@ const handleUpdateProfile = async (req, res) => {
         }
       }
 
-      // Handle foreignEmployment object
+      // Handle foreign employment object
       if (req.body.personalDetails.foreignEmployment) {
         if (
           req.body.personalDetails.foreignEmployment.hasWorkedAboroad !==
@@ -198,8 +189,10 @@ const handleUpdateProfile = async (req, res) => {
         "jobLevel",
         "availabilityStatus",
         "preferredShift",
-        "workingStatus",
+        "expectedSalary",
         "careerObjectives",
+
+        "workingStatus",
       ];
 
       jobPreferenceFields.forEach((field) => {
@@ -208,24 +201,13 @@ const handleUpdateProfile = async (req, res) => {
             req.body.jobPreference[field];
         }
       });
-
-      // Handle expectedSalary object
-      if (req.body.jobPreference.expectedSalary) {
-        const salaryFields = ["minimum", "maximum", "currency"];
-        salaryFields.forEach((field) => {
-          if (req.body.jobPreference.expectedSalary[field] !== undefined) {
-            updateFields[`jobPreference.expectedSalary.${field}`] =
-              req.body.jobPreference.expectedSalary[field];
-          }
-        });
-      }
     }
 
-    // If updating email, check if it's already in use by another profile
+    // Check for duplicate email
     if (req.body.personalDetails?.email) {
       const existingProfileWithEmail = await Profile.findOne({
         "personalDetails.email": req.body.personalDetails.email,
-        userId: { $ne: userId }, // Exclude current user's profile
+        userId: { $ne: userId },
       });
 
       if (existingProfileWithEmail) {
@@ -242,7 +224,7 @@ const handleUpdateProfile = async (req, res) => {
       { $set: updateFields },
       {
         new: true,
-        runValidators: true, // This ensures schema validations run on update
+        runValidators: true,
         select: "-__v -createdAt -updatedAt",
       }
     );
@@ -260,7 +242,11 @@ const handleUpdateProfile = async (req, res) => {
       profile: updatedUserProfile,
     });
   } catch (error) {
-    return res.status(500).json({ status: false, message: error.message });
+    console.error("Profile update error:", error);
+    return res.status(500).json({
+      status: false,
+      message: error.message || "Internal server error",
+    });
   }
 };
 

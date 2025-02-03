@@ -67,7 +67,6 @@ class SignupStatusLastScreen extends StatelessWidget {
           // religion: "Hindu",
           // email: "test@example.com",
           // disability: Disability(hasDisability: false, details: ""),
-          workingStatus: detailProvider.selectedWorkingStatus ?? "",
           foreignEmployment: ForeignEmployment(
             hasWorkedAboroad: detailProvider.foreignEmploymentAsBool ?? false,
             // details: "",
@@ -77,6 +76,8 @@ class SignupStatusLastScreen extends StatelessWidget {
           // jobLevel: "entry",
           // availabilityStatus: "immediate",
           // preferredShift: "any",
+          
+          workingStatus: detailProvider.selectedWorkingStatus ?? "",
           expectedSalary: detailProvider.selectedSalary ?? "",
           // careerObjectives: "",
         ),

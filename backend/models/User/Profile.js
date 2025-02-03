@@ -29,8 +29,14 @@ const profileSchema = new mongoose.Schema(
       fullAddress: { type: String, required: true },
     },
     personalDetails: {
-      age: { type: Number, required: true },
-      experience: { type: Number, required: true },
+      age: {
+        type: Number,
+         required: true
+      },
+      experience: {
+        type: Number,
+        required: true
+      },
       gender: {
         type: String,
         enum: ["male", "female", "other"],
@@ -58,14 +64,7 @@ const profileSchema = new mongoose.Schema(
         hasDisability: Boolean,
         details: String,
       },
-      workingStatus: {
-        type: String,
-        enum: [
-          "Actively Seeking Employment",
-          "Available For Employment",
-          "Currently Working",
-        ],
-      },
+     
       foreignEmployment: {
         hasWorkedAboroad: Boolean,
         details: String,
@@ -75,17 +74,42 @@ const profileSchema = new mongoose.Schema(
     jobPreference: {
       jobLevel: {
         type: String,
-        enum: ["entry", "mid", "senior", "executive"],
+        enum: ["Top Level", "Senior Level", "Mid Level", "Entry Level"],
         // required: true,
+      },
+      workingStatus: {
+        type: String,
+        enum: [
+          "Actively Seeking Employment",
+          "Available For Employment",
+          "Currently Working",
+        ],
       },
       availabilityStatus: {
         type: String,
-        enum: ["immediate", "15days", "30days", "custom"],
+        enum: [
+          "Full Time",
+          "Part Time",
+          "Contractual",
+          "Freelancing",
+          "Intenship",
+          "Volunteer",
+          "Temporary",
+          "Traineeship",
+        ],
         // required: true,
       },
       preferredShift: {
         type: String,
-        enum: ["day", "night", "any"],
+        enum: [
+          "Regular",
+          "Morning",
+          "Day",
+          "Evening",
+          "Flexible",
+          "Anytime",
+          "Night",
+        ],
       },
       expectedSalary: {
         type: String,

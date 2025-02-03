@@ -1533,6 +1533,8 @@ class JobPreference {
   final dynamic preferredShift;
   final String? expectedSalary;
   final dynamic careerObjectives;
+  
+  final String? workingStatus;
 
   JobPreference({
     this.jobLevel,
@@ -1540,6 +1542,7 @@ class JobPreference {
     this.preferredShift,
     this.expectedSalary,
     this.careerObjectives,
+    this.workingStatus,
   });
 
   factory JobPreference.fromJson(Map<String, dynamic> json) => JobPreference(
@@ -1548,6 +1551,7 @@ class JobPreference {
         preferredShift: json["preferredShift"],
         expectedSalary: json["expectedSalary"],
         careerObjectives: json["careerObjectives"],
+        workingStatus: json["workingStatus"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -1556,6 +1560,7 @@ class JobPreference {
         "preferredShift": preferredShift,
         "expectedSalary": expectedSalary,
         "careerObjectives": careerObjectives,
+        "workingStatus": workingStatus,
       };
 }
 
@@ -1568,7 +1573,6 @@ class PersonalDetails {
   final dynamic religion;
   final dynamic email;
   final dynamic disability;
-  final String? workingStatus;
   final ForeignEmployment? foreignEmployment;
 
   PersonalDetails({
@@ -1580,7 +1584,6 @@ class PersonalDetails {
     this.religion,
     this.email,
     this.disability,
-    this.workingStatus,
     this.foreignEmployment,
   });
 
@@ -1594,7 +1597,6 @@ class PersonalDetails {
         religion: json["religion"],
         email: json["email"],
         disability: json["disability"],
-        workingStatus: json["workingStatus"],
         foreignEmployment: json["foreignEmployment"] == null
             ? null
             : ForeignEmployment.fromJson(json["foreignEmployment"]),
@@ -1609,7 +1611,6 @@ class PersonalDetails {
         "religion": religion,
         "email": email,
         "disability": disability,
-        "workingStatus": workingStatus,
         "foreignEmployment": foreignEmployment?.toJson(),
       };
 }
