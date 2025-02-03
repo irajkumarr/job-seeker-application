@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
-import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
-import 'package:frontend/data/models/profile_detail_model.dart' as profile;
 import 'package:frontend/data/models/user_profile_request.dart';
 import 'package:frontend/features/authentication/providers/details_provider.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';

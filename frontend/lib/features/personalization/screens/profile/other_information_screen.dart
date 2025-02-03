@@ -1,20 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/custom_screen/custom_screen.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/divider/dotted_divider.dart';
-import 'package:frontend/core/utils/validators/validation.dart';
-import 'package:frontend/data/models/experience_model.dart' as experienceModel;
 import 'package:frontend/data/models/other_information_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
-import 'package:frontend/features/personalization/providers/experience_provider.dart';
 import 'package:frontend/features/personalization/providers/other_information_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/text_editor_widget.dart';
-import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
