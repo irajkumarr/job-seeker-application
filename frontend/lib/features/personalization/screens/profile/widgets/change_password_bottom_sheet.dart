@@ -253,7 +253,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
                 horizontal: KSizes.md, vertical: KSizes.sm),
             child: CustomButton(
               text: profileProvider.isLoading
-                  ? "Loading..."
+                  ? "${l10n.loading}"
                   : "${l10n.update_password}",
               onPressed: () async {
                 if (_formKey.currentState!.validate()) {

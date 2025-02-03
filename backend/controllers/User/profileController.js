@@ -252,7 +252,6 @@ const handleUpdateProfile = async (req, res) => {
       }
     }
 
-
     // Check for duplicate email
     if (req.body.personalDetails?.email) {
       const existingProfileWithEmail = await Profile.findOne({
@@ -301,6 +300,8 @@ const handleUpdateProfile = async (req, res) => {
   }
 };
 
+
+
 const handleGetMatchedJobs = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -311,7 +312,9 @@ const handleGetMatchedJobs = async (req, res) => {
       return res.status(404).json({ message: "Profile not found" });
     }
 
-    const { interestedCategories, currentLocation } = profile;
+    const { preferredCategories, preferredJobLocation } = profile;
+
+    
 
     // Fetch jobs that match the user's interested categories
     const matchedJobs = await JobPosting.find()
@@ -319,47 +322,30 @@ const handleGetMatchedJobs = async (req, res) => {
         path: "company",
         populate: {
           path: "industry",
-          match: { name: { $in: interestedCategories } }, // Match based on industry name
+          match: { name: { $in: preferredCategories } }, // Match based on industry name
         },
       })
       .then((jobs) =>
         jobs.filter(
-          (job) => job.company && job.company.industry
-          //  &&
-          // job.location.district === currentLocation.district // Match district in job location
+          (job) =>
+            job.company &&
+            job.company.industry &&
+            job.company.industry.name &&
+            preferredCategories.includes(job.company.industry.name)
+          // Uncomment this if you need to filter by location
+          // && job.location.district === currentLocation.district
         )
       );
 
+
+    if (matchedJobs.length === 0) {
+      return res.status(200).json({ message: "No matched jobs found" });
+    }
+
     res.status(200).json({ matchedJobs });
   } catch (error) {
-    console.error(error);
     res.status(500).json({ message: "An error occurred", error });
   }
-  // try {
-  //   const { userId } = req.params;
-
-  //   // Find the user's profile
-  //   const profile = await Profile.findOne({ userId });
-  //   if (!profile) {
-  //     return res.status(404).json({ message: "Profile not found" });
-  //   }
-
-  //   // Fetch matched jobs based on the user's interested categories
-  //   const matchedJobs = await JobPosting.find()
-  //     .populate({
-  //       path: "company",
-  //       populate: {
-  //         path: "industry",
-  //         match: { name: { $in: profile.interestedCategories } }, // Match based on industry name
-  //       },
-  //     })
-  //     .then((jobs) => jobs.filter((job) => job.company && job.company.industry)); // Filter jobs with matching industries
-
-  //   res.status(200).json({ matchedJobs });
-  // } catch (error) {
-  //   console.error(error);
-  //   res.status(500).json({ message: "An error occurred", error });
-  // }
 };
 
 module.exports = {
