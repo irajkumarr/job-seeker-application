@@ -81,15 +81,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // return const ProfileWithoutLogin();
             }
 
-            String getValue(bool? field) {
-              return (profile.otherinformations != null &&
-                      profile.otherinformations!.isNotEmpty &&
-                      field != null &&
-                      field)
-                  ? "Yes"
-                  : "No";
-            }
-
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
@@ -252,7 +243,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 context
                                     .pushNamed(RoutesConstant.profileCategory);
                               },
-                              data: profile.profile![0].preferredCategories!),
+                              data: profile.profile?[0].preferredCategories ??
+                                  []),
                           SizedBox(height: KSizes.sm),
                           ExpandableCategoryAndSkillSection(
                               height: 300.h,
@@ -263,7 +255,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 context.pushNamed(RoutesConstant.profileSkill);
                               },
                               leadingIconColor: Colors.green,
-                              data: profile.profile![0].skills!),
+                              data: profile.profile?[0].skills ?? []),
                           SizedBox(height: KSizes.sm),
                           ExpandablePreferredJobLocationSection(
                               height: 135.h,
@@ -278,10 +270,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               data: [
                                 SectionData(
                                   icon: Icons.radio_button_checked,
-                                  label: profile.profile![0]
+                                  label: profile.profile?[0]
                                           .preferredJobLocation?.district ??
                                       "",
-                                  value: profile.profile![0]
+                                  value: profile.profile?[0]
                                           .preferredJobLocation?.fullAddress ??
                                       "",
                                 ),

@@ -104,7 +104,7 @@ class ExpandableProfileSection extends StatelessWidget {
                 color: KColors.grey,
               ),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 1000),
+              duration: const Duration(milliseconds: 700),
               curve: Curves.easeInOut,
               height: isExpanded ? height : 0,
               child: SingleChildScrollView(

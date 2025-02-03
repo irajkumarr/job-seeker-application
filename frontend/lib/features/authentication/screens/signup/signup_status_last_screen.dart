@@ -61,25 +61,13 @@ class SignupStatusLastScreen extends StatelessWidget {
         personalDetails: PersonalDetails(
           age: detailProvider.ageCounter,
           experience: detailProvider.experienceCounter,
-          gender: detailProvider.selectedGender!.toLowerCase(),
-          // maritalStatus: "single",
-          // nationality: "Nepali",
-          // religion: "Hindu",
-          // email: "test@example.com",
-          // disability: Disability(hasDisability: false, details: ""),
+          gender: detailProvider.selectedGender!,
           foreignEmployment: ForeignEmployment(
             hasWorkedAboroad: detailProvider.foreignEmploymentAsBool ?? false,
-            // details: "",
           ),
         ),
         jobPreference: JobPreference(
-          // jobLevel: "entry",
-          // availabilityStatus: "immediate",
-          // preferredShift: "any",
-
           workingStatus: detailProvider.selectedWorkingStatus ?? "",
-          // expectedSalary: detailProvider.selectedSalary ?? "",
-          // careerObjectives: "",
         ),
       );
 

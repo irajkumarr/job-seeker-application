@@ -189,6 +189,7 @@ const handleUpdateProfile = async (req, res) => {
         "jobLevel",
         "availabilityStatus",
         "preferredShift",
+        "currentSalary",
         "expectedSalary",
         "careerObjectives",
 

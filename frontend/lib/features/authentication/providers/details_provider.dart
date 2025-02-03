@@ -133,7 +133,7 @@ class DetailsProvider with ChangeNotifier {
     "Part Time",
     "Contractual",
     "Freelancing",
-    "Intenship",
+    "Internship",
     "Volunteer",
     "Temporary",
     "Traineeship",
