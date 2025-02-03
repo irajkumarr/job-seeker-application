@@ -8,9 +8,10 @@ import 'package:frontend/core/utils/validators/validation.dart';
 enum ListType { none, bullet, numbered, numberedRtl }
 
 class TextEditorWidget extends StatefulWidget {
-  const TextEditorWidget({Key? key, required this.rolesController})
+  const TextEditorWidget({Key? key, required this.controller, required this.title})
       : super(key: key);
-  final TextEditingController rolesController;
+  final TextEditingController controller;
+  final String title;
   @override
   _TextEditorWidgetState createState() => _TextEditorWidgetState();
 }
@@ -25,7 +26,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
 
   // Convert text to list format
   void _formatAsList(ListType type) {
-    final String currentText = widget.rolesController.text;
+    final String currentText = widget.controller.text;
     final List<String> lines = currentText.split('\n');
     String formattedText = '';
 
@@ -67,7 +68,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
       currentListType = type;
     }
 
-    widget.rolesController.value = TextEditingValue(
+    widget.controller.value = TextEditingValue(
       text: formattedText.trimRight(),
       selection:
           TextSelection.collapsed(offset: formattedText.trimRight().length),
@@ -80,7 +81,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Roles and Responsibilities',
+         widget. title,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: 8),
@@ -126,7 +127,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: TextFormField(
-                  controller: widget.rolesController,
+                  controller: widget.controller,
                   maxLines: 8,
                   validator: (value) => KValidator.validateEmptyText(
                       "Roles and Responsibilities", value),

@@ -523,7 +523,8 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                     DottedDivider(),
                     SizedBox(height: KSizes.sm),
                     TextEditorWidget(
-                      rolesController: _rolesController,
+                      title: "Roles and Responsibilities",
+                      controller: _rolesController,
                     ),
                     SizedBox(height: KSizes.defaultSpace * 10),
                   ],
