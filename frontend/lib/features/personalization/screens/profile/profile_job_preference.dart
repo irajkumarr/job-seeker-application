@@ -72,21 +72,26 @@ class _ProfileJobPreferenceState extends State<ProfileJobPreference> {
     careerObjectivesController.text =
         profile?.jobPreference?.careerObjectives ?? "";
     currentSalaryController.text =
-        profile?.jobPreference?.currentSalary?.amount.toString() ?? "";
-    _selectedCurrentSalaryCurrency =
-        profile?.jobPreference?.currentSalary?.currency ?? "";
-    _selectedExpectedSalaryCurrency =
-        profile?.jobPreference?.currentSalary?.amount.toString() ?? "";
-    _selectedCurrentSalaryValue =
-        profile?.jobPreference?.currentSalary?.valueType ?? "";
-    _selectedExpectedSalaryValue =
-        profile?.jobPreference?.expectedSalary?.valueType ?? "";
-    _selectedCurrentSalaryDuration =
-        profile?.jobPreference?.currentSalary?.duration ?? "";
-    _selectedExpectedSalaryDuration =
-        profile?.jobPreference?.expectedSalary?.duration ?? "";
+        profile?.jobPreference?.currentSalary?.amount != null
+            ? profile!.jobPreference!.currentSalary!.amount.toString()
+            : "";
+
     expectedSalaryController.text =
-        profile?.jobPreference?.expectedSalary?.amount.toString() ?? "";
+        profile?.jobPreference?.expectedSalary?.amount != null
+            ? profile!.jobPreference!.expectedSalary!.amount.toString()
+            : "";
+    _selectedCurrentSalaryCurrency =
+        profile?.jobPreference?.currentSalary?.currency;
+    _selectedExpectedSalaryCurrency =
+        profile?.jobPreference?.expectedSalary?.currency;
+    _selectedCurrentSalaryValue =
+        profile?.jobPreference?.currentSalary?.valueType;
+    _selectedExpectedSalaryValue =
+        profile?.jobPreference?.expectedSalary?.valueType;
+    _selectedCurrentSalaryDuration =
+        profile?.jobPreference?.currentSalary?.duration;
+    _selectedExpectedSalaryDuration =
+        profile?.jobPreference?.expectedSalary?.duration;
   }
 
   @override

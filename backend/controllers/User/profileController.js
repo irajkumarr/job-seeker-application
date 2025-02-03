@@ -105,7 +105,7 @@ const handleGetProfile = async (req, res) => {
 };
 const handleUpdateProfile = async (req, res) => {
   const userId = req.user.id;
-
+  console.log(req.body);
   try {
     const profile = await Profile.findOne({ userId });
 
@@ -171,25 +171,87 @@ const handleUpdateProfile = async (req, res) => {
     }
 
     // Handle job preference fields
-    if (req.body.jobPreference) {
+    // if (req.body.jobPreference) {
+    //   const jobPreferenceFields = [
+    //     "jobLevel",
+    //     "availabilityStatus",
+    //     "preferredShift",
+    //     "currentSalary",
+    //     "expectedSalary",
+    //     "careerObjectives",
+
+    //     "workingStatus",
+    //   ];
+
+    //   jobPreferenceFields.forEach((field) => {
+    //     if (req.body.jobPreference[field] !== undefined) {
+    //       updateFields[`jobPreference.${field}`] =
+    //         req.body.jobPreference[field];
+    //     }
+    //   });
+    // }
+
+    // Handle top-level job preference fields (only if jobPreference exists)
+    if (
+      req.body.jobLevel ||
+      req.body.availabilityStatus ||
+      req.body.preferredShift ||
+      req.body.careerObjectives ||
+      req.body.workingStatus
+    ) {
       const jobPreferenceFields = [
         "jobLevel",
         "availabilityStatus",
         "preferredShift",
-        "currentSalary",
-        "expectedSalary",
         "careerObjectives",
-
         "workingStatus",
       ];
 
       jobPreferenceFields.forEach((field) => {
-        if (req.body.jobPreference[field] !== undefined) {
-          updateFields[`jobPreference.${field}`] =
-            req.body.jobPreference[field];
+        if (req.body[field] !== undefined && req.body[field] !== null) {
+          updateFields[`jobPreference.${field}`] = req.body[field];
         }
       });
+
+      // Ensure currentSalary and expectedSalary are processed correctly
+      if (req.body.currentSalary && req.body.currentSalary !== null) {
+        const { amount, currency, valueType, duration } =
+          req.body.currentSalary;
+        if (
+          amount !== undefined &&
+          currency !== undefined &&
+          valueType !== undefined &&
+          duration !== undefined
+        ) {
+          updateFields["jobPreference.currentSalary"] = {
+            amount,
+            currency,
+            valueType,
+            duration,
+          };
+        }
+      }
+
+      // Handle expectedSalary (if it exists)
+      if (req.body.expectedSalary && req.body.expectedSalary !== null) {
+        const { amount, currency, valueType, duration } =
+          req.body.expectedSalary;
+        if (
+          amount !== undefined &&
+          currency !== undefined &&
+          valueType !== undefined &&
+          duration !== undefined
+        ) {
+          updateFields["jobPreference.expectedSalary"] = {
+            amount,
+            currency,
+            valueType,
+            duration,
+          };
+        }
+      }
     }
+
 
     // Check for duplicate email
     if (req.body.personalDetails?.email) {

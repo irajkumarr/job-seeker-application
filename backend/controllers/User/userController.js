@@ -47,6 +47,33 @@ const handleDeleteUser = async (req, res) => {
   }
 };
 
+//handle update password
+const handleUpdatePassword = async (req, res) => {
+  const userId = req.user.id;
+  const { oldPassword, newPassword } = req.body;
+  try {
+    const user = await User.findOne({ _id: userId, isActive: true });
+    if (!user) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User not found" });
+    }
+
+    if (!(await user.comparePassword(oldPassword))) {
+      return res
+        .status(401)
+        .json({ status: false, message: "Incorrect old password" });
+    }
+    user.password = newPassword;
+    await user.save();
+    return res
+      .status(200)
+      .json({ status: true, message: "Password changed successfully" });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
 const handleUpdateUser = async (req, res) => {
   const userId = req.user.id;
   try {
@@ -383,5 +410,5 @@ module.exports = {
   handleDeleteUser,
   handleUpdateUser,
   handleGetAllProfiles,
-  handleUpdateProfileImage,
+  handleUpdateProfileImage,handleUpdatePassword,
 };

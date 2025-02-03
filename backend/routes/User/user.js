@@ -5,7 +5,7 @@ const {
   handleUpdateUser,
   handleDeleteUser,
   handleGetAllProfiles,
-  handleUpdateProfileImage,
+  handleUpdateProfileImage,handleUpdatePassword
 } = require("../../controllers/User/userController");
 const { verifyAndAuthorize } = require("../../middlewares/jwt");
 
@@ -15,6 +15,7 @@ const router = express.Router();
 router.get("/", verifyAndAuthorize, handleGetUser);
 router.put("/", verifyAndAuthorize, handleUpdateUser);
 router.delete("/", verifyAndAuthorize, handleDeleteUser);
+router.put("/change-password", verifyAndAuthorize, handleUpdatePassword);
 router.get("/profiles", verifyAndAuthorize, handleGetAllProfiles);
 router.put(
   "/profileImage/",

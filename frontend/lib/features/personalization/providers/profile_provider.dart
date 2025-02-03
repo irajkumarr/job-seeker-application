@@ -10,6 +10,7 @@ import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:get_storage/get_storage.dart';
 
 import 'package:frontend/data/models/user_profile_request.dart' as userProfile;
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
 class ProfileProvider extends ChangeNotifier {
@@ -295,97 +296,6 @@ class ProfileProvider extends ChangeNotifier {
     }
   }
 
-  //Personal Information
-  // Future<void> updatePersonalInformation(
-  //   BuildContext context,
-  //   userProfile.PersonalDetails data,
-  //   VoidCallback onSuccess,
-  // ) async {
-  //   _isLoading = true;
-  //   _errorMessage = '';
-  //   notifyListeners();
-
-  //   try {
-  //     final storage = GetStorage();
-  //     String? token = storage.read('token');
-
-  //     if (token == null) {
-  //       throw Exception("User token not found");
-  //     }
-
-  //     final response =
-  //         await http.put(Uri.parse('$kAppBaseUrl/api/users/profile'),
-  //             headers: {
-  //               'Content-Type': 'application/json',
-  //               'Authorization': 'Bearer $token',
-  //             },
-  //             body: json.encode(data.toJson()));
-
-  //     if (response.statusCode == 200) {
-  //       // final data = json.decode(response.body);
-  //       KSnackbar.CustomSnackbar(
-  //           context, "Successfully updated!", KColors.primary);
-
-  //       onSuccess();
-  //     } else {
-  //       _errorMessage =
-  //           json.decode(response.body)['message'] ?? "Failed to update";
-  //       print(_errorMessage);
-  //       KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
-  //     }
-  //   } catch (error) {
-  //     _errorMessage = error.toString();
-  //     KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
-  //   } finally {
-  //     _isLoading = false;
-  //     notifyListeners();
-  //   }
-  // }
-
-  // Future<void> updateName(
-  //   BuildContext context,
-  //   String data,
-  //   VoidCallback onSuccess,
-  // ) async {
-  //   _isLoading = true;
-  //   _errorMessage = '';
-  //   notifyListeners();
-
-  //   try {
-  //     final storage = GetStorage();
-  //     String? token = storage.read('token');
-
-  //     if (token == null) {
-  //       throw Exception("User token not found");
-  //     }
-
-  //     final response = await http.put(
-  //       Uri.parse('$kAppBaseUrl/api/users/profile'), // Ensure correct URL
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         'Authorization': 'Bearer $token',
-  //       },
-  //       body: json.encode({"name": data}), // Convert to JSON
-  //     );
-
-  //     if (response.statusCode == 200) {
-  //       onSuccess();
-  //     } else {
-  //       final responseData = json.decode(response.body);
-  //       _errorMessage = responseData['message'] ?? "Failed to update";
-  //       print(_errorMessage);
-
-  //       KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
-  //     }
-  //   } catch (error) {
-  //     _errorMessage = error.toString();
-  //     KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
-  //   } finally {
-  //     _isLoading = false;
-  //     notifyListeners();
-  //   }
-  // }
-
   Future<void> updateName(
     BuildContext context,
     String data,
@@ -412,15 +322,11 @@ class ProfileProvider extends ChangeNotifier {
         body: json.encode({"name": data}), // ✅ Ensure body is encoded properly
       );
 
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
-
       if (response.statusCode == 200) {
         onSuccess();
       } else {
         _errorMessage =
             json.decode(response.body)['message'] ?? "Failed to update";
-        print("Error Message: $_errorMessage");
         KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
       }
     } catch (error) {
@@ -457,11 +363,8 @@ class ProfileProvider extends ChangeNotifier {
           'Content-Type': 'application/json',
           'Authorization': 'Bearer $token',
         },
-        body: json.encode(data.toJson()), // ✅ Ensure body is encoded
+        body: json.encode(data.toJson()),
       );
-
-      print("Response Status Code: ${response.statusCode}");
-      print("Response Body: ${response.body}");
 
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
@@ -470,7 +373,6 @@ class ProfileProvider extends ChangeNotifier {
       } else {
         _errorMessage =
             json.decode(response.body)['message'] ?? "Failed to update";
-        print("Error Message: $_errorMessage");
         KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
       }
     } catch (error) {
@@ -479,6 +381,49 @@ class ProfileProvider extends ChangeNotifier {
     } finally {
       _isLoading = false;
       notifyListeners();
+    }
+  }
+
+  //update password
+  Future<void> changePassword(
+      BuildContext context, String oldPassword, String newPassword) async {
+    _isLoading = true;
+    notifyListeners();
+    final url = Uri.parse('$kAppBaseUrl/api/users/change-password');
+
+    try {
+      final response = await http.put(
+        url,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ${user!.userToken}',
+        },
+        body: json.encode({
+          'oldPassword': oldPassword,
+          'newPassword': newPassword,
+        }),
+      );
+      if (response.statusCode == 200) {
+        _isLoading = false;
+        notifyListeners();
+        // Handle success
+        final data = json.decode(response.body);
+        KSnackbar.CustomSnackbar(context, data['message'], KColors.primary);
+        context.pop();
+      } else {
+        // Handle error
+        _isLoading = false;
+        notifyListeners();
+        final errorResponse = json.decode(response.body);
+        KSnackbar.CustomSnackbar(
+            context, errorResponse['message'], KColors.error);
+      }
+    } catch (error) {
+      _isLoading = false;
+      notifyListeners();
+      print('Error: $error');
+      KSnackbar.CustomSnackbar(context,
+          "An error occurred while changing the password", KColors.error);
     }
   }
 

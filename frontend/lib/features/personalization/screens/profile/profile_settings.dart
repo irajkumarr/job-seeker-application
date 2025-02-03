@@ -7,6 +7,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/http/url_launch.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/change_password_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/language_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/settings_tile.dart';

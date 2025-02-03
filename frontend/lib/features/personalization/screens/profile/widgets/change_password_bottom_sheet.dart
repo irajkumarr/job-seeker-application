@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
+import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/features/authentication/providers/password_provider.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 void showChangePasswordBottomSheet(BuildContext context) {
@@ -67,6 +70,7 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final profileProvider = Provider.of<ProfileProvider>(context);
     return GestureDetector(
       onTap: () {
         FocusScopeNode currentFocus = FocusScope.of(context);
@@ -248,10 +252,15 @@ class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
             padding: EdgeInsets.symmetric(
                 horizontal: KSizes.md, vertical: KSizes.sm),
             child: CustomButton(
-              text: "${l10n.update_password}",
-              onPressed: () {
+              text: profileProvider.isLoading
+                  ? "Loading..."
+                  : "${l10n.update_password}",
+              onPressed: () async {
                 if (_formKey.currentState!.validate()) {
                   // Handle update logic
+
+                  await profileProvider.changePassword(context,
+                      _oldPasswordController.text, _newPasswordController.text);
                 }
               },
             ),
