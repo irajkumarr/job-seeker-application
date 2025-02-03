@@ -71,8 +71,22 @@ class _ProfileJobPreferenceState extends State<ProfileJobPreference> {
     detailProvider.selectedJobLevel = profile?.jobPreference?.jobLevel;
     careerObjectivesController.text =
         profile?.jobPreference?.careerObjectives ?? "";
+    currentSalaryController.text =
+        profile?.jobPreference?.currentSalary?.amount.toString() ?? "";
+    _selectedCurrentSalaryCurrency =
+        profile?.jobPreference?.currentSalary?.currency ?? "";
+    _selectedExpectedSalaryCurrency =
+        profile?.jobPreference?.currentSalary?.amount.toString() ?? "";
+    _selectedCurrentSalaryValue =
+        profile?.jobPreference?.currentSalary?.valueType ?? "";
+    _selectedExpectedSalaryValue =
+        profile?.jobPreference?.expectedSalary?.valueType ?? "";
+    _selectedCurrentSalaryDuration =
+        profile?.jobPreference?.currentSalary?.duration ?? "";
+    _selectedExpectedSalaryDuration =
+        profile?.jobPreference?.expectedSalary?.duration ?? "";
     expectedSalaryController.text =
-        profile?.jobPreference?.expectedSalary ?? "";
+        profile?.jobPreference?.expectedSalary?.amount.toString() ?? "";
   }
 
   @override
@@ -111,7 +125,18 @@ class _ProfileJobPreferenceState extends State<ProfileJobPreference> {
               preferredShift: detailProvider.selectedPreferredShift,
               jobLevel: detailProvider.selectedJobLevel,
               availabilityStatus: detailProvider.selectedAvailableFor,
-              expectedSalary: expectedSalaryController.text.trim(),
+              currentSalary: Salary(
+                currency: _selectedCurrentSalaryCurrency?.trim(),
+                valueType: _selectedCurrentSalaryValue?.trim(),
+                duration: _selectedCurrentSalaryDuration?.trim(),
+                amount: double.tryParse(currentSalaryController.text.trim()),
+              ),
+              expectedSalary: Salary(
+                currency: _selectedExpectedSalaryCurrency?.trim(),
+                valueType: _selectedExpectedSalaryValue?.trim(),
+                duration: _selectedExpectedSalaryDuration?.trim(),
+                amount: double.tryParse(expectedSalaryController.text.trim()),
+              ),
               careerObjectives: careerObjectivesController.text.trim(),
               // ),
             );

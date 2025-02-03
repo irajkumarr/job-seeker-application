@@ -50,15 +50,18 @@ class JobPreference {
   final String? jobLevel;
   final String? availabilityStatus;
   final String? preferredShift;
-  final String? expectedSalary;
+  final Salary? currentSalary;
+  final Salary? expectedSalary;
   final String? careerObjectives;
-  
+
   final String? workingStatus;
 
-  JobPreference({this.workingStatus, 
+  JobPreference({
+    this.workingStatus,
     this.jobLevel,
     this.availabilityStatus,
     this.preferredShift,
+    this.currentSalary,
     this.expectedSalary,
     this.careerObjectives,
   });
@@ -67,7 +70,12 @@ class JobPreference {
         jobLevel: json["jobLevel"],
         availabilityStatus: json["availabilityStatus"],
         preferredShift: json["preferredShift"],
-        expectedSalary: json["expectedSalary"],
+        currentSalary: json["currentSalary"] == null
+            ? null
+            : Salary.fromJson(json["currentSalary"]),
+        expectedSalary: json["expectedSalary"] == null
+            ? null
+            : Salary.fromJson(json["expectedSalary"]),
         careerObjectives: json["careerObjectives"],
         workingStatus: json["workingStatus"],
       );
@@ -76,9 +84,38 @@ class JobPreference {
         "jobLevel": jobLevel,
         "availabilityStatus": availabilityStatus,
         "preferredShift": preferredShift,
-        "expectedSalary": expectedSalary,
+        "currentSalary": currentSalary?.toJson(),
+        "expectedSalary": expectedSalary?.toJson(),
         "careerObjectives": careerObjectives,
         "workingStatus": workingStatus,
+      };
+}
+
+class Salary {
+  final String? currency;
+  final String? valueType;
+  final String? duration;
+  final double? amount;
+
+  Salary({
+    this.currency,
+    this.valueType,
+    this.duration,
+    this.amount,
+  });
+
+  factory Salary.fromJson(Map<String, dynamic> json) => Salary(
+        currency: json["currency"],
+        valueType: json["valueType"],
+        duration: json["duration"],
+        amount: json["amount"]?.toDouble(),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "currency": currency,
+        "valueType": valueType,
+        "duration": duration,
+        "amount": amount,
       };
 }
 

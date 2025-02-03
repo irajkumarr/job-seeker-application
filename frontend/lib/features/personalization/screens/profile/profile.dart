@@ -325,14 +325,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SectionData(
                                   label: 'Current Salary',
                                   value: profile.profile?[0].jobPreference
-                                          ?.expectedSalary ??
-                                      "_ _ _",
+                                              ?.currentSalary ==
+                                          null
+                                      ? "${profile.profile?[0].jobPreference?.currentSalary?.valueType} ${profile.profile?[0].jobPreference?.currentSalary?.currency} ${profile.profile?[0].jobPreference?.currentSalary?.amount} ${profile.profile?[0].jobPreference?.currentSalary?.duration}"
+                                      : "_ _ _",
                                   icon: Icons.local_offer_outlined),
                               SectionData(
                                   label: 'Expected Salary',
                                   value: profile.profile?[0].jobPreference
-                                          ?.expectedSalary ??
-                                      "_ _ _",
+                                              ?.expectedSalary ==
+                                          null
+                                      ? "${profile.profile?[0].jobPreference?.expectedSalary?.valueType} ${profile.profile?[0].jobPreference?.expectedSalary?.currency} ${profile.profile?[0].jobPreference?.expectedSalary?.amount} ${profile.profile?[0].jobPreference?.expectedSalary?.duration}"
+                                      : "_ _ _",
                                   icon: Icons.local_offer_outlined),
                               SectionData(
                                   label: 'Career Objectives',

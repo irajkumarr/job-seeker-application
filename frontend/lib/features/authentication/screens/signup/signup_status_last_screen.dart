@@ -23,7 +23,7 @@ class SignupStatusLastScreen extends StatelessWidget {
     final signupProvider = Provider.of<SignupProvider>(context);
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final locationProvider = Provider.of<LocationProvider>(context);
-  
+
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
       if (detailProvider.selectedIsForeignEmployment == null ||
           detailProvider.selectedWorkingStatus == null) {
@@ -76,9 +76,9 @@ class SignupStatusLastScreen extends StatelessWidget {
           // jobLevel: "entry",
           // availabilityStatus: "immediate",
           // preferredShift: "any",
-          
+
           workingStatus: detailProvider.selectedWorkingStatus ?? "",
-          expectedSalary: detailProvider.selectedSalary ?? "",
+          // expectedSalary: detailProvider.selectedSalary ?? "",
           // careerObjectives: "",
         ),
       );
@@ -107,7 +107,6 @@ class SignupStatusLastScreen extends StatelessWidget {
       child: FullScreenOverlay(
         isLoading: signupProvider.isLoading,
         child: CustomScreen(
-         
           onPressed: () => _submitProfile(context),
           isProgressBarShowed: true,
           progressBarWidth: 300.w,

@@ -31,11 +31,11 @@ const profileSchema = new mongoose.Schema(
     personalDetails: {
       age: {
         type: Number,
-         required: true
+        required: true,
       },
       experience: {
         type: Number,
-        required: true
+        required: true,
       },
       gender: {
         type: String,
@@ -64,7 +64,7 @@ const profileSchema = new mongoose.Schema(
         hasDisability: Boolean,
         details: String,
       },
-     
+
       foreignEmployment: {
         hasWorkedAboroad: Boolean,
         details: String,
@@ -111,9 +111,60 @@ const profileSchema = new mongoose.Schema(
           "Night",
         ],
       },
+      // expectedSalary: {
+      //   type: String,
+      //   required: true,
+      // },
+      currentSalary: {
+        currency: {
+          type: String,
+          enum: ["NPR."],
+          default: "NPR.",
+          required: true,
+          trim: true,
+        },
+        value: {
+          type: Number,
+          required: true,
+          min: 0,
+        },
+        valueType: {
+          // New field to indicate "above", "below", or "equals"
+          type: String,
+          enum: ["Above", "Equals", "Below"],
+          required: true, // Make it required
+          trim: true,
+        },
+        duration: {
+          type: String,
+          required: true,
+          enum: ["per Hour", "per Day", "per Week", "per Month", "per Year"],
+          trim: true,
+        },
+        amount: { type: Number, required: true, min: 0 },
+      },
       expectedSalary: {
-        type: String,
-        required: true,
+        currency: {
+          type: String,
+          enum: ["NPR."],
+          default: "NPR.",
+          required: true,
+          trim: true,
+        },
+        valueType: {
+          // New field to indicate "above", "below", or "equals"
+          type: String,
+          enum: ["Above", "Equals", "Below"],
+          required: true, // Make it required
+          trim: true,
+        },
+        duration: {
+          type: String,
+          required: true,
+          enum: ["per Hour", "per Day", "per Week", "per Month", "per Year"],
+          trim: true,
+        },
+        amount: { type: Number, required: true, min: 0 },
       },
 
       careerObjectives: { type: String, maxlength: 500 },
