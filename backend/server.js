@@ -25,6 +25,7 @@ const userExperienceRoutes = require("./routes/User/experience");
 const userReferenceRoutes = require("./routes/User/reference");
 const userSocialAccountRoutes = require("./routes/User/socialAccount");
 const userDocumentRoutes = require("./routes/User/document");
+const userOtherInformationRoutes = require("./routes/User/otherInformation");
 
 const industryRoutes = require("./routes/Industry/industry");
 const companyRoutes = require("./routes/Company/company");
@@ -42,6 +43,7 @@ app.use("/api/users/experience", userExperienceRoutes);
 app.use("/api/users/reference", userReferenceRoutes);
 app.use("/api/users/socialAccount", userSocialAccountRoutes);
 app.use("/api/users/document", userDocumentRoutes);
+app.use("/api/users/otherInformation", userOtherInformationRoutes);
 app.use("/api/industries", industryRoutes);
 app.use("/api/companies", companyRoutes);
 app.use("/api/jobs", jobPostingRoutes);
