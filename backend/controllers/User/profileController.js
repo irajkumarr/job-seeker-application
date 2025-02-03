@@ -170,27 +170,6 @@ const handleUpdateProfile = async (req, res) => {
       };
     }
 
-    // Handle job preference fields
-    // if (req.body.jobPreference) {
-    //   const jobPreferenceFields = [
-    //     "jobLevel",
-    //     "availabilityStatus",
-    //     "preferredShift",
-    //     "currentSalary",
-    //     "expectedSalary",
-    //     "careerObjectives",
-
-    //     "workingStatus",
-    //   ];
-
-    //   jobPreferenceFields.forEach((field) => {
-    //     if (req.body.jobPreference[field] !== undefined) {
-    //       updateFields[`jobPreference.${field}`] =
-    //         req.body.jobPreference[field];
-    //     }
-    //   });
-    // }
-
     // Handle top-level job preference fields (only if jobPreference exists)
     if (
       req.body.jobLevel ||
@@ -300,8 +279,6 @@ const handleUpdateProfile = async (req, res) => {
   }
 };
 
-
-
 const handleGetMatchedJobs = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -314,9 +291,7 @@ const handleGetMatchedJobs = async (req, res) => {
 
     const { preferredCategories, preferredJobLocation } = profile;
 
-    
-
-    // Fetch jobs that match the user's interested categories
+    // Fetch jobs that match the user's preferred categories and preferred job location
     const matchedJobs = await JobPosting.find()
       .populate({
         path: "company",
@@ -331,12 +306,11 @@ const handleGetMatchedJobs = async (req, res) => {
             job.company &&
             job.company.industry &&
             job.company.industry.name &&
-            preferredCategories.includes(job.company.industry.name)
-          // Uncomment this if you need to filter by location
-          // && job.location.district === currentLocation.district
+            preferredCategories.includes(job.company.industry.name) &&
+            job.location &&
+            job.location.district === preferredJobLocation.district // Match the preferred location
         )
       );
-
 
     if (matchedJobs.length === 0) {
       return res.status(200).json({ message: "No matched jobs found" });
