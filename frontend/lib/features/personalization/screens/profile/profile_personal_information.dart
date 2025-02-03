@@ -19,14 +19,14 @@ import 'package:frontend/features/personalization/screens/profile/widgets/text_e
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class ProfileJobPreference extends StatefulWidget {
-  const ProfileJobPreference({super.key});
+class ProfilePersonalInformation extends StatefulWidget {
+  const ProfilePersonalInformation({super.key});
 
   @override
-  State<ProfileJobPreference> createState() => _ProfileJobPreferenceState();
+  State<ProfilePersonalInformation> createState() => _ProfilePersonalInformationState();
 }
 
-class _ProfileJobPreferenceState extends State<ProfileJobPreference> {
+class _ProfilePersonalInformationState extends State<ProfilePersonalInformation> {
   String? _selectedCurrentSalaryCurrency;
   String? _selectedExpectedSalaryCurrency;
   String? _selectedCurrentSalaryValue;
