@@ -22,6 +22,7 @@ class ExpandableProfileSection extends StatelessWidget {
     required this.leadingIconColor,
     required this.data,
     required this.height,
+    required this.onTap,
   });
 
   final String sectionId;
@@ -30,6 +31,7 @@ class ExpandableProfileSection extends StatelessWidget {
   final Color leadingIconColor;
   final List<SectionData> data;
   final double height;
+  final VoidCallback onTap;
 
   /// Check if all required data fields are completed
   // Check if section is complete
@@ -90,7 +92,7 @@ class ExpandableProfileSection extends StatelessWidget {
                     ),
               ),
               trailing: AnimatedRotation(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 500),
                 turns: isExpanded ? 0.5 : 0,
                 child: const Icon(Icons.keyboard_arrow_down_sharp),
               ),
@@ -102,7 +104,7 @@ class ExpandableProfileSection extends StatelessWidget {
                 color: KColors.grey,
               ),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 1000),
               curve: Curves.easeInOut,
               height: isExpanded ? height : 0,
               child: SingleChildScrollView(
@@ -134,7 +136,7 @@ class ExpandableProfileSection extends StatelessWidget {
                       Divider(),
                       SizedBox(height: KSizes.sm),
                       InkWell(
-                        onTap: () {},
+                        onTap: onTap,
                         borderRadius: BorderRadius.circular(KSizes.sm + 4),
                         child: Row(
                           children: [
@@ -208,5 +210,3 @@ class ExpandableProfileSection extends StatelessWidget {
     );
   }
 }
-
-

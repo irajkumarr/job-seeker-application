@@ -81,6 +81,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
               // return const ProfileWithoutLogin();
             }
 
+            String getValue(bool? field) {
+              return (profile.otherinformations != null &&
+                      profile.otherinformations!.isNotEmpty &&
+                      field != null &&
+                      field)
+                  ? "Yes"
+                  : "No";
+            }
+
             return Scaffold(
               appBar: PreferredSize(
                 preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
@@ -179,6 +188,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             sectionId: 'personal_info',
                             title: 'Personal Information',
                             leadingIcon: Icons.error_outline_outlined,
+                            onTap: () {},
                             leadingIconColor: KColors.primary,
                             data: [
                               SectionData(
@@ -281,6 +291,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             sectionId: 'job_preference_info',
                             title: 'Job Preference',
                             leadingIcon: Icons.error_outline_outlined,
+                            onTap: () {
+                              context.pushNamed(
+                                  RoutesConstant.profileJobPreference);
+                            },
                             leadingIconColor: KColors.primary,
                             data: [
                               SectionData(
@@ -810,70 +824,109 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 ),
                           SizedBox(height: KSizes.sm),
-                          !profile.references!.isEmpty
-                              ? ExpandableProfileSection(
-                                  height: 400.h,
-                                  sectionId: 'other_info_section',
-                                  title: 'Other Information',
-                                  leadingIcon: Icons.error_outline_outlined,
-                                  leadingIconColor: KColors.primary,
-                                  data: [
-                                    SectionData(
-                                        label:
-                                            'Are you willing to travel outside of your residing location during the job?',
-                                        value: profile.profile?[0].jobPreference
-                                                ?.jobLevel ??
-                                            "No",
-                                        icon: Icons
-                                            .radio_button_checked_outlined),
-                                    SectionData(
-                                        label:
-                                            'Are you willing to temporarily relocate outside of your residing location during the job period?',
-                                        value: profile.profile?[0].jobPreference
-                                                ?.availabilityStatus ??
-                                            "No",
-                                        icon: Icons
-                                            .radio_button_checked_outlined),
-                                    SectionData(
-                                        label:
-                                            'Do you have a two-wheeler riding license?',
-                                        value: profile.profile?[0].jobPreference
-                                                ?.preferredShift ??
-                                            "No",
-                                        icon: Icons
-                                            .radio_button_checked_outlined),
-                                    SectionData(
-                                        label:
-                                            'Do you have a four-wheeler driving license?',
-                                        value: profile.profile?[0].jobPreference
-                                                ?.expectedSalary ??
-                                            "No",
-                                        icon: Icons
-                                            .radio_button_checked_outlined),
-                                    SectionData(
-                                        label:
-                                            'Do you own two-wheeler vehicle?',
-                                        value: profile.profile?[0].jobPreference
-                                                ?.expectedSalary ??
-                                            "No",
-                                        icon: Icons
-                                            .radio_button_checked_outlined),
-                                    SectionData(
-                                        label:
-                                            'Do you own four-wheeler vehicle?',
-                                        value: profile.profile?[0].jobPreference
-                                                ?.careerObjectives ??
-                                            "No",
-                                        icon: Icons
-                                            .radio_button_checked_outlined),
-                                  ],
-                                )
-                              : ProfileDetailListTile(
-                                  title: "Other Information",
-                                  onAdd: () {
-                                    context.pushNamed(RoutesConstant.reference);
-                                  },
-                                ),
+                          ExpandableProfileSection(
+                            height: 430.h,
+                            sectionId: 'other_info_section',
+                            title: 'Other Information',
+                            leadingIcon: Icons.error_outline_outlined,
+                            onTap: () {
+                              context.pushNamed(
+                                RoutesConstant.profileOtherInformation,
+                                extra: profileProvider.profile
+                                            ?.otherinformations?.isNotEmpty ==
+                                        true
+                                    ? profileProvider
+                                        .profile!.otherinformations![0]
+                                    : null,
+                              );
+                            },
+                            leadingIconColor: KColors.primary,
+                            data: [
+                              SectionData(
+                                  label:
+                                      'Are you willing to travel outside of your residing location during the job?',
+                                  value: (profile.otherinformations != null &&
+                                          profile
+                                              .otherinformations!.isNotEmpty &&
+                                          profile.otherinformations![0]
+                                                  .willingToTravelOutsideResidingLocation !=
+                                              null &&
+                                          profile.otherinformations![0]
+                                              .willingToTravelOutsideResidingLocation!)
+                                      ? "Yes"
+                                      : "No",
+                                  icon: Icons.radio_button_checked_outlined),
+                              SectionData(
+                                  label:
+                                      'Are you willing to temporarily relocate outside of your residing location during the job period?',
+                                  value: (profile.otherinformations != null &&
+                                          profile
+                                              .otherinformations!.isNotEmpty &&
+                                          profile.otherinformations![0]
+                                                  .willingToRelocateOutsideResidingLocation !=
+                                              null &&
+                                          profile.otherinformations![0]
+                                              .willingToRelocateOutsideResidingLocation!)
+                                      ? "Yes"
+                                      : "No",
+                                  icon: Icons.radio_button_checked_outlined),
+                              SectionData(
+                                  label:
+                                      'Do you have a two-wheeler riding license?',
+                                  value: (profile.otherinformations != null &&
+                                          profile
+                                              .otherinformations!.isNotEmpty &&
+                                          profile.otherinformations![0]
+                                                  .haveTwoWheelerDrivingLicense !=
+                                              null &&
+                                          profile.otherinformations![0]
+                                              .haveTwoWheelerDrivingLicense!)
+                                      ? "Yes"
+                                      : "No",
+                                  icon: Icons.radio_button_checked_outlined),
+                              SectionData(
+                                  label:
+                                      'Do you have a four-wheeler driving license?',
+                                  value: (profile.otherinformations != null &&
+                                          profile
+                                              .otherinformations!.isNotEmpty &&
+                                          profile.otherinformations![0]
+                                                  .havefourWheelerDrivingLicense !=
+                                              null &&
+                                          profile.otherinformations![0]
+                                              .havefourWheelerDrivingLicense!)
+                                      ? "Yes"
+                                      : "No",
+                                  icon: Icons.radio_button_checked_outlined),
+                              SectionData(
+                                  label: 'Do you own two-wheeler vehicle?',
+                                  value: (profile.otherinformations != null &&
+                                          profile
+                                              .otherinformations!.isNotEmpty &&
+                                          profile.otherinformations![0]
+                                                  .ownTwoWheelerVehicle !=
+                                              null &&
+                                          profile.otherinformations![0]
+                                              .ownTwoWheelerVehicle!)
+                                      ? "Yes"
+                                      : "No",
+                                  icon: Icons.radio_button_checked_outlined),
+                              SectionData(
+                                  label: 'Do you own four-wheeler vehicle?',
+                                  value: (profile.otherinformations != null &&
+                                          profile
+                                              .otherinformations!.isNotEmpty &&
+                                          profile.otherinformations![0]
+                                                  .ownFourWheelerVehicle !=
+                                              null &&
+                                          profile.otherinformations![0]
+                                              .ownFourWheelerVehicle!)
+                                      ? "Yes"
+                                      : "No",
+                                  icon: Icons.radio_button_checked_outlined),
+                            ],
+                          ),
+
                           SizedBox(height: KSizes.defaultSpace),
                         ],
                       ),

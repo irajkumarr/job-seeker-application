@@ -6,10 +6,14 @@ const handleAddOtherInformation = async (req, res) => {
   try {
     const newOtherInformation = new OtherInformation({
       userId: userId,
-      willingToTravelOutsideResidingLocation: otherInformation.willingToTravelOutsideResidingLocation,
-      willingToRelocateOutsideResidingLocation: otherInformation.willingToRelocateOutsideResidingLocation,
-      haveTwoWheelerDrivingLicense: otherInformation.haveTwoWheelerDrivingLicense,
-      havefourWheelerDrivingLicense: otherInformation.havefourWheelerDrivingLicense,
+      willingToTravelOutsideResidingLocation:
+        otherInformation.willingToTravelOutsideResidingLocation,
+      willingToRelocateOutsideResidingLocation:
+        otherInformation.willingToRelocateOutsideResidingLocation,
+      haveTwoWheelerDrivingLicense:
+        otherInformation.haveTwoWheelerDrivingLicense,
+      havefourWheelerDrivingLicense:
+        otherInformation.havefourWheelerDrivingLicense,
       ownTwoWheelerVehicle: otherInformation.ownTwoWheelerVehicle,
       ownFourWheelerVehicle: otherInformation.ownFourWheelerVehicle,
     });
@@ -23,33 +27,45 @@ const handleAddOtherInformation = async (req, res) => {
 };
 
 const handleUpdateOtherInformation = async (req, res) => {
-  const updatedOtherInformation = req.body;
-  const id = req.params.id;
   try {
-    const otherInformation = await OtherInformation.findById(id);
-    if (!otherInformation) {
+    const userId = req.user.id; // Extract user ID from authenticated request
+    const updatedOtherInformation = req.body;
+
+    let otherInformation = await OtherInformation.findOne({ userId });
+
+    if (otherInformation) {
+      // Update existing document
+      otherInformation = await OtherInformation.findOneAndUpdate(
+        { userId },
+        { $set: updatedOtherInformation },
+        { new: true, runValidators: true }
+      );
       return res
-        .status(404)
-        .json({ status: false, message: "OtherInformation not found" });
-    }
-    await OtherInformation.findByIdAndUpdate(
-      id,
-      {
-        $set: updatedOtherInformation,
-      },
-      { new: true, runValidators: true }
-    );
-    return res
-      .status(200)
-      .json({
-        status: true,
-        message: "OtherInformation updated successfully!",
+        .status(200)
+        .json({
+          status: true,
+          message: "Other information updated successfully!",
+          data: otherInformation,
+        });
+    } else {
+      // Create new document if it doesn't exist
+      const newOtherInformation = new OtherInformation({
+        userId,
+        ...updatedOtherInformation,
       });
+      await newOtherInformation.save();
+      return res
+        .status(201)
+        .json({
+          status: true,
+          message: "Other information created successfully!",
+          data: newOtherInformation,
+        });
+    }
   } catch (error) {
     return res.status(500).json({ status: false, message: error.message });
   }
 };
-
 const handleDeleteOtherInformation = async (req, res) => {
   const id = req.params.id;
   try {

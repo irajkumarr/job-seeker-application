@@ -811,7 +811,7 @@ class ProfileDetailModel {
   final List<Language>? languages;
   final List<Education>? educations;
   final List<Emergencycontact>? emergencycontacts;
-  final List<OtherInformation>? otherinformations;
+  final List<Otherinformation>? otherinformations;
 
   ProfileDetailModel({
     this.id,
@@ -888,8 +888,8 @@ class ProfileDetailModel {
                 .map((x) => Emergencycontact.fromJson(x))),
         otherinformations: json["otherinformations"] == null
             ? []
-            : List<OtherInformation>.from(json["otherinformations"]!
-                .map((x) => OtherInformation.fromJson(x))),
+            : List<Otherinformation>.from(json["otherinformations"]!
+                .map((x) => Otherinformation.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -1822,7 +1822,7 @@ class Training {
       };
 }
 
-class OtherInformation {
+class Otherinformation {
   final String? id;
   final String? userId;
   final bool? willingToTravelOutsideResidingLocation;
@@ -1835,7 +1835,7 @@ class OtherInformation {
   final DateTime? updatedAt;
   final int? v;
 
-  OtherInformation({
+  Otherinformation({
     this.id,
     this.userId,
     this.createdAt,
@@ -1849,8 +1849,8 @@ class OtherInformation {
     this.ownFourWheelerVehicle,
   });
 
-  factory OtherInformation.fromJson(Map<String, dynamic> json) =>
-      OtherInformation(
+  factory Otherinformation.fromJson(Map<String, dynamic> json) =>
+      Otherinformation(
         id: json["_id"],
         userId: json["userId"],
         willingToTravelOutsideResidingLocation:
