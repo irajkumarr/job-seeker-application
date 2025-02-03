@@ -240,6 +240,10 @@ class DetailsProvider with ChangeNotifier {
     selectedJobLevel = null;
     selectedPreferredShift = null;
     selectedSalary = null;
+    selectedNationality = null;
+    selectedMaritalStatus = null;
+    selectedReligion = null;
+    selectedDisability = null;
     notifyListeners();
   }
 }

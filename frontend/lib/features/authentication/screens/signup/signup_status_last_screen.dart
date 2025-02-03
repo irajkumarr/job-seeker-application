@@ -71,7 +71,7 @@ class SignupStatusLastScreen extends StatelessWidget {
         ),
       );
 
-      final success = await signupProvider.createProfile(profile);
+      final success = await signupProvider.createProfile(context, profile);
       if (!context.mounted) return;
 
       KSnackbar.CustomSnackbar(

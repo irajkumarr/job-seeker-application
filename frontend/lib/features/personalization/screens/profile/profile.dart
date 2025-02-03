@@ -179,7 +179,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             sectionId: 'personal_info',
                             title: 'Personal Information',
                             leadingIcon: Icons.error_outline_outlined,
-                            onTap: () {},
+                            onTap: () {
+                              context.pushNamed(
+                                  RoutesConstant.profilePersonalInformation);
+                            },
                             leadingIconColor: KColors.primary,
                             data: [
                               SectionData(
@@ -226,9 +229,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   icon: Icons.email_outlined),
                               SectionData(
                                   label: 'Any Disability',
+                                  // value: (profile.profile != null &&
+                                  //         profile.profile!.isNotEmpty &&
+                                  //         profile.profile![0].personalDetails !=
+                                  //             null &&
+                                  //         profile.profile![0].personalDetails!
+                                  //             .disability!.hasDisability!)
+                                  //     ? "Yes"
+                                  //     : "No",
                                   value: profile.profile?[0].personalDetails
-                                          ?.disability ??
-                                      "No",
+                                              ?.disability?.hasDisability ==
+                                          true
+                                      ? "Yes"
+                                      : "No",
                                   icon: Icons.accessible_forward_outlined),
                             ],
                           ),

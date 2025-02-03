@@ -182,7 +182,6 @@ class ProfileProvider extends ChangeNotifier {
         KSnackbar.CustomSnackbar(
             context, "Successfully updated!", KColors.primary);
 
-      
         onSuccess();
       } else {
         _errorMessage = json.decode(response.body)['message'] ??
@@ -198,6 +197,7 @@ class ProfileProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   //preferred skills
   Future<void> updateSkills(
     BuildContext context,
@@ -232,11 +232,10 @@ class ProfileProvider extends ChangeNotifier {
         KSnackbar.CustomSnackbar(
             context, "Successfully updated!", KColors.primary);
 
-      
         onSuccess();
       } else {
-        _errorMessage = json.decode(response.body)['message'] ??
-            "Failed to update skills";
+        _errorMessage =
+            json.decode(response.body)['message'] ?? "Failed to update skills";
 
         KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
       }
@@ -248,6 +247,7 @@ class ProfileProvider extends ChangeNotifier {
       notifyListeners();
     }
   }
+
   //job preferecnes
   Future<void> updateJobPreference(
     BuildContext context,
@@ -266,26 +266,211 @@ class ProfileProvider extends ChangeNotifier {
         throw Exception("User token not found");
       }
 
-      final response = await http.put(
-        Uri.parse('$kAppBaseUrl/api/users/profile'),
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer $token',
-        },
-        body: json.encode(data.toJson())
-      );
+      final response =
+          await http.put(Uri.parse('$kAppBaseUrl/api/users/profile'),
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $token',
+              },
+              body: json.encode(data.toJson()));
 
       if (response.statusCode == 200) {
         // final data = json.decode(response.body);
         KSnackbar.CustomSnackbar(
             context, "Successfully updated!", KColors.primary);
 
-      
         onSuccess();
       } else {
-        _errorMessage = json.decode(response.body)['message'] ??
-            "Failed to update";
+        _errorMessage =
+            json.decode(response.body)['message'] ?? "Failed to update";
 
+        KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+      }
+    } catch (error) {
+      _errorMessage = error.toString();
+      KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  //Personal Information
+  // Future<void> updatePersonalInformation(
+  //   BuildContext context,
+  //   userProfile.PersonalDetails data,
+  //   VoidCallback onSuccess,
+  // ) async {
+  //   _isLoading = true;
+  //   _errorMessage = '';
+  //   notifyListeners();
+
+  //   try {
+  //     final storage = GetStorage();
+  //     String? token = storage.read('token');
+
+  //     if (token == null) {
+  //       throw Exception("User token not found");
+  //     }
+
+  //     final response =
+  //         await http.put(Uri.parse('$kAppBaseUrl/api/users/profile'),
+  //             headers: {
+  //               'Content-Type': 'application/json',
+  //               'Authorization': 'Bearer $token',
+  //             },
+  //             body: json.encode(data.toJson()));
+
+  //     if (response.statusCode == 200) {
+  //       // final data = json.decode(response.body);
+  //       KSnackbar.CustomSnackbar(
+  //           context, "Successfully updated!", KColors.primary);
+
+  //       onSuccess();
+  //     } else {
+  //       _errorMessage =
+  //           json.decode(response.body)['message'] ?? "Failed to update";
+  //       print(_errorMessage);
+  //       KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+  //     }
+  //   } catch (error) {
+  //     _errorMessage = error.toString();
+  //     KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+  //   } finally {
+  //     _isLoading = false;
+  //     notifyListeners();
+  //   }
+  // }
+
+  // Future<void> updateName(
+  //   BuildContext context,
+  //   String data,
+  //   VoidCallback onSuccess,
+  // ) async {
+  //   _isLoading = true;
+  //   _errorMessage = '';
+  //   notifyListeners();
+
+  //   try {
+  //     final storage = GetStorage();
+  //     String? token = storage.read('token');
+
+  //     if (token == null) {
+  //       throw Exception("User token not found");
+  //     }
+
+  //     final response = await http.put(
+  //       Uri.parse('$kAppBaseUrl/api/users/profile'), // Ensure correct URL
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         'Authorization': 'Bearer $token',
+  //       },
+  //       body: json.encode({"name": data}), // Convert to JSON
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       onSuccess();
+  //     } else {
+  //       final responseData = json.decode(response.body);
+  //       _errorMessage = responseData['message'] ?? "Failed to update";
+  //       print(_errorMessage);
+
+  //       KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+  //     }
+  //   } catch (error) {
+  //     _errorMessage = error.toString();
+  //     KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+  //   } finally {
+  //     _isLoading = false;
+  //     notifyListeners();
+  //   }
+  // }
+
+  Future<void> updateName(
+    BuildContext context,
+    String data,
+    VoidCallback onSuccess,
+  ) async {
+    _isLoading = true;
+    _errorMessage = '';
+    notifyListeners();
+
+    try {
+      final storage = GetStorage();
+      String? token = storage.read('token');
+
+      if (token == null) {
+        throw Exception("User token not found");
+      }
+
+      final response = await http.put(
+        Uri.parse('$kAppBaseUrl/api/users/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode({"name": data}), // ✅ Ensure body is encoded properly
+      );
+
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        onSuccess();
+      } else {
+        _errorMessage =
+            json.decode(response.body)['message'] ?? "Failed to update";
+        print("Error Message: $_errorMessage");
+        KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+      }
+    } catch (error) {
+      _errorMessage = error.toString();
+      KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
+    } finally {
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> updatePersonalInformation(
+    BuildContext context,
+    userProfile.PersonalDetails data,
+    VoidCallback onSuccess,
+  ) async {
+    _isLoading = true;
+    _errorMessage = '';
+    notifyListeners();
+
+    try {
+      final storage = GetStorage();
+      String? token = storage.read('token');
+
+      if (token == null) {
+        throw Exception("User token not found");
+      }
+
+      print("Sending Personal Details: ${json.encode(data.toJson())}");
+
+      final response = await http.put(
+        Uri.parse('$kAppBaseUrl/api/users/profile'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(data.toJson()), // ✅ Ensure body is encoded
+      );
+
+      print("Response Status Code: ${response.statusCode}");
+      print("Response Body: ${response.body}");
+
+      if (response.statusCode == 200) {
+        KSnackbar.CustomSnackbar(
+            context, "Successfully updated!", KColors.primary);
+        onSuccess();
+      } else {
+        _errorMessage =
+            json.decode(response.body)['message'] ?? "Failed to update";
+        print("Error Message: $_errorMessage");
         KSnackbar.CustomSnackbar(context, _errorMessage, KColors.error);
       }
     } catch (error) {

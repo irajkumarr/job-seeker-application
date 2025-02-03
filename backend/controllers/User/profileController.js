@@ -137,50 +137,37 @@ const handleUpdateProfile = async (req, res) => {
       );
     }
 
-    // Handle personal details fields
-    if (req.body.personalDetails) {
-      // Handle basic personal details fields
-      [
-        "age",
-        "experience",
-        "gender",
-        "maritalStatus",
-        "nationality",
-        "religion",
-        "email",
-      ].forEach((field) => {
-        if (req.body.personalDetails[field] !== undefined) {
-          updateFields[`personalDetails.${field}`] =
-            req.body.personalDetails[field];
-        }
-      });
+    // Handle personal details fields (support both direct and nested)
+    const personalDetailsFields = [
+      "age",
+      "experience",
+      "gender",
+      "maritalStatus",
+      "nationality",
+      "religion",
+      "email",
+    ];
 
-      // Handle disability object
-      if (req.body.personalDetails.disability) {
-        if (req.body.personalDetails.disability.hasDisability !== undefined) {
-          updateFields["personalDetails.disability.hasDisability"] =
-            req.body.personalDetails.disability.hasDisability;
-        }
-        if (req.body.personalDetails.disability.details !== undefined) {
-          updateFields["personalDetails.disability.details"] =
-            req.body.personalDetails.disability.details;
-        }
+    personalDetailsFields.forEach((field) => {
+      if (req.body[field] !== undefined) {
+        updateFields[`personalDetails.${field}`] = req.body[field];
       }
+    });
 
-      // Handle foreign employment object
-      if (req.body.personalDetails.foreignEmployment) {
-        if (
-          req.body.personalDetails.foreignEmployment.hasWorkedAboroad !==
-          undefined
-        ) {
-          updateFields["personalDetails.foreignEmployment.hasWorkedAboroad"] =
-            req.body.personalDetails.foreignEmployment.hasWorkedAboroad;
-        }
-        if (req.body.personalDetails.foreignEmployment.details !== undefined) {
-          updateFields["personalDetails.foreignEmployment.details"] =
-            req.body.personalDetails.foreignEmployment.details;
-        }
-      }
+    // Ensure `disability` exists as an object before setting properties
+    if (req.body.disability) {
+      updateFields["personalDetails.disability"] = {
+        hasDisability: req.body.disability.hasDisability ?? false,
+        details: req.body.disability.details ?? "",
+      };
+    }
+
+    // Ensure `foreignEmployment` exists as an object before setting properties
+    if (req.body.foreignEmployment) {
+      updateFields["personalDetails.foreignEmployment"] = {
+        hasWorkedAboroad: req.body.foreignEmployment.hasWorkedAboroad ?? false,
+        details: req.body.foreignEmployment.details ?? "",
+      };
     }
 
     // Handle job preference fields
@@ -227,6 +214,7 @@ const handleUpdateProfile = async (req, res) => {
         new: true,
         runValidators: true,
         select: "-__v -createdAt -updatedAt",
+        // upsert: false,
       }
     );
 

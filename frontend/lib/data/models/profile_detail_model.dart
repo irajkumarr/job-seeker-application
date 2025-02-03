@@ -1599,11 +1599,11 @@ class PersonalDetails {
   final int? age;
   final int? experience;
   final String? gender;
-  final dynamic maritalStatus;
-  final dynamic nationality;
-  final dynamic religion;
-  final dynamic email;
-  final dynamic disability;
+  final String? maritalStatus;
+  final String? nationality;
+  final String? religion;
+  final String? email;
+  final Disability? disability;
   final ForeignEmployment? foreignEmployment;
 
   PersonalDetails({
@@ -1627,7 +1627,9 @@ class PersonalDetails {
         nationality: json["nationality"],
         religion: json["religion"],
         email: json["email"],
-        disability: json["disability"],
+        disability: json["disability"] == null
+            ? null
+            : Disability.fromJson(json["disability"]),
         foreignEmployment: json["foreignEmployment"] == null
             ? null
             : ForeignEmployment.fromJson(json["foreignEmployment"]),
@@ -1641,10 +1643,32 @@ class PersonalDetails {
         "nationality": nationality,
         "religion": religion,
         "email": email,
-        "disability": disability,
+        "disability": disability?.toJson(),
         "foreignEmployment": foreignEmployment?.toJson(),
       };
 }
+
+
+class Disability {
+  final bool? hasDisability;
+  final String? details;
+
+  Disability({
+    this.hasDisability,
+    this.details,
+  });
+
+  factory Disability.fromJson(Map<String, dynamic> json) => Disability(
+        hasDisability: json["hasDisability"],
+        details: json["details"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "hasDisability": hasDisability,
+        "details": details,
+      };
+}
+
 
 class ForeignEmployment {
   final bool? hasWorkedAboroad;

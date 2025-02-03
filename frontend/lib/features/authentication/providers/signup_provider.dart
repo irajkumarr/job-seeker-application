@@ -115,7 +115,7 @@ class SignupProvider with ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
   //create profile forms
-  Future<bool> createProfile(UserProfileRequest profile) async {
+  Future<bool> createProfile(BuildContext context,UserProfileRequest profile) async {
     setLoading = true;
     _errorMessage = null;
     notifyListeners();
@@ -142,6 +142,8 @@ class SignupProvider with ChangeNotifier {
       final data = jsonDecode(response.body);
 
       if (response.statusCode == 201) {
+        Provider.of<ProfileProvider>(context, listen: false)
+            .fetchProfile(forceRefresh: true);
         setLoading = false;
         notifyListeners();
         return true;

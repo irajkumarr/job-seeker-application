@@ -36,9 +36,8 @@ class _ProfilePersonalInformationState
   String? _selectedExpectedSalaryValue;
   String? _selectedCurrentSalaryDuration;
   String? _selectedExpectedSalaryDuration;
-  final expectedSalaryController = TextEditingController();
-  final currentSalaryController = TextEditingController();
-  final careerObjectivesController = TextEditingController();
+  final _nameController = TextEditingController();
+  final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   // List of months
   final List<String> _currency = ["NPR."];
@@ -57,28 +56,29 @@ class _ProfilePersonalInformationState
 
   bool _haveDisability = false;
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   final profileProvider =
-  //       Provider.of<ProfileProvider>(context, listen: false);
-  //   final detailProvider = Provider.of<DetailsProvider>(context, listen: false);
+  @override
+  void initState() {
+    super.initState();
+    final profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
+    final detailProvider = Provider.of<DetailsProvider>(context, listen: false);
 
-  //   final profile = profileProvider.profile?.profile?.isNotEmpty == true
-  //       ? profileProvider.profile!.profile![0]
-  //       : null;
-  //   detailProvider.selectedWorkingStatus =
-  //       profile?.jobPreference?.workingStatus;
-  //   detailProvider.selectedAvailableFor =
-  //       profile?.jobPreference?.availabilityStatus;
-  //   detailProvider.selectedPreferredShift =
-  //       profile?.jobPreference?.preferredShift;
-  //   detailProvider.selectedJobLevel = profile?.jobPreference?.jobLevel;
-  //   careerObjectivesController.text =
-  //       profile?.jobPreference?.careerObjectives ?? "";
-  //   expectedSalaryController.text =
-  //       profile?.jobPreference?.expectedSalary ?? "";
-  // }
+    final profile = profileProvider.profile?.profile?.isNotEmpty == true
+        ? profileProvider.profile!.profile![0]
+        : null;
+    detailProvider.selectedGender = profile?.personalDetails?.gender;
+    detailProvider.selectedMaritalStatus =
+        profile?.personalDetails?.maritalStatus;
+    detailProvider.selectedNationality = profile?.personalDetails?.nationality;
+    detailProvider.ageCounter = profile?.personalDetails?.age ?? 16;
+    detailProvider.selectedReligion = profile?.personalDetails?.religion;
+    detailProvider.selectedDisability =
+        profile?.personalDetails?.disability?.details;
+    _haveDisability =
+        profile?.personalDetails?.disability?.hasDisability ?? false;
+    _emailController.text = profile?.personalDetails?.email ?? "";
+    _nameController.text = profileProvider.profile?.name ?? "";
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,10 +89,11 @@ class _ProfilePersonalInformationState
     final locationProvider = Provider.of<LocationProvider>(context);
 
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
-      if (detailProvider.selectedPreferredShift == null ||
-          detailProvider.selectedAvailableFor == null ||
-          detailProvider.selectedJobLevel == null ||
-          detailProvider.selectedWorkingStatus == null) {
+      if (detailProvider.selectedGender == null ||
+          detailProvider.selectedMaritalStatus == null ||
+          detailProvider.selectedNationality == null ||
+          detailProvider.selectedNationality == null ||
+          detailProvider.selectedReligion == null) {
         KSnackbar.CustomSnackbar(
           context,
           "Please select required fields",
@@ -109,22 +110,68 @@ class _ProfilePersonalInformationState
         onPressed: () async {
           if (!_validateInputs(context, detailProvider)) return;
           if (_formKey.currentState!.validate()) {
-            // profile.Profile model = profile.Profile(
+            // PersonalDetails model = PersonalDetails(
+            //   age: detailProvider.ageCounter,
+            //   experience: profileProvider
+            //           .profile?.profile?[0].personalDetails?.experience ??
+            //       0,
+            //   gender: detailProvider.selectedGender,
+            //   religion: detailProvider.selectedReligion,
+            //   nationality: detailProvider.selectedNationality,
+            //   maritalStatus: detailProvider.selectedMaritalStatus,
 
-            JobPreference model = JobPreference(
-              workingStatus: detailProvider.selectedWorkingStatus,
-              preferredShift: detailProvider.selectedPreferredShift,
-              jobLevel: detailProvider.selectedJobLevel,
-              availabilityStatus: detailProvider.selectedAvailableFor,
-              // expectedSalary: expectedSalaryController.text.trim(),
-              careerObjectives: careerObjectivesController.text.trim(),
-              // ),
+            //   email: _emailController.text.trim(),
+            //   disability: Disability(
+            //     hasDisability: _haveDisability,
+            //     details: detailProvider.selectedDisability,
+            //   ),
+            //   foreignEmployment: ForeignEmployment(
+            //     hasWorkedAboroad: profileProvider.profile?.profile?[0]
+            //             .personalDetails?.foreignEmployment?.hasWorkedAboroad ??
+            //         false,
+            //     details: profileProvider.profile?.profile?[0].personalDetails
+            //             ?.foreignEmployment?.details ??
+            //         "",
+            //   ),
+            //   // ),
+            // );
+
+            PersonalDetails model = PersonalDetails(
+              age: detailProvider.ageCounter,
+              experience: profileProvider
+                      .profile?.profile?[0].personalDetails?.experience ??
+                  0,
+              gender: detailProvider.selectedGender,
+              religion: detailProvider.selectedReligion ?? "",
+              nationality: detailProvider.selectedNationality ?? "",
+              maritalStatus: detailProvider.selectedMaritalStatus ?? "",
+              email: _emailController.text.trim(),
+              disability: Disability(
+                hasDisability: _haveDisability,
+                details: detailProvider.selectedDisability ?? "",
+              ),
+              foreignEmployment: ForeignEmployment(
+                hasWorkedAboroad: profileProvider.profile?.profile?[0]
+                        .personalDetails?.foreignEmployment?.hasWorkedAboroad ??
+                    false,
+                details: profileProvider.profile?.profile?[0].personalDetails
+                        ?.foreignEmployment?.details ??
+                    "",
+              ),
             );
-            await profileProvider.updateJobPreference(context, model, () async {
-              await profileProvider.fetchProfile(forceRefresh: true);
-              detailProvider.reset();
-              context.pop();
-            });
+            print(detailProvider.selectedReligion);
+            try {
+              await profileProvider.updateName(
+                  context, _nameController.text.trim(), () {});
+              await profileProvider.updatePersonalInformation(context, model,
+                  () async {
+                await profileProvider.fetchProfile(forceRefresh: true);
+                detailProvider.reset();
+                context.pop(); // Only pop after everything is done
+              });
+            } catch (error) {
+              print("Error updating profile: $error");
+            }
           }
         },
         buttonText: "Submit",
@@ -151,7 +198,7 @@ class _ProfilePersonalInformationState
                             // text field for name
                             //name
                             TextFormField(
-                              // controller: _nameController,
+                              controller: _nameController,
                               textInputAction: TextInputAction.next,
                               keyboardType: TextInputType.text,
                               style: Theme.of(context)
@@ -458,7 +505,7 @@ class _ProfilePersonalInformationState
                             SizedBox(height: KSizes.md),
                             //email
                             TextFormField(
-                              // controller: _nameController,
+                              controller: _emailController,
                               textInputAction: TextInputAction.done,
                               keyboardType: TextInputType.emailAddress,
                               style: Theme.of(context)
