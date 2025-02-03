@@ -339,6 +339,14 @@ const handleGetAllProfiles = async (req, res) => {
         },
       },
       {
+        $lookup: {
+          from: "otherinformations",
+          localField: "_id",
+          foreignField: "userId",
+          as: "otherinformations",
+        },
+      },
+      {
         $project: {
           password: 0,
           // "profile.password": 0,

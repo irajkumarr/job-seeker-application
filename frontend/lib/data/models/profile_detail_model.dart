@@ -811,6 +811,7 @@ class ProfileDetailModel {
   final List<Language>? languages;
   final List<Education>? educations;
   final List<Emergencycontact>? emergencycontacts;
+  final List<OtherInformation>? otherinformations;
 
   ProfileDetailModel({
     this.id,
@@ -831,6 +832,7 @@ class ProfileDetailModel {
     this.languages,
     this.educations,
     this.emergencycontacts,
+    this.otherinformations,
   });
 
   factory ProfileDetailModel.fromJson(Map<String, dynamic> json) =>
@@ -884,6 +886,10 @@ class ProfileDetailModel {
             ? []
             : List<Emergencycontact>.from(json["emergencycontacts"]!
                 .map((x) => Emergencycontact.fromJson(x))),
+        otherinformations: json["otherinformations"] == null
+            ? []
+            : List<OtherInformation>.from(json["otherinformations"]!
+                .map((x) => OtherInformation.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -923,6 +929,9 @@ class ProfileDetailModel {
         "emergencycontacts": emergencycontacts == null
             ? []
             : List<dynamic>.from(emergencycontacts!.map((x) => x.toJson())),
+        "otherinformations": otherinformations == null
+            ? []
+            : List<dynamic>.from(otherinformations!.map((x) => x.toJson())),
       };
 }
 
@@ -1807,6 +1816,71 @@ class Training {
         "institute": institute,
         "duration": duration?.toJson(),
         "completionYear": completionYear?.toJson(),
+        "createdAt": createdAt?.toIso8601String(),
+        "updatedAt": updatedAt?.toIso8601String(),
+        "__v": v,
+      };
+}
+
+class OtherInformation {
+  final String? id;
+  final String? userId;
+  final bool? willingToTravelOutsideResidingLocation;
+  final bool? willingToRelocateOutsideResidingLocation;
+  final bool? haveTwoWheelerDrivingLicense;
+  final bool? havefourWheelerDrivingLicense;
+  final bool? ownTwoWheelerVehicle;
+  final bool? ownFourWheelerVehicle;
+  final DateTime? createdAt;
+  final DateTime? updatedAt;
+  final int? v;
+
+  OtherInformation({
+    this.id,
+    this.userId,
+    this.createdAt,
+    this.updatedAt,
+    this.v,
+    this.willingToTravelOutsideResidingLocation,
+    this.willingToRelocateOutsideResidingLocation,
+    this.haveTwoWheelerDrivingLicense,
+    this.havefourWheelerDrivingLicense,
+    this.ownTwoWheelerVehicle,
+    this.ownFourWheelerVehicle,
+  });
+
+  factory OtherInformation.fromJson(Map<String, dynamic> json) =>
+      OtherInformation(
+        id: json["_id"],
+        userId: json["userId"],
+        willingToTravelOutsideResidingLocation:
+            json["willingToTravelOutsideResidingLocation"],
+        willingToRelocateOutsideResidingLocation:
+            json["willingToRelocateOutsideResidingLocation"],
+        haveTwoWheelerDrivingLicense: json["haveTwoWheelerDrivingLicense"],
+        havefourWheelerDrivingLicense: json["havefourWheelerDrivingLicense"],
+        ownTwoWheelerVehicle: json["ownTwoWheelerVehicle"],
+        ownFourWheelerVehicle: json["ownFourWheelerVehicle"],
+        createdAt: json["createdAt"] == null
+            ? null
+            : DateTime.parse(json["createdAt"]),
+        updatedAt: json["updatedAt"] == null
+            ? null
+            : DateTime.parse(json["updatedAt"]),
+        v: json["__v"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "_id": id,
+        "userId": userId,
+        "willingToTravelOutsideResidingLocation":
+            willingToTravelOutsideResidingLocation,
+        "willingToRelocateOutsideResidingLocation":
+            willingToRelocateOutsideResidingLocation,
+        "haveTwoWheelerDrivingLicense": haveTwoWheelerDrivingLicense,
+        "havefourWheelerDrivingLicense": havefourWheelerDrivingLicense,
+        "ownTwoWheelerVehicle": ownTwoWheelerVehicle,
+        "ownFourWheelerVehicle": ownFourWheelerVehicle,
         "createdAt": createdAt?.toIso8601String(),
         "updatedAt": updatedAt?.toIso8601String(),
         "__v": v,
