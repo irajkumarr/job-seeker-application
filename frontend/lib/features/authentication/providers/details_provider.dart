@@ -145,6 +145,74 @@ class DetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //marital status
+  final List<String> maritalStatus = [
+    "Married",
+    "Unmarried",
+  ];
+
+  String? selectedMaritalStatus;
+  void setSelectedMaritalStatus(String? maritalStatus) {
+    selectedMaritalStatus = maritalStatus;
+    notifyListeners();
+  }
+
+  //nationality
+  final List<String> nationality = [
+    "Nepali",
+    "United States",
+    "Indian",
+    "Bangladeshi",
+    "Afghan",
+    "Pakistani",
+    "Sri Lankan",
+    "Maldivian",
+    "Bhutanese",
+    "Angolan",
+  ];
+
+  String? selectedNationality;
+  void setSelectedNationality(String? nationality) {
+    selectedNationality = nationality;
+    notifyListeners();
+  }
+
+  //nationality
+  final List<String> religion = [
+    "Hinduism",
+    "Buddhism",
+    "Islam",
+    "Muslim",
+    "Christianity",
+    "No religion",
+    "Agnosticism",
+    "Animism",
+    "Atheism",
+    "Bobo ashanti",
+  ];
+
+  String? selectedReligion;
+  void setSelectedReligion(String? religion) {
+    selectedReligion = religion;
+    notifyListeners();
+  }
+
+  //nationality
+  final List<String> disability = [
+    "No disability",
+    "Vision Impairment",
+    "Intellectual Disability",
+    "Stuttering",
+    "Hearing Aid",
+    "Color Blindness",
+  ];
+
+  String? selectedDisability;
+  void setSelectedDisability(String? disability) {
+    selectedDisability = disability;
+    notifyListeners();
+  }
+
   // //foreign employment
   final List<String> isForeignEmployment = [
     "Yes",

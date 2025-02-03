@@ -340,11 +340,13 @@ class CounterWithTextWidget extends StatelessWidget {
     required this.value,
     required this.incrementPressed,
     required this.decrementPressed,
+    this.isRequired = true,
   });
   final String text;
   final String value;
   final VoidCallback incrementPressed;
   final VoidCallback decrementPressed;
+  final bool isRequired;
 
   @override
   Widget build(BuildContext context) {
@@ -357,12 +359,14 @@ class CounterWithTextWidget extends StatelessWidget {
               text,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            Text(
-              " *",
-              style: Theme.of(context).textTheme.titleLarge!.copyWith(
-                    color: KColors.error,
+            !isRequired
+                ? SizedBox()
+                : Text(
+                    " *",
+                    style: Theme.of(context).textTheme.titleLarge!.copyWith(
+                          color: KColors.error,
+                        ),
                   ),
-            ),
           ],
         ),
         Row(

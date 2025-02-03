@@ -13,6 +13,7 @@ import 'package:frontend/data/models/user_profile_request.dart';
 import 'package:frontend/features/authentication/providers/details_provider.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
+import 'package:frontend/features/authentication/screens/signup/personal_details_screen.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/text_editor_widget.dart';
@@ -23,10 +24,12 @@ class ProfilePersonalInformation extends StatefulWidget {
   const ProfilePersonalInformation({super.key});
 
   @override
-  State<ProfilePersonalInformation> createState() => _ProfilePersonalInformationState();
+  State<ProfilePersonalInformation> createState() =>
+      _ProfilePersonalInformationState();
 }
 
-class _ProfilePersonalInformationState extends State<ProfilePersonalInformation> {
+class _ProfilePersonalInformationState
+    extends State<ProfilePersonalInformation> {
   String? _selectedCurrentSalaryCurrency;
   String? _selectedExpectedSalaryCurrency;
   String? _selectedCurrentSalaryValue;
@@ -51,6 +54,8 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
     "per Month",
     "per Year",
   ];
+
+  bool _haveDisability = false;
 
   // @override
   // void initState() {
@@ -134,7 +139,7 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                   Column(
                     children: [
                       Text(
-                        "Job Preference",
+                        "Personal Information",
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       SizedBox(height: KSizes.defaultSpace),
@@ -143,14 +148,34 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                         key: _formKey,
                         child: Column(
                           children: [
-                            //working status
+                            // text field for name
+                            //name
+                            TextFormField(
+                              // controller: _nameController,
+                              textInputAction: TextInputAction.next,
+                              keyboardType: TextInputType.text,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: KSizes.fontSizeSm),
+                              validator: (value) =>
+                                  KValidator.validateEmptyText(
+                                      "Full Name", value),
+                              decoration: InputDecoration(
+                                labelText: "Full Name",
+                              ),
+                            ),
+                            SizedBox(height: KSizes.md),
+                            DottedDivider(),
+                            SizedBox(height: KSizes.md),
+                            //gender
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      "Working Status",
+                                      "Gender",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -164,23 +189,19 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                                 Wrap(
                                   spacing: 10,
                                   runSpacing: 10,
-                                  children: detailProvider.workingStatus
-                                      .map((workingStatus) {
+                                  children: detailProvider.gender.map((gender) {
                                     final isSelected =
-                                        detailProvider.selectedWorkingStatus ==
-                                            workingStatus;
+                                        detailProvider.selectedGender == gender;
 
                                     return GestureDetector(
                                       onTap: () {
-                                        if (detailProvider
-                                                .selectedWorkingStatus ==
-                                            workingStatus) {
+                                        if (detailProvider.selectedGender ==
+                                            gender) {
                                           detailProvider
-                                              .setSelectedWorkingStatus(null);
+                                              .setSelectedGender(null);
                                         } else {
                                           detailProvider
-                                              .setSelectedWorkingStatus(
-                                                  workingStatus);
+                                              .setSelectedGender(gender);
                                         }
                                       },
                                       child: Container(
@@ -199,7 +220,7 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                                           ),
                                         ),
                                         child: Text(
-                                          workingStatus,
+                                          gender,
                                           style: TextStyle(
                                             color: Colors.black,
                                           ),
@@ -213,14 +234,29 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                             SizedBox(height: KSizes.md),
                             DottedDivider(),
                             SizedBox(height: KSizes.md),
-                            //Preferred Shift
+                            //age
+                            Consumer<DetailsProvider>(
+                                builder: (context, detailProvider, child) {
+                              return CounterWithTextWidget(
+                                text: "Age",
+                                isRequired: false,
+                                value: detailProvider.ageCounter
+                                    .toStringAsFixed(0),
+                                incrementPressed:
+                                    detailProvider.incrementAgeCounter,
+                                decrementPressed:
+                                    detailProvider.decrementAgeCounter,
+                              );
+                            }),
+                            SizedBox(height: KSizes.md),
+                            //marital status
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      "Preferred Shift",
+                                      "Marital Status",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -234,22 +270,23 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                                 Wrap(
                                   spacing: 10,
                                   runSpacing: 10,
-                                  children: detailProvider.preferredShift
-                                      .map((shift) {
+                                  children: detailProvider.maritalStatus
+                                      .map((maritalStatus) {
                                     final isSelected =
-                                        detailProvider.selectedPreferredShift ==
-                                            shift;
+                                        detailProvider.selectedMaritalStatus ==
+                                            maritalStatus;
 
                                     return GestureDetector(
                                       onTap: () {
                                         if (detailProvider
-                                                .selectedPreferredShift ==
-                                            shift) {
+                                                .selectedMaritalStatus ==
+                                            maritalStatus) {
                                           detailProvider
-                                              .setSelectedPreferredShift(null);
+                                              .setSelectedMaritalStatus(null);
                                         } else {
                                           detailProvider
-                                              .setSelectedPreferredShift(shift);
+                                              .setSelectedMaritalStatus(
+                                                  maritalStatus);
                                         }
                                       },
                                       child: Container(
@@ -268,7 +305,7 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                                           ),
                                         ),
                                         child: Text(
-                                          shift,
+                                          maritalStatus,
                                           style: TextStyle(
                                             color: Colors.black,
                                           ),
@@ -282,14 +319,83 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                             SizedBox(height: KSizes.md),
                             DottedDivider(),
                             SizedBox(height: KSizes.md),
-                            //job level
+                            //Nationality
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Row(
                                   children: [
                                     Text(
-                                      "Job Level",
+                                      "Nationality",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleLarge!
+                                          .copyWith(
+                                            color: KColors.darkGrey,
+                                          ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: KSizes.md),
+                                Wrap(
+                                  spacing: 10,
+                                  runSpacing: 10,
+                                  children: detailProvider.nationality
+                                      .map((nationality) {
+                                    final isSelected =
+                                        detailProvider.selectedNationality ==
+                                            nationality;
+
+                                    return GestureDetector(
+                                      onTap: () {
+                                        if (detailProvider
+                                                .selectedNationality ==
+                                            nationality) {
+                                          detailProvider
+                                              .setSelectedNationality(null);
+                                        } else {
+                                          detailProvider.setSelectedNationality(
+                                              nationality);
+                                        }
+                                      },
+                                      child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 16.0, vertical: 8.0),
+                                        decoration: BoxDecoration(
+                                          color: isSelected
+                                              ? KColors.secondary
+                                              : Colors.white,
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          border: Border.all(
+                                            color: isSelected
+                                                ? KColors.primary
+                                                : KColors.grey,
+                                          ),
+                                        ),
+                                        child: Text(
+                                          nationality,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }).toList(),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: KSizes.md),
+                            DottedDivider(),
+                            SizedBox(height: KSizes.md),
+                            //Religion
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "Religion",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -304,20 +410,20 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                                   spacing: 10,
                                   runSpacing: 10,
                                   children:
-                                      detailProvider.jobLevel.map((jobLevel) {
+                                      detailProvider.religion.map((religion) {
                                     final isSelected =
-                                        detailProvider.selectedJobLevel ==
-                                            jobLevel;
+                                        detailProvider.selectedReligion ==
+                                            religion;
 
                                     return GestureDetector(
                                       onTap: () {
-                                        if (detailProvider.selectedJobLevel ==
-                                            jobLevel) {
+                                        if (detailProvider.selectedReligion ==
+                                            religion) {
                                           detailProvider
-                                              .setSelectedJobLevel(null);
+                                              .setSelectedReligion(null);
                                         } else {
                                           detailProvider
-                                              .setSelectedJobLevel(jobLevel);
+                                              .setSelectedReligion(religion);
                                         }
                                       },
                                       child: Container(
@@ -336,7 +442,7 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                                           ),
                                         ),
                                         child: Text(
-                                          jobLevel,
+                                          religion,
                                           style: TextStyle(
                                             color: Colors.black,
                                           ),
@@ -350,120 +456,110 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
                             SizedBox(height: KSizes.md),
                             DottedDivider(),
                             SizedBox(height: KSizes.md),
-                            //avalilble for
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            //email
+                            TextFormField(
+                              // controller: _nameController,
+                              textInputAction: TextInputAction.done,
+                              keyboardType: TextInputType.emailAddress,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(fontSize: KSizes.fontSizeSm),
+                              validator: (value) =>
+                                  KValidator.validateEmail(value),
+                              decoration: InputDecoration(
+                                labelText: "Email",
+                              ),
+                            ),
+
+                            SizedBox(height: KSizes.md),
+                            DottedDivider(),
+                            SizedBox(height: KSizes.md),
+                            //disability
+                            Row(
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "Available For",
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleLarge!
-                                          .copyWith(
-                                            color: KColors.darkGrey,
-                                          ),
-                                    ),
-                                  ],
+                                Text(
+                                  "Is there any form of disability?",
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
-                                SizedBox(height: KSizes.md),
-                                Wrap(
-                                  spacing: 10,
-                                  runSpacing: 10,
-                                  children: detailProvider.availableFor
-                                      .map((availableFor) {
-                                    final isSelected =
-                                        detailProvider.selectedAvailableFor ==
-                                            availableFor;
-
-                                    return GestureDetector(
-                                      onTap: () {
-                                        if (detailProvider
-                                                .selectedAvailableFor ==
-                                            availableFor) {
-                                          detailProvider
-                                              .setSelectedAvailableFor(null);
-                                        } else {
-                                          detailProvider
-                                              .setSelectedAvailableFor(
-                                                  availableFor);
-                                        }
-                                      },
-                                      child: Container(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 16.0, vertical: 8.0),
-                                        decoration: BoxDecoration(
-                                          color: isSelected
-                                              ? KColors.secondary
-                                              : Colors.white,
-                                          borderRadius:
-                                              BorderRadius.circular(20),
-                                          border: Border.all(
-                                            color: isSelected
-                                                ? KColors.primary
-                                                : KColors.grey,
-                                          ),
-                                        ),
-                                        child: Text(
-                                          availableFor,
-                                          style: TextStyle(
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }).toList(),
+                                Spacer(),
+                                Switch(
+                                  value: _haveDisability,
+                                  onChanged: (value) {
+                                    setState(() {
+                                      _haveDisability = value;
+                                    });
+                                  },
+                                  activeColor: KColors.primary,
                                 ),
                               ],
                             ),
                             SizedBox(height: KSizes.md),
-                            DottedDivider(),
-                            SizedBox(height: KSizes.md),
+                            if (_haveDisability) ...[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(
+                                        "Disability",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleSmall,
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(height: KSizes.md),
+                                  Wrap(
+                                    spacing: 10,
+                                    runSpacing: 10,
+                                    children: detailProvider.disability
+                                        .map((disability) {
+                                      final isSelected =
+                                          detailProvider.selectedDisability ==
+                                              disability;
 
-                            SalaryInputWidget(
-                              title: "Current Salary",
-                              selectedCurrency: _selectedCurrentSalaryCurrency,
-                              selectedValue: _selectedCurrentSalaryValue,
-                              selectedDuration: _selectedCurrentSalaryDuration,
-                              amountController: currentSalaryController,
-                              onCurrencyChanged: (value) => setState(
-                                  () => _selectedCurrentSalaryCurrency = value),
-                              onValueChanged: (value) => setState(
-                                  () => _selectedCurrentSalaryValue = value),
-                              onDurationChanged: (value) => setState(
-                                  () => _selectedCurrentSalaryDuration = value),
-                              currencies: _currency,
-                              values: _value,
-                              durations: _duration,
-                            ),
-                            SizedBox(height: KSizes.md),
-                            DottedDivider(),
-                            SizedBox(height: KSizes.md),
-                            SalaryInputWidget(
-                              title: "Expected Salary",
-                              selectedCurrency: _selectedExpectedSalaryCurrency,
-                              selectedValue: _selectedExpectedSalaryValue,
-                              selectedDuration: _selectedExpectedSalaryDuration,
-                              amountController: expectedSalaryController,
-                              onCurrencyChanged: (value) => setState(() =>
-                                  _selectedExpectedSalaryCurrency = value),
-                              onValueChanged: (value) => setState(
-                                  () => _selectedExpectedSalaryValue = value),
-                              onDurationChanged: (value) => setState(() =>
-                                  _selectedExpectedSalaryDuration = value),
-                              currencies: _currency,
-                              values: _value,
-                              durations: _duration,
-                            ),
-
-                            SizedBox(height: KSizes.md),
-                            DottedDivider(),
-                            SizedBox(height: KSizes.md),
-                            TextEditorWidget(
-                              title: "Career Objectives",
-                              controller: careerObjectivesController,
-                            ),
+                                      return GestureDetector(
+                                        onTap: () {
+                                          if (detailProvider
+                                                  .selectedDisability ==
+                                              disability) {
+                                            detailProvider
+                                                .setSelectedDisability(null);
+                                          } else {
+                                            detailProvider
+                                                .setSelectedDisability(
+                                                    disability);
+                                          }
+                                        },
+                                        child: Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 16.0, vertical: 8.0),
+                                          decoration: BoxDecoration(
+                                            color: isSelected
+                                                ? KColors.secondary
+                                                : Colors.white,
+                                            borderRadius:
+                                                BorderRadius.circular(20),
+                                            border: Border.all(
+                                              color: isSelected
+                                                  ? KColors.primary
+                                                  : KColors.grey,
+                                            ),
+                                          ),
+                                          child: Text(
+                                            disability,
+                                            style: TextStyle(
+                                              color: Colors.black,
+                                            ),
+                                          ),
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ],
+                              ),
+                            ],
                             SizedBox(height: KSizes.defaultSpace * 10),
                           ],
                         ),
@@ -476,145 +572,6 @@ class _ProfilePersonalInformationState extends State<ProfilePersonalInformation>
           ],
         ),
       ),
-    );
-  }
-}
-
-class SalaryInputWidget extends StatelessWidget {
-  final String title;
-  final String? selectedCurrency;
-  final String? selectedValue;
-  final String? selectedDuration;
-  final TextEditingController amountController;
-  final Function(String?) onCurrencyChanged;
-  final Function(String?) onValueChanged;
-  final Function(String?) onDurationChanged;
-  final List<String> currencies;
-  final List<String> values;
-  final List<String> durations;
-
-  const SalaryInputWidget({
-    Key? key,
-    required this.title,
-    required this.selectedCurrency,
-    required this.selectedValue,
-    required this.selectedDuration,
-    required this.amountController,
-    required this.onCurrencyChanged,
-    required this.onValueChanged,
-    required this.onDurationChanged,
-    required this.currencies,
-    required this.values,
-    required this.durations,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: Theme.of(context).textTheme.titleSmall,
-        ),
-        SizedBox(height: KSizes.sm),
-        Row(
-          children: [
-            Expanded(
-              child: DropdownButtonFormField<String>(
-                value: selectedCurrency,
-                dropdownColor: KColors.white,
-                icon: Icon(Icons.keyboard_arrow_down_outlined),
-                hint: Text('Currency'),
-                validator: (value) =>
-                    KValidator.validateEmptyText("Currency", value),
-                items: currencies
-                    .map((currency) => DropdownMenuItem(
-                          value: currency,
-                          child: Text(currency),
-                        ))
-                    .toList(),
-                onChanged: onCurrencyChanged,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-            ),
-            SizedBox(width: KSizes.sm),
-            Expanded(
-              child: DropdownButtonFormField<String>(
-                value: selectedValue,
-                dropdownColor: KColors.white,
-                icon: Icon(Icons.keyboard_arrow_down_outlined),
-                hint: Text('Value'),
-                validator: (value) =>
-                    KValidator.validateEmptyText("Value", value),
-                items: values
-                    .map((value) => DropdownMenuItem(
-                          value: value,
-                          child: Text(value),
-                        ))
-                    .toList(),
-                onChanged: onValueChanged,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: KSizes.md),
-        Row(
-          children: [
-            Expanded(
-              child: TextFormField(
-                controller: amountController,
-                textInputAction: TextInputAction.next,
-                keyboardType: TextInputType.number,
-                style: Theme.of(context)
-                    .textTheme
-                    .bodyLarge!
-                    .copyWith(fontSize: KSizes.fontSizeSm),
-                validator: (value) =>
-                    KValidator.validateEmptyText("Amount", value),
-                decoration: const InputDecoration(
-                  labelText: "Amount",
-                ),
-              ),
-            ),
-            SizedBox(width: KSizes.sm),
-            Expanded(
-              child: DropdownButtonFormField<String>(
-                value: selectedDuration,
-                dropdownColor: KColors.white,
-                icon: Icon(Icons.keyboard_arrow_down_outlined),
-                hint: Text('Duration'),
-                validator: (value) =>
-                    KValidator.validateEmptyText("Duration", value),
-                items: durations
-                    .map((duration) => DropdownMenuItem(
-                          value: duration,
-                          child: Text(duration),
-                        ))
-                    .toList(),
-                onChanged: onDurationChanged,
-                decoration: InputDecoration(
-                  contentPadding: EdgeInsets.symmetric(horizontal: 12),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

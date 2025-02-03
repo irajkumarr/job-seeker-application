@@ -23,6 +23,7 @@ import 'package:frontend/features/personalization/screens/profile/language_scree
 import 'package:frontend/features/personalization/screens/profile/other_information_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_category.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_job_preference.dart';
+import 'package:frontend/features/personalization/screens/profile/profile_personal_information.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_skill.dart';
 import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
@@ -39,8 +40,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    // initialLocation: "/profileOtherInformation",
-    initialLocation: "/navigationMenu",
+    initialLocation: "/profilePersonalInformation",
+    // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -335,6 +336,18 @@ class AppRoutes {
             child: OtherInformationScreen(
               otherInformation: otherInformation,
             ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.profilePersonalInformation,
+        path: "/profilePersonalInformation",
+        pageBuilder: (context, state) {
+          // final otherInformation = state.extra as Otherinformation?;
+          return MaterialPage(
+            child: ProfilePersonalInformation(
+                // otherInformation: otherInformation,
+                ),
           );
         },
       ),
