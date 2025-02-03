@@ -21,6 +21,7 @@ import 'package:frontend/features/personalization/screens/profile/education_scre
 import 'package:frontend/features/personalization/screens/profile/experience_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/language_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_category.dart';
+import 'package:frontend/features/personalization/screens/profile/profile_job_preference.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
 import 'package:frontend/features/personalization/screens/profile/profile_skill.dart';
 import 'package:frontend/features/personalization/screens/profile/reference_screen.dart';
@@ -37,8 +38,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    // initialLocation: "/profileCategory",
-    initialLocation: "/navigationMenu",
+    initialLocation: "/profileJobPreference",
+    // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -312,6 +313,15 @@ class AppRoutes {
         pageBuilder: (context, state) {
           return MaterialPage(
             child: ProfileSkill(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.profileJobPreference,
+        path: "/profileJobPreference",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: ProfileJobPreference(),
           );
         },
       ),

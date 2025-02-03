@@ -96,6 +96,55 @@ class DetailsProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //preferred shift
+  final List<String> preferredShift = [
+    "Regular",
+    "Morning",
+    "Day",
+    "Evening",
+    "Flexible",
+    "Anytime",
+    "Night",
+  ];
+
+  String? selectedPreferredShift;
+  void setSelectedPreferredShift(String? preferredShift) {
+    selectedPreferredShift = preferredShift;
+    notifyListeners();
+  }
+
+  //job level
+  final List<String> jobLevel = [
+    "Top Level",
+    "Senior Level",
+    "Mid Level",
+    "Entry Level",
+  ];
+
+  String? selectedJobLevel;
+  void setSelectedJobLevel(String? jobLevel) {
+    selectedJobLevel = jobLevel;
+    notifyListeners();
+  }
+
+  //availiability
+  final List<String> availableFor = [
+    "Full Time",
+    "Part Time",
+    "Contractual",
+    "Freelancing",
+    "Intenship",
+    "Volunteer",
+    "Temporary",
+    "Traineeship",
+  ];
+
+  String? selectedAvailableFor;
+  void setSelectedAvailableFor(String? availableFor) {
+    selectedAvailableFor = availableFor;
+    notifyListeners();
+  }
+
   // //foreign employment
   final List<String> isForeignEmployment = [
     "Yes",
@@ -114,7 +163,7 @@ class DetailsProvider with ChangeNotifier {
   }
 
   //resetting method
-   void reset() {
+  void reset() {
     ageCounter = 16;
     experienceCounter = 0;
     selectedGender = null;

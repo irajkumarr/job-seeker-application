@@ -235,12 +235,16 @@ class _EducationScreenState extends State<EducationScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                 Row(
+                  children: [
+                     Text(
                     "Add Education",
                     style: Theme.of(context).textTheme.labelLarge!.copyWith(
                           fontSize: 18.sp,
                         ),
                   ),
+                  ],
+                 ),
                   SizedBox(height: KSizes.sm),
                   Wrap(
                     spacing: 10,
