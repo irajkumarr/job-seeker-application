@@ -8,7 +8,8 @@ import 'package:frontend/core/utils/validators/validation.dart';
 enum ListType { none, bullet, numbered, numberedRtl }
 
 class TextEditorWidget extends StatefulWidget {
-  const TextEditorWidget({Key? key, required this.controller, required this.title})
+  const TextEditorWidget(
+      {Key? key, required this.controller, required this.title})
       : super(key: key);
   final TextEditingController controller;
   final String title;
@@ -81,7 +82,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-         widget. title,
+          widget.title,
           style: Theme.of(context).textTheme.titleSmall,
         ),
         const SizedBox(height: 8),
@@ -129,8 +130,8 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
                 child: TextFormField(
                   controller: widget.controller,
                   maxLines: 8,
-                  validator: (value) => KValidator.validateEmptyText(
-                      "Roles and Responsibilities", value),
+                  // validator: (value) => KValidator.validateEmptyText(
+                  //     "Roles and Responsibilities", value),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     enabledBorder: InputBorder.none,

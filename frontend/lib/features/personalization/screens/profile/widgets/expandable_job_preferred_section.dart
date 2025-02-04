@@ -14,7 +14,8 @@ class ExpandablePreferredJobLocationSection extends StatelessWidget {
     required this.leadingIcon,
     required this.leadingIconColor,
     required this.data,
-    required this.height, required this.onTap,
+    required this.height,
+    required this.onTap,
   });
 
   final String sectionId;
@@ -56,7 +57,7 @@ class ExpandablePreferredJobLocationSection extends StatelessWidget {
                     ),
               ),
               trailing: AnimatedRotation(
-                duration: const Duration(milliseconds: 200),
+                duration: const Duration(milliseconds: 500),
                 turns: isExpanded ? 0.5 : 0,
                 child: const Icon(Icons.keyboard_arrow_down_sharp),
               ),
@@ -68,7 +69,7 @@ class ExpandablePreferredJobLocationSection extends StatelessWidget {
                 color: KColors.grey,
               ),
             AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
+              duration: const Duration(milliseconds: 700),
               curve: Curves.easeInOut,
               height: isExpanded ? height : 0,
               child: SingleChildScrollView(

@@ -846,6 +846,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             title: 'Other Information',
                             leadingIcon: Icons.error_outline_outlined,
                             onTap: () {
+                              final profile = profileProvider.profile;
+
+                              // Check if job preferences are not null and have values
+                              final bool isJobPreferencesCompleted =
+                                  profile?.profile?[0].jobPreference != null;
+
+                              if (!isJobPreferencesCompleted) {
+                                // Show a message if job preferences are not completed
+                                KSnackbar.CustomSnackbar(
+                                    context,
+                                    "To edit other information, you need to set your job preference first",
+                                    KColors.error);
+                                return; // Prevent navigation
+                              }
                               context.pushNamed(
                                 RoutesConstant.profileOtherInformation,
                                 extra: profileProvider.profile

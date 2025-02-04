@@ -88,7 +88,8 @@ class ProfileDetailsWidget extends StatelessWidget {
                     curve: Curves.easeInOut,
                     child: Container(
                       height: isExpanded ? null : 0,
-                      padding: EdgeInsets.all(16.w),
+                      padding: EdgeInsets.symmetric(horizontal: KSizes.md)
+                          .copyWith(bottom: KSizes.md),
                       decoration: BoxDecoration(
                         color: KColors.secondaryBackground,
                         borderRadius: BorderRadius.only(
@@ -136,98 +137,218 @@ class ProfileDetailsWidget extends StatelessWidget {
     );
   }
 
-  /// Build dynamic row from map data
   Widget _buildInfoRow(BuildContext context, Map<String, dynamic> item) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 8.h),
-      child: Row(
+      padding: EdgeInsets.symmetric(vertical: KSizes.sm),
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Icon(
-            item['icon'] ?? Icons.info,
-            size: 24,
-            color: Colors.grey[600],
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  item['label'] ?? "",
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Colors.black87,
-                  ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(
+                item['icon'] ?? Icons.info,
+                size: 24,
+                color: Colors.grey[600],
+              ),
+              SizedBox(width: KSizes.sm),
+              Text(
+                item['label'] ?? "",
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.black87,
                 ),
-                if (item['value'] != null) ...[
-                  const SizedBox(height: KSizes.md),
-                  isImage
-                      ? GestureDetector(
-                          onTap: () {},
-                          child: GestureDetector(
-                            onTap: () {
-                              // showImagePreview(context, item['value']);
-                              context.pushNamed(
-                                RoutesConstant.imagePreview,
-                                extra: {
-                                  'file': null,
-                                  'image': item['value'],
-                                  'isFile': false,
-                                },
-                              );
-                            },
-                            child: Center(
-                              child: Image.network(
-                                item['value'],
-                              ),
-                            ),
+              ),
+              Spacer(),
+              Row(
+                children: [
+                  TextButton(
+                    onPressed: item['onDelete'] ?? () {},
+                    child: Text(
+                      "Delete",
+                      style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                            color: KColors.error,
                           ),
-                        )
-                      : isRating
-                          ? RatingBar.builder(
-                              initialRating: item["value"],
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemSize: 18,
-                              itemBuilder: (context, _) => Icon(
-                                Icons.star,
-                                color: KColors.primary,
-                              ),
-                              onRatingUpdate: (rating) {
-                                // You can handle the rating update here (if required)
-                                // print(rating);
-                              },
-                            )
-                          : Text(
-                              item['value'],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleSmall!
-                                  .copyWith(
+                    ),
+                  ),
+                  if (isEditShowed)
+                    TextButton(
+                      onPressed: item['onEdit'] ?? () {},
+                      child: Text(
+                        "Edit",
+                        style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                              color: KColors.primary,
+                            ),
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+          if (item['value'] != null) ...[
+            // const SizedBox(height: KSizes.md),
+            isImage
+                ? GestureDetector(
+                    onTap: () {
+                      context.pushNamed(
+                        RoutesConstant.imagePreview,
+                        extra: {
+                          'file': null,
+                          'image': item['value'],
+                          'isFile': false,
+                        },
+                      );
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.only(
+                          left: KSizes.spaceBtwSections, right: KSizes.md),
+                      child: Center(
+                        child: Image.network(
+                          item['value'],
+                        ),
+                      ),
+                    ),
+                  )
+                : isRating
+                    ? Padding(
+                        padding: EdgeInsets.only(
+                            left: KSizes.spaceBtwSections, right: KSizes.md),
+                        child: RatingBar.builder(
+                          initialRating: item["value"],
+                          minRating: 1,
+                          direction: Axis.horizontal,
+                          allowHalfRating: true,
+                          itemCount: 5,
+                          itemSize: 18,
+                          itemBuilder: (context, _) => Icon(
+                            Icons.star,
+                            color: KColors.primary,
+                          ),
+                          onRatingUpdate: (rating) {},
+                        ),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(
+                            left: KSizes.spaceBtwSections, right: KSizes.md),
+                        child: Text(
+                          item['value'],
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
                                     fontSize: 14.sp,
                                   ),
-                            ),
-                ]
-              ],
-            ),
-          ),
-          TextButton(
-            onPressed: item['onDelete'] ?? () {},
-            child: const Text("Delete", style: TextStyle(color: KColors.error)),
-          ),
-          !isEditShowed
-              ? SizedBox()
-              : TextButton(
-                  onPressed: item['onEdit'] ?? () {},
-                  child: const Text("Edit",
-                      style: TextStyle(color: KColors.primary)),
-                ),
+                        ),
+                      ),
+          ],
         ],
       ),
     );
   }
 }
+
+
+
+
+  /// Build dynamic row from map data
+  // Widget _buildInfoRow(BuildContext context, Map<String, dynamic> item) {
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(vertical: 8.h),
+  //     child: Row(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Icon(
+  //           item['icon'] ?? Icons.info,
+  //           size: 24,
+  //           color: Colors.grey[600],
+  //         ),
+  //         const SizedBox(width: 12),
+  //         Expanded(
+  //           child: Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Text(
+  //                 item['label'] ?? "",
+  //                 style: const TextStyle(
+  //                   fontSize: 16,
+  //                   fontWeight: FontWeight.w500,
+  //                   color: Colors.black87,
+  //                 ),
+  //               ),
+  //               if (item['value'] != null) ...[
+  //                 const SizedBox(height: KSizes.md),
+  //                 isImage
+  //                     ? GestureDetector(
+  //                         onTap: () {},
+  //                         child: GestureDetector(
+  //                           onTap: () {
+  //                             // showImagePreview(context, item['value']);
+  //                             context.pushNamed(
+  //                               RoutesConstant.imagePreview,
+  //                               extra: {
+  //                                 'file': null,
+  //                                 'image': item['value'],
+  //                                 'isFile': false,
+  //                               },
+  //                             );
+  //                           },
+  //                           child: Center(
+  //                             child: Image.network(
+  //                               item['value'],
+  //                             ),
+  //                           ),
+  //                         ),
+  //                       )
+  //                     : isRating
+  //                         ? RatingBar.builder(
+  //                             initialRating: item["value"],
+  //                             minRating: 1,
+  //                             direction: Axis.horizontal,
+  //                             allowHalfRating: true,
+  //                             itemCount: 5,
+  //                             itemSize: 18,
+  //                             itemBuilder: (context, _) => Icon(
+  //                               Icons.star,
+  //                               color: KColors.primary,
+  //                             ),
+  //                             onRatingUpdate: (rating) {
+  //                               // You can handle the rating update here (if required)
+  //                               // print(rating);
+  //                             },
+  //                           )
+  //                         : Text(
+  //                             item['value'],
+  //                             style: Theme.of(context)
+  //                                 .textTheme
+  //                                 .titleSmall!
+  //                                 .copyWith(
+  //                                   fontSize: 14.sp,
+  //                                 ),
+  //                           ),
+  //               ]
+  //             ],
+  //           ),
+  //         ),
+  //         TextButton(
+  //           onPressed: item['onDelete'] ?? () {},
+  //           child: Text(
+  //             "Delete",
+  //             style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+  //                   color: KColors.error,
+  //                 ),
+  //           ),
+  //         ),
+  //         !isEditShowed
+  //             ? SizedBox()
+  //             : TextButton(
+  //                 onPressed: item['onEdit'] ?? () {},
+  //                 child: Text(
+  //                   "Edit",
+  //                   style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+  //                         color: KColors.primary,
+  //                       ),
+  //                 ),
+  //               ),
+  //       ],
+  //     ),
+  //   );
+  // }
