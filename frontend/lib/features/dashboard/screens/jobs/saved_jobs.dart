@@ -9,7 +9,7 @@ class SavedJobsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final box = GetStorage();
     final String? token = box.read("token");
-    if (token == null) {
+    if (token != null) {
       return LoginRedirect(
         isMatchedJobs: true,
       );

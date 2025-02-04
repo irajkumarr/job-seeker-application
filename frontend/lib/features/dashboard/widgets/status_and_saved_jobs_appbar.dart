@@ -8,7 +8,8 @@ import 'package:provider/provider.dart';
 
 class StatusAndSavedJobsAppbar extends StatelessWidget {
   const StatusAndSavedJobsAppbar({
-    super.key, required this.appbarText,
+    super.key,
+    required this.appbarText,
   });
   final String appbarText;
 
@@ -18,7 +19,7 @@ class StatusAndSavedJobsAppbar extends StatelessWidget {
       elevation: 0.2,
       child: AppBar(
         title: Text(
-         appbarText,
+          appbarText,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(
                 fontSize: 22,
               ),
@@ -61,6 +62,7 @@ class StatusAndSavedJobsAppbar extends StatelessWidget {
           ),
           SizedBox(width: KSizes.xs),
         ],
+      
       ),
     );
   }
