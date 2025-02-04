@@ -7,6 +7,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/authentication/providers/login_provider.dart';
+import 'package:frontend/features/dashboard/providers/job_application_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/education_provider.dart';
@@ -25,6 +26,7 @@ import 'package:frontend/features/personalization/screens/profile/widgets/profil
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:frontend/navigation_menu.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
@@ -37,15 +39,20 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Provider.of<ProfileProvider>(context, listen: false).fetchProfile();
-  // }
+  @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final jobApplicationProvider =
+          Provider.of<JobApplicationProvider>(context, listen: false);
+      jobApplicationProvider.fetchJobApplications();
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final jobApplicationProvider = Provider.of<JobApplicationProvider>(context);
 
     return Consumer<LoginProvider>(
       builder: (context, loginProvider, child) {
@@ -139,35 +146,60 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Column(
-                                children: [
-                                  Text("Jobs Applied"),
-                                  SizedBox(height: KSizes.xs),
-                                  Text(
-                                    "0",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .copyWith(
-                                          color: KColors.primary,
-                                        ),
+                              InkWell(
+                                onTap: () {
+                                  context.read<NavigationProvider>().onTap(2);
+                                },
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2 -
+                                      KSizes.md,
+                                  child: Column(
+                                    children: [
+                                      Text("Jobs Applied"),
+                                      SizedBox(height: KSizes.xs),
+                                      jobApplicationProvider.isLoading
+                                          ? CustomLoading(
+                                              isLoadingTextShowed: false,
+                                              size: KSizes.md,
+                                              padding: EdgeInsets.only(
+                                                  top: KSizes.xs - 2),
+                                            )
+                                          : Text(
+                                              "${jobApplicationProvider.jobApplications?.length ?? 0}",
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .titleMedium!
+                                                  .copyWith(
+                                                    color: KColors.primary,
+                                                  ),
+                                            ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
-                              Column(
-                                children: [
-                                  Text("Profile Visits"),
-                                  SizedBox(height: KSizes.xs),
-                                  Text(
-                                    "0",
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .titleMedium!
-                                        .copyWith(
-                                          color: KColors.primary,
-                                        ),
+                              InkWell(
+                                onTap: () {
+                                  context.read<NavigationProvider>().onTap(2);
+                                },
+                                child: SizedBox(
+                                  width: MediaQuery.of(context).size.width / 2 -
+                                      KSizes.md,
+                                  child: Column(
+                                    children: [
+                                      Text("Profile Visits"),
+                                      SizedBox(height: KSizes.xs),
+                                      Text(
+                                        "0",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .copyWith(
+                                              color: KColors.primary,
+                                            ),
+                                      ),
+                                    ],
                                   ),
-                                ],
+                                ),
                               ),
                             ],
                           ),
