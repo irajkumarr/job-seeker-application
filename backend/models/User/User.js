@@ -27,8 +27,14 @@ const userSchema = new mongoose.Schema(
     },
     profileImage: {
       type: String,
-      default: null, 
+      default: null,
     },
+    savedJobs: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "JobPosting",
+      },
+    ],
 
     isActive: { type: Boolean, default: true },
   },

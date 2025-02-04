@@ -1,4 +1,5 @@
 const User = require("../../models/User/User");
+const JobPosting = require("../../models/JobPosting/JobPosting");
 const mongoose = require("mongoose");
 
 const cloudinary = require("../../utils/cloudinary");
@@ -157,124 +158,43 @@ const handleUpdateProfileImage = async (req, res) => {
   }
 };
 
-//getting all user data
-// const handleGetAllProfiles = async (req, res) => {
-//   try {
-//     const userId = req.user.id;
-//     const userProfiles = await User.aggregate([
-//       {
-//         $match: { _id: userId },
-//       },
-//       {
-//         $lookup: {
-//           from: "profiles", // Collection for profiles
-//           localField: "_id", // User's `_id`
-//           foreignField: "userId", // Field in profiles referencing the user's ID
-//           as: "profile", // Alias for the result
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "experiences", // Collection for experiences
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "experiences",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "documents", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "documents",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "trainings", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "trainings",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "socialaccounts", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "socialaccounts",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "references", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "references",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "languages", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "languages",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "educations", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "educations",
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "emergencycontacts", // Collection for documents
-//           localField: "_id",
-//           foreignField: "userId",
-//           as: "emergencycontacts",
-//         },
-//       },
-//       // Add more lookups as needed for other related collections
-//       {
-//         // $project: {
-//         //   password: 0, // Exclude sensitive fields like passwords
-//         //   "profile.password": 0, // Exclude nested sensitive fields if necessary
-//         // },
-//         $project: {
-//           password: 0, // Exclude sensitive fields like passwords
-//           "profile.password": 0, // Exclude nested sensitive fields if necessary
-//           "experiences._id": 0, // Optionally, exclude other sensitive fields from subcollections
-//           "documents._id": 0, // Exclude _id from documents if not needed
-//           "trainings._id": 0,
-//           "socialaccounts._id": 0,
-//           "references._id": 0,
-//           "languages._id": 0,
-//           "educations._id": 0,
-//           "emergencycontacts._id": 0,
-//         },
-//       },
-//     ]);
+//handle saved jobs
+const handleSavedJob = async (req, res) => {
+  try {
+    const userId = req.user.id;
+    const { jobId } = req.body;
 
-//     // Check if profiles exist
-//     if (!userProfiles.length) {
-//       return res.status(404).json({
-//         status: false,
-//         message: "No profiles found",
-//       });
-//     }
+    // Check if the job exists in the Job collection
+    const job = await JobPosting.findById(jobId);
+    if (!job) {
+      return res.status(404).json({ message: "Job not found" });
+    }
 
-//     return res.status(200).json(userProfiles);
+    // Find the user by their ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-//   } catch (error) {
-//     return res.status(500).json({
-//       status: false,
-//       message: error.message,
-//     });
-//   }
-// };
+    // Check if the job is already saved by the user
+    const isSaved = user.savedJobs.includes(jobId);
+
+    if (isSaved) {
+      user.savedJobs = user.savedJobs.filter(
+        (savedJob) => savedJob.toString() !== jobId
+      );
+      await user.save();
+      return res.status(200).json({ message: "Job removed from saved jobs" });
+    } else {
+      user.savedJobs.push(jobId);
+      await user.save();
+      return res.status(200).json({ message: "Job saved successfully" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Server error" });
+  }
+};
 
 const handleGetAllProfiles = async (req, res) => {
   try {
@@ -285,9 +205,7 @@ const handleGetAllProfiles = async (req, res) => {
       });
     }
 
-    const userId = new mongoose.Types.ObjectId(req.user.id); // Ensure it's an ObjectId
-
-    // console.log("User ID from token:", userId); // Debugging
+    const userId = new mongoose.Types.ObjectId(req.user.id);
 
     const userProfile = await User.aggregate([
       {
@@ -410,5 +328,7 @@ module.exports = {
   handleDeleteUser,
   handleUpdateUser,
   handleGetAllProfiles,
-  handleUpdateProfileImage,handleUpdatePassword,
+  handleUpdateProfileImage,
+  handleSavedJob,
+  handleUpdatePassword,
 };
