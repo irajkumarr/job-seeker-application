@@ -11,6 +11,7 @@ import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_information_section.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/job_description_section.dart';
+import 'package:frontend/features/personalization/providers/saved_jobs_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -292,16 +293,25 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
               ),
               child: Row(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: KColors.secondaryBackground,
-                      borderRadius: BorderRadius.circular(50),
-                    ),
-                    child: IconButton(
-                      icon: const Icon(Icons.favorite_border),
-                      onPressed: () {},
-                    ),
-                  ),
+                  Consumer<SavedJobsProvider>(
+                      builder: (context, provider, child) {
+                    bool isJobSaved = provider.savedJobIds.contains(job.id);
+                    return Container(
+                      decoration: BoxDecoration(
+                        color: KColors.secondaryBackground,
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                      child: IconButton(
+                        icon: Icon(isJobSaved
+                            ? Icons.favorite
+                            : Icons.favorite_border_outlined),
+                        color: isJobSaved ? KColors.error : KColors.darkGrey,
+                        onPressed: () {
+                          provider.handleSavedJob(context, job.id);
+                        },
+                      ),
+                    );
+                  }),
                   const SizedBox(width: KSizes.md),
                   Expanded(
                       child: CustomButton(

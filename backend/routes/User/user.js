@@ -8,6 +8,7 @@ const {
   handleUpdateProfileImage,
   handleUpdatePassword,
   handleSavedJob,
+  handleGetUserSavedJobs,
 } = require("../../controllers/User/userController");
 const { verifyAndAuthorize } = require("../../middlewares/jwt");
 
@@ -19,6 +20,7 @@ router.put("/", verifyAndAuthorize, handleUpdateUser);
 router.delete("/", verifyAndAuthorize, handleDeleteUser);
 router.put("/change-password", verifyAndAuthorize, handleUpdatePassword);
 router.post("/saved-jobs", verifyAndAuthorize, handleSavedJob);
+router.get("/saved-jobs", verifyAndAuthorize, handleGetUserSavedJobs);
 router.get("/profiles", verifyAndAuthorize, handleGetAllProfiles);
 router.put(
   "/profileImage/",

@@ -196,6 +196,32 @@ const handleSavedJob = async (req, res) => {
   }
 };
 
+const handleGetUserSavedJobs = async (req, res) => {
+  try {
+    const userId = req.user.id;
+
+    const user = await User.findById(userId).populate({
+      path: "savedJobs",
+      populate: [{ path: "company", select: "name logo" }],
+      select: "title company location",
+    });
+
+    if (!user) {
+      return res.status(404).json({ status: false, message: "User not found" });
+    }
+
+    if (!user.savedJobs) {
+      return res
+        .status(404)
+        .json({ status: false, message: "No saved jobs found" });
+    }
+
+    return res.status(200).json(user.savedJobs);
+  } catch (error) {
+    return res.status(500).json({ status: false, message: error.message });
+  }
+};
+
 const handleGetAllProfiles = async (req, res) => {
   try {
     if (!req.user || !req.user.id) {
@@ -330,5 +356,6 @@ module.exports = {
   handleGetAllProfiles,
   handleUpdateProfileImage,
   handleSavedJob,
+  handleGetUserSavedJobs,
   handleUpdatePassword,
 };
