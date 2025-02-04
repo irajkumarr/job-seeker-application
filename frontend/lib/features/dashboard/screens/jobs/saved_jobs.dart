@@ -131,7 +131,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  savedJobsProvider.isLoading
+                  matchedJobsProvider.isLoading
                       ? JobShimmer()
                       : matchedJobsProvider.matchedJobs.isEmpty
                           ? NoDataWidget(

@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
+import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/shimmers/job_detail_shimmer.dart';
+import 'package:frontend/features/dashboard/providers/job_application_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_information_section.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
@@ -60,6 +62,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     final jobProvider = Provider.of<JobProvider>(context);
+    final jobApplicationProvider = Provider.of<JobApplicationProvider>(context);
     final l10n = AppLocalizations.of(context)!;
 
     // Loading and error handling
@@ -314,9 +317,40 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   }),
                   const SizedBox(width: KSizes.md),
                   Expanded(
-                      child: CustomButton(
-                    text: "${l10n.apply_now}",
-                    onPressed: () {},
+                      child: SizedBox(
+                    width: double.infinity,
+                    height: 50.h,
+                    child: ElevatedButton(
+                      onPressed: jobApplicationProvider.isLoading
+                          ? null
+                          : () async {
+                              await jobApplicationProvider.applyJob(
+                                  context: context,
+                                  jobId: job.id,
+                                  onSuccess: () {});
+                            },
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: KColors.primary,
+                          splashFactory: NoSplash.splashFactory,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          )),
+                      child: jobApplicationProvider.isLoading
+                          ? CustomLoading(
+                              isLoadingTextShowed: false,
+                              size: KSizes.md,
+                              padding: EdgeInsets.only(top: KSizes.xs - 2),
+                            )
+                          : Text(
+                              "${l10n.apply_now}",
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                    color: KColors.white,
+                                  ),
+                            ),
+                    ),
                   )),
                 ],
               ),
