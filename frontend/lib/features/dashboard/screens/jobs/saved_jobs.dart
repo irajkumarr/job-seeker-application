@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/shimmers/full_shimmer.dart';
 import 'package:frontend/core/utils/shimmers/job_shimmer.dart';
 import 'package:frontend/data/models/user_saved_jobs_model.dart';
+import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/features/dashboard/widgets/no_data_widget.dart';
 import 'package:frontend/features/dashboard/widgets/status_and_saved_jobs_appbar.dart';
@@ -72,13 +73,21 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                                   ),
                         ),
                         SizedBox(height: KSizes.xs),
-                        Text(
-                          "0",
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: KColors.primary,
-                                  ),
-                        ),
+                        savedJobsProvider.isLoading
+                            ? CustomLoading(
+                                isLoadingTextShowed: false,
+                                size: KSizes.md,
+                                padding: EdgeInsets.only(top: KSizes.xs - 2),
+                              )
+                            : Text(
+                                "${savedJobsProvider.matchedJobs.length}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: KColors.primary,
+                                    ),
+                              ),
                       ],
                     ),
                   ),
@@ -119,17 +128,33 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  NoDataWidget(
-                    title: "No data available",
-                    subTitle:
-                        "There are no matched jobs available for you at the moment.",
-                    image: "assets/images/content/my_status_person.gif",
-                    isButtonShowed: true,
-                    buttonText: "Get Started",
-                    onPressed: () {
-                      context.read<NavigationProvider>().onTap(0);
-                    },
-                  ),
+                  savedJobsProvider.isLoading
+                      ? JobShimmer()
+                      : savedJobsProvider.matchedJobs.isEmpty
+                          ? NoDataWidget(
+                              title: "No data available",
+                              subTitle:
+                                  "There are no matched jobs available for you at the moment.",
+                              image:
+                                  "assets/images/content/my_status_person.gif",
+                              isButtonShowed: true,
+                              buttonText: "Get Started",
+                              onPressed: () {
+                                context.read<NavigationProvider>().onTap(0);
+                              },
+                            )
+                          : Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: KSizes.md, vertical: KSizes.sm),
+                              child: ListView.builder(
+                                itemCount: savedJobsProvider.matchedJobs.length,
+                                itemBuilder: (context, index) {
+                                  final job =
+                                      savedJobsProvider.matchedJobs[index];
+                                  return JobCard(job: job);
+                                },
+                              ),
+                            ),
                   savedJobsProvider.isLoading
                       ? JobShimmer()
                       : savedJobsProvider.savedJobs.isEmpty
@@ -280,9 +305,10 @@ class SavedJobsCard extends StatelessWidget {
                     builder: (context, provider, child) {
                   bool isJobSaved = provider.savedJobIds.contains(job.id!);
                   return IconButton(
-                    icon: Icon(
-                        isJobSaved ? Icons.favorite : Icons.favorite_border_outlined),
-                        color: isJobSaved?KColors.error:KColors.darkGrey,
+                    icon: Icon(isJobSaved
+                        ? Icons.favorite
+                        : Icons.favorite_border_outlined),
+                    color: isJobSaved ? KColors.error : KColors.darkGrey,
                     onPressed: () {
                       provider.handleSavedJob(context, job.id!);
                     },
