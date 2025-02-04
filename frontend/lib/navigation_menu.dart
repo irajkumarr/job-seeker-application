@@ -10,6 +10,7 @@ import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 
@@ -20,8 +21,8 @@ class NavigationMenu extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // final profileProvider =
-    //     Provider.of<ProfileProvider>(context, listen: false);
+    final box = GetStorage();
+    final String? profileImage = box.read("profileImage");
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
@@ -99,35 +100,35 @@ class NavigationMenu extends StatelessWidget {
                   icon: Icon(Iconsax.user),
                   label: "${l10n.profile}",
                   activeIcon: Container(
-                    padding: EdgeInsets.all(KSizes.xs - 2),
+                    padding: profileImage != null
+                        ? EdgeInsets.all(0)
+                        : EdgeInsets.all(KSizes.xs - 2),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
                       border: Border.all(
                         color: KColors.darkGrey,
                       ),
                     ),
-                    child:
-                        //  profileProvider.profile!.profileImage != null
-                        //     ? SizedBox(
-                        //         height: 16.h,
-                        //         width: 16.w,
-                        //         child: ClipRRect(
-                        //           borderRadius: BorderRadius.circular(100),
-                        //           child: Image.network(
-                        //             profileProvider.profile!.profileImage!,
-                        //             height: 16.h,
-                        //             width: 16.w,
-                        //             fit: BoxFit.cover,
-                        //           ),
-                        //         ),
-                        //       )
-                        //     :
-                        Icon(
-                      Iconsax.user,
-                      size: 16.sp,
-                      color: KColors.black,
-                      weight: 3,
-                    ),
+                    child: profileImage != null
+                        ? SizedBox(
+                            height: 16.h,
+                            width: 16.w,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(100),
+                              child: Image.network(
+                                profileImage,
+                                height: 16.h,
+                                width: 16.w,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          )
+                        : Icon(
+                            Iconsax.user,
+                            size: 16.sp,
+                            color: KColors.black,
+                            weight: 3,
+                          ),
                   ),
                 ),
               ],
