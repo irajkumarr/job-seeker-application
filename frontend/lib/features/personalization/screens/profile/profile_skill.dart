@@ -9,7 +9,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/show_logout_alert.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 

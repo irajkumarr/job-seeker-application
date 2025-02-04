@@ -16,7 +16,7 @@ import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_in
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/job_description_section.dart';
 import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/show_logout_alert.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';

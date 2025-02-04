@@ -10,7 +10,7 @@ import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/change_password_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/language_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/settings_tile.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/show_logout_alert.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:iconsax/iconsax.dart';

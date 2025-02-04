@@ -22,7 +22,7 @@ import 'package:frontend/features/personalization/screens/profile/widgets/expand
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_details_list_tile.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_details_widget.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_without_login.dart';
-import 'package:frontend/features/personalization/screens/profile/widgets/show_logout_alert.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/user_icon_with_add_button.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
