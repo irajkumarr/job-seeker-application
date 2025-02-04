@@ -6,7 +6,6 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/shimmers/job_shimmer.dart';
 import 'package:frontend/features/dashboard/providers/job_application_provider.dart';
-import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/status/widgets/job_application_card.dart';
 import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/features/dashboard/widgets/no_data_widget.dart';

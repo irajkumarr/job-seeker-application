@@ -7,7 +7,6 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/job_application_model.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 import '../../../../../core/utils/constants/image_strings.dart';

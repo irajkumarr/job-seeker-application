@@ -1,15 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
-import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
-import 'package:frontend/core/utils/shimmers/full_shimmer.dart';
 import 'package:frontend/core/utils/shimmers/job_shimmer.dart';
-import 'package:frontend/data/models/user_saved_jobs_model.dart';
 import 'package:frontend/features/dashboard/providers/matched_jobs_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/jobs/widgets/saved_jobs_card.dart';
@@ -20,7 +15,6 @@ import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class SavedJobsScreen extends StatefulWidget {

@@ -1,10 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
-import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/data/models/job_model.dart';
-import 'package:frontend/data/models/user_saved_jobs_model.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
