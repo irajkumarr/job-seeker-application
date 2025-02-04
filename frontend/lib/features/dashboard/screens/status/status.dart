@@ -7,7 +7,9 @@ import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/features/dashboard/widgets/no_data_widget.dart';
 import 'package:frontend/features/dashboard/widgets/status_and_saved_jobs_appbar.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 
 class StatusScreen extends StatefulWidget {
   @override
@@ -105,7 +107,9 @@ class _StatusScreenState extends State<StatusScreen> {
                     image: "assets/images/content/my_status_person.gif",
                     isButtonShowed: true,
                     buttonText: "Start Browsing Jobs",
-                    onPressed: () {},
+                    onPressed: () {
+                      context.read<NavigationProvider>().onTap(0);
+                    },
                   ),
                   NoDataWidget(
                     title: "No data available",
