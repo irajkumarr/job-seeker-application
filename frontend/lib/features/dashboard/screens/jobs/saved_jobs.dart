@@ -11,6 +11,7 @@ import 'package:frontend/core/utils/shimmers/full_shimmer.dart';
 import 'package:frontend/core/utils/shimmers/job_shimmer.dart';
 import 'package:frontend/data/models/user_saved_jobs_model.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
+import 'package:frontend/features/dashboard/screens/jobs/widgets/saved_jobs_card.dart';
 import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/features/dashboard/widgets/no_data_widget.dart';
 import 'package:frontend/features/dashboard/widgets/status_and_saved_jobs_appbar.dart';
@@ -51,7 +52,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
           children: [
             Container(
               color: KColors.white,
-              padding: EdgeInsets.symmetric(vertical: KSizes.md),
+              padding: EdgeInsets.only(top: KSizes.md),
               child: TabBar(
                 indicatorColor: KColors.primary,
                 labelColor: KColors.black,
@@ -143,10 +144,15 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                                 context.read<NavigationProvider>().onTap(0);
                               },
                             )
-                          : Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: KSizes.md, vertical: KSizes.sm),
+                          : RefreshIndicator(
+                              onRefresh: () async {
+                                return await savedJobsProvider
+                                    .getUserMatchedJobs();
+                              },
                               child: ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: KSizes.md,
+                                    vertical: KSizes.defaultSpace),
                                 itemCount: savedJobsProvider.matchedJobs.length,
                                 itemBuilder: (context, index) {
                                   final job =
@@ -169,20 +175,22 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                                 context.read<NavigationProvider>().onTap(0);
                               },
                             )
-                          : Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: KSizes.md, vertical: KSizes.sm),
+                          : RefreshIndicator(
+                              onRefresh: () async {
+                                return await savedJobsProvider
+                                    .getUserSavedJobs();
+                              },
                               child: ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: KSizes.md,
+                                    vertical: KSizes.defaultSpace),
                                 itemCount: savedJobsProvider.savedJobs.length,
                                 itemBuilder: (context, index) {
                                   final job =
                                       savedJobsProvider.savedJobs[index];
                                   return SavedJobsCard(
-                                      job: job,
-                                      onTapFavourite: () {
-                                        savedJobsProvider.handleSavedJob(
-                                            context, job.id!);
-                                      });
+                                    job: job,
+                                  );
                                 },
                               ),
                             ),
@@ -190,133 +198,6 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
               ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class SavedJobsCard extends StatelessWidget {
-  const SavedJobsCard({
-    super.key,
-    required this.job,
-    required this.onTapFavourite,
-  });
-
-  final UserSavedJobsModel job;
-  final VoidCallback onTapFavourite;
-
-  @override
-  Widget build(BuildContext context) {
-    final savedJobsProvider = Provider.of<SavedJobsProvider>(context);
-    bool isSaved = savedJobsProvider.savedJobIds.contains(job.id);
-    return Padding(
-      padding: EdgeInsets.only(bottom: KSizes.md),
-      child: InkWell(
-        onTap: () {
-          context.pushNamed(RoutesConstant.jobDetails, extra: job.id);
-        },
-        borderRadius: BorderRadius.circular(12),
-        child: Container(
-          padding: EdgeInsets.symmetric(vertical: KSizes.sm),
-          decoration: BoxDecoration(
-            border: Border.all(color: KColors.lightBackground),
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: IntrinsicHeight(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                // Building Icon
-                Center(
-                  child: Container(
-                    width: 100.w,
-                    height: 100.h,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(KSizes.sm),
-                      child: CachedNetworkImage(
-                        imageUrl: job.company?.logo?.url ?? "",
-                        placeholder: (context, url) => SizedBox(
-                            child: Image.asset(KImages.defaultBuilding)),
-                        errorWidget: (context, url, error) =>
-                            Image.asset(KImages.defaultBuilding),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
-                // Vertical Line
-                Container(
-                  width: 1,
-                  color: Colors.grey[200],
-                  margin: EdgeInsets.symmetric(horizontal: KSizes.sm),
-                ),
-                // Content
-                Expanded(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: KSizes.md, horizontal: KSizes.sm),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        // Job Title
-                        Text(
-                          job.title ?? "",
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        // Company Name
-                        Text(
-                          job.company?.name ?? "",
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Colors.black87,
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        // Location
-                        Row(
-                          children: [
-                            Icon(
-                              Icons.location_on_outlined,
-                              size: 16,
-                              color: Colors.grey[600],
-                            ),
-                            const SizedBox(width: 4),
-                            Text(
-                              job.location?.fullAddress ?? "",
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 4),
-                      ],
-                    ),
-                  ),
-                ),
-
-                Consumer<SavedJobsProvider>(
-                    builder: (context, provider, child) {
-                  bool isJobSaved = provider.savedJobIds.contains(job.id!);
-                  return IconButton(
-                    icon: Icon(isJobSaved
-                        ? Icons.favorite
-                        : Icons.favorite_border_outlined),
-                    color: isJobSaved ? KColors.error : KColors.darkGrey,
-                    onPressed: () {
-                      provider.handleSavedJob(context, job.id!);
-                    },
-                  );
-                }),
-              ],
-            ),
-          ),
         ),
       ),
     );

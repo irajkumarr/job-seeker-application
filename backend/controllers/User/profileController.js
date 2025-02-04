@@ -316,7 +316,7 @@ const handleGetMatchedJobs = async (req, res) => {
       return res.status(200).json({ message: "No matched jobs found" });
     }
 
-    res.status(200).json({ matchedJobs });
+    res.status(200).json(matchedJobs);
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
   }
