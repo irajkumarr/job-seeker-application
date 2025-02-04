@@ -8,6 +8,7 @@ import 'package:frontend/features/authentication/providers/timer_provider.dart';
 import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
+import 'package:frontend/features/dashboard/providers/matched_jobs_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
 import 'package:frontend/features/personalization/providers/document_provider.dart';
 import 'package:frontend/features/personalization/providers/education_provider.dart';
@@ -15,7 +16,7 @@ import 'package:frontend/features/personalization/providers/experience_provider.
 import 'package:frontend/features/personalization/providers/other_information_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/providers/reference_provider.dart';
-import 'package:frontend/features/personalization/providers/saved_jobs_provider.dart';
+import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
 import 'package:frontend/features/personalization/providers/training_provider.dart';
 import 'package:frontend/features/personalization/providers/user_language_provider.dart';
@@ -48,6 +49,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => ExperienceProvider()),
     ChangeNotifierProvider(create: (_) => OtherInformationProvider()),
     ChangeNotifierProvider(create: (_) => SavedJobsProvider()),
+    ChangeNotifierProvider(create: (_) => MatchedJobsProvider()),
     ChangeNotifierProvider(create: (_) => PasswordProvider()),
     ChangeNotifierProvider(create: (_) => ResendTimerProvider()),
   ];

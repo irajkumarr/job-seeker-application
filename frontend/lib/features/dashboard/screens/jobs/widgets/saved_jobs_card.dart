@@ -6,7 +6,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/user_saved_jobs_model.dart';
-import 'package:frontend/features/personalization/providers/saved_jobs_provider.dart';
+import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 class SavedJobsCard extends StatelessWidget {

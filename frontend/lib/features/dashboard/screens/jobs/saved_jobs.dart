@@ -10,12 +10,13 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/shimmers/full_shimmer.dart';
 import 'package:frontend/core/utils/shimmers/job_shimmer.dart';
 import 'package:frontend/data/models/user_saved_jobs_model.dart';
+import 'package:frontend/features/dashboard/providers/matched_jobs_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/jobs/widgets/saved_jobs_card.dart';
 import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/features/dashboard/widgets/no_data_widget.dart';
 import 'package:frontend/features/dashboard/widgets/status_and_saved_jobs_appbar.dart';
-import 'package:frontend/features/personalization/providers/saved_jobs_provider.dart';
+import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:get_storage/get_storage.dart';
@@ -34,6 +35,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
     final box = GetStorage();
     final String? token = box.read("token");
     final savedJobsProvider = Provider.of<SavedJobsProvider>(context);
+    final matchedJobsProvider = Provider.of<MatchedJobsProvider>(context);
     if (token == null) {
       return LoginRedirect(
         isMatchedJobs: true,
@@ -74,14 +76,14 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                                   ),
                         ),
                         SizedBox(height: KSizes.xs),
-                        savedJobsProvider.isLoading
+                        matchedJobsProvider.isLoading
                             ? CustomLoading(
                                 isLoadingTextShowed: false,
                                 size: KSizes.md,
                                 padding: EdgeInsets.only(top: KSizes.xs - 2),
                               )
                             : Text(
-                                "${savedJobsProvider.matchedJobs.length}",
+                                "${matchedJobsProvider.matchedJobs.length}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .titleMedium!
@@ -131,7 +133,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                 children: [
                   savedJobsProvider.isLoading
                       ? JobShimmer()
-                      : savedJobsProvider.matchedJobs.isEmpty
+                      : matchedJobsProvider.matchedJobs.isEmpty
                           ? NoDataWidget(
                               title: "No data available",
                               subTitle:
@@ -146,17 +148,18 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                             )
                           : RefreshIndicator(
                               onRefresh: () async {
-                                return await savedJobsProvider
+                                return await matchedJobsProvider
                                     .getUserMatchedJobs();
                               },
                               child: ListView.builder(
                                 padding: EdgeInsets.symmetric(
                                     horizontal: KSizes.md,
                                     vertical: KSizes.defaultSpace),
-                                itemCount: savedJobsProvider.matchedJobs.length,
+                                itemCount:
+                                    matchedJobsProvider.matchedJobs.length,
                                 itemBuilder: (context, index) {
                                   final job =
-                                      savedJobsProvider.matchedJobs[index];
+                                      matchedJobsProvider.matchedJobs[index];
                                   return JobCard(job: job);
                                 },
                               ),
