@@ -9,6 +9,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/core/utils/shimmers/job_detail_shimmer.dart';
 import 'package:frontend/features/dashboard/providers/job_application_provider.dart';
+import 'package:frontend/features/dashboard/providers/job_application_status_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_information_section.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
@@ -37,6 +38,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final jobProvider = Provider.of<JobProvider>(context, listen: false);
+      Provider.of<JobApplicationStatusProvider>(context, listen: false)
+          .checkJobApplicationStatus(context: context, jobId: widget.jobId);
       jobProvider.fetchJobById(widget.jobId);
     });
     super.initState();
@@ -316,42 +319,94 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     );
                   }),
                   const SizedBox(width: KSizes.md),
-                  Expanded(
-                      child: SizedBox(
-                    width: double.infinity,
-                    height: 50.h,
-                    child: ElevatedButton(
-                      onPressed: jobApplicationProvider.isLoading
-                          ? null
-                          : () async {
-                              await jobApplicationProvider.applyJob(
-                                  context: context,
-                                  jobId: job.id,
-                                  onSuccess: () {});
-                            },
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: KColors.primary,
-                          splashFactory: NoSplash.splashFactory,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          )),
-                      child: jobApplicationProvider.isLoading
-                          ? CustomLoading(
-                              isLoadingTextShowed: false,
-                              size: KSizes.md,
-                              padding: EdgeInsets.only(top: KSizes.xs - 2),
-                            )
-                          : Text(
-                              "${l10n.apply_now}",
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                    color: KColors.white,
-                                  ),
-                            ),
-                    ),
-                  )),
+                  // Expanded(
+                  //     child: SizedBox(
+                  //   width: double.infinity,
+                  //   height: 50.h,
+                  //   child: ElevatedButton(
+                  //     onPressed: jobApplicationProvider.isLoading
+                  //         ? null
+                  //         : () async {
+                  //             await jobApplicationProvider.applyJob(
+                  //                 context: context,
+                  //                 jobId: job.id,
+                  //                 onSuccess: () {});
+                  //           },
+                  //     style: ElevatedButton.styleFrom(
+                  //         backgroundColor: KColors.primary,
+                  //         splashFactory: NoSplash.splashFactory,
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(50),
+                  //         )),
+                  //     child: jobApplicationProvider.isLoading
+                  //         ? CustomLoading(
+                  //             isLoadingTextShowed: false,
+                  //             size: KSizes.md,
+                  //             padding: EdgeInsets.only(top: KSizes.xs - 2),
+                  //           )
+                  //         : Text(
+                  //             "${l10n.apply_now}",
+                  //             style: Theme.of(context)
+                  //                 .textTheme
+                  //                 .titleMedium!
+                  //                 .copyWith(
+                  //                   color: KColors.white,
+                  //                 ),
+                  //           ),
+                  //   ),
+                  // )),
+                  Consumer<JobApplicationStatusProvider>(
+                    builder: (context, provider, child) {
+                      if (provider.isLoading) {
+                        return CircularProgressIndicator();
+                      }
+
+                      return Expanded(
+                        child: SizedBox(
+                          width: double.infinity,
+                          height: 50.h,
+                          child: ElevatedButton(
+                            onPressed: provider.hasApplied
+                                ? null
+                                : () async {
+                                    await jobApplicationProvider.applyJob(
+                                        context: context,
+                                        jobId: job.id,
+                                        onSuccess: () {
+                                          provider.checkJobApplicationStatus(
+                                              context: context,
+                                              jobId: widget.jobId);
+                                        });
+                                  },
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: KColors.primary,
+                                splashFactory: NoSplash.splashFactory,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(50),
+                                )),
+                            child:
+                                //  jobApplicationProvider.isLoading
+                                //     ? CustomLoading(
+                                //         isLoadingTextShowed: false,
+                                //         size: KSizes.md,
+                                //         padding: EdgeInsets.only(top: KSizes.xs - 2),
+                                //       ):
+                                provider.hasApplied
+                                    ? Text("Applied")
+                                    : Text(
+                                        "${l10n.apply_now}",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium!
+                                            .copyWith(
+                                              color: KColors.white,
+                                            ),
+                                      ),
+                          ),
+                        ),
+                      );
+                    },
+                  )
                 ],
               ),
             ),

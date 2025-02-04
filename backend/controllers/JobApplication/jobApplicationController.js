@@ -48,10 +48,36 @@ const handleCreateJobApplication = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+
+const handleCheckJobApplicationStatus = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    const applicantId = req.user.id;
+
+    // Check if the user has applied for this job
+    const existingApplication = await JobApplication.findOne({
+      job: jobId,
+      applicant: applicantId,
+    });
+
+    res.status(200).json({ 
+      hasApplied: !!existingApplication,
+      applicationId: existingApplication ? existingApplication._id : null
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error" });
+  }
+};
 const handleGetAllJobApplications = async (req, res) => {
   try {
     const jobApplications = await JobApplication.find({})
-      .populate("job")
+      .populate({
+        path: "job",
+        populate: {
+          path: "company",
+        },
+      })
       .sort({ createdAt: -1 });
     res.status(200).json(jobApplications);
   } catch (error) {
@@ -351,4 +377,5 @@ module.exports = {
   handleUpdateJobApplicationStatus,
   handleGetJobApplicationsByJob,
   handleGetJobApplicationsByApplicant,
+  handleCheckJobApplicationStatus,
 };

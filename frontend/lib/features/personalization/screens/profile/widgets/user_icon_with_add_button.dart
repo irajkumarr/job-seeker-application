@@ -1,10 +1,9 @@
-
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
+import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
@@ -31,6 +30,7 @@ class UserIconWithAddButton extends StatelessWidget {
           Container(
             height: 100.h,
             width: 100.w,
+            padding: EdgeInsets.all(KSizes.xs - 2),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               border: Border.all(

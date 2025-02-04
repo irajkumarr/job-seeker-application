@@ -8,6 +8,7 @@ import 'package:frontend/features/authentication/providers/timer_provider.dart';
 import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_application_provider.dart';
+import 'package:frontend/features/dashboard/providers/job_application_status_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/providers/matched_jobs_provider.dart';
 import 'package:frontend/features/personalization/providers/contact_information_provider.dart';
@@ -52,6 +53,7 @@ class AppProviders {
     ChangeNotifierProvider(create: (_) => SavedJobsProvider()),
     ChangeNotifierProvider(create: (_) => MatchedJobsProvider()),
     ChangeNotifierProvider(create: (_) => JobApplicationProvider()),
+    ChangeNotifierProvider(create: (_) => JobApplicationStatusProvider()),
     ChangeNotifierProvider(create: (_) => PasswordProvider()),
     ChangeNotifierProvider(create: (_) => ResendTimerProvider()),
   ];
