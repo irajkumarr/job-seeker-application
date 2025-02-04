@@ -48,6 +48,38 @@ const handleCreateJobApplication = async (req, res) => {
     res.status(500).json({ message: "Server error" });
   }
 };
+const handleGetAllJobApplications = async (req, res) => {
+  try {
+    const jobApplications = await JobApplication.find({})
+      .populate("job")
+      .sort({ createdAt: -1 });
+    res.status(200).json(jobApplications);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+const handleGetJobPostingById = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const jobPosting = await JobPosting.findById(id).populate({
+      path: "company",
+
+      populate: {
+        path: "industry",
+      },
+    });
+
+    if (!jobPosting) {
+      return res.status(404).json({ message: "Job posting not found" });
+    }
+
+    res.status(200).json(jobPosting);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
 
 // Get all job applications for a job posting
 const handleGetJobApplicationsByJob = async (req, res) => {
@@ -312,6 +344,7 @@ const handleDeleteJobApplication = async (req, res) => {
 
 module.exports = {
   handleAddFeedbackToJobApplication,
+  handleGetAllJobApplications,
   handleAddNoteToJobApplication,
   handleCreateJobApplication,
   handleDeleteJobApplication,
