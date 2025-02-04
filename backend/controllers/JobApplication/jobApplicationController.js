@@ -60,9 +60,9 @@ const handleCheckJobApplicationStatus = async (req, res) => {
       applicant: applicantId,
     });
 
-    res.status(200).json({ 
+    res.status(200).json({
       hasApplied: !!existingApplication,
-      applicationId: existingApplication ? existingApplication._id : null
+      applicationId: existingApplication ? existingApplication._id : null,
     });
   } catch (error) {
     console.error(error);
@@ -76,6 +76,9 @@ const handleGetAllJobApplications = async (req, res) => {
         path: "job",
         populate: {
           path: "company",
+          populate: {
+            path: "industry",
+          },
         },
       })
       .sort({ createdAt: -1 });

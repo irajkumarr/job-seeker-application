@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/core/utils/shimmers/job_shimmer.dart';
+import 'package:frontend/features/dashboard/providers/job_application_provider.dart';
+import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
+import 'package:frontend/features/dashboard/screens/status/widgets/job_application_card.dart';
 import 'package:frontend/features/dashboard/widgets/login_redirect.dart';
 import 'package:frontend/features/dashboard/widgets/no_data_widget.dart';
 import 'package:frontend/features/dashboard/widgets/status_and_saved_jobs_appbar.dart';
@@ -18,9 +23,20 @@ class StatusScreen extends StatefulWidget {
 
 class _StatusScreenState extends State<StatusScreen> {
   @override
+  void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final jobApplicationProvider =
+          Provider.of<JobApplicationProvider>(context, listen: false);
+      jobApplicationProvider.fetchJobApplications();
+    });
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final box = GetStorage();
+    final jobApplicationProvider = Provider.of<JobApplicationProvider>(context);
     final String? token = box.read("token");
     if (token == null) {
       return LoginRedirect(
@@ -62,13 +78,21 @@ class _StatusScreenState extends State<StatusScreen> {
                                   ),
                         ),
                         SizedBox(height: KSizes.xs),
-                        Text(
-                          "0",
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                    color: KColors.primary,
-                                  ),
-                        ),
+                        jobApplicationProvider.isLoading
+                            ? CustomLoading(
+                                isLoadingTextShowed: false,
+                                size: KSizes.md,
+                                padding: EdgeInsets.only(top: KSizes.xs - 2),
+                              )
+                            : Text(
+                                "${jobApplicationProvider.jobApplications?.length ?? 0}",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                      color: KColors.primary,
+                                    ),
+                              ),
                       ],
                     ),
                   ),
@@ -101,16 +125,41 @@ class _StatusScreenState extends State<StatusScreen> {
             Expanded(
               child: TabBarView(
                 children: [
-                  NoDataWidget(
-                    title: "No data available",
-                    subTitle: "You haven't applied to any jobs.",
-                    image: "assets/images/content/my_status_person.gif",
-                    isButtonShowed: true,
-                    buttonText: "Start Browsing Jobs",
-                    onPressed: () {
-                      context.read<NavigationProvider>().onTap(0);
-                    },
-                  ),
+                  jobApplicationProvider.isLoading
+                      ? JobShimmer()
+                      : jobApplicationProvider.jobApplications == null ||
+                              jobApplicationProvider.jobApplications!.isEmpty
+                          ? NoDataWidget(
+                              title: "No data available",
+                              subTitle: "You haven't applied to any jobs.",
+                              image:
+                                  "assets/images/content/my_status_person.gif",
+                              isButtonShowed: true,
+                              buttonText: "Start Browsing Jobs",
+                              onPressed: () {
+                                context.read<NavigationProvider>().onTap(0);
+                              },
+                            )
+                          : RefreshIndicator(
+                              onRefresh: () async {
+                                return await jobApplicationProvider
+                                    .fetchJobApplications();
+                              },
+                              child: ListView.builder(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: KSizes.md,
+                                    vertical: KSizes.defaultSpace),
+                                itemCount: jobApplicationProvider
+                                        .jobApplications?.length ??
+                                    0,
+                                itemBuilder: (context, index) {
+                                  final jobApplication = jobApplicationProvider
+                                      .jobApplications![index];
+                                  return JobApplicationCard(
+                                      jobApplication: jobApplication);
+                                },
+                              ),
+                            ),
                   NoDataWidget(
                     title: "No data available",
                     subTitle: "No profile visitors yet",
