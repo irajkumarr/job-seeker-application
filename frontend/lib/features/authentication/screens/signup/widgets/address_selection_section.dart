@@ -270,7 +270,6 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';

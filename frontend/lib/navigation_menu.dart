@@ -6,7 +6,6 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
-import 'package:frontend/features/authentication/providers/login_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';

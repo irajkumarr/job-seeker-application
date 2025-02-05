@@ -6,8 +6,6 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
-import 'package:frontend/data/models/profile_detail_model.dart';
-import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/navigation_menu.dart';

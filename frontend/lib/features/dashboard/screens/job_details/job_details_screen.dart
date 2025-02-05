@@ -321,9 +321,14 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                               ? Icons.favorite
                               : Icons.favorite_border_outlined),
                           color: isJobSaved ? KColors.error : KColors.darkGrey,
-                          onPressed: () {
-                            provider.handleSavedJob(context, job.id);
-                          },
+                          onPressed:
+                              token == null || token.isEmpty || token == ""
+                                  ? () {
+                                      context.pushNamed(RoutesConstant.login);
+                                    }
+                                  : () {
+                                      provider.handleSavedJob(context, job.id);
+                                    },
                         ),
                       );
                     }),
@@ -339,7 +344,9 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             width: double.infinity,
                             height: 50.h,
                             child: ElevatedButton(
-                              onPressed: token == null
+                              onPressed: token == null ||
+                                      token.isEmpty ||
+                                      token == ""
                                   ? () {
                                       context.pushNamed(RoutesConstant.login);
                                     }
