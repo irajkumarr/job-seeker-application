@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_vector_icons/flutter_vector_icons.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -17,6 +19,7 @@ class PreferredSkillSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final categoryProvider = Provider.of<CategoryProvider>(context);
     return Column(
       children: [
@@ -24,7 +27,7 @@ class PreferredSkillSection extends StatelessWidget {
           children: [
             SizedBox(height: KSizes.defaultSpace),
             Text(
-              "What skills do you have",
+              "${l10n.what_skills_do_you_have}",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -32,7 +35,7 @@ class PreferredSkillSection extends StatelessWidget {
             ),
             SizedBox(height: KSizes.xs),
             Text(
-              "Choose five skills you have",
+              "${l10n.choose_five_skills_you_have}",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: KColors.darkerGrey,
@@ -70,7 +73,7 @@ class PreferredSkillSection extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Skill",
+                            "${l10n.skill}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -115,7 +118,7 @@ class PreferredSkillSection extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            hintText: "Search Category",
+                            hintText: "${l10n.search_skill}",
                             border: const OutlineInputBorder().copyWith(
                               borderRadius: BorderRadius.circular(50),
                               borderSide: const BorderSide(
@@ -149,19 +152,11 @@ class PreferredSkillSection extends StatelessWidget {
                                   if (categoryProvider.selectedSkills.length >=
                                           5 &&
                                       !isSelected) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        elevation: 0,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(KSizes.md),
-                                        ),
-                                        behavior: SnackBarBehavior.floating,
-                                        backgroundColor: KColors.error,
-                                        content: Text("Max limit reached"),
-                                        duration: Duration(seconds: 2),
-                                      ),
-                                    );
+                                   
+                                    KSnackbar.CustomSnackbar(
+                                        context,
+                                        "${l10n.max_limit_reached}",
+                                        KColors.error);
                                   } else {
                                     categoryProvider.toggleSkill(skill);
                                   }
@@ -197,7 +192,7 @@ class PreferredSkillSection extends StatelessWidget {
                         // Next Button
                         categoryProvider.selectedSkills.length >= 1
                             ? CustomButton(
-                                text: "Next",
+                                text: "${l10n.next}",
                                 onPressed: () {
                                   context.goNamed(
                                       RoutesConstant.signupPreferredLocation);

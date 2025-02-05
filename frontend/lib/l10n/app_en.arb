@@ -62,6 +62,8 @@
   "marital_status": "Marital Status",
   "full_name": "Full Name",
   "search_category": "Search Category",
+  "what_skills_do_you_have": "What skills do you have",
+  "select_preferred_category": "Select Preferred Category",
   "search_skill": "Search Skill",
   "choose_five_jobs_of_your_choice": "Choose up to five jobs of your choice.",
   "expected_salary": "Expected Salary",

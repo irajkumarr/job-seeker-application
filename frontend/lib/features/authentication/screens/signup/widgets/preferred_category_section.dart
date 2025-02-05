@@ -7,6 +7,7 @@ import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.d
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 class PreferredCategorySection extends StatelessWidget {
@@ -16,6 +17,7 @@ class PreferredCategorySection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final categoryProvider = Provider.of<CategoryProvider>(context);
     return Column(
       children: [
@@ -23,7 +25,7 @@ class PreferredCategorySection extends StatelessWidget {
           children: [
             SizedBox(height: KSizes.defaultSpace),
             Text(
-              "Select Preferred Category",
+              "${l10n.select_preferred_category}",
               style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
@@ -31,7 +33,7 @@ class PreferredCategorySection extends StatelessWidget {
             ),
             SizedBox(height: KSizes.xs),
             Text(
-              "Choose up to five jobs of your choice.",
+              "${l10n.choose_five_jobs_of_your_choice}",
               textAlign: TextAlign.center,
               style: Theme.of(context).textTheme.titleSmall?.copyWith(
                     color: KColors.darkerGrey,
@@ -66,7 +68,7 @@ class PreferredCategorySection extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Category",
+                            "${l10n.category}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleLarge!
@@ -111,7 +113,7 @@ class PreferredCategorySection extends StatelessWidget {
                                 ),
                               ),
                             ),
-                            hintText: "Search Category",
+                            hintText: "${l10n.search_category}",
                             border: const OutlineInputBorder().copyWith(
                               borderRadius: BorderRadius.circular(50),
                               borderSide: const BorderSide(
@@ -148,7 +150,7 @@ class PreferredCategorySection extends StatelessWidget {
                                           5 &&
                                       !isSelected) {
                                     KSnackbar.CustomSnackbar(context,
-                                        "Max limit reached", KColors.error);
+                                        "${l10n.max_limit_reached}", KColors.error);
                                   } else {
                                     categoryProvider
                                         .toggleCategory(category.name);
@@ -185,7 +187,7 @@ class PreferredCategorySection extends StatelessWidget {
                         // Next Button
                         categoryProvider.selectedCategories.length >= 1
                             ? CustomButton(
-                                text: "Next",
+                                text: "${l10n.next}",
                                 onPressed: () {
                                   categoryProvider.toggleMinimizedCategory();
                                 },
