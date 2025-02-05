@@ -24,7 +24,9 @@ const verifyToken = (req, res, next) => {
 };
 
 const generateToken = (userData) => {
-  return jwt.sign(userData, process.env.JWT_SECRET);
+  return jwt.sign(userData, process.env.JWT_SECRET, {
+    expiresIn: "30d",
+  });
 };
 
 const verifyAndAuthorize = (req, res, next) => {

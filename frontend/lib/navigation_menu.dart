@@ -11,11 +11,65 @@ import 'package:frontend/features/dashboard/screens/status/status.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:provider/provider.dart';
 
-class NavigationMenu extends StatelessWidget {
+class NavigationMenu extends StatefulWidget {
   const NavigationMenu({super.key});
+
+  @override
+  State<NavigationMenu> createState() => _NavigationMenuState();
+}
+
+class _NavigationMenuState extends State<NavigationMenu> {
+  final storage = GetStorage();
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      checkToken();
+    });
+  }
+
+  void checkToken() {
+    Future.delayed(Duration(seconds: 1), () {
+      String? token = storage.read("token");
+      if (token == null || token.isEmpty) {
+        return;
+      }
+
+      if (JwtDecoder.isExpired(token)) {
+        storage.remove("token");
+        showTokenExpiredDialog();
+      }
+    });
+  }
+
+  void showTokenExpiredDialog() {
+    showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (context) => AlertDialog(
+        title: Text("Session Expired"),
+        content: Text("Your session has expired. Please log in again."),
+        actions: [
+          TextButton(
+            onPressed: () {
+              context.pop();
+              // Navigator.pushReplacement(
+              //   context,
+              //   MaterialPageRoute(builder: (context) => LoginScreen()),
+              // );
+            },
+            child: Text("OK"),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

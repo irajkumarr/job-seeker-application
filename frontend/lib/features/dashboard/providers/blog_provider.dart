@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/blog_model.dart';
 import 'package:frontend/data/models/error_model.dart';
@@ -26,11 +25,11 @@ class BlogProvider with ChangeNotifier {
 
     try {
       final response = await http.get(
-          Uri.parse("https://api.rojgari.com/api/v1/blogs/?limit=4"),
+          Uri.parse("https://api.rojgari.com/api/v1/blogs/?limit=7"),
           headers: {
             'Content-Type': 'application/json; charset=utf-8',
           });
-      print(response.statusCode);
+
       if (response.statusCode == 200) {
         _blogs = blogModelFromJson(response.body);
         _error = null; // No error
