@@ -181,11 +181,6 @@ class _SignupFormState extends State<SignupForm> {
           CustomButton(
             text: l10n.sign_up,
             onPressed: () async {
-              // if (_signupKey.currentState!.validate()) {
-
-              //   await signupPhoneAlert(
-              //       context, _mobileNumberController.text.trim());
-              // }
               if (_signupKey.currentState!.validate()) {
                 if (!signupProvider.termsAndConditions) {
                   setState(() {

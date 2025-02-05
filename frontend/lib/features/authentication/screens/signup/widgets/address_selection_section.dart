@@ -335,7 +335,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
       }
     } catch (e) {
       print('Error fetching suggestions: $e');
-      showToast('Error fetching address suggestions');
+      print('Error fetching address suggestions');
     }
   }
 
@@ -352,7 +352,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
       widget.locationProvider.setSelectedStreet(address);
     } catch (e) {
       print('Error processing address selection: $e');
-      showToast('Error processing address selection');
+      print('Error processing address selection');
     }
   }
 

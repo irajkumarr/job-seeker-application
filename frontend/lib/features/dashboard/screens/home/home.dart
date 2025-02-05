@@ -87,8 +87,8 @@ class HomeScreen extends StatelessWidget {
                     SizedBox(height: KSizes.defaultSpace),
                     HomeQuickLinksSection(),
                     //blogs section
-                    SizedBox(height: KSizes.defaultSpace),
-                    HomeBlogsSection(),
+                    // SizedBox(height: KSizes.defaultSpace),
+                    // HomeBlogsSection(),
                     //all jobs section
                     SizedBox(height: KSizes.defaultSpace),
                     HomeAllJobsSection(),

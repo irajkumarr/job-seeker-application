@@ -27,7 +27,6 @@ class _LoginFormState extends State<LoginForm> {
   final _loginKey = GlobalKey<FormState>();
   final FocusNode _mobileNumberFocusNode = FocusNode();
 
-
   @override
   void initState() {
     super.initState();
@@ -48,6 +47,9 @@ class _LoginFormState extends State<LoginForm> {
     });
     _mobileNumberFocusNode.addListener(() {
       setState(() {});
+    });
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _mobileNumberFocusNode.requestFocus();
     });
   }
 

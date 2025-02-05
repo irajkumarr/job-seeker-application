@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
@@ -16,6 +17,7 @@ import 'package:frontend/features/dashboard/screens/job_details/widgets/job_desc
 import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -68,7 +70,8 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
     final jobProvider = Provider.of<JobProvider>(context);
     final jobApplicationProvider = Provider.of<JobApplicationProvider>(context);
     final l10n = AppLocalizations.of(context)!;
-
+    final box = GetStorage();
+    final String? token = box.read("token");
     // Loading and error handling
     if (jobProvider.isLoading) {
       return Scaffold(
@@ -336,26 +339,33 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                             width: double.infinity,
                             height: 50.h,
                             child: ElevatedButton(
-                              onPressed: provider.hasApplied
-                                  ? null
-                                  : () async {
-                                      await alertApplyJob(context, () async {
-                                        context.pop();
-                                        await jobApplicationProvider.applyJob(
-                                            context: context,
-                                            jobId: job.id,
-                                            onSuccess: () async {
-                                              await showCongratulationsDialog(
-                                                  context, () {
-                                                context.pop();
-                                              });
-                                              provider
-                                                  .checkJobApplicationStatus(
-                                                      context: context,
-                                                      jobId: widget.jobId);
-                                            });
-                                      });
-                                    },
+                              onPressed: token == null
+                                  ? () {
+                                      context.pushNamed(RoutesConstant.login);
+                                    }
+                                  : provider.hasApplied
+                                      ? null
+                                      : () async {
+                                          await alertApplyJob(context,
+                                              () async {
+                                            context.pop();
+                                            await jobApplicationProvider
+                                                .applyJob(
+                                                    context: context,
+                                                    jobId: job.id,
+                                                    onSuccess: () async {
+                                                      await showCongratulationsDialog(
+                                                          context, () {
+                                                        context.pop();
+                                                      });
+                                                      provider
+                                                          .checkJobApplicationStatus(
+                                                              context: context,
+                                                              jobId:
+                                                                  widget.jobId);
+                                                    });
+                                          });
+                                        },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor: KColors.primary,
                                   splashFactory: NoSplash.splashFactory,

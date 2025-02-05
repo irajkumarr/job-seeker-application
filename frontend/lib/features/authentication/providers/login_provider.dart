@@ -100,7 +100,8 @@ class LoginProvider with ChangeNotifier {
         setLoading = false;
         context.pop();
         // context.read<NavigationProvider>().onTap(3);
-        KSnackbar.CustomSnackbar(context, "Login Successfully!", Colors.green);
+        KSnackbar.CustomSnackbar(
+            context, "Login Successfully!", KColors.primary);
       } else {
         setLoading = false;
         var error = errorModelFromJson(response.body);
@@ -134,7 +135,8 @@ class LoginProvider with ChangeNotifier {
         box.write("remember_me", true);
       }
 
-      KSnackbar.CustomSnackbar(context, "Log out Successfully!", Colors.green);
+      KSnackbar.CustomSnackbar(
+          context, "Log out Successfully!", KColors.primary);
     } catch (error) {
       showToast("Error during logout: $error");
     } finally {
