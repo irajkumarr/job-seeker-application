@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:frontend/data/models/blog_model.dart';
 import 'package:frontend/data/models/error_model.dart';
@@ -31,7 +33,9 @@ class BlogProvider with ChangeNotifier {
           });
 
       if (response.statusCode == 200) {
+        // print(response.body);
         _blogs = blogModelFromJson(response.body);
+        print(_blogs!.toJson());
         _error = null; // No error
       } else {
         _error = ErrorModel(status: false, message: "Failed to load blogs.");

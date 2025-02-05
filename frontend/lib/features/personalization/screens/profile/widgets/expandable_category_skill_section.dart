@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 class ExpandableCategoryAndSkillSection extends StatelessWidget {
@@ -13,7 +14,8 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
     required this.leadingIcon,
     required this.leadingIconColor,
     required this.data,
-    required this.height, required this.onTap,
+    required this.height,
+    required this.onTap,
   });
 
   final String sectionId;
@@ -26,6 +28,7 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         final isExpanded = provider.isExpanded(sectionId);
@@ -148,7 +151,7 @@ class ExpandableCategoryAndSkillSection extends StatelessWidget {
                               ),
                               SizedBox(width: KSizes.md),
                               Text(
-                                "Add ${title}",
+                                "${l10n.add} ${title}",
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyLarge!

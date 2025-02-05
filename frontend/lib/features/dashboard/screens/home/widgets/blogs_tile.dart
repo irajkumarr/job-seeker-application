@@ -22,7 +22,7 @@ class BlogsTile extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime parsedDate = DateTime.parse(blog.createdAt.toString()).toLocal();
 
-    String createdFullDate = DateFormat('MMMM d yyyy').format(parsedDate);
+    String createdFullDate = DateFormat('MMMM dd, yyyy').format(parsedDate);
 
     final l10n = AppLocalizations.of(context)!;
     return SizedBox(

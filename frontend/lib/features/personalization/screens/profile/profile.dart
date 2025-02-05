@@ -17,6 +17,7 @@ import 'package:frontend/features/personalization/providers/reference_provider.d
 import 'package:frontend/features/personalization/providers/social_account_provider.dart';
 import 'package:frontend/features/personalization/providers/training_provider.dart';
 import 'package:frontend/features/personalization/providers/user_language_provider.dart';
+import 'package:frontend/features/personalization/screens/profile/profile_settings.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_category_skill_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_job_preferred_section.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/expandable_profile_section.dart';
@@ -104,7 +105,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     actions: [
                       IconButton(
                         onPressed: () {
-                          context.pushNamed(RoutesConstant.profileSettings);
+                          // context.pushNamed(RoutesConstant.profileSettings);
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      ProfileSettingsScreen()));
                         },
                         icon: const Icon(Icons.settings_outlined),
                       ),

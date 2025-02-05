@@ -79,13 +79,13 @@ class LanguageBottomSheet extends StatelessWidget {
                   groupValue: currentLocale,
                   onChanged: (value) {
                     languageProvider.setLocale(const Locale('ne', ''));
-                    // Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   activeColor: KColors.primary,
                 ),
                 onTap: () {
                   languageProvider.setLocale(const Locale('ne', ''));
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
               ListTile(
@@ -102,13 +102,13 @@ class LanguageBottomSheet extends StatelessWidget {
                   groupValue: currentLocale,
                   onChanged: (value) {
                     languageProvider.setLocale(const Locale('en', ''));
-                    // Navigator.pop(context);
+                    Navigator.pop(context);
                   },
                   activeColor: KColors.primary,
                 ),
                 onTap: () {
                   languageProvider.setLocale(const Locale('en', ''));
-                  // Navigator.pop(context);
+                  Navigator.pop(context);
                 },
               ),
             ],
