@@ -13,6 +13,7 @@ import 'package:frontend/features/authentication/providers/signup_provider.dart'
 import 'package:frontend/features/authentication/screens/signup/personal_details_screen.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -79,11 +80,8 @@ class _ProfilePersonalInformationState
   @override
   Widget build(BuildContext context) {
     final detailProvider = Provider.of<DetailsProvider>(context);
-    final signupProvider = Provider.of<SignupProvider>(context);
-    final categoryProvider = Provider.of<CategoryProvider>(context);
     final profileProvider = Provider.of<ProfileProvider>(context);
-    final locationProvider = Provider.of<LocationProvider>(context);
-
+    final l10n = AppLocalizations.of(context)!;
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
       if (detailProvider.selectedGender == null ||
           detailProvider.selectedMaritalStatus == null ||
@@ -92,7 +90,7 @@ class _ProfilePersonalInformationState
           detailProvider.selectedReligion == null) {
         KSnackbar.CustomSnackbar(
           context,
-          "Please select required fields",
+          "${l10n.please_select_required_fields}",
           KColors.error,
         );
         return false;
@@ -106,32 +104,6 @@ class _ProfilePersonalInformationState
         onPressed: () async {
           if (!_validateInputs(context, detailProvider)) return;
           if (_formKey.currentState!.validate()) {
-            // PersonalDetails model = PersonalDetails(
-            //   age: detailProvider.ageCounter,
-            //   experience: profileProvider
-            //           .profile?.profile?[0].personalDetails?.experience ??
-            //       0,
-            //   gender: detailProvider.selectedGender,
-            //   religion: detailProvider.selectedReligion,
-            //   nationality: detailProvider.selectedNationality,
-            //   maritalStatus: detailProvider.selectedMaritalStatus,
-
-            //   email: _emailController.text.trim(),
-            //   disability: Disability(
-            //     hasDisability: _haveDisability,
-            //     details: detailProvider.selectedDisability,
-            //   ),
-            //   foreignEmployment: ForeignEmployment(
-            //     hasWorkedAboroad: profileProvider.profile?.profile?[0]
-            //             .personalDetails?.foreignEmployment?.hasWorkedAboroad ??
-            //         false,
-            //     details: profileProvider.profile?.profile?[0].personalDetails
-            //             ?.foreignEmployment?.details ??
-            //         "",
-            //   ),
-            //   // ),
-            // );
-
             PersonalDetails model = PersonalDetails(
               age: detailProvider.ageCounter,
               experience: profileProvider
@@ -163,14 +135,14 @@ class _ProfilePersonalInformationState
                   () async {
                 await profileProvider.fetchProfile(forceRefresh: true);
                 detailProvider.reset();
-                context.pop(); // Only pop after everything is done
+                context.pop();
               });
             } catch (error) {
               print("Error updating profile: $error");
             }
           }
         },
-        buttonText: "Submit",
+        buttonText: "${l10n.submit}",
         child: Column(
           children: [
             SizedBox(height: KSizes.defaultSpace),
@@ -182,7 +154,7 @@ class _ProfilePersonalInformationState
                   Column(
                     children: [
                       Text(
-                        "Personal Information",
+                        "${l10n.personal_information}",
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       SizedBox(height: KSizes.defaultSpace),
@@ -203,9 +175,9 @@ class _ProfilePersonalInformationState
                                   .copyWith(fontSize: KSizes.fontSizeSm),
                               validator: (value) =>
                                   KValidator.validateEmptyText(
-                                      "Full Name", value),
+                                      "${l10n.full_name}", value),
                               decoration: InputDecoration(
-                                labelText: "Full Name",
+                                labelText: "${l10n.full_name}",
                               ),
                             ),
                             SizedBox(height: KSizes.md),
@@ -218,7 +190,7 @@ class _ProfilePersonalInformationState
                                 Row(
                                   children: [
                                     Text(
-                                      "Gender",
+                                      "${l10n.gender}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -281,7 +253,7 @@ class _ProfilePersonalInformationState
                             Consumer<DetailsProvider>(
                                 builder: (context, detailProvider, child) {
                               return CounterWithTextWidget(
-                                text: "Age",
+                                text: "${l10n.age}",
                                 isRequired: false,
                                 value: detailProvider.ageCounter
                                     .toStringAsFixed(0),
@@ -299,7 +271,7 @@ class _ProfilePersonalInformationState
                                 Row(
                                   children: [
                                     Text(
-                                      "Marital Status",
+                                      "${l10n.marital_status}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -369,7 +341,7 @@ class _ProfilePersonalInformationState
                                 Row(
                                   children: [
                                     Text(
-                                      "Nationality",
+                                      "${l10n.nationality}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -438,7 +410,7 @@ class _ProfilePersonalInformationState
                                 Row(
                                   children: [
                                     Text(
-                                      "Religion",
+                                      "${l10n.religion}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -511,7 +483,7 @@ class _ProfilePersonalInformationState
                               validator: (value) =>
                                   KValidator.validateEmail(value),
                               decoration: InputDecoration(
-                                labelText: "Email",
+                                labelText: "${l10n.email}",
                               ),
                             ),
 
@@ -522,7 +494,7 @@ class _ProfilePersonalInformationState
                             Row(
                               children: [
                                 Text(
-                                  "Is there any form of disability?",
+                                  "${l10n.is_there_any_disability}",
                                   style: Theme.of(context).textTheme.titleSmall,
                                 ),
                                 Spacer(),
@@ -545,7 +517,7 @@ class _ProfilePersonalInformationState
                                   Row(
                                     children: [
                                       Text(
-                                        "Disability",
+                                        "${l10n.disablity}",
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall,

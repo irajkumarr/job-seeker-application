@@ -1,10 +1,10 @@
-
 import 'package:flutter/material.dart';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/appbar/appbar.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_all_jobs_section.dart';
@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
         await Future.wait([
           Provider.of<JobProvider>(context, listen: false).fetchJobPlaces(),
           Provider.of<JobProvider>(context, listen: false).fetchJobs(),
+          Provider.of<BlogProvider>(context, listen: false).fetchBlogs(),
           Provider.of<CategoryProvider>(context, listen: false)
               .fetchCategories(),
         ]);

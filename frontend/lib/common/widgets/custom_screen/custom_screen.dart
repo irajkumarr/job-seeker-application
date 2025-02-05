@@ -14,15 +14,18 @@ class CustomScreen extends StatelessWidget {
   final bool isProgressBarShowed;
   final double? progressBarWidth;
   final bool showAppBar;
+  final bool isIconShowed;
 
-  const CustomScreen(
-      {super.key,
-      required this.child,
-      this.buttonText,
-      required this.onPressed,
-      this.isProgressBarShowed = false,
-      this.progressBarWidth,
-      this.showAppBar = true});
+  const CustomScreen({
+    super.key,
+    required this.child,
+    this.buttonText,
+    required this.onPressed,
+    this.isProgressBarShowed = false,
+    this.progressBarWidth,
+    this.showAppBar = true,
+    this.isIconShowed = true,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +95,7 @@ class CustomScreen extends StatelessWidget {
                   horizontal: KSizes.md, vertical: KSizes.sm),
               child: CustomButton(
                 text: buttonText ?? l10n.next,
-                isIconShowed: true,
+                isIconShowed: isIconShowed,
                 icon: Icons.arrow_forward,
                 onPressed: onPressed,
               ),

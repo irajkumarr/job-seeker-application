@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -33,7 +34,7 @@ class _ProfileSkillState extends State<ProfileSkill> {
           Provider.of<CategoryProvider>(context, listen: false);
 
       await categoryProvider.selectedSkills;
-   
+
       if (profileProvider.profile?.profile![0].skills != null) {
         categoryProvider.selectedSkills
             .addAll(profileProvider.profile?.profile![0].skills ?? []);
@@ -61,14 +62,15 @@ class _ProfileSkillState extends State<ProfileSkill> {
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final profileProvider = Provider.of<ProfileProvider>(context);
-
+    final l10n = AppLocalizations.of(context)!;
     // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: _onWillPop, // Intercept back button press
       child: FullScreenOverlay(
         isLoading: profileProvider.isLoading,
         child: CustomScreen(
-          buttonText: "Update",
+          buttonText: "${l10n.update}",
+          isIconShowed: false,
           onPressed: () {
             final selectedSkills = categoryProvider.selectedSkills;
             if (selectedSkills.isEmpty) {
@@ -92,7 +94,7 @@ class _ProfileSkillState extends State<ProfileSkill> {
             child: Column(
               children: [
                 Text(
-                  "Skill",
+                  "${l10n.skill}",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 SizedBox(height: KSizes.md),
@@ -115,7 +117,7 @@ class _ProfileSkillState extends State<ProfileSkill> {
                         ),
                       ),
                     ),
-                    hintText: "Search for Skill",
+                    hintText: "${l10n.search_skill}",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide:
@@ -141,7 +143,7 @@ class _ProfileSkillState extends State<ProfileSkill> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Choose five skills you have.",
+                        "${l10n.choose_five_skills_you_have}",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
@@ -171,7 +173,7 @@ class _ProfileSkillState extends State<ProfileSkill> {
                               if (categoryProvider.selectedSkills.length >= 5 &&
                                   !isSelected) {
                                 KSnackbar.CustomSnackbar(context,
-                                    "Max limit reached", KColors.error);
+                                    "${l10n.max_limit_reached}", KColors.error);
                               } else {
                                 categoryProvider.toggleSkill(skill);
                                 setState(() {

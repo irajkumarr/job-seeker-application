@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -61,18 +62,20 @@ class _ProfileCategoryState extends State<ProfileCategory> {
   Widget build(BuildContext context) {
     final categoryProvider = Provider.of<CategoryProvider>(context);
     final profileProvider = Provider.of<ProfileProvider>(context);
-
+    final l10n = AppLocalizations.of(context)!;
+    // ignore: deprecated_member_use
     return WillPopScope(
-      onWillPop: _onWillPop, // Intercept back button press
+      onWillPop: _onWillPop,
       child: FullScreenOverlay(
         isLoading: profileProvider.isLoading,
         child: CustomScreen(
-          buttonText: "Update",
+          buttonText: "${l10n.update}",
+          isIconShowed: false,
           onPressed: () {
             final selectedCategories = categoryProvider.selectedCategories;
             if (selectedCategories.isEmpty) {
               KSnackbar.CustomSnackbar(context,
-                  "Please select at least one category", KColors.error);
+                  "${l10n.please_select_at_least_one_category}", KColors.error);
             } else {
               profileProvider.updatePreferredCategories(
                 context,
@@ -91,7 +94,7 @@ class _ProfileCategoryState extends State<ProfileCategory> {
             child: Column(
               children: [
                 Text(
-                  "Category",
+                  "${l10n.category}",
                   style: Theme.of(context).textTheme.headlineMedium,
                 ),
                 SizedBox(height: KSizes.md),
@@ -114,7 +117,7 @@ class _ProfileCategoryState extends State<ProfileCategory> {
                         ),
                       ),
                     ),
-                    hintText: "Search Category",
+                    hintText: "${l10n.search_category} ",
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(50),
                       borderSide:
@@ -140,7 +143,7 @@ class _ProfileCategoryState extends State<ProfileCategory> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
-                        "Choose up to five jobs of your choice.",
+                        "${l10n.choose_five_jobs_of_your_choice}",
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
                       Text(
@@ -171,7 +174,7 @@ class _ProfileCategoryState extends State<ProfileCategory> {
                                       5 &&
                                   !isSelected) {
                                 KSnackbar.CustomSnackbar(context,
-                                    "Max limit reached", KColors.error);
+                                    "${l10n.max_limit_reached}", KColors.error);
                               } else {
                                 categoryProvider.toggleCategory(category.name);
                                 setState(() {
