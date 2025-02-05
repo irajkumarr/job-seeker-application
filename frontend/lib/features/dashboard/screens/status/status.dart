@@ -129,12 +129,13 @@ class _StatusScreenState extends State<StatusScreen> {
                       : jobApplicationProvider.jobApplications == null ||
                               jobApplicationProvider.jobApplications!.isEmpty
                           ? NoDataWidget(
-                              title: "No data available",
-                              subTitle: "You haven't applied to any jobs.",
+                              title: "${l10n.no_data_available}",
+                              subTitle:
+                                  "${l10n.you_have_not_applied_to_any_jobs}",
                               image:
                                   "assets/images/content/my_status_person.gif",
                               isButtonShowed: true,
-                              buttonText: "Start Browsing Jobs",
+                              buttonText: "${l10n.start_browsing_jobs}",
                               onPressed: () {
                                 context.read<NavigationProvider>().onTap(0);
                               },
@@ -160,8 +161,8 @@ class _StatusScreenState extends State<StatusScreen> {
                               ),
                             ),
                   NoDataWidget(
-                    title: "No data available",
-                    subTitle: "No profile visitors yet",
+                    title: "${l10n.no_data_available}",
+                    subTitle: "${l10n.no_profile_visitors_yet}",
                     image: "assets/images/content/my_status_person.gif",
                     isButtonShowed: false,
                   ),

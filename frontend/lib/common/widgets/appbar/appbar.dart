@@ -34,26 +34,26 @@ class Appbar extends StatelessWidget {
                   final lang = languageProvider.locale.languageCode == 'ne'
                       ? "EN"
                       : "ने";
-                  return Row(
-                    spacing: KSizes.sm,
-                    children: [
-                      Text(
-                        lang,
-                        style:
-                            Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  fontWeight: FontWeight.w700,
-                                ),
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          languageProvider.toggleLanguage();
-                        },
-                        child: Image.asset(
+                  return GestureDetector(
+                    onTap: () {
+                      languageProvider.toggleLanguage();
+                    },
+                    child: Row(
+                      spacing: KSizes.sm,
+                      children: [
+                        Text(
+                          lang,
+                          style:
+                              Theme.of(context).textTheme.titleMedium!.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                        ),
+                        Image.asset(
                           flagImage,
                           width: 25.w,
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   );
                 }),
                 SizedBox(width: KSizes.sm),

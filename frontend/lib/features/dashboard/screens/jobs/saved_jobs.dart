@@ -63,7 +63,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "Matched Jobs",
+                          "${l10n.matched_jobs}",
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.w500,
@@ -93,7 +93,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "Saved Jobs",
+                          "${l10n.saved_jobs}",
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.w500,
@@ -129,13 +129,12 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                       ? JobShimmer()
                       : matchedJobsProvider.matchedJobs.isEmpty
                           ? NoDataWidget(
-                              title: "No data available",
-                              subTitle:
-                                  "There are no matched jobs available for you at the moment.",
+                              title: "${l10n.no_data_available}",
+                              subTitle: "${l10n.there_are_no_matched_jobs}",
                               image:
                                   "assets/images/content/my_status_person.gif",
                               isButtonShowed: true,
-                              buttonText: "Get Started",
+                              buttonText: "${l10n.get_started}",
                               onPressed: () {
                                 context.read<NavigationProvider>().onTap(0);
                               },
@@ -162,12 +161,11 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
                       ? JobShimmer()
                       : savedJobsProvider.savedJobs.isEmpty
                           ? NoDataWidget(
-                              title: "It's time to find your favourite jobs!",
-                              subTitle:
-                                  "Click on the icon ❤ to boomark or shortlist any jobs.",
+                              title: "${l10n.time_to_find_favourite_jobs}",
+                              subTitle: "${l10n.clik_on_the_icon_to_bookmark}",
                               image: "assets/images/content/heart.gif",
                               isButtonShowed: true,
-                              buttonText: "Start Browsing Jobs",
+                              buttonText: "${l10n.start_browsing_jobs}",
                               onPressed: () {
                                 context.read<NavigationProvider>().onTap(0);
                               },

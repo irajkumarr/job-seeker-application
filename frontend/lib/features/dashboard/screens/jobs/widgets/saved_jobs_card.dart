@@ -9,6 +9,7 @@ import 'package:frontend/data/models/user_saved_jobs_model.dart';
 import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
+
 class SavedJobsCard extends StatelessWidget {
   const SavedJobsCard({
     super.key,
