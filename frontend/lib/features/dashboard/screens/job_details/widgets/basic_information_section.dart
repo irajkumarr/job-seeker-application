@@ -43,7 +43,7 @@ class BasicInformationSection extends StatelessWidget {
               InfoRow(
                   label: '${l10n.salary}',
                   value:
-                      "NRs. ${job.salary.toStringAsFixed(0)} ${l10n.monthly}"),
+                      "${l10n.nrs} ${job.salary.toStringAsFixed(0)} ${l10n.monthly}"),
               InfoRow(
                   label: '${l10n.job_level}',
                   value: job.basicInformation.jobLevel),
@@ -60,8 +60,9 @@ class BasicInformationSection extends StatelessWidget {
               InfoRow(
                   label: '${l10n.experience}',
                   value:
-                      "${job.basicInformation.experience.toStringAsFixed(0)} years"),
-              InfoRow(label: 'Shift', value: job.basicInformation.shift),
+                      "${job.basicInformation.experience.toStringAsFixed(0)} ${l10n.years}"),
+              InfoRow(
+                  label: '${l10n.shift}', value: job.basicInformation.shift),
             ],
           ),
         ),

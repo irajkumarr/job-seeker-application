@@ -24,7 +24,7 @@ class JobCard extends StatelessWidget {
   Widget build(BuildContext context) {
     DateTime parsedDate = DateTime.parse(job.expiryDate.toString()).toLocal();
 
-    String expiryFullDate = DateFormat('MMMM d yyyy').format(parsedDate);
+    String expiryFullDate = DateFormat('MMMM dd, yyyy').format(parsedDate);
 
     final l10n = AppLocalizations.of(context)!;
     return Padding(

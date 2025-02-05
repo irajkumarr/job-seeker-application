@@ -117,7 +117,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
     DateTime parsedDate =
         DateTime.parse(jobProvider.job!.expiryDate.toString()).toLocal();
 
-    String expiryFullDate = DateFormat('MMMM d yyyy').format(parsedDate);
+    String expiryFullDate = DateFormat('MMMM dd, yyyy').format(parsedDate);
     // Main UI
     return FullScreenOverlay(
       isLoading: jobApplicationProvider.isLoading,
@@ -222,7 +222,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   InfoItem(
                     icon: Icons.money,
                     text:
-                        "NRs. ${job.salary.toStringAsFixed(0)} ${l10n.monthly}",
+                        "${l10n.nrs} ${job.salary.toStringAsFixed(0)} ${l10n.monthly}",
                   ),
                   SizedBox(height: KSizes.sm),
 
@@ -364,33 +364,26 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(50),
                                   )),
-                              child:
-                                  //  jobApplicationProvider.isLoading
-                                  //     ? CustomLoading(
-                                  //         isLoadingTextShowed: false,
-                                  //         size: KSizes.md,
-                                  //         padding: EdgeInsets.only(top: KSizes.xs - 2),
-                                  //       ):
-                                  provider.hasApplied
-                                      ? Text(
-                                          "Applied",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                                color: KColors.white,
-                                              ),
-                                        )
-                                      : Text(
-                                          "${l10n.apply_now}",
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium!
-                                              .copyWith(
-                                                // fontWeight: FontWeight.w700,
-                                                color: KColors.white,
-                                              ),
-                                        ),
+                              child: provider.hasApplied
+                                  ? Text(
+                                      "${l10n.applied}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                            color: KColors.white,
+                                          ),
+                                    )
+                                  : Text(
+                                      "${l10n.apply_now}",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                            // fontWeight: FontWeight.w700,
+                                            color: KColors.white,
+                                          ),
+                                    ),
                             ),
                           ),
                         );
