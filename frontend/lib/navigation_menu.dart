@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/alert_box/alert_box.dart';
 import 'package:frontend/core/network/connectivity_checker.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
@@ -9,6 +10,7 @@ import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
+import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
@@ -43,32 +45,12 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
       if (JwtDecoder.isExpired(token)) {
         storage.remove("token");
-        showTokenExpiredDialog();
+        showTokenExpiredDialog(context, () {
+          context.pop();
+          context.pushNamed(RoutesConstant.login);
+        });
       }
     });
-  }
-
-  void showTokenExpiredDialog() {
-    showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (context) => AlertDialog(
-        title: Text("Session Expired"),
-        content: Text("Your session has expired. Please log in again."),
-        actions: [
-          TextButton(
-            onPressed: () {
-              context.pop();
-              // Navigator.pushReplacement(
-              //   context,
-              //   MaterialPageRoute(builder: (context) => LoginScreen()),
-              // );
-            },
-            child: Text("OK"),
-          ),
-        ],
-      ),
-    );
   }
 
   @override
