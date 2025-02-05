@@ -14,23 +14,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-const authRoutes = require("./routes/Auth/auth");
-const userRoutes = require("./routes/User/user");
-const userProfileRoutes = require("./routes/User/profile");
-const userLanguageRoutes = require("./routes/User/language");
-const userTrainingRoutes = require("./routes/User/training");
-const userEducationRoutes = require("./routes/User/education");
-const userEmergencyContactRoutes = require("./routes/User/emergencyContact");
-const userExperienceRoutes = require("./routes/User/experience");
-const userReferenceRoutes = require("./routes/User/reference");
-const userSocialAccountRoutes = require("./routes/User/socialAccount");
-const userDocumentRoutes = require("./routes/User/document");
-const userOtherInformationRoutes = require("./routes/User/otherInformation");
+const authRoutes = require("./routes/auth/auth");
+const userRoutes = require("./routes/user/user");
+const userProfileRoutes = require("./routes/user/profile");
+const userLanguageRoutes = require("./routes/user/language");
+const userTrainingRoutes = require("./routes/user/training");
+const userEducationRoutes = require("./routes/user/education");
+const userEmergencyContactRoutes = require("./routes/user/emergencyContact");
+const userExperienceRoutes = require("./routes/user/experience");
+const userReferenceRoutes = require("./routes/user/reference");
+const userSocialAccountRoutes = require("./routes/user/socialAccount");
+const userDocumentRoutes = require("./routes/user/document");
+const userOtherInformationRoutes = require("./routes/user/otherInformation");
 
-const industryRoutes = require("./routes/Industry/industry");
-const companyRoutes = require("./routes/Company/company");
-const jobPostingRoutes = require("./routes/JobPosting/jobPosting");
-const jobApplicationRoutes = require("./routes/JobApplication/jobApplication");
+const industryRoutes = require("./routes/industry/industry");
+const companyRoutes = require("./routes/company/company");
+const jobPostingRoutes = require("./routes/job_posting/jobPosting");
+const jobApplicationRoutes = require("./routes/job_application/jobApplication");
 
 app.use("/", authRoutes);
 app.use("/api/users", userRoutes);
