@@ -99,7 +99,7 @@ class JobApplicationCard extends StatelessWidget {
                         Row(
                           children: [
                             Text(
-                              'Applied Date:',
+                              '${l10n.applied_date}:',
                               style: TextStyle(
                                 fontSize: 12,
                                 color: KColors.primary,
@@ -124,7 +124,7 @@ class JobApplicationCard extends StatelessWidget {
                               color: Color(0xffB0B1B5),
                               borderRadius: BorderRadius.circular(KSizes.xs)),
                           child: Text(
-                            "Applied",
+                            "${l10n.applied}",
                             style: TextStyle(color: KColors.white),
                           ),
                         ),

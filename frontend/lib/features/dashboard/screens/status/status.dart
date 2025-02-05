@@ -70,7 +70,7 @@ class _StatusScreenState extends State<StatusScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "Jobs Applied",
+                          "${l10n.jobs_applied}",
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.w500,
@@ -100,7 +100,7 @@ class _StatusScreenState extends State<StatusScreen> {
                     child: Column(
                       children: [
                         Text(
-                          "Profile Visits",
+                          "${l10n.profile_visits}",
                           style:
                               Theme.of(context).textTheme.bodyMedium!.copyWith(
                                     fontWeight: FontWeight.w500,
