@@ -222,45 +222,45 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   value: profile.name ?? "_ _ _",
                                   icon: Iconsax.user),
                               SectionData(
-                                  label: 'Gender',
+                                  label: '${l10n.gender}',
                                   value: profile
                                           .profile?[0].personalDetails?.gender
                                           .toString() ??
                                       "_ _ _",
                                   icon: Icons.call_missed_outgoing_outlined),
                               SectionData(
-                                  label: 'Age',
+                                  label: '${l10n.age}',
                                   value: profile
                                           .profile?[0].personalDetails?.age
                                           .toString() ??
                                       "_ _ _",
                                   icon: Icons.watch_later_outlined),
                               SectionData(
-                                  label: 'Marital Status',
+                                  label: '${l10n.marital_status}',
                                   value: profile.profile?[0].personalDetails
                                           ?.maritalStatus ??
                                       "_ _ _",
                                   icon: Iconsax.user_tag),
                               SectionData(
-                                  label: 'Nationality',
+                                  label: '${l10n.nationality}',
                                   value: profile.profile?[0].personalDetails
                                           ?.nationality ??
                                       "_ _ _",
                                   icon: Icons.language_outlined),
                               SectionData(
-                                  label: 'Religion',
+                                  label: '${l10n.religion}',
                                   value: profile.profile?[0].personalDetails
                                           ?.religion ??
                                       "_ _ _",
                                   icon: Icons.flag_outlined),
                               SectionData(
-                                  label: 'Email',
+                                  label: '${l10n.email}',
                                   value: profile
                                           .profile?[0].personalDetails?.email ??
                                       "_ _ _",
                                   icon: Icons.email_outlined),
                               SectionData(
-                                  label: 'Any Disability',
+                                  label: '${l10n.any_disablity}',
                                   // value: (profile.profile != null &&
                                   //         profile.profile!.isNotEmpty &&
                                   //         profile.profile![0].personalDetails !=
@@ -272,8 +272,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   value: profile.profile?[0].personalDetails
                                               ?.disability?.hasDisability ==
                                           true
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.accessible_forward_outlined),
                             ],
                           ),
@@ -336,31 +336,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             leadingIconColor: KColors.primary,
                             data: [
                               SectionData(
-                                  label: 'Job Level',
+                                  label: '${l10n.job_level}',
                                   value: profile.profile?[0].jobPreference
                                           ?.jobLevel ??
                                       "_ _ _",
                                   icon: Iconsax.level),
                               SectionData(
-                                  label: 'Available for',
+                                  label: '${l10n.available_for}',
                                   value: profile.profile?[0].jobPreference
                                           ?.availabilityStatus ??
                                       "_ _ _",
                                   icon: Icons.watch_later_outlined),
                               SectionData(
-                                  label: 'Working Status',
+                                  label: '${l10n.working_status}',
                                   value: profile.profile?[0].jobPreference
                                           ?.workingStatus ??
                                       "_ _ _",
                                   icon: Icons.work_history_outlined),
                               SectionData(
-                                  label: 'Preferred Shift',
+                                  label: '${l10n.preferred_shift}',
                                   value: profile.profile?[0].jobPreference
                                           ?.preferredShift ??
                                       "_ _ _",
                                   icon: Icons.watch_later_outlined),
                               SectionData(
-                                  label: 'Current Salary',
+                                  label: '${l10n.current_salary}',
                                   value: profile.profile?[0].jobPreference
                                                   ?.currentSalary !=
                                               null &&
@@ -377,7 +377,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       : "_ _ _",
                                   icon: Icons.local_offer_outlined),
                               SectionData(
-                                  label: 'Expected Salary',
+                                  label: '${l10n.expected_salary}',
                                   value: profile.profile?[0].jobPreference
                                                   ?.expectedSalary !=
                                               null &&
@@ -394,7 +394,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       : "_ _ _",
                                   icon: Icons.local_offer_outlined),
                               SectionData(
-                                  label: 'Career Objectives',
+                                  label: '${l10n.career_objectives}',
                                   value: profile.profile?[0].jobPreference
                                           ?.careerObjectives ??
                                       "_ _ _",
@@ -595,7 +595,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       // Show a snackbar to inform the user
                                       KSnackbar.CustomSnackbar(
                                           context,
-                                          "You cannot add more education details with this qualification. Please change your education level first.",
+                                          "${l10n.change_your_education_first}",
                                           KColors.darkerGrey);
                                       return;
                                     }
@@ -625,7 +625,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       'label':
                                           "${training.completionYear?.year}, ${training.completionYear?.month}",
                                       'value':
-                                          "${training.name ?? ""}\n${training.institute ?? ""}\n${training.duration?.value ?? ""} ${training.duration?.unit ?? ""}",
+                                          "${training.name ?? "N/A"}\n${training.institute ?? "N/A"}\n${training.duration?.value ?? "N/A"} ${training.duration?.unit ?? "N/A"}",
                                       'onEdit': () {
                                         context.pushNamed(
                                             RoutesConstant.training,
@@ -667,10 +667,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   data: profile.languages!.map((language) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': language.name ?? "Unknown",
+                                      'label': language.name ?? "N/A",
                                       // 'value':
                                       //  "${language.score ?? ""}",
-                                      'value': language.score ?? "",
+                                      'value': language.score ?? "N/A",
 
                                       'onEdit': () {
                                         context.pushNamed(
@@ -715,8 +715,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   data: profile.documents!.map((document) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': document.category ?? "Unknown",
-                                      'value': "${document.file ?? ""}",
+                                      'label': document.category ?? "N/A",
+                                      'value': "${document.file ?? "N/A"}",
                                       'onEdit': () {
                                         context.pushNamed(
                                           RoutesConstant.document,
@@ -761,9 +761,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .map((socialaccount) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label':
-                                          socialaccount.platform ?? "Unknown",
-                                      'value': "${socialaccount.url ?? ""}",
+                                      'label': socialaccount.platform ?? "N/A",
+                                      'value': "${socialaccount.url ?? "N/A"}",
                                       'onEdit': () {
                                         context.pushNamed(
                                             RoutesConstant.socialAccount,
@@ -808,10 +807,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       .map((emergencycontact) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label': emergencycontact.fullName ??
-                                          "Unknown",
+                                      'label':
+                                          emergencycontact.fullName ?? "N/A",
                                       'value':
-                                          "${emergencycontact.phoneNumber?.mobileNumber ?? ""}\n${emergencycontact.relation ?? ""}\n${emergencycontact.address ?? ""}",
+                                          "${emergencycontact.phoneNumber?.mobileNumber ?? "N/A"}\n${emergencycontact.relation ?? "N/A"}\n${emergencycontact.address ?? "N/A"}",
                                       'onEdit': () {
                                         context.pushNamed(
                                             RoutesConstant.contactInformation,
@@ -855,10 +854,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   data: profile.references!.map((reference) {
                                     return {
                                       'icon': Icons.radio_button_checked,
-                                      'label':
-                                          reference.organization ?? "Unknown",
+                                      'label': reference.organization ?? "N/A",
                                       'value':
-                                          "${reference.name ?? ""}\n${reference.email ?? ""}\n${reference.phoneNumber?.mobileNumber ?? ""}",
+                                          "${reference.name ?? "N/A"}\n${reference.email ?? "N/A"}\n${reference.phoneNumber?.mobileNumber ?? "N/A"}",
                                       'onEdit': () {
                                         context.pushNamed(
                                             RoutesConstant.reference,
@@ -900,13 +898,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                               // Check if job preferences are not null and have values
                               final bool isJobPreferencesCompleted =
-                                  profile?.profile?[0].jobPreference != null;
+                                  profile?.profile?[0].jobPreference != null &&
+                                      profile?.profile?[0].jobPreference
+                                              ?.jobLevel !=
+                                          null &&
+                                      profile?.profile?[0].jobPreference
+                                              ?.availabilityStatus !=
+                                          null &&
+                                      profile?.profile?[0].jobPreference
+                                              ?.expectedSalary !=
+                                          null &&
+                                      profile?.profile?[0].jobPreference
+                                              ?.currentSalary !=
+                                          null &&
+                                      profile?.profile?[0].jobPreference
+                                              ?.workingStatus !=
+                                          null &&
+                                      profile?.profile?[0].jobPreference
+                                              ?.preferredShift !=
+                                          null;
 
                               if (!isJobPreferencesCompleted) {
                                 // Show a message if job preferences are not completed
                                 KSnackbar.CustomSnackbar(
                                     context,
-                                    "To edit other information, you need to set your job preference first",
+                                    "${l10n.to_edit_other_info_set_your_job_preference}",
                                     KColors.error);
                                 return; // Prevent navigation
                               }
@@ -924,7 +940,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             data: [
                               SectionData(
                                   label:
-                                      'Are you willing to travel outside of your residing location during the job?',
+                                      '${l10n.will_you_travel_outside_during_job}',
                                   value: (profile.otherinformations != null &&
                                           profile
                                               .otherinformations!.isNotEmpty &&
@@ -933,12 +949,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               null &&
                                           profile.otherinformations![0]
                                               .willingToTravelOutsideResidingLocation!)
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.radio_button_checked_outlined),
                               SectionData(
                                   label:
-                                      'Are you willing to temporarily relocate outside of your residing location during the job period?',
+                                      '${l10n.will_you_temporarily_relocate_during_job}',
                                   value: (profile.otherinformations != null &&
                                           profile
                                               .otherinformations!.isNotEmpty &&
@@ -947,12 +963,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               null &&
                                           profile.otherinformations![0]
                                               .willingToRelocateOutsideResidingLocation!)
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.radio_button_checked_outlined),
                               SectionData(
-                                  label:
-                                      'Do you have a two-wheeler riding license?',
+                                  label: '${l10n.have_two_wheeler_license}',
                                   value: (profile.otherinformations != null &&
                                           profile
                                               .otherinformations!.isNotEmpty &&
@@ -961,12 +976,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               null &&
                                           profile.otherinformations![0]
                                               .haveTwoWheelerDrivingLicense!)
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.radio_button_checked_outlined),
                               SectionData(
-                                  label:
-                                      'Do you have a four-wheeler driving license?',
+                                  label: '${l10n.have_four_wheeler_license}',
                                   value: (profile.otherinformations != null &&
                                           profile
                                               .otherinformations!.isNotEmpty &&
@@ -975,11 +989,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               null &&
                                           profile.otherinformations![0]
                                               .havefourWheelerDrivingLicense!)
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.radio_button_checked_outlined),
                               SectionData(
-                                  label: 'Do you own two-wheeler vehicle?',
+                                  label: '${l10n.own_two_wheeler}',
                                   value: (profile.otherinformations != null &&
                                           profile
                                               .otherinformations!.isNotEmpty &&
@@ -988,11 +1002,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               null &&
                                           profile.otherinformations![0]
                                               .ownTwoWheelerVehicle!)
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.radio_button_checked_outlined),
                               SectionData(
-                                  label: 'Do you own four-wheeler vehicle?',
+                                  label: '${l10n.own_four_wheeler}',
                                   value: (profile.otherinformations != null &&
                                           profile
                                               .otherinformations!.isNotEmpty &&
@@ -1001,8 +1015,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                               null &&
                                           profile.otherinformations![0]
                                               .ownFourWheelerVehicle!)
-                                      ? "Yes"
-                                      : "No",
+                                      ? "${l10n.yes}"
+                                      : "${l10n.no}",
                                   icon: Icons.radio_button_checked_outlined),
                             ],
                           ),
