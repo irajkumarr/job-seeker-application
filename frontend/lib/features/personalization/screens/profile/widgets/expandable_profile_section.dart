@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 class SectionData {
@@ -59,6 +60,7 @@ class ExpandableProfileSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         final isExpanded = provider.isExpanded(sectionId);
@@ -147,7 +149,7 @@ class ExpandableProfileSection extends StatelessWidget {
                             ),
                             SizedBox(width: KSizes.md),
                             Text(
-                              "Edit ${title}",
+                              "${l10n.edit} ${title}",
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyLarge!

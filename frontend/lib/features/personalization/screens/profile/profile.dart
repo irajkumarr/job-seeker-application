@@ -82,7 +82,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             if (profile == null) {
               return Center(
                   child: Text(
-                "Profile Data not found",
+                "${l10n.no_data_found}",
                 style: Theme.of(context).textTheme.titleSmall,
               ));
               // return const ProfileWithoutLogin();
@@ -155,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       KSizes.md,
                                   child: Column(
                                     children: [
-                                      Text("Jobs Applied"),
+                                      Text("${l10n.jobs_applied}"),
                                       SizedBox(height: KSizes.xs),
                                       jobApplicationProvider.isLoading
                                           ? CustomLoading(
@@ -186,7 +186,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       KSizes.md,
                                   child: Column(
                                     children: [
-                                      Text("Profile Visits"),
+                                      Text("${l10n.profile_visits}"),
                                       SizedBox(height: KSizes.xs),
                                       Text(
                                         "0",
@@ -209,7 +209,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ExpandableProfileSection(
                             height: 500.h,
                             sectionId: 'personal_info',
-                            title: 'Personal Information',
+                            title: '${l10n.personal_information}',
                             leadingIcon: Icons.error_outline_outlined,
                             onTap: () {
                               context.pushNamed(
@@ -218,7 +218,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             leadingIconColor: KColors.primary,
                             data: [
                               SectionData(
-                                  label: 'Full Name',
+                                  label: '${l10n.full_name}',
                                   value: profile.name ?? "_ _ _",
                                   icon: Iconsax.user),
                               SectionData(
@@ -281,7 +281,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ExpandableCategoryAndSkillSection(
                               height: 120.h,
                               sectionId: 'category_info',
-                              title: 'Category',
+                              title: '${l10n.category}',
                               leadingIcon: Icons.check_circle,
                               leadingIconColor: Colors.green,
                               onTap: () {
@@ -294,7 +294,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ExpandableCategoryAndSkillSection(
                               height: 300.h,
                               sectionId: 'skill_info',
-                              title: 'Skill',
+                              title: '${l10n.skill}',
                               leadingIcon: Icons.check_circle,
                               onTap: () {
                                 context.pushNamed(RoutesConstant.profileSkill);
@@ -305,7 +305,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ExpandablePreferredJobLocationSection(
                               height: 135.h,
                               sectionId: 'preferred_job_location_info',
-                              title: 'Preferred Job Location',
+                              title: '${l10n.preferred_job_location}',
                               leadingIcon: Icons.check_circle,
                               onTap: () {
                                 // context.pushNamed(
@@ -327,7 +327,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ExpandableProfileSection(
                             height: 455.h,
                             sectionId: 'job_preference_info',
-                            title: 'Job Preference',
+                            title: '${l10n.job_preference}',
                             leadingIcon: Icons.error_outline_outlined,
                             onTap: () {
                               context.pushNamed(
@@ -362,16 +362,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SectionData(
                                   label: 'Current Salary',
                                   value: profile.profile?[0].jobPreference
-                                              ?.currentSalary !=
-                                          null
+                                                  ?.currentSalary !=
+                                              null &&
+                                          profile.profile?[0].jobPreference
+                                                  ?.currentSalary!.amount !=
+                                              null &&
+                                          profile.profile?[0].jobPreference
+                                                  ?.currentSalary!.currency !=
+                                              null &&
+                                          profile.profile?[0].jobPreference
+                                                  ?.currentSalary!.valueType !=
+                                              null
                                       ? "${profile.profile?[0].jobPreference?.currentSalary?.valueType} ${profile.profile?[0].jobPreference?.currentSalary?.currency} ${profile.profile?[0].jobPreference?.currentSalary?.amount?.toStringAsFixed(0)} ${profile.profile?[0].jobPreference?.currentSalary?.duration}"
                                       : "_ _ _",
                                   icon: Icons.local_offer_outlined),
                               SectionData(
                                   label: 'Expected Salary',
                                   value: profile.profile?[0].jobPreference
-                                              ?.expectedSalary !=
-                                          null
+                                                  ?.expectedSalary !=
+                                              null &&
+                                          profile.profile?[0].jobPreference
+                                                  ?.expectedSalary!.amount !=
+                                              null &&
+                                          profile.profile?[0].jobPreference
+                                                  ?.expectedSalary!.currency !=
+                                              null &&
+                                          profile.profile?[0].jobPreference
+                                                  ?.expectedSalary!.valueType !=
+                                              null
                                       ? "${profile.profile?[0].jobPreference?.expectedSalary?.valueType} ${profile.profile?[0].jobPreference?.expectedSalary?.currency} ${profile.profile?[0].jobPreference?.expectedSalary?.amount?.toStringAsFixed(0)} ${profile.profile?[0].jobPreference?.expectedSalary?.duration}"
                                       : "_ _ _",
                                   icon: Icons.local_offer_outlined),
@@ -390,7 +408,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.experiences!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "experience_section",
-                                  title: "Work Experience",
+                                  title: "${l10n.work_experience}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -426,7 +444,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 )
                               : ProfileDetailListTile(
-                                  title: "Work Experience",
+                                  title: "${l10n.work_experience}",
                                   onAdd: () {
                                     context
                                         .pushNamed(RoutesConstant.experience);
@@ -436,7 +454,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.educations!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "education_section",
-                                  title: "Education",
+                                  title: "${l10n.education}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: KColors.success,
                                   isEditShowed: profile.educations!.any(
@@ -588,7 +606,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   },
                                 )
                               : ProfileDetailListTile(
-                                  title: "Education",
+                                  title: "${l10n.education}",
                                   onAdd: () {
                                     context.pushNamed(RoutesConstant.education);
                                   },
@@ -597,7 +615,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.trainings!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "training_section",
-                                  title: "Training",
+                                  title: "${l10n.training}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -632,7 +650,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }, // Define add function
                                 )
                               : ProfileDetailListTile(
-                                  title: "Training",
+                                  title: "${l10n.training}",
                                   onAdd: () {
                                     context.pushNamed(RoutesConstant.training);
                                   },
@@ -641,7 +659,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.languages!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "language_section",
-                                  title: "Language",
+                                  title: "${l10n.language}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -680,7 +698,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }, // Define add function
                                 )
                               : ProfileDetailListTile(
-                                  title: "Language",
+                                  title: "${l10n.language}",
                                   onAdd: () {
                                     context.pushNamed(RoutesConstant.language);
                                   },
@@ -689,7 +707,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.documents!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "document_section",
-                                  title: "Document",
+                                  title: "${l10n.document}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -726,7 +744,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }, // Define add function
                                 )
                               : ProfileDetailListTile(
-                                  title: "Document",
+                                  title: "${l10n.document}",
                                   onAdd: () {
                                     context.pushNamed(RoutesConstant.document);
                                   },
@@ -735,7 +753,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.socialaccounts!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "social_account_section",
-                                  title: "Social Account",
+                                  title: "${l10n.social_account}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -772,7 +790,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }, // Define add function
                                 )
                               : ProfileDetailListTile(
-                                  title: "Social Account",
+                                  title: "${l10n.social_account}",
                                   onAdd: () {
                                     context.pushNamed(
                                         RoutesConstant.socialAccount);
@@ -782,7 +800,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.emergencycontacts!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "emergency_contact_section",
-                                  title: "Contact Information",
+                                  title: "${l10n.contact_information}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -820,7 +838,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }, // Define add function
                                 )
                               : ProfileDetailListTile(
-                                  title: "Contact Information",
+                                  title: "${l10n.contact_information}",
                                   onAdd: () {
                                     context.pushNamed(
                                         RoutesConstant.contactInformation);
@@ -830,7 +848,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           !profile.references!.isEmpty
                               ? ProfileDetailsWidget(
                                   sectionId: "reference_section",
-                                  title: "Reference",
+                                  title: "${l10n.reference}",
                                   leadingIcon: Icons.check_circle,
                                   leadingIconColor: Colors.green,
                                   height: 160.h,
@@ -866,7 +884,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   }, // Define add function
                                 )
                               : ProfileDetailListTile(
-                                  title: "Reference",
+                                  title: "${l10n.reference}",
                                   onAdd: () {
                                     context.pushNamed(RoutesConstant.reference);
                                   },
@@ -875,7 +893,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ExpandableProfileSection(
                             height: 430.h,
                             sectionId: 'other_info_section',
-                            title: 'Other Information',
+                            title: '${l10n.other_information}',
                             leadingIcon: Icons.error_outline_outlined,
                             onTap: () {
                               final profile = profileProvider.profile;

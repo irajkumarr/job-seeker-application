@@ -71,7 +71,9 @@ const handleCheckJobApplicationStatus = async (req, res) => {
 };
 const handleGetAllJobApplications = async (req, res) => {
   try {
-    const jobApplications = await JobApplication.find({})
+    const jobApplications = await JobApplication.find({
+      applicant: req.user.id,
+    })
       .populate({
         path: "job",
         populate: {

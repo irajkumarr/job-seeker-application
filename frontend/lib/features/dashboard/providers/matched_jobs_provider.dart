@@ -15,9 +15,9 @@ class MatchedJobsProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  MatchedJobsProvider() {
-    getUserMatchedJobs();
-  }
+  // MatchedJobsProvider() {
+  //   getUserMatchedJobs();
+  // }
 
   List<JobModel> _matchedJobs = [];
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 class ProfileDetailListTile extends StatelessWidget {
   const ProfileDetailListTile({
@@ -17,6 +18,7 @@ class ProfileDetailListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -49,7 +51,7 @@ class ProfileDetailListTile extends StatelessWidget {
                 ),
                 const SizedBox(width: KSizes.md),
                 Text(
-                  'Add $title',
+                  '${l10n.add} $title',
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         color: KColors.primary,
                       ),

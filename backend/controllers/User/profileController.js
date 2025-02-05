@@ -279,6 +279,8 @@ const handleUpdateProfile = async (req, res) => {
   }
 };
 
+
+
 const handleGetMatchedJobs = async (req, res) => {
   try {
     const userId = req.user.id;
@@ -291,32 +293,27 @@ const handleGetMatchedJobs = async (req, res) => {
 
     const { preferredCategories, preferredJobLocation } = profile;
 
-    // Fetch jobs that match the user's preferred categories and preferred job location
-    const matchedJobs = await JobPosting.find()
-      .populate({
-        path: "company",
-        populate: {
-          path: "industry",
-          match: { name: { $in: preferredCategories } }, // Match based on industry name
-        },
-      })
-      .then((jobs) =>
-        jobs.filter(
-          (job) =>
-            job.company &&
-            job.company.industry &&
-            job.company.industry.name &&
-            preferredCategories.includes(job.company.industry.name) &&
-            job.location &&
-            job.location.district === preferredJobLocation.district // Match the preferred location
-        )
-      );
+    // Fetch jobs that match the preferred location
+    const matchedJobs = await JobPosting.find({
+      "location.district": preferredJobLocation.district, // Match location
+    }).populate({
+      path: "company",
+      populate: {
+        path: "industry",
+        match: { name: { $in: preferredCategories } }, // Try matching industry
+      },
+    });
 
-    if (matchedJobs.length === 0) {
+    // 🚀 Filter out jobs where `company.industry` is null
+    const filteredJobs = matchedJobs.filter(
+      (job) => job.company && job.company.industry
+    );
+
+    if (filteredJobs.length === 0) {
       return res.status(200).json({ message: "No matched jobs found" });
     }
 
-    res.status(200).json(matchedJobs);
+    res.status(200).json(filteredJobs);
   } catch (error) {
     res.status(500).json({ message: "An error occurred", error });
   }

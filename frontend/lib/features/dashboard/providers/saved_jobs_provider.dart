@@ -23,7 +23,7 @@ class SavedJobsProvider with ChangeNotifier {
 
   SavedJobsProvider() {
     _loadSavedJobIdsFromLocalStorage();
-    getUserSavedJobs();
+    // getUserSavedJobs();
   }
 
   /// **Load saved job IDs from local storage**
@@ -120,6 +120,4 @@ class SavedJobsProvider with ChangeNotifier {
       setLoading(false);
     }
   }
-
-  
 }

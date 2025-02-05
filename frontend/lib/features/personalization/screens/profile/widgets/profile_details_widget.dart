@@ -5,6 +5,7 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -36,6 +37,7 @@ class ProfileDetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Consumer<ProfileProvider>(
       builder: (context, provider, child) {
         final isExpanded = provider.isExpanded(sectionId);
@@ -115,7 +117,7 @@ class ProfileDetailsWidget extends StatelessWidget {
                                     color: Colors.black54),
                                 SizedBox(width: 8.w),
                                 Text(
-                                  "Add $title",
+                                  "${l10n.add} $title",
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyLarge!
@@ -138,6 +140,7 @@ class ProfileDetailsWidget extends StatelessWidget {
   }
 
   Widget _buildInfoRow(BuildContext context, Map<String, dynamic> item) {
+    final l10n = AppLocalizations.of(context)!;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: KSizes.sm),
       child: Column(
@@ -166,7 +169,7 @@ class ProfileDetailsWidget extends StatelessWidget {
                   TextButton(
                     onPressed: item['onDelete'] ?? () {},
                     child: Text(
-                      "Delete",
+                      "${l10n.remove}",
                       style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                             color: KColors.error,
                           ),
@@ -176,7 +179,7 @@ class ProfileDetailsWidget extends StatelessWidget {
                     TextButton(
                       onPressed: item['onEdit'] ?? () {},
                       child: Text(
-                        "Edit",
+                        "${l10n.edit}",
                         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
                               color: KColors.primary,
                             ),
