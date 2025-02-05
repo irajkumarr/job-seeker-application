@@ -62,7 +62,7 @@
   "district": "District",
   "adddress": "Address",
   "in_years": "in years",
-  "continue": "Continue",
+  "mobile_correct": "Is this mobile number correct?",
   "you_are_all_set_to_apply": "You are all set to apply for the jobs.",
   "signup_form_completed": "Successfully Completed Signup Forms",
   "profile_creation_failed": "Profile creation failed",

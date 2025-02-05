@@ -6,6 +6,7 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
@@ -19,7 +20,8 @@ class SignupFormCompletedScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final signupProvider = Provider.of<SignupProvider>(context, listen: false);
+    final profileProvider =
+        Provider.of<ProfileProvider>(context, listen: false);
 
     return Scaffold(
       appBar: PreferredSize(
@@ -74,7 +76,7 @@ class SignupFormCompletedScreen extends StatelessWidget {
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  "${signupProvider.user?.name ?? ""}, ${l10n.you_are_all_set_to_apply}",
+                  "${profileProvider.profile?.name ?? ""}, ${l10n.you_are_all_set_to_apply}",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: KColors.darkerGrey,
