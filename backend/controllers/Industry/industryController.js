@@ -1,4 +1,4 @@
-const Industry = require("../../models/Industry/Industry");
+const Industry = require("../../models/industry/Industry");
 
 // Add a new industry
 const handleAddIndustry = async (req, res) => {

@@ -9,7 +9,7 @@ const {
   handleUpdatePassword,
   handleSavedJob,
   handleGetUserSavedJobs,
-} = require("../../controllers/User/userController");
+} = require("../../controllers/user/userController");
 const { verifyAndAuthorize } = require("../../middlewares/jwt");
 
 const upload = require("../../middlewares/multer");

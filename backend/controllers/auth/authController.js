@@ -1,4 +1,4 @@
-const User = require("../../models/User/User.js");
+const User = require("../../models/user/User.js");
 const { generateToken } = require("../../middlewares/jwt.js");
 
 const handleCreateUser = async (req, res) => {
@@ -55,7 +55,7 @@ const handleCheckMobileNumber = async (req, res) => {
     if (!mobileNumber) {
       return res.status(400).json({
         status: false,
-        message: "Mobile number is required!"
+        message: "Mobile number is required!",
       });
     }
 
@@ -65,20 +65,19 @@ const handleCheckMobileNumber = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         status: false,
-        message: "Mobile number already registered!"
+        message: "Mobile number already registered!",
       });
     }
 
     // If no user found with this mobile number
     return res.status(200).json({
       status: true,
-      message: "Mobile number is available"
+      message: "Mobile number is available",
     });
-
   } catch (error) {
     return res.status(500).json({
       status: false,
-      message: error.message
+      message: error.message,
     });
   }
 };

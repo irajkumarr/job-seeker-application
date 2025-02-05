@@ -1,6 +1,6 @@
-const JobApplication = require("../../models/JobApplication/JobApplication");
-const User = require("../../models/User/User");
-const JobPosting = require("../../models/JobPosting/JobPosting");
+const JobApplication = require("../../models/job_application/JobApplication");
+const User = require("../../models/user/User");
+const JobPosting = require("../../models/job_posting/JobPosting");
 const mongoose = require("mongoose");
 // Create a new job application
 

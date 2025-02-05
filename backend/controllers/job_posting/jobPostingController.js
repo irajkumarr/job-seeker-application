@@ -1,7 +1,5 @@
-const JobPosting = require("../../models/JobPosting/JobPosting");
-const {
-  handleUpdateJobCount,
-} = require("../../controllers/Industry/industryController");
+const JobPosting = require("../../models/job_posting/JobPosting");
+const { handleUpdateJobCount } = require("../industry/industryController");
 
 const handleCreateJobPosting = async (req, res) => {
   try {

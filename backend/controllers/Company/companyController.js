@@ -1,7 +1,5 @@
-const Company = require("../../models/Company/Company");
-const {
-  handleUpdateCompanyCount,
-} = require("../../controllers/Industry/industryController");
+const Company = require("../../models/company/Company");
+const { handleUpdateCompanyCount } = require("../industry/industryController");
 
 const handleAddCompany = async (req, res) => {
   const userId = req.user.id;

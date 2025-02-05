@@ -10,7 +10,7 @@ const {
   handleGetJobApplicationsByApplicant,
   handleGetAllJobApplications,
   handleCheckJobApplicationStatus,
-} = require("../../controllers/JobApplication/jobApplicationController");
+} = require("../../controllers/job_application/jobApplicationController");
 const { verifyAndAuthorize, verifyEmployer } = require("../../middlewares/jwt");
 
 router.post("/", verifyAndAuthorize, handleCreateJobApplication);

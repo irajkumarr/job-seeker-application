@@ -6,7 +6,7 @@ const {
   handleGetFilteredIndustries,
   handleAddIndustry,
   handleGetIndustries,
-} = require("../../controllers/Industry/industryController");
+} = require("../../controllers/industry/industryController");
 const router = express.Router();
 const { verifyEmployer } = require("../../middlewares/jwt");
 
