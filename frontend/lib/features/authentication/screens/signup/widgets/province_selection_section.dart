@@ -4,6 +4,7 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 class ProvinceSelectionSection extends StatelessWidget {
   const ProvinceSelectionSection({
     super.key,
@@ -13,6 +14,8 @@ class ProvinceSelectionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       color: KColors.white,
       child: Padding(
@@ -26,7 +29,7 @@ class ProvinceSelectionSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Province",
+                  "${l10n.province}",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -86,7 +89,7 @@ class ProvinceSelectionSection extends StatelessWidget {
               SizedBox(height: KSizes.md),
               if (locationProvider.selectedProvince != null)
                 CustomButton(
-                  text: "Next",
+                  text: "${l10n.next}",
                   onPressed: () {
                     locationProvider.toggleMinimizedProvince();
                   },

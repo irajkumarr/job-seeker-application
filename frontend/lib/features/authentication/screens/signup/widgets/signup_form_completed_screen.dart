@@ -6,6 +6,9 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/features/authentication/providers/signup_provider.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/navigation_menu.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +18,9 @@ class SignupFormCompletedScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final signupProvider = Provider.of<SignupProvider>(context, listen: false);
+
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight() + 5.h),
@@ -60,7 +66,7 @@ class SignupFormCompletedScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  "Successfully Completed Signup Forms",
+                  "${l10n.signup_form_completed}",
                   style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
@@ -68,7 +74,7 @@ class SignupFormCompletedScreen extends StatelessWidget {
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  "Raj, You are all set to apply for the jobs.",
+                  "${signupProvider.user?.name ?? ""}, ${l10n.you_are_all_set_to_apply}",
                   textAlign: TextAlign.center,
                   style: Theme.of(context).textTheme.titleSmall?.copyWith(
                         color: KColors.darkerGrey,
@@ -83,7 +89,7 @@ class SignupFormCompletedScreen extends StatelessWidget {
                 SizedBox(
                   width: 200.w,
                   child: CustomButton(
-                      text: "Continue",
+                      text: "${l10n.continue_name}",
                       onPressed: () {
                         context.read<NavigationProvider>().onTap(0);
                         context.goNamed(RoutesConstant.navigationMenu);

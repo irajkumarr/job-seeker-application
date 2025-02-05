@@ -4,6 +4,7 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 class DistrictSelectionSection extends StatelessWidget {
   const DistrictSelectionSection({
     super.key,
@@ -13,6 +14,8 @@ class DistrictSelectionSection extends StatelessWidget {
   final LocationProvider locationProvider;
   @override
   Widget build(BuildContext context) {
+    
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       color: KColors.white,
       child: Padding(
@@ -25,7 +28,7 @@ class DistrictSelectionSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "District",
+                  "${l10n.district}",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -89,7 +92,7 @@ class DistrictSelectionSection extends StatelessWidget {
               SizedBox(height: KSizes.md),
               if (locationProvider.selectedDistrict != null)
                 CustomButton(
-                  text: "Next",
+                  text: "${l10n.next}",
                   onPressed: () {
                     // Handle district selection completion
                     locationProvider.toggleMinimizedDistrict();

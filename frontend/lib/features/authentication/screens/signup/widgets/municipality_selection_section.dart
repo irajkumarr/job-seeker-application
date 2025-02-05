@@ -4,6 +4,8 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
+
 class MunicipalitySelectionSection extends StatelessWidget {
   const MunicipalitySelectionSection({
     super.key,
@@ -13,6 +15,7 @@ class MunicipalitySelectionSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       color: KColors.white,
       child: Padding(
@@ -25,7 +28,7 @@ class MunicipalitySelectionSection extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Municipality/VDC",
+                  "${l10n.municipality}",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -96,7 +99,7 @@ class MunicipalitySelectionSection extends StatelessWidget {
               SizedBox(height: KSizes.md),
               if (locationProvider.selectedMunicipality != null)
                 CustomButton(
-                  text: "Next",
+                  text: "${l10n.next}",
                   onPressed: () {
                     // Handle district selection completion
                     locationProvider.toggleMinimizedMunicipality();

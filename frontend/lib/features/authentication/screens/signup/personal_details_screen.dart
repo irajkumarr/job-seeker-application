@@ -6,6 +6,7 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/authentication/providers/details_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -14,6 +15,8 @@ class PersonalDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    
+    final l10n = AppLocalizations.of(context)!;
     final detailProvider = Provider.of<DetailsProvider>(context);
     return PopScope(
       canPop: false,
@@ -23,7 +26,7 @@ class PersonalDetailsScreen extends StatelessWidget {
               detailProvider.selectedSalary == null ||
               detailProvider.selectedEducationQualification == null) {
             KSnackbar.CustomSnackbar(
-                context, "Please select required fields", KColors.error);
+                context, "${l10n.please_select_required_fields}", KColors.error);
           }
           context.goNamed(RoutesConstant.statusDetails);
         },
@@ -40,7 +43,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                     children: [
                       SizedBox(height: KSizes.defaultSpace),
                       Text(
-                        "Fill in your personal details",
+                        "${l10n.fill_in_your_personal_details}",
                         style: Theme.of(context)
                             .textTheme
                             .headlineMedium
@@ -51,7 +54,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(height: KSizes.xs),
                       Text(
-                        "Fill your complete details",
+                        "${l10n.fill_in_your_complete_details}",
                         textAlign: TextAlign.center,
                         style: Theme.of(context).textTheme.titleSmall?.copyWith(
                               color: KColors.darkerGrey,
@@ -69,7 +72,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                           return Column(
                             children: [
                               CounterWithTextWidget(
-                                text: "Age",
+                                text: "${l10n.age}",
                                 value: detailProvider.ageCounter
                                     .toStringAsFixed(0),
                                 incrementPressed:
@@ -79,7 +82,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                               ),
                               SizedBox(height: KSizes.defaultSpace),
                               CounterWithTextWidget(
-                                text: "Work experience (in years)",
+                                text: "${l10n.work_experience} (${l10n.in_years})",
                                 value: detailProvider.experienceCounter
                                     .toStringAsFixed(0),
                                 incrementPressed:
@@ -107,7 +110,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Gender",
+                                    "${l10n.gender}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
@@ -178,7 +181,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Education Qualification",
+                                    "${l10n.education_qualification}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!
@@ -255,7 +258,7 @@ class PersonalDetailsScreen extends StatelessWidget {
                               Row(
                                 children: [
                                   Text(
-                                    "Expected Salary",
+                                    "${l10n.expected_salary}",
                                     style: Theme.of(context)
                                         .textTheme
                                         .titleLarge!

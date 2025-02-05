@@ -272,6 +272,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/features/authentication/providers/location_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' as http;
 
@@ -427,6 +428,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Card(
       color: KColors.white,
       child: Padding(
@@ -439,7 +441,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  "Address",
+                  "${l10n.address}",
                   style: Theme.of(context).textTheme.titleLarge!.copyWith(
                         fontSize: 18.sp,
                         fontWeight: FontWeight.w600,
@@ -468,7 +470,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
               TextField(
                 controller: _addressSearchController,
                 decoration: InputDecoration(
-                  hintText: 'Search address',
+                  hintText: '${l10n.search_address_here}',
                   suffixIcon: Padding(
                     padding: EdgeInsets.all(KSizes.sm),
                     child: GestureDetector(
@@ -556,7 +558,7 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
               if (widget.locationProvider.selectedStreet != null) ...[
                 SizedBox(height: KSizes.md),
                 CustomButton(
-                  text: "Next",
+                  text: "${l10n.next}",
                   onPressed: () {
                     context.goNamed(RoutesConstant.personalDetails);
                   },

@@ -11,6 +11,7 @@ import 'package:frontend/features/authentication/providers/details_provider.dart
 import 'package:frontend/features/authentication/providers/location_provider.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -19,17 +20,17 @@ class SignupStatusLastScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final detailProvider = Provider.of<DetailsProvider>(context);
     final signupProvider = Provider.of<SignupProvider>(context);
-    final categoryProvider = Provider.of<CategoryProvider>(context);
-    final locationProvider = Provider.of<LocationProvider>(context);
+   
 
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
       if (detailProvider.selectedIsForeignEmployment == null ||
           detailProvider.selectedWorkingStatus == null) {
         KSnackbar.CustomSnackbar(
           context,
-          "Please select required fields",
+          "${l10n.please_select_required_fields}",
           KColors.error,
         );
         return false;
@@ -77,9 +78,9 @@ class SignupStatusLastScreen extends StatelessWidget {
       KSnackbar.CustomSnackbar(
         context,
         success
-            ? "Profile created successfully!"
-            : (signupProvider.errorMessage ?? "Profile creation failed"),
-        success ? Colors.green : KColors.error,
+            ? "${l10n.profile_created}"
+            : (signupProvider.errorMessage ?? "${l10n.profile_creation_failed}"),
+        success ? KColors.primary : KColors.error,
       );
 
       if (success) {
@@ -118,7 +119,7 @@ class SignupStatusLastScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      "Working Status",
+                                      "${l10n.working_status}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
@@ -195,7 +196,7 @@ class SignupStatusLastScreen extends StatelessWidget {
                                 Row(
                                   children: [
                                     Text(
-                                      "Have you been to foreign employement?",
+                                      "${l10n.have_you_been_to_foreign_employment}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleLarge!
