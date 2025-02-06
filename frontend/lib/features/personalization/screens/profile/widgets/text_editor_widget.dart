@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 enum ListType { none, bullet, numbered, numberedRtl }
 
@@ -77,6 +78,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n=AppLocalizations.of(context)!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -141,7 +143,7 @@ class _TextEditorWidgetState extends State<TextEditorWidget> {
                     contentPadding:
                         EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                     hintText:
-                        'Write a brief summary of your professional goals to enhance the possibility of getting employment.',
+                        '${l10n.hint_text_professional_goal}',
                     hintStyle: TextStyle(
                       color: KColors.darkGrey,
                       fontSize: 13.sp,

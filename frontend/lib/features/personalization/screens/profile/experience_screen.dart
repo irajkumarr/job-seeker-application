@@ -141,7 +141,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
         onPressed: () {
           if (_selectedJobLevel == null) {
             KSnackbar.CustomSnackbar(
-                context, "Please select a job level", KColors.error);
+                context, "${l10n.select_job_level}", KColors.error);
             return;
           }
           if (_formKey.currentState!.validate()) {
@@ -211,7 +211,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Work Experience",
+                "${l10n.work_experience}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -233,9 +233,9 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) => KValidator.validateEmptyText(
-                          "Organization Name", value),
+                          "${l10n.organization_name}", value),
                       decoration: InputDecoration(
-                        labelText: "Organization Name",
+                        labelText: "${l10n.organization_name}",
                       ),
                     ),
                     SizedBox(height: KSizes.md),
@@ -247,10 +247,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Industry", value),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.industry}", value),
                       decoration: InputDecoration(
-                        labelText: "Industry",
+                        labelText: "${l10n.industry}",
                       ),
                     ),
                     SizedBox(height: KSizes.md),
@@ -262,10 +262,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Job Category", value),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.job_category}", value),
                       decoration: InputDecoration(
-                        labelText: "Job Category",
+                        labelText: "${l10n.job_category}",
                       ),
                     ),
                     SizedBox(height: KSizes.md),
@@ -277,10 +277,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Location", value),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.location}", value),
                       decoration: InputDecoration(
-                        labelText: "Location",
+                        labelText: "${l10n.location}",
                       ),
                     ),
                     SizedBox(height: KSizes.md),
@@ -292,17 +292,17 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Designation", value),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.designation}", value),
                       decoration: InputDecoration(
-                        labelText: "Designation",
+                        labelText: "${l10n.designation}",
                       ),
                     ),
                     SizedBox(height: KSizes.sm),
                     DottedDivider(),
                     SizedBox(height: KSizes.sm),
                     Text(
-                      "Job Level",
+                      "${l10n.job_level}",
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                     SizedBox(height: KSizes.sm),
@@ -351,7 +351,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Started Date",
+                          "${l10n.started_date}",
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         SizedBox(height: KSizes.sm),
@@ -362,9 +362,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                 value: _selectedStartYear,
                                 dropdownColor: KColors.white,
                                 icon: Icon(Icons.keyboard_arrow_down_outlined),
-                                hint: Text('Year'),
+                                hint: Text('${l10n.year}'),
                                 validator: (value) =>
-                                    KValidator.validateEmptyText("Year", value),
+                                    KValidator.validateEmptyText(
+                                        "${l10n.year}", value),
                                 items: _years
                                     .map((year) => DropdownMenuItem(
                                           value: year,
@@ -391,10 +392,10 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                 value: _selectedStartMonth,
                                 dropdownColor: KColors.white,
                                 icon: Icon(Icons.keyboard_arrow_down_outlined),
-                                hint: Text('Month'),
+                                hint: Text('${l10n.month}'),
                                 validator: (value) =>
                                     KValidator.validateEmptyText(
-                                        "Month", value),
+                                        "${l10n.month}", value),
                                 items: _months
                                     .map((month) => DropdownMenuItem(
                                           value: month,
@@ -423,7 +424,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                     Row(
                       children: [
                         Text(
-                          "Are you currently working here?",
+                          "${l10n.are_you_currently_working}",
                           style: Theme.of(context).textTheme.titleSmall,
                         ),
                         Spacer(),
@@ -444,7 +445,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "End Date",
+                            "${l10n.end_date}",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           SizedBox(height: KSizes.sm),
@@ -456,10 +457,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   dropdownColor: KColors.white,
                                   icon:
                                       Icon(Icons.keyboard_arrow_down_outlined),
-                                  hint: Text('Year'),
-                                  // validator: (value) =>
-                                  //     KValidator.validateEmptyText(
-                                  //         "Year", value),
+                                  hint: Text('${l10n.year}'),
                                   validator: validateEndDate,
                                   items: _years
                                       .map((year) => DropdownMenuItem(
@@ -488,11 +486,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                                   dropdownColor: KColors.white,
                                   icon:
                                       Icon(Icons.keyboard_arrow_down_outlined),
-                                  hint: Text('Month'),
-                                  // validator: (value) =>
-                                  //     KValidator.validateEmptyText(
-                                  //         "Month", value),
-
+                                  hint: Text('${l10n.month}'),
                                   validator: validateEndDate,
                                   items: _months
                                       .map((month) => DropdownMenuItem(
@@ -523,7 +517,7 @@ class _ExperienceScreenState extends State<ExperienceScreen> {
                     DottedDivider(),
                     SizedBox(height: KSizes.sm),
                     TextEditorWidget(
-                      title: "Roles and Responsibilities",
+                      title: "${l10n.roles_and_responsiblity}",
                       controller: _rolesController,
                     ),
                     SizedBox(height: KSizes.defaultSpace * 10),
