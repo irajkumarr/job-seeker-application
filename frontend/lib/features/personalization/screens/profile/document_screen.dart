@@ -53,61 +53,10 @@ class _DocumentScreenState extends State<DocumentScreen> {
     } catch (e) {
       print("Error picking document: $e");
       if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Failed to pick document')),
-        );
+        KSnackbar.CustomSnackbar(
+            context, "Failed to pick document", KColors.error);
       }
     }
-  }
-
-  void _showImagePreview() {
-    if (_selectedFile == null) return;
-
-    showModalBottomSheet(
-      context: context,
-      isScrollControlled: true, // Allow the sheet to be as large as needed
-      builder: (context) => Container(
-        height:
-            MediaQuery.of(context).size.height * 0.8, // 80% of screen height
-        padding: const EdgeInsets.all(16.0),
-        child: Stack(
-          children: [
-            // Image preview
-            Center(
-              child: InteractiveViewer(
-                minScale: 0.5,
-                maxScale: 4,
-                child: Image.file(
-                  _selectedFile!,
-                  fit: BoxFit.contain,
-                ),
-              ),
-            ),
-
-            // Close button (cross icon)
-            Positioned(
-              top: 16,
-              right: 16,
-              child: GestureDetector(
-                onTap: () => Navigator.pop(context), // Close the bottom sheet
-                child: Container(
-                  padding: EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.5),
-                    shape: BoxShape.circle,
-                  ),
-                  child: Icon(
-                    Icons.close,
-                    color: Colors.white,
-                    size: 24,
-                  ),
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   @override
@@ -133,12 +82,12 @@ class _DocumentScreenState extends State<DocumentScreen> {
           if (_formKey.currentState!.validate()) {
             if (_selectedDocumentCategory == null) {
               KSnackbar.CustomSnackbar(
-                  context, "Please select a document category", KColors.error);
+                  context, "${l10n.select_document_category}", KColors.error);
               return;
             }
             if (_selectedFile == null && widget.document == null) {
               KSnackbar.CustomSnackbar(
-                  context, "Please upload a document", KColors.error);
+                  context, "${l10n.upload_document}", KColors.error);
               return;
             }
 
@@ -177,7 +126,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
           child: Column(
             children: [
               Text(
-                "Document",
+                "${l10n.document}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -198,9 +147,9 @@ class _DocumentScreenState extends State<DocumentScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) =>
-                          KValidator.validateEmptyText("Title", value),
+                          KValidator.validateEmptyText("${l10n.title}", value),
                       decoration: InputDecoration(
-                        labelText: "Title",
+                        labelText: "${l10n.title}",
                       ),
                     ),
                     SizedBox(height: KSizes.sm),
@@ -210,7 +159,7 @@ class _DocumentScreenState extends State<DocumentScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Add Document Category",
+                          "${l10n.add_document_category}",
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     fontSize: 18.sp,
@@ -275,11 +224,11 @@ class _DocumentScreenState extends State<DocumentScreen> {
                               .textTheme
                               .bodyLarge!
                               .copyWith(fontSize: KSizes.fontSizeSm),
-                          validator: (value) =>
-                              KValidator.validateEmptyText("Document", value),
+                          validator: (value) => KValidator.validateEmptyText(
+                              "${l10n.document}", value),
                           decoration: InputDecoration(
-                            labelText: "Document",
-                            suffixIcon: Icon(Icons.note_outlined),
+                            labelText: "${l10n.document}",
+                            suffixIcon: Icon(Icons.insert_drive_file_outlined),
                           ),
                         ),
                       ),
