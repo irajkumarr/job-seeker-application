@@ -55,6 +55,16 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
   }
 
   @override
+  void dispose() {
+    _referenceNameController.dispose();
+    _phoneNumberController.dispose();
+    _organizationNameController.dispose();
+    _designationController.dispose();
+    _emailController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final referenceProvider = Provider.of<ReferenceProvider>(context);
@@ -109,7 +119,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
           child: Column(
             children: [
               Text(
-                "Reference",
+                "${l10n.reference}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -129,10 +139,10 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Reference name", value),
-                      decoration:
-                          const InputDecoration(labelText: "Reference name"),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.reference} ${l10n.name}", value),
+                      decoration: InputDecoration(
+                          labelText: "${l10n.reference} ${l10n.name}"),
                     ),
                     SizedBox(height: KSizes.defaultSpace),
                     TextFormField(
@@ -144,9 +154,9 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) =>
-                          KValidator.validateEmptyText("Designation", value),
+                          KValidator.validateEmptyText("${l10n.designation}", value),
                       decoration:
-                          const InputDecoration(labelText: "Designation"),
+                           InputDecoration(labelText: "${l10n.designation}"),
                     ),
                     SizedBox(height: KSizes.defaultSpace),
                     TextFormField(
@@ -158,9 +168,9 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) => KValidator.validateEmptyText(
-                          "Organization Name", value),
+                          "${l10n.organization_name}", value),
                       decoration:
-                          const InputDecoration(labelText: "Organization Name"),
+                           InputDecoration(labelText: "${l10n.organization_name}"),
                     ),
                     SizedBox(height: KSizes.defaultSpace),
                     TextFormField(
@@ -172,7 +182,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) => KValidator.validateEmail(value),
-                      decoration: const InputDecoration(labelText: "Email"),
+                      decoration:  InputDecoration(labelText: "${l10n.email}"),
                     ),
 
                     SizedBox(height: KSizes.sm),
@@ -183,7 +193,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Phone Number",
+                        Text("${l10n.mobileNumber}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
@@ -198,7 +208,7 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                                 dropdownColor: KColors.white,
                                 validator: (value) =>
                                     KValidator.validateEmptyText(
-                                        "Number Type", value),
+                                        "${l10n.number_type}", value),
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedNumberType = value;
@@ -208,8 +218,8 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                                   return DropdownMenuItem(
                                       value: type, child: Text(type));
                                 }).toList(),
-                                decoration: const InputDecoration(
-                                    labelText: "Number Type"),
+                                decoration:  InputDecoration(
+                                    labelText: "${l10n.number_type}"),
                               ),
                             ),
                             SizedBox(width: KSizes.md),
@@ -224,9 +234,9 @@ class _ReferenceScreenState extends State<ReferenceScreen> {
                                     .copyWith(fontSize: KSizes.fontSizeSm),
                                 validator: (value) =>
                                     KValidator.validateEmptyText(
-                                        "Phone Number", value),
-                                decoration: const InputDecoration(
-                                    labelText: "Phone Number"),
+                                        "${l10n.mobileNumber}", value),
+                                decoration:  InputDecoration(
+                                    labelText: "${l10n.mobileNumber}"),
                               ),
                             ),
                           ],

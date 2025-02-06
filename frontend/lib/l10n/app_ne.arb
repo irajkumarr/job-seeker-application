@@ -186,6 +186,8 @@
   "web_address": "वेब ठेगाना",
   "training_name": "तालिमको नाम",
   "completion_year": "समापन वर्ष",
+  "designation": "पदनाम",
+  "organization_name": "संस्थाको नाम",
   "duration": "अवधि",
   "duration_type": "अवधि प्रकार",
   "select_social_media": "कृपया सामाजिक मिडिया प्लेटफर्म चयन गर्नुहोस्",

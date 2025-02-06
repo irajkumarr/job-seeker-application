@@ -213,6 +213,8 @@
   "duration": "Duration",
   "duration_type": "Duration Type",
   "completion_year": "Completion Year",
+  "designation": "Designation",
+  "organization_name": "Organization Name",
   "started_year": "Started Year",
   "education_board": "Education Board",
   "select_social_media": "Please select a social media platform",
