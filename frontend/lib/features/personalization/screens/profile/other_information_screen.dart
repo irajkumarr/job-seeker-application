@@ -8,6 +8,7 @@ import 'package:frontend/data/models/other_information_model.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/personalization/providers/other_information_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -48,7 +49,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
 
     final otherInformationProvider =
         Provider.of<OtherInformationProvider>(context);
-
+    final l10n = AppLocalizations.of(context)!;
     return FullScreenOverlay(
       isLoading: otherInformationProvider.isLoading,
       child: CustomScreen(
@@ -67,7 +68,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
             context.pop();
           });
         },
-        buttonText: "Submit",
+        buttonText: "${l10n.submit}",
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: KSizes.md,
@@ -77,7 +78,7 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Other Information",
+                "${l10n.other_information}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -88,39 +89,37 @@ class _OtherInformationScreenState extends State<OtherInformationScreen> {
                 child: Column(
                   children: [
                     SwitchTextTile(
-                      title:
-                          "Are you willing to travel outside of your residing location during the job?",
+                      title: "${l10n.will_you_travel_outside_during_job}",
                       isValue: willingToTravel,
                       onChanged: (value) =>
                           setState(() => willingToTravel = value),
                     ),
                     SwitchTextTile(
-                      title:
-                          "Are you willing to temporarily relocate outside of your residing location during the job?",
+                      title: "${l10n.will_you_temporarily_relocate_during_job}",
                       isValue: willingToRelocate,
                       onChanged: (value) =>
                           setState(() => willingToRelocate = value),
                     ),
                     SwitchTextTile(
-                      title: "Do you have a two-wheeler riding license?",
+                      title: "${l10n.have_two_wheeler_license}",
                       isValue: hasTwoWheelerLicense,
                       onChanged: (value) =>
                           setState(() => hasTwoWheelerLicense = value),
                     ),
                     SwitchTextTile(
-                      title: "Do you have a four-wheeler driving license?",
+                      title: "${l10n.have_four_wheeler_license}",
                       isValue: hasFourWheelerLicense,
                       onChanged: (value) =>
                           setState(() => hasFourWheelerLicense = value),
                     ),
                     SwitchTextTile(
-                      title: "Do you own a two-wheeler vehicle?",
+                      title: "${l10n.own_two_wheeler}",
                       isValue: ownsTwoWheeler,
                       onChanged: (value) =>
                           setState(() => ownsTwoWheeler = value),
                     ),
                     SwitchTextTile(
-                      title: "Do you own a four-wheeler vehicle?",
+                      title: "${l10n.own_four_wheeler}",
                       isValue: ownsFourWheeler,
                       onChanged: (value) =>
                           setState(() => ownsFourWheeler = value),
