@@ -212,207 +212,285 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           SizedBox(height: KSizes.sm),
                           Divider(color: KColors.grey),
                           SizedBox(height: KSizes.md),
-                          ExpandableProfileSection(
-                            height: 500.h,
-                            sectionId: 'personal_info',
-                            title: '${l10n.personal_information}',
-                            leadingIcon: Icons.error_outline_outlined,
-                            onTap: () {
-                              context.pushNamed(
-                                  RoutesConstant.profilePersonalInformation);
-                            },
-                            leadingIconColor: KColors.primary,
-                            data: [
-                              SectionData(
-                                  label: '${l10n.full_name}',
-                                  value: profile.name ?? "_ _ _",
-                                  icon: Iconsax.user),
-                              SectionData(
-                                  label: '${l10n.gender}',
-                                  value: profile
-                                          .profile?[0].personalDetails?.gender
-                                          .toString() ??
-                                      "_ _ _",
-                                  icon: Icons.call_missed_outgoing_outlined),
-                              SectionData(
-                                  label: '${l10n.age}',
-                                  value: profile
-                                          .profile?[0].personalDetails?.age
-                                          .toString() ??
-                                      "_ _ _",
-                                  icon: Icons.watch_later_outlined),
-                              SectionData(
-                                  label: '${l10n.marital_status}',
-                                  value: profile.profile?[0].personalDetails
-                                          ?.maritalStatus ??
-                                      "_ _ _",
-                                  icon: Iconsax.user_tag),
-                              SectionData(
-                                  label: '${l10n.nationality}',
-                                  value: profile.profile?[0].personalDetails
-                                          ?.nationality ??
-                                      "_ _ _",
-                                  icon: Icons.language_outlined),
-                              SectionData(
-                                  label: '${l10n.religion}',
-                                  value: profile.profile?[0].personalDetails
-                                          ?.religion ??
-                                      "_ _ _",
-                                  icon: Icons.flag_outlined),
-                              SectionData(
-                                  label: '${l10n.email}',
-                                  value: profile
-                                          .profile?[0].personalDetails?.email ??
-                                      "_ _ _",
-                                  icon: Icons.email_outlined),
-                              SectionData(
-                                  label: '${l10n.any_disablity}',
-                                  // value: (profile.profile != null &&
-                                  //         profile.profile!.isNotEmpty &&
-                                  //         profile.profile![0].personalDetails !=
-                                  //             null &&
-                                  //         profile.profile![0].personalDetails!
-                                  //             .disability!.hasDisability!)
-                                  //     ? "Yes"
-                                  //     : "No",
-                                  value: profile.profile?[0].personalDetails
-                                              ?.disability?.hasDisability ==
-                                          true
-                                      ? "${l10n.yes}"
-                                      : "${l10n.no}",
-                                  icon: Icons.accessible_forward_outlined),
-                            ],
-                          ),
-                          SizedBox(height: KSizes.sm),
-                          ExpandableCategoryAndSkillSection(
-                              height: 120.h,
-                              sectionId: 'category_info',
-                              title: '${l10n.category}',
-                              leadingIcon: Icons.check_circle,
-                              leadingIconColor: Colors.green,
-                              onTap: () {
-                                context
-                                    .pushNamed(RoutesConstant.profileCategory);
-                              },
-                              data: profile.profile?[0].preferredCategories ??
-                                  []),
-                          SizedBox(height: KSizes.sm),
-                          ExpandableCategoryAndSkillSection(
-                              height: 300.h,
-                              sectionId: 'skill_info',
-                              title: '${l10n.skill}',
-                              leadingIcon: Icons.check_circle,
-                              onTap: () {
-                                context.pushNamed(RoutesConstant.profileSkill);
-                              },
-                              leadingIconColor: Colors.green,
-                              data: profile.profile?[0].skills ?? []),
-                          SizedBox(height: KSizes.sm),
-                          ExpandablePreferredJobLocationSection(
-                              height: 135.h,
-                              sectionId: 'preferred_job_location_info',
-                              title: '${l10n.preferred_job_location}',
-                              leadingIcon: Icons.check_circle,
-                              onTap: () {
-                                // context.pushNamed(
-                                //     RoutesConstant.signupPreferredLocation);
-                              },
-                              leadingIconColor: Colors.green,
-                              data: [
-                                SectionData(
-                                  icon: Icons.radio_button_checked,
-                                  label: profile.profile?[0]
-                                          .preferredJobLocation?.district ??
-                                      "",
-                                  value: profile.profile?[0]
-                                          .preferredJobLocation?.fullAddress ??
-                                      "",
+                          (profile.profile != null &&
+                                  profile.profile!.isNotEmpty)
+                              ? ExpandableProfileSection(
+                                  height: 500.h,
+                                  sectionId: 'personal_info',
+                                  title: '${l10n.personal_information}',
+                                  leadingIcon: Icons.error_outline_outlined,
+                                  onTap: () {
+                                    context.pushNamed(RoutesConstant
+                                        .profilePersonalInformation);
+                                  },
+                                  leadingIconColor: KColors.primary,
+                                  data: [
+                                    SectionData(
+                                        label: '${l10n.full_name}',
+                                        value: profile.name ?? "_ _ _",
+                                        icon: Iconsax.user),
+                                    SectionData(
+                                        label: '${l10n.gender}',
+                                        value: profile.profile?[0]
+                                                .personalDetails?.gender ??
+                                            "_ _ _",
+                                        icon: Icons
+                                            .call_missed_outgoing_outlined),
+                                    SectionData(
+                                        label: '${l10n.age}',
+                                        value: profile.profile?[0]
+                                                .personalDetails?.age
+                                                .toString() ??
+                                            "_ _ _",
+                                        icon: Icons.watch_later_outlined),
+                                    SectionData(
+                                        label: '${l10n.marital_status}',
+                                        value: profile
+                                                .profile?[0]
+                                                .personalDetails
+                                                ?.maritalStatus ??
+                                            "_ _ _",
+                                        icon: Iconsax.user_tag),
+                                    SectionData(
+                                        label: '${l10n.nationality}',
+                                        value: profile.profile?[0]
+                                                .personalDetails?.nationality ??
+                                            "_ _ _",
+                                        icon: Icons.language_outlined),
+                                    SectionData(
+                                        label: '${l10n.religion}',
+                                        value: profile.profile?[0]
+                                                .personalDetails?.religion ??
+                                            "_ _ _",
+                                        icon: Icons.flag_outlined),
+                                    SectionData(
+                                        label: '${l10n.email}',
+                                        value: profile.profile?[0]
+                                                .personalDetails?.email ??
+                                            "_ _ _",
+                                        icon: Icons.email_outlined),
+                                    SectionData(
+                                        label: '${l10n.any_disablity}',
+                                        // value: (profile.profile != null &&
+                                        //         profile.profile!.isNotEmpty &&
+                                        //         profile.profile![0].personalDetails !=
+                                        //             null &&
+                                        //         profile.profile![0].personalDetails!
+                                        //             .disability!.hasDisability!)
+                                        //     ? "Yes"
+                                        //     : "No",
+                                        value: profile
+                                                    .profile?[0]
+                                                    .personalDetails
+                                                    ?.disability
+                                                    ?.hasDisability ==
+                                                true
+                                            ? "${l10n.yes}"
+                                            : "${l10n.no}",
+                                        icon:
+                                            Icons.accessible_forward_outlined),
+                                  ],
+                                )
+                              : ProfileDetailListTile(
+                                  title: "${l10n.personal_information}",
+                                  onAdd: () {
+                                    context.goNamed(
+                                        RoutesConstant.signupPreferred);
+                                  },
                                 ),
-                              ]),
                           SizedBox(height: KSizes.sm),
-                          ExpandableProfileSection(
-                            height: 455.h,
-                            sectionId: 'job_preference_info',
-                            title: '${l10n.job_preference}',
-                            leadingIcon: Icons.error_outline_outlined,
-                            onTap: () {
-                              context.pushNamed(
-                                  RoutesConstant.profileJobPreference);
-                            },
-                            leadingIconColor: KColors.primary,
-                            data: [
-                              SectionData(
-                                  label: '${l10n.job_level}',
-                                  value: profile.profile?[0].jobPreference
-                                          ?.jobLevel ??
-                                      "_ _ _",
-                                  icon: Iconsax.level),
-                              SectionData(
-                                  label: '${l10n.available_for}',
-                                  value: profile.profile?[0].jobPreference
-                                          ?.availabilityStatus ??
-                                      "_ _ _",
-                                  icon: Icons.watch_later_outlined),
-                              SectionData(
-                                  label: '${l10n.working_status}',
-                                  value: profile.profile?[0].jobPreference
-                                          ?.workingStatus ??
-                                      "_ _ _",
-                                  icon: Icons.work_history_outlined),
-                              SectionData(
-                                  label: '${l10n.preferred_shift}',
-                                  value: profile.profile?[0].jobPreference
-                                          ?.preferredShift ??
-                                      "_ _ _",
-                                  icon: Icons.watch_later_outlined),
-                              SectionData(
-                                  label: '${l10n.current_salary}',
-                                  value: profile.profile?[0].jobPreference
-                                                  ?.currentSalary !=
-                                              null &&
-                                          profile.profile?[0].jobPreference
-                                                  ?.currentSalary!.amount !=
-                                              null &&
-                                          profile.profile?[0].jobPreference
-                                                  ?.currentSalary!.currency !=
-                                              null &&
-                                          profile.profile?[0].jobPreference
-                                                  ?.currentSalary!.valueType !=
-                                              null
-                                      ? "${profile.profile?[0].jobPreference?.currentSalary?.valueType} ${profile.profile?[0].jobPreference?.currentSalary?.currency} ${profile.profile?[0].jobPreference?.currentSalary?.amount?.toStringAsFixed(0)} ${profile.profile?[0].jobPreference?.currentSalary?.duration}"
-                                      : "_ _ _",
-                                  icon: Icons.local_offer_outlined),
-                              SectionData(
-                                  label: '${l10n.expected_salary}',
-                                  value: profile.profile?[0].jobPreference
-                                                  ?.expectedSalary !=
-                                              null &&
-                                          profile.profile?[0].jobPreference
-                                                  ?.expectedSalary!.amount !=
-                                              null &&
-                                          profile.profile?[0].jobPreference
-                                                  ?.expectedSalary!.currency !=
-                                              null &&
-                                          profile.profile?[0].jobPreference
-                                                  ?.expectedSalary!.valueType !=
-                                              null
-                                      ? "${profile.profile?[0].jobPreference?.expectedSalary?.valueType} ${profile.profile?[0].jobPreference?.expectedSalary?.currency} ${profile.profile?[0].jobPreference?.expectedSalary?.amount?.toStringAsFixed(0)} ${profile.profile?[0].jobPreference?.expectedSalary?.duration}"
-                                      : "_ _ _",
-                                  icon: Icons.local_offer_outlined),
-                              SectionData(
-                                  label: '${l10n.career_objectives}',
-                                  value: profile.profile?[0].jobPreference
-                                                  ?.careerObjectives ==
-                                              null ||
-                                          profile.profile?[0].jobPreference
-                                                  ?.careerObjectives ==
-                                              ""
-                                      ? "_ _ _"
-                                      : profile.profile?[0].jobPreference
-                                          ?.careerObjectives,
-                                  icon: Icons.star_outline_outlined),
-                            ],
-                          ),
+                          (profile.profile != null &&
+                                  profile.profile!.isNotEmpty)
+                              ? ExpandableCategoryAndSkillSection(
+                                  height: 120.h,
+                                  sectionId: 'category_info',
+                                  title: '${l10n.category}',
+                                  leadingIcon: Icons.check_circle,
+                                  leadingIconColor: Colors.green,
+                                  onTap: () {
+                                    context.pushNamed(
+                                        RoutesConstant.profileCategory);
+                                  },
+                                  data:
+                                      profile.profile?[0].preferredCategories ??
+                                          [])
+                              : ProfileDetailListTile(
+                                  title: "${l10n.category}",
+                                  onAdd: () {
+                                    context.goNamed(
+                                        RoutesConstant.signupPreferred);
+                                  },
+                                ),
+
+                          SizedBox(height: KSizes.sm),
+                          (profile.profile != null &&
+                                  profile.profile!.isNotEmpty)
+                              ? ExpandableCategoryAndSkillSection(
+                                  height: 300.h,
+                                  sectionId: 'skill_info',
+                                  title: '${l10n.skill}',
+                                  leadingIcon: Icons.check_circle,
+                                  onTap: () {
+                                    context
+                                        .pushNamed(RoutesConstant.profileSkill);
+                                  },
+                                  leadingIconColor: Colors.green,
+                                  data: profile.profile?[0].skills ?? [])
+                              : ProfileDetailListTile(
+                                  title: "${l10n.skill}",
+                                  onAdd: () {
+                                    context.pushNamed(
+                                        RoutesConstant.signupPreferred);
+                                  },
+                                ),
+                          SizedBox(height: KSizes.sm),
+                          (profile.profile != null &&
+                                  profile.profile!.isNotEmpty)
+                              ? ExpandablePreferredJobLocationSection(
+                                  height: 135.h,
+                                  sectionId: 'preferred_job_location_info',
+                                  title: '${l10n.preferred_job_location}',
+                                  leadingIcon: Icons.check_circle,
+                                  onTap: () {
+                                    // context.pushNamed(
+                                    //     RoutesConstant.signupPreferredLocation);
+                                  },
+                                  leadingIconColor: Colors.green,
+                                  data: [
+                                      SectionData(
+                                        icon: Icons.radio_button_checked,
+                                        label: profile
+                                                .profile?[0]
+                                                .preferredJobLocation
+                                                ?.district ??
+                                            "",
+                                        value: profile
+                                                .profile?[0]
+                                                .preferredJobLocation
+                                                ?.fullAddress ??
+                                            "",
+                                      ),
+                                    ])
+                              : ProfileDetailListTile(
+                                  title: "${l10n.preferred_job_location}",
+                                  onAdd: () {
+                                    context.goNamed(
+                                        RoutesConstant.signupPreferred);
+                                  },
+                                ),
+                          SizedBox(height: KSizes.sm),
+                          (profile.profile != null &&
+                                  profile.profile!.isNotEmpty)
+                              ? ExpandableProfileSection(
+                                  height: 455.h,
+                                  sectionId: 'job_preference_info',
+                                  title: '${l10n.job_preference}',
+                                  leadingIcon: Icons.error_outline_outlined,
+                                  onTap: () {
+                                    context.pushNamed(
+                                        RoutesConstant.profileJobPreference);
+                                  },
+                                  leadingIconColor: KColors.primary,
+                                  data: [
+                                    SectionData(
+                                        label: '${l10n.job_level}',
+                                        value: profile.profile?[0].jobPreference
+                                                ?.jobLevel ??
+                                            "_ _ _",
+                                        icon: Iconsax.level),
+                                    SectionData(
+                                        label: '${l10n.available_for}',
+                                        value: profile.profile?[0].jobPreference
+                                                ?.availabilityStatus ??
+                                            "_ _ _",
+                                        icon: Icons.watch_later_outlined),
+                                    SectionData(
+                                        label: '${l10n.working_status}',
+                                        value: profile.profile?[0].jobPreference
+                                                ?.workingStatus ??
+                                            "_ _ _",
+                                        icon: Icons.work_history_outlined),
+                                    SectionData(
+                                        label: '${l10n.preferred_shift}',
+                                        value: profile.profile?[0].jobPreference
+                                                ?.preferredShift ??
+                                            "_ _ _",
+                                        icon: Icons.watch_later_outlined),
+                                    SectionData(
+                                        label: '${l10n.current_salary}',
+                                        value: profile.profile?[0].jobPreference
+                                                        ?.currentSalary !=
+                                                    null &&
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.currentSalary!
+                                                        .amount !=
+                                                    null &&
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.currentSalary!
+                                                        .currency !=
+                                                    null &&
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.currentSalary!
+                                                        .valueType !=
+                                                    null
+                                            ? "${profile.profile?[0].jobPreference?.currentSalary?.valueType} ${profile.profile?[0].jobPreference?.currentSalary?.currency} ${profile.profile?[0].jobPreference?.currentSalary?.amount?.toStringAsFixed(0)} ${profile.profile?[0].jobPreference?.currentSalary?.duration}"
+                                            : "_ _ _",
+                                        icon: Icons.local_offer_outlined),
+                                    SectionData(
+                                        label: '${l10n.expected_salary}',
+                                        value: profile.profile?[0].jobPreference
+                                                        ?.expectedSalary !=
+                                                    null &&
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.expectedSalary!
+                                                        .amount !=
+                                                    null &&
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.expectedSalary!
+                                                        .currency !=
+                                                    null &&
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.expectedSalary!
+                                                        .valueType !=
+                                                    null
+                                            ? "${profile.profile?[0].jobPreference?.expectedSalary?.valueType} ${profile.profile?[0].jobPreference?.expectedSalary?.currency} ${profile.profile?[0].jobPreference?.expectedSalary?.amount?.toStringAsFixed(0)} ${profile.profile?[0].jobPreference?.expectedSalary?.duration}"
+                                            : "_ _ _",
+                                        icon: Icons.local_offer_outlined),
+                                    SectionData(
+                                        label: '${l10n.career_objectives}',
+                                        value: profile.profile?[0].jobPreference
+                                                        ?.careerObjectives ==
+                                                    null ||
+                                                profile
+                                                        .profile?[0]
+                                                        .jobPreference
+                                                        ?.careerObjectives ==
+                                                    ""
+                                            ? "_ _ _"
+                                            : profile.profile?[0].jobPreference
+                                                ?.careerObjectives,
+                                        icon: Icons.star_outline_outlined),
+                                  ],
+                                )
+                              : ProfileDetailListTile(
+                                  title: "${l10n.job_preference}",
+                                  onAdd: () {
+                                    context.goNamed(
+                                        RoutesConstant.signupPreferred);
+                                  },
+                                ),
                           SizedBox(height: KSizes.sm),
 
                           //more sections experience education come here
@@ -910,23 +988,27 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                               // Check if job preferences are not null and have values
                               final bool isJobPreferencesCompleted =
-                                  profile?.profile?[0].jobPreference != null &&
-                                      profile?.profile?[0].jobPreference
+                                  profile?.profile != null &&
+                                      profile!.profile!.isNotEmpty &&
+                                      profile.profile?[0] == null &&
+                                      profile.profile?[0].jobPreference !=
+                                          null &&
+                                      profile.profile?[0].jobPreference
                                               ?.jobLevel !=
                                           null &&
-                                      profile?.profile?[0].jobPreference
+                                      profile.profile?[0].jobPreference
                                               ?.availabilityStatus !=
                                           null &&
-                                      profile?.profile?[0].jobPreference
+                                      profile.profile?[0].jobPreference
                                               ?.expectedSalary !=
                                           null &&
-                                      profile?.profile?[0].jobPreference
+                                      profile.profile?[0].jobPreference
                                               ?.currentSalary !=
                                           null &&
-                                      profile?.profile?[0].jobPreference
+                                      profile.profile?[0].jobPreference
                                               ?.workingStatus !=
                                           null &&
-                                      profile?.profile?[0].jobPreference
+                                      profile.profile?[0].jobPreference
                                               ?.preferredShift !=
                                           null;
 

@@ -252,6 +252,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                               child: DropdownButtonFormField<String>(
                                 value: _selectedCompletionYear,
                                 icon: Icon(Icons.keyboard_arrow_down_outlined),
+                                validator: (value) =>
+                                    KValidator.validateEmptyText(
+                                        "${l10n.year}", value),
                                 dropdownColor: KColors.white,
                                 onChanged: (value) {
                                   setState(() {
@@ -272,6 +275,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                                 value: _selectedCompletionMonth,
                                 icon: Icon(Icons.keyboard_arrow_down_outlined),
                                 dropdownColor: KColors.white,
+                                validator: (value) =>
+                                    KValidator.validateEmptyText(
+                                        "${l10n.month}", value),
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedCompletionMonth = value;

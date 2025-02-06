@@ -11,6 +11,7 @@ import 'package:frontend/features/authentication/providers/details_provider.dart
 import 'package:frontend/features/authentication/providers/location_provider.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +24,6 @@ class SignupStatusLastScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final detailProvider = Provider.of<DetailsProvider>(context);
     final signupProvider = Provider.of<SignupProvider>(context);
-   
 
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
       if (detailProvider.selectedIsForeignEmployment == null ||
@@ -47,6 +47,8 @@ class SignupStatusLastScreen extends StatelessWidget {
           Provider.of<CategoryProvider>(context, listen: false);
       final locationProvider =
           Provider.of<LocationProvider>(context, listen: false);
+      final profileProvider =
+          Provider.of<ProfileProvider>(context, listen: false);
 
       if (!_validateInputs(context, detailProvider)) return;
 
@@ -79,12 +81,14 @@ class SignupStatusLastScreen extends StatelessWidget {
         context,
         success
             ? "${l10n.profile_created}"
-            : (signupProvider.errorMessage ?? "${l10n.profile_creation_failed}"),
+            : (signupProvider.errorMessage ??
+                "${l10n.profile_creation_failed}"),
         success ? KColors.primary : KColors.error,
       );
 
       if (success) {
         context.goNamed(RoutesConstant.signupFormCompleted);
+        // profileProvider.fetchProfile(forceRefresh: true);
         detailProvider.reset();
         locationProvider.reset();
         categoryProvider.reset();

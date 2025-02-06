@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
@@ -15,6 +16,7 @@ import 'package:frontend/features/dashboard/screens/job_details/widgets/basic_in
 import 'package:frontend/features/dashboard/screens/job_details/widgets/info_item.dart';
 import 'package:frontend/features/dashboard/screens/job_details/widgets/job_description_section.dart';
 import 'package:frontend/features/dashboard/providers/saved_jobs_provider.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:get_storage/get_storage.dart';
@@ -44,6 +46,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
       Provider.of<JobApplicationStatusProvider>(context, listen: false)
           .checkJobApplicationStatus(context: context, jobId: widget.jobId);
       jobProvider.fetchJobById(widget.jobId);
+
+      // final profileProvider =
+      //     Provider.of<ProfileProvider>(context, listen: false);
+      // profileProvider.fetchProfile(forceRefresh: true);
     });
     super.initState();
   }
@@ -69,9 +75,43 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
   Widget build(BuildContext context) {
     final jobProvider = Provider.of<JobProvider>(context);
     final jobApplicationProvider = Provider.of<JobApplicationProvider>(context);
+    final profileProvider = Provider.of<ProfileProvider>(context);
     final l10n = AppLocalizations.of(context)!;
     final box = GetStorage();
     final String? token = box.read("token");
+
+    // bool isProfileComplete() {
+    //   final profile = profileProvider.profile;
+    //   if (profile?.profile != null &&
+    //       profile!.profile!.isNotEmpty &&
+    //       profile.profile?[0] == null &&
+    //       profile.profile?[0].preferredCategories == null &&
+    //       profile.profile?[0].preferredJobLocation == null &&
+    //       profile.profile?[0].personalDetails == null) {
+    //     return false;
+    //   }
+    //   return true;
+    // }
+    bool isProfileComplete() {
+      final profile = profileProvider.profile;
+
+      // Check if profile and profile list exist
+      if (profile?.profile == null || profile!.profile!.isEmpty) {
+        return false;
+      }
+
+      final userProfile = profile.profile![0]; // Get the first profile
+
+      // Check if required fields are missing
+      if (userProfile.preferredCategories == null ||
+          userProfile.preferredJobLocation == null ||
+          userProfile.personalDetails == null) {
+        return false;
+      }
+
+      return true; // Profile is complete
+    }
+
     // Loading and error handling
     if (jobProvider.isLoading) {
       return Scaffold(
@@ -353,6 +393,18 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                                   : provider.hasApplied
                                       ? null
                                       : () async {
+                                          if (!isProfileComplete()) {
+                                            // KSnackbar.CustomSnackbar(
+                                            //     context,
+                                            //     "Your profile is incomplete! Please complete it before applying.",
+                                            //     KColors.error);
+                                            showProfileIncompleteDialog(context,
+                                                () {
+                                              context.goNamed(RoutesConstant
+                                                  .signupPreferred);
+                                            });
+                                            return;
+                                          }
                                           await alertApplyJob(context,
                                               () async {
                                             context.pop();

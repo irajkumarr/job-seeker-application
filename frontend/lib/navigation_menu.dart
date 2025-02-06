@@ -80,6 +80,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
               selectedItemColor: KColors.primary,
               unselectedItemColor: KColors.darkGrey,
               type: BottomNavigationBarType.fixed,
+
               selectedLabelStyle: TextStyle(
                 color: KColors.primary,
                 fontSize: 10,
@@ -96,6 +97,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                 // Provider.of<LoginProvider>(context, listen: false)
                 //     .logout(context);
               },
+
               items: [
                 BottomNavigationBarItem(
                   icon: Icon(Iconsax.home_2),
