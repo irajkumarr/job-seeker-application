@@ -213,6 +213,7 @@
   "select_grade_type": "Please select a grade type",
   "please_enter_marks": "Please enter marks",
   "grade_type": "Grade Type",
+  "score": "Score",
   "marks_secured": "Marks Secured",
   "percentage_must_be": "Percentage must be between 0 and 100",
   "cgpa_must_be": "CGPA must be between 0 and 4",

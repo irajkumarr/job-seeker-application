@@ -77,7 +77,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
           child: Column(
             children: [
               Text(
-                "Language",
+                "${l10n.language}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -98,10 +98,10 @@ class _LanguageScreenState extends State<LanguageScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Language", value),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.language}", value),
                       decoration: InputDecoration(
-                        labelText: "Language",
+                        labelText: "${l10n.language}",
                       ),
                     ),
                     SizedBox(
@@ -113,7 +113,7 @@ class _LanguageScreenState extends State<LanguageScreen> {
                     ),
                     //score
                     Text(
-                      "Score",
+                      "${l10n.score}",
                       style: Theme.of(context).textTheme.labelLarge!.copyWith(
                             fontSize: 18.sp,
                           ),
@@ -128,7 +128,6 @@ class _LanguageScreenState extends State<LanguageScreen> {
                       allowHalfRating: true,
                       itemCount: 5,
                       itemSize: KSizes.iconLg,
-
                       unratedColor: KColors.grey,
                       // itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                       itemBuilder: (context, _) => Icon(

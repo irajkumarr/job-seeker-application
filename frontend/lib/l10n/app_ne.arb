@@ -189,6 +189,7 @@
   "percentage_must_be": "प्रतिशत 0 र 100 बीचको हुनुपर्छ",
   "cgpa_must_be": "CGPA 0 र 4 को बीच हुनुपर्छ",
   "graduation_year": "स्नातक वर्ष",
+  "score": "स्कोर",
   "marks_secured": "अंक सुरक्षित",
   "currently_studying": "हाल अध्ययन गर्दै हुनुहुन्छ?",
   "select_document_category": "कृपया कागजात कोटि चयन गर्नुहोस्",
