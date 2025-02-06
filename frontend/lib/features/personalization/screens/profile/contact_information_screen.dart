@@ -75,7 +75,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
             if (_selectedRelation == null) {
               // Show an error message
               KSnackbar.CustomSnackbar(
-                  context, "Please select a relation", KColors.error);
+                  context, "${l10n.please_select_relation}", KColors.error);
               return;
             }
 
@@ -125,7 +125,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
           child: Column(
             children: [
               Text(
-                "Contact Information",
+                "${l10n.contact_information}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -146,9 +146,9 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) => KValidator.validateEmptyText(
-                          "Contact Person Full Name", value),
+                          "${l10n.contact_person_full_name}", value),
                       decoration: InputDecoration(
-                        labelText: "Contact Person Full Name",
+                        labelText: "${l10n.contact_person_full_name}",
                       ),
                     ),
                     SizedBox(height: KSizes.defaultSpace),
@@ -160,10 +160,10 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Address", value),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.address}", value),
                       decoration: InputDecoration(
-                        labelText: "Address",
+                        labelText: "${l10n.address}",
                       ),
                     ),
                     SizedBox(height: KSizes.sm),
@@ -173,7 +173,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "Relation",
+                          "${l10n.relation}",
                           style:
                               Theme.of(context).textTheme.labelLarge!.copyWith(
                                     fontSize: 18.sp,
@@ -228,7 +228,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Phone Number",
+                        Text("${l10n.mobileNumber}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
@@ -243,7 +243,7 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                                 dropdownColor: KColors.white,
                                 validator: (value) =>
                                     KValidator.validateEmptyText(
-                                        "Number Type", value),
+                                        "${l10n.number_type}", value),
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedNumberType = value;
@@ -253,8 +253,8 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                                   return DropdownMenuItem(
                                       value: type, child: Text(type));
                                 }).toList(),
-                                decoration: const InputDecoration(
-                                    labelText: "Number Type"),
+                                decoration: InputDecoration(
+                                    labelText: "${l10n.number_type}"),
                               ),
                             ),
                             SizedBox(width: KSizes.md),
@@ -269,8 +269,8 @@ class _ContactInformationScreenState extends State<ContactInformationScreen> {
                                     .copyWith(fontSize: KSizes.fontSizeSm),
                                 validator: (value) =>
                                     KValidator.validatePhoneNumber(value),
-                                decoration: const InputDecoration(
-                                    labelText: "Phone Number"),
+                                decoration: InputDecoration(
+                                    labelText: "${l10n.mobileNumber}"),
                               ),
                             ),
                           ],
