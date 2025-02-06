@@ -1,4 +1,6 @@
-const User = require("../../models/user/User.js");
+// const User = require("../../models/user/User.js");
+const path = require('path');
+const User = require(path.resolve(__dirname, '../../models/user/User.js'));
 const { generateToken } = require("../../middlewares/jwt.js");
 
 const handleCreateUser = async (req, res) => {
