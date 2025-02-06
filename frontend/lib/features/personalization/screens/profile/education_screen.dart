@@ -133,7 +133,7 @@ class _EducationScreenState extends State<EducationScreen> {
         onPressed: () {
           if (_selectedEducationQualification == null) {
             KSnackbar.CustomSnackbar(context,
-                "Please select an education qualification", KColors.error);
+                "${l10n.select_education_qualification}", KColors.error);
             return;
           }
           if (!_shouldShowForm() || _formKey.currentState!.validate()) {
@@ -225,7 +225,7 @@ class _EducationScreenState extends State<EducationScreen> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                "Education",
+                "${l10n.education}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -235,16 +235,16 @@ class _EducationScreenState extends State<EducationScreen> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                 Row(
-                  children: [
-                     Text(
-                    "Add Education",
-                    style: Theme.of(context).textTheme.labelLarge!.copyWith(
-                          fontSize: 18.sp,
-                        ),
+                  Row(
+                    children: [
+                      Text(
+                        "${l10n.add_education}",
+                        style: Theme.of(context).textTheme.labelLarge!.copyWith(
+                              fontSize: 18.sp,
+                            ),
+                      ),
+                    ],
                   ),
-                  ],
-                 ),
                   SizedBox(height: KSizes.sm),
                   Wrap(
                     spacing: 10,
@@ -308,9 +308,9 @@ class _EducationScreenState extends State<EducationScreen> {
                             .bodyLarge!
                             .copyWith(fontSize: KSizes.fontSizeSm),
                         validator: (value) => KValidator.validateEmptyText(
-                            "Education Program", value),
+                            "${l10n.education_program}", value),
                         decoration: InputDecoration(
-                          labelText: "Education Program",
+                          labelText: "${l10n.education_program}",
                         ),
                       ),
                       SizedBox(height: KSizes.sm),
@@ -325,9 +325,9 @@ class _EducationScreenState extends State<EducationScreen> {
                             .bodyLarge!
                             .copyWith(fontSize: KSizes.fontSizeSm),
                         validator: (value) => KValidator.validateEmptyText(
-                            "Education Board", value),
+                            "${l10n.education_board}", value),
                         decoration: InputDecoration(
-                          labelText: "Education Board",
+                          labelText: "${l10n.education_board}",
                         ),
                       ),
                       SizedBox(height: KSizes.md),
@@ -340,9 +340,9 @@ class _EducationScreenState extends State<EducationScreen> {
                             .bodyLarge!
                             .copyWith(fontSize: KSizes.fontSizeSm),
                         validator: (value) => KValidator.validateEmptyText(
-                            "Name of Institute", value),
+                            "${l10n.name_of_institute}", value),
                         decoration: InputDecoration(
-                          labelText: "Name of Institute",
+                          labelText: "${l10n.name_of_institute}",
                         ),
                       ),
                       SizedBox(height: KSizes.sm),
@@ -351,7 +351,7 @@ class _EducationScreenState extends State<EducationScreen> {
                       Row(
                         children: [
                           Text(
-                            "Currently studying?",
+                            "${l10n.currently_studying}",
                             style: Theme.of(context).textTheme.titleSmall,
                           ),
                           Spacer(),
@@ -372,7 +372,7 @@ class _EducationScreenState extends State<EducationScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Started Year",
+                              "${l10n.started_year}",
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             SizedBox(height: KSizes.sm),
@@ -384,10 +384,10 @@ class _EducationScreenState extends State<EducationScreen> {
                                     dropdownColor: KColors.white,
                                     icon: Icon(
                                         Icons.keyboard_arrow_down_outlined),
-                                    hint: Text('Year'),
+                                    hint: Text('${l10n.year}'),
                                     validator: (value) =>
                                         KValidator.validateEmptyText(
-                                            "Year", value),
+                                            "${l10n.year}", value),
                                     items: _years
                                         .map((year) => DropdownMenuItem(
                                               value: year,
@@ -415,10 +415,10 @@ class _EducationScreenState extends State<EducationScreen> {
                                     dropdownColor: KColors.white,
                                     icon: Icon(
                                         Icons.keyboard_arrow_down_outlined),
-                                    hint: Text('Month'),
+                                    hint: Text('${l10n.month}'),
                                     validator: (value) =>
                                         KValidator.validateEmptyText(
-                                            "Month", value),
+                                            "${l10n.month}", value),
                                     items: _months
                                         .map((month) => DropdownMenuItem(
                                               value: month,
@@ -448,7 +448,7 @@ class _EducationScreenState extends State<EducationScreen> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              "Graduation Year",
+                              "${l10n.graduation_year}",
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             SizedBox(height: KSizes.sm),
@@ -460,10 +460,10 @@ class _EducationScreenState extends State<EducationScreen> {
                                     dropdownColor: KColors.white,
                                     icon: Icon(
                                         Icons.keyboard_arrow_down_outlined),
-                                    hint: Text('Year'),
+                                    hint: Text('${l10n.year}'),
                                     validator: (value) =>
                                         KValidator.validateEmptyText(
-                                            "Year", value),
+                                            "${l10n.year}", value),
                                     items: _years
                                         .map((year) => DropdownMenuItem(
                                               value: year,
@@ -491,10 +491,10 @@ class _EducationScreenState extends State<EducationScreen> {
                                     dropdownColor: KColors.white,
                                     icon: Icon(
                                         Icons.keyboard_arrow_down_outlined),
-                                    hint: Text('Month'),
+                                    hint: Text('${l10n.month}'),
                                     validator: (value) =>
                                         KValidator.validateEmptyText(
-                                            "Month", value),
+                                            "${l10n.month}", value),
                                     items: _months
                                         .map((month) => DropdownMenuItem(
                                               value: month,
@@ -526,10 +526,10 @@ class _EducationScreenState extends State<EducationScreen> {
                                     dropdownColor: KColors.white,
                                     icon: Icon(
                                         Icons.keyboard_arrow_down_outlined),
-                                    hint: Text('Grade Type'),
+                                    hint: Text('${l10n.grade_type}'),
                                     validator: (value) =>
                                         KValidator.validateEmptyText(
-                                            "Grade Type", value),
+                                            "${l10n.grade_type}", value),
                                     items: _gradeType
                                         .map((type) => DropdownMenuItem(
                                               value: type,
@@ -562,27 +562,27 @@ class _EducationScreenState extends State<EducationScreen> {
                                         .copyWith(fontSize: KSizes.fontSizeSm),
                                     validator: (value) {
                                       if (_selectedGradeType == null) {
-                                        return 'Please select a grade type';
+                                        return '${l10n.select_grade_type}';
                                       }
                                       if (value == null || value.isEmpty) {
-                                        return 'Please enter marks';
+                                        return '${l10n.please_enter_marks}';
                                       }
                                       final marks = double.tryParse(value);
                                       if (marks == null) {
-                                        return 'Please enter a valid number';
+                                        return '${l10n.please_enter_valid_number}';
                                       }
                                       if (_selectedGradeType == "Percentage" &&
                                           (marks < 0 || marks > 100)) {
-                                        return 'Percentage must be between 0 and 100';
+                                        return '${l10n.percentage_must_be}';
                                       }
                                       if (_selectedGradeType == "CGPA" &&
                                           (marks < 0 || marks > 4)) {
-                                        return 'CGPA must be between 0 and 4';
+                                        return '${l10n.cgpa_must_be}';
                                       }
                                       return null; // No error
                                     },
                                     decoration: InputDecoration(
-                                      labelText: "Marks Secured",
+                                      labelText: "${l10n.marks_secured}",
                                     ),
                                   ),
                                 ),
