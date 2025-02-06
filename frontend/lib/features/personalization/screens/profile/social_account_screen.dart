@@ -46,6 +46,13 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
   }
 
   @override
+  void dispose() {
+    _socialMediaController.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
@@ -87,7 +94,7 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
           child: Column(
             children: [
               Text(
-                "Social Account",
+                "${l10n.social_account}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -103,7 +110,7 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
                       dropdownColor: KColors.white,
                       icon: Icon(Icons.keyboard_arrow_down_outlined),
                       value: _selectedSocialMedia,
-                      hint: Text("Social Media"),
+                      hint: Text("${l10n.social_media}"),
                       items: _socialMediaOptions.map((String socialMedia) {
                         return DropdownMenuItem<String>(
                           value: socialMedia,
@@ -116,9 +123,8 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
                           _socialMediaController.text = value;
                         });
                       },
-                      validator: (value) => value == null
-                          ? "Please select a social media platform"
-                          : null,
+                      validator: (value) =>
+                          value == null ? "${l10n.select_social_media}" : null,
                     ),
                     SizedBox(height: KSizes.defaultSpace),
                     TextFormField(
@@ -131,7 +137,7 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return "Web Address cannot be empty";
+                          return "${l10n.web_address_cannot_be_empty}";
                         }
 
                         // Define platform-specific URL patterns
@@ -167,7 +173,7 @@ class _SocialAccountScreenState extends State<SocialAccountScreen> {
                         return null;
                       },
                       decoration: InputDecoration(
-                        labelText: "Web Address",
+                        labelText: "${l10n.web_address}",
                       ),
                     ),
                     SizedBox(height: KSizes.defaultSpace),
