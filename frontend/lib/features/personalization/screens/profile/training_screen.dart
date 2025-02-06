@@ -24,8 +24,7 @@ class TrainingScreen extends StatefulWidget {
 class _TrainingScreenState extends State<TrainingScreen> {
   final TextEditingController _trainingNameController = TextEditingController();
   final TextEditingController _durationController = TextEditingController();
-  final TextEditingController _completionYearController =
-      TextEditingController();
+
   final TextEditingController _instituteNameController =
       TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -66,6 +65,14 @@ class _TrainingScreenState extends State<TrainingScreen> {
       _selectedCompletionYear = widget.training!.completionYear?.year ?? "";
       _selectedCompletionMonth = widget.training!.completionYear?.month ?? "";
     }
+  }
+
+  @override
+  void dispose() {
+    _trainingNameController.dispose();
+    _instituteNameController.dispose();
+    _durationController.dispose();
+    super.dispose();
   }
 
   @override
@@ -125,7 +132,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
           child: Column(
             children: [
               Text(
-                "Training Name",
+                "${l10n.training_name}",
                 style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -145,9 +152,10 @@ class _TrainingScreenState extends State<TrainingScreen> {
                           .textTheme
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
-                      validator: (value) =>
-                          KValidator.validateEmptyText("Training", value),
-                      decoration: const InputDecoration(labelText: "Training"),
+                      validator: (value) => KValidator.validateEmptyText(
+                          "${l10n.training}", value),
+                      decoration:
+                          InputDecoration(labelText: "${l10n.training}"),
                     ),
                     SizedBox(height: KSizes.defaultSpace),
 
@@ -160,9 +168,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                           .bodyLarge!
                           .copyWith(fontSize: KSizes.fontSizeSm),
                       validator: (value) => KValidator.validateEmptyText(
-                          "Name of Institute", value),
-                      decoration:
-                          const InputDecoration(labelText: "Name of Institute"),
+                          "${l10n.name_of_institute}", value),
+                      decoration: InputDecoration(
+                          labelText: "${l10n.name_of_institute}"),
                     ),
 
                     SizedBox(height: KSizes.sm),
@@ -173,7 +181,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Duration",
+                        Text("${l10n.duration}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
@@ -192,8 +200,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                                     .copyWith(fontSize: KSizes.fontSizeSm),
                                 validator: (value) =>
                                     KValidator.validateEmptyText(
-                                        "Duration", value),
-                                decoration: const InputDecoration(),
+                                        "${l10n.duration}", value),
+                                decoration: InputDecoration(
+                                    labelText: "${l10n.duration}"),
                               ),
                             ),
                             SizedBox(width: KSizes.md),
@@ -202,6 +211,9 @@ class _TrainingScreenState extends State<TrainingScreen> {
                                 icon: Icon(Icons.keyboard_arrow_down_outlined),
                                 value: _selectedDurationType,
                                 dropdownColor: KColors.white,
+                                validator: (value) =>
+                                    KValidator.validateEmptyText(
+                                        "${l10n.duration_type}", value),
                                 onChanged: (value) {
                                   setState(() {
                                     _selectedDurationType = value;
@@ -211,8 +223,8 @@ class _TrainingScreenState extends State<TrainingScreen> {
                                   return DropdownMenuItem(
                                       value: type, child: Text(type));
                                 }).toList(),
-                                decoration: const InputDecoration(
-                                    labelText: "Duration Type"),
+                                decoration: InputDecoration(
+                                    labelText: "${l10n.duration_type}"),
                               ),
                             ),
                           ],
@@ -228,7 +240,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Completion Year",
+                        Text("${l10n.completion_year}",
                             style: Theme.of(context)
                                 .textTheme
                                 .labelLarge!
@@ -251,7 +263,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                                       value: year, child: Text(year));
                                 }).toList(),
                                 decoration:
-                                    const InputDecoration(labelText: "Year"),
+                                    InputDecoration(labelText: "${l10n.year}"),
                               ),
                             ),
                             SizedBox(width: KSizes.md),
@@ -270,7 +282,7 @@ class _TrainingScreenState extends State<TrainingScreen> {
                                       value: month, child: Text(month));
                                 }).toList(),
                                 decoration:
-                                    const InputDecoration(labelText: "Month"),
+                                    InputDecoration(labelText: "${l10n.month}"),
                               ),
                             ),
                           ],
