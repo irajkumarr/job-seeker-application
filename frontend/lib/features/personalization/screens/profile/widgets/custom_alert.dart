@@ -130,7 +130,7 @@ Future<void> alertDelete(BuildContext context, VoidCallback onPressed) async {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Do you want to delete this?',
+                    '${l10n.do_you_want_to_delete_this}',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: KColors.black,
                           fontWeight: FontWeight.w600,
@@ -139,7 +139,7 @@ Future<void> alertDelete(BuildContext context, VoidCallback onPressed) async {
                   ),
                   SizedBox(height: KSizes.xs),
                   Text(
-                    "You won't be able to recover it after you delete it",
+                    "${l10n.you_will_not_be_able_to_recover}",
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: KColors.darkGrey,
                         ),
@@ -232,7 +232,7 @@ Future<bool> alertEditChange(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Unsaved Changes',
+                    '${l10n.unsaved_changes}',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: KColors.black,
                           fontWeight: FontWeight.w600,
@@ -241,7 +241,7 @@ Future<bool> alertEditChange(
                   ),
                   SizedBox(height: KSizes.xs),
                   Text(
-                    "You have unsaved changes. Do you want to leave without saving?",
+                    "${l10n.you_have_unsaved_changes}",
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: KColors.darkGrey,
                         ),
@@ -333,7 +333,7 @@ Future<void> alertApplyJob(BuildContext context, VoidCallback onPressed) async {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Are you sure you want to apply for this job?',
+                    '${l10n.are_you_sure_to_apply_job}',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: KColors.black,
                           fontWeight: FontWeight.w600,
@@ -342,7 +342,7 @@ Future<void> alertApplyJob(BuildContext context, VoidCallback onPressed) async {
                   ),
                   SizedBox(height: KSizes.xs),
                   Text(
-                    "Press 'Yes' to apply for the job",
+                    "${l10n.press_yes_to_apply}",
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: KColors.darkGrey,
                         ),
@@ -435,7 +435,7 @@ Future<void> showTokenExpiredDialog(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(
-                    'Session Expired',
+                    '${l10n.session_expired}',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: KColors.black,
                           fontWeight: FontWeight.w600,
@@ -444,7 +444,7 @@ Future<void> showTokenExpiredDialog(
                   ),
                   SizedBox(height: KSizes.xs),
                   Text(
-                    "Your session has expired. Please log in again.",
+                    '${l10n.your_sessio_has_expired}',
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: KColors.darkGrey,
                         ),
@@ -538,7 +538,7 @@ Future<void> showCongratulationsDialog(
                 children: [
                   Image.asset("assets/images/content/congratulations.png"),
                   Text(
-                    'Thank You!!!',
+                    '${l10n.thank_you}',
                     style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                           color: KColors.black,
                           fontWeight: FontWeight.w600,
@@ -547,7 +547,7 @@ Future<void> showCongratulationsDialog(
                   ),
                   SizedBox(height: KSizes.xs),
                   Text(
-                    "You have successfully applied for the job",
+                    '${l10n.you_have_applied_for_the_job}',
                     style: Theme.of(context).textTheme.labelSmall!.copyWith(
                           color: KColors.darkGrey,
                         ),
@@ -559,7 +559,7 @@ Future<void> showCongratulationsDialog(
                   ),
                   SizedBox(height: KSizes.sm),
                   CustomButton(
-                    text: "Continue",
+                    text: "${l10n.continue_name}",
                     onPressed: onPressed,
                   ),
                 ],
