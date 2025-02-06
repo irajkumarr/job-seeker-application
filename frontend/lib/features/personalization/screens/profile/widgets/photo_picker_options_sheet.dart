@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -48,6 +49,7 @@ class _PhotoPickerOptionsBottomSheetState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Container(
       padding: EdgeInsets.symmetric(vertical: KSizes.md),
       decoration: BoxDecoration(
@@ -63,14 +65,14 @@ class _PhotoPickerOptionsBottomSheetState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Upload Profile Photo',
+                  '${l10n.upload_profile_photo}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Choose your profile photo to upload',
+                  '${l10n.choose_your_profile_photo}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),
@@ -81,7 +83,7 @@ class _PhotoPickerOptionsBottomSheetState
           SizedBox(height: KSizes.md),
           ListTile(
             leading: Icon(Icons.photo_library_outlined),
-            title: Text('Upload from Gallery'),
+            title: Text('${l10n.upload_from_gallery}'),
             trailing: Icon(
               Icons.arrow_forward_ios_outlined,
               size: KSizes.iconXs,
@@ -91,7 +93,7 @@ class _PhotoPickerOptionsBottomSheetState
           ),
           ListTile(
             leading: Icon(Icons.camera_alt_outlined),
-            title: Text('Take a Photo'),
+            title: Text('${l10n.take_a_photo}'),
             trailing: Icon(
               Icons.arrow_forward_ios_outlined,
               size: KSizes.iconXs,

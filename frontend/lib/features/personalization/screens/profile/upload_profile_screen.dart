@@ -12,6 +12,7 @@ import 'package:frontend/core/utils/device/device_utility.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/image_preview.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/photo_picker_options_sheet.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -62,6 +63,7 @@ class _UploadProfileScreenState extends State<UploadProfileScreen> {
   @override
   Widget build(BuildContext context) {
     final profileProvider = Provider.of<ProfileProvider>(context);
+    final l10n = AppLocalizations.of(context)!;
     return FullScreenOverlay(
       isLoading: profileProvider.isLoading,
       child: Scaffold(
@@ -81,12 +83,12 @@ class _UploadProfileScreenState extends State<UploadProfileScreen> {
                   child: Column(
                     children: [
                       Text(
-                        "Upload your profile photo",
+                        "${l10n.upload_your_profile_photo}",
                         style: Theme.of(context).textTheme.headlineMedium,
                       ),
                       SizedBox(height: KSizes.sm),
                       Text(
-                        "Choose and upload a clearly recognizable photo",
+                        "${l10n.choose_upload_recognizable_photo}",
                         style: Theme.of(context).textTheme.titleSmall!.copyWith(
                               fontSize: 17.sp,
                             ),
@@ -162,7 +164,7 @@ class _UploadProfileScreenState extends State<UploadProfileScreen> {
                   Expanded(
                     flex: 1,
                     child: CustomButton(
-                      text: "Skip",
+                      text: "${l10n.skip}",
                       isIconShowed: false,
                       color: KColors.secondaryBackground,
                       textColor: KColors.black,
@@ -176,7 +178,7 @@ class _UploadProfileScreenState extends State<UploadProfileScreen> {
                     Expanded(
                       flex: 2,
                       child: CustomButton(
-                        text: "Upload Photo",
+                        text: "${l10n.upload_photo}",
                         isIconShowed: false,
                         onPressed: _showPhotoPickerBottomSheet,
                       ),
@@ -185,7 +187,7 @@ class _UploadProfileScreenState extends State<UploadProfileScreen> {
                     Expanded(
                       flex: 2,
                       child: CustomButton(
-                        text: "Next",
+                        text: "${l10n.next}",
                         isIconShowed: false,
                         onPressed: () {
                           showImagePreview(context, _selectedImage!, () async {
@@ -193,8 +195,10 @@ class _UploadProfileScreenState extends State<UploadProfileScreen> {
                             await profileProvider.updateProfileImage(
                                 context, _selectedImage!);
 
-                            KSnackbar.CustomSnackbar(context,
-                                "Profile Image Updated!", KColors.primary);
+                            KSnackbar.CustomSnackbar(
+                                context,
+                                "${l10n.profile_image_updated}",
+                                KColors.primary);
                             Provider.of<ProfileProvider>(context, listen: false)
                                 .fetchProfile(forceRefresh: true);
                             context.pop();

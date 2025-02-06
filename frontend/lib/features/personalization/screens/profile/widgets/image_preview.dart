@@ -5,6 +5,7 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 
 void showImagePreview(
@@ -12,6 +13,7 @@ void showImagePreview(
   File image,
   VoidCallback onPressed,
 ) {
+  final l10n = AppLocalizations.of(context)!;
   showModalBottomSheet(
     context: context,
     isScrollControlled: true, // Allow the sheet to be as large as needed
@@ -33,7 +35,7 @@ void showImagePreview(
                     child: Column(
                       children: [
                         Text(
-                          'Preview Photo',
+                          '${l10n.preview_photo}',
                           style: Theme.of(context)
                               .textTheme
                               .headlineMedium!
@@ -43,7 +45,7 @@ void showImagePreview(
                         ),
                         SizedBox(height: KSizes.xs),
                         Text(
-                          'Choose and upload clearly recognizable photo',
+                          '${l10n.choose_upload_recognizable_photo}',
                           style:
                               Theme.of(context).textTheme.bodyLarge!.copyWith(
                                     color: KColors.black,
@@ -105,7 +107,7 @@ void showImagePreview(
                 Expanded(
                   flex: 1,
                   child: CustomButton(
-                    text: "Cancel",
+                    text: "${l10n.cancel}",
                     isIconShowed: false,
                     color: KColors.secondaryBackground,
                     textColor: KColors.black,
@@ -118,7 +120,7 @@ void showImagePreview(
                 Expanded(
                   flex: 2,
                   child: CustomButton(
-                    text: "Upload Photo",
+                    text: "${l10n.upload_photo}",
                     isIconShowed: false,
                     onPressed: onPressed,
                   ),

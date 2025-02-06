@@ -402,8 +402,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               SectionData(
                                   label: '${l10n.career_objectives}',
                                   value: profile.profile?[0].jobPreference
-                                          ?.careerObjectives ??
-                                      "_ _ _",
+                                                  ?.careerObjectives ==
+                                              null ||
+                                          profile.profile?[0].jobPreference
+                                                  ?.careerObjectives ==
+                                              ""
+                                      ? "_ _ _"
+                                      : profile.profile?[0].jobPreference
+                                          ?.careerObjectives,
                                   icon: Icons.star_outline_outlined),
                             ],
                           ),

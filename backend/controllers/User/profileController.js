@@ -1,5 +1,5 @@
-const Profile = require("../../models/User/Profile");
-const JobPosting = require("../../models/JobPosting/JobPosting");
+const Profile = require("../../models/user/Profile");
+const JobPosting = require("../../models/job_posting/JobPosting");
 const handleCreateProfile = async (req, res) => {
   const {
     preferredCategories,
@@ -105,7 +105,7 @@ const handleGetProfile = async (req, res) => {
 };
 const handleUpdateProfile = async (req, res) => {
   const userId = req.user.id;
-  console.log(req.body);
+  // console.log(req.body);
   try {
     const profile = await Profile.findOne({ userId });
 
@@ -278,8 +278,6 @@ const handleUpdateProfile = async (req, res) => {
     });
   }
 };
-
-
 
 const handleGetMatchedJobs = async (req, res) => {
   try {
