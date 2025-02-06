@@ -28,7 +28,9 @@ const experienceSchema = new mongoose.Schema(
       year: String,
       month: String,
     },
-    rolesAndResponsibilities: { type: String, required: true },
+    rolesAndResponsibilities: { type: String,
+      //  required: true 
+      },
   },
   { timestamps: true }
 );
