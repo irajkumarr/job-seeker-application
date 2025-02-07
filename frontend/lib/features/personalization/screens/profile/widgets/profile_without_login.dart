@@ -5,6 +5,7 @@ import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
+import 'package:frontend/core/utils/http/url_launch.dart';
 import 'package:frontend/features/dashboard/widgets/employer_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/language_bottom_sheet.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/profile_appbar.dart';
@@ -156,17 +157,24 @@ class ProfileWithoutLogin extends StatelessWidget {
                     SettingsTile(
                       text: "${l10n.terms_conditions}",
                       icon: Icons.description_outlined,
-                      onTap: () {},
+                      onTap: () {
+                        UrlLaunch.launchUrl(
+                            "https://rojgari.com/en/terms-condition");
+                      },
                     ),
                     SettingsTile(
                       text: "FAQs",
                       icon: Icons.help_outline,
-                      onTap: () {},
+                      onTap: () {
+                        UrlLaunch.launchUrl("https://rojgari.com/en/faq");
+                      },
                     ),
                     SettingsTile(
                       text: "${l10n.contact_us}",
                       icon: Icons.phone_outlined,
-                      onTap: () {},
+                      onTap: () {
+                        UrlLaunch.launchUrl("https://rojgari.com/en/contact");
+                      },
                     ),
                   ],
                 ),
