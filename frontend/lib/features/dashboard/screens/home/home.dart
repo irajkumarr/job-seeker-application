@@ -8,7 +8,6 @@ import 'package:frontend/features/dashboard/providers/blog_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_all_jobs_section.dart';
-import 'package:frontend/features/dashboard/screens/home/widgets/home_blogs_section.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_category_list.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_header.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/home_job_places_list.dart';
