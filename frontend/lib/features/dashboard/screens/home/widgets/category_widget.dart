@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/data/models/category_model.dart';
+import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class CategoryWidget extends StatelessWidget {
   const CategoryWidget({
@@ -16,8 +20,13 @@ class CategoryWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final filterProvider = Provider.of<FilterProvider>(context);
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        context.pushNamed(RoutesConstant.filter,extra: false);
+
+        await filterProvider.getFilteredJobs(category: category.name);
+      },
       child: Container(
         width: 170.w,
         margin: EdgeInsets.only(right: KSizes.md - 4),

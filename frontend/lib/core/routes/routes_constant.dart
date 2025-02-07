@@ -36,6 +36,7 @@ class RoutesConstant {
   static const String profileOtherInformation = "profileOtherInformation";
   static const String profilePersonalInformation = "profilePersonalInformation";
   static const String search = "search";
+  static const String filter = "filter";
 
   static const String language = "language";
   static const String onboarding = "onboarding";

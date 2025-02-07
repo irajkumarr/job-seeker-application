@@ -13,7 +13,9 @@ import 'package:frontend/features/authentication/screens/signup/signup_preferred
 import 'package:frontend/features/authentication/screens/signup/signup_status_last_screen.dart';
 import 'package:frontend/features/authentication/screens/signup/widgets/signup_form_completed_screen.dart';
 import 'package:frontend/features/authentication/screens/splash/splash.dart';
+import 'package:frontend/features/dashboard/screens/filter/filter_screen.dart';
 import 'package:frontend/features/dashboard/screens/job_details/job_details_screen.dart';
+import 'package:frontend/features/dashboard/screens/search/search_screen.dart';
 import 'package:frontend/features/dashboard/widgets/employer_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/contact_information_screen.dart';
 import 'package:frontend/features/personalization/screens/profile/document_screen.dart';
@@ -40,8 +42,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    initialLocation: "/",
-    // initialLocation: "/navigationMenu",
+    // initialLocation: "/filter",
+    initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -336,6 +338,25 @@ class AppRoutes {
             child: OtherInformationScreen(
               otherInformation: otherInformation,
             ),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.search,
+        path: "/search",
+        pageBuilder: (context, state) {
+          return MaterialPage(
+            child: SearchScreen(),
+          );
+        },
+      ),
+      GoRoute(
+        name: RoutesConstant.filter,
+        path: "/filter",
+        pageBuilder: (context, state) {
+          final bool isSearch=state.extra as bool;
+          return MaterialPage(
+            child: FilterScreen(isSearch: isSearch,),
           );
         },
       ),

@@ -1,9 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/features/dashboard/providers/filter_provider.dart';
+import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 class JobPlaceWidget extends StatelessWidget {
   const JobPlaceWidget({
@@ -15,10 +19,14 @@ class JobPlaceWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final filterProvider = Provider.of<FilterProvider>(context);
     return Padding(
       padding: EdgeInsets.only(right: KSizes.md - 4),
       child: InkWell(
-        onTap: () {},
+        onTap: () async {
+          context.pushNamed(RoutesConstant.filter, extra: false);
+          await filterProvider.getFilteredJobs(location: jobPlace);
+        },
         borderRadius: BorderRadius.circular(KSizes.sm),
         child: Container(
           width: 110.w,

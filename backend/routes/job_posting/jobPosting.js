@@ -8,6 +8,7 @@ const {
   handleFilterJobPostings,
   handleGetJobsByDistrict,
   handleGetUniqueJobDistricts,
+  handleSearchJob,
 } = require("../../controllers/job_posting/jobPostingController");
 const { verifyEmployer } = require("../../middlewares/jwt");
 const router = express.Router();
@@ -20,5 +21,6 @@ router.get("/districts/all", handleGetUniqueJobDistricts);
 router.get("/all/by-district", handleGetJobsByDistrict);
 router.put("/:id", verifyEmployer, handleUpdateJobPosting);
 router.delete("/:id", verifyEmployer, handleDeleteJobPosting);
+router.get("/search/:search", handleSearchJob);
 
 module.exports = router;

@@ -106,11 +106,11 @@ const handleFilterJobPostings = async (req, res) => {
   try {
     const {
       location,
-      category, // Category from the `Company` model
+      categories, // Category from the `Company` model
       education,
       salary,
       experience,
-      industryTitle, // Filter by industry title
+      category, // Filter by industry title
     } = req.query;
 
     // Build the query dynamically
@@ -140,11 +140,11 @@ const handleFilterJobPostings = async (req, res) => {
     const filteredJobs = await JobPosting.find(query).populate({
       path: "company",
       match: {
-        ...(category ? { category } : {}), // Filter by company category if specified
+        ...(categories ? { categories } : {}), // Filter by company category if specified
       },
       populate: {
         path: "industry", // Populate the industry reference
-        match: industryTitle ? { name: industryTitle } : {}, // Filter by industry title if specified
+        match: category ? { name: category } : {}, // Filter by industry title if specified
       },
     });
 
@@ -229,6 +229,187 @@ const handleGetUniqueJobDistricts = async (req, res) => {
   }
 };
 
+//handle search product
+// const handleSearchJob = async (req, res) => {
+//   const search = req.params.search;
+
+//   try {
+//     const results = await JobPosting.aggregate([
+//       {
+//         $search: {
+//           index: "jobs",
+//           compound: {
+//             should: [
+//               {
+//                 text: {
+//                   query: search,
+//                   path: ["title"],
+//                   fuzzy: {
+//                     maxEdits: 2,
+//                     prefixLength: 1,
+//                   },
+//                 },
+//               },
+//             ],
+//           },
+//         },
+//       },
+//       {
+//         $project: {
+//           createdAt: 0,
+//           updatedAt: 0,
+//           __v: 0,
+//         },
+//       },
+//       {
+//         $limit: 15,
+//       },
+//     ]);
+//     // if (!results.length) {
+//     //   return res.status(404).json({
+//     //     status: false,
+//     //     message: "No products found matching your search query.",
+//     //   });
+//     // }
+
+//     res.status(200).json(results);
+//   } catch (error) {
+//     return res.status(500).json({ status: false, message: error.message });
+//   }
+// };
+
+// const handleSearchJob = async (req, res) => {
+//   const search = req.params.search;
+
+//   try {
+//     const results = await JobPosting.aggregate([
+//       {
+//         $search: {
+//           index: "jobs",
+//           compound: {
+//             should: [
+//               {
+//                 text: {
+//                   query: search,
+//                   path: ["title"],
+//                   fuzzy: {
+//                     maxEdits: 2,
+//                     prefixLength: 1,
+//                   },
+//                 },
+//               },
+//             ],
+//           },
+//         },
+//       },
+//       {
+//         $lookup: {
+//           from: "companies", // Name of the company collection
+//           localField: "company", // Field in JobPosting referencing Company
+//           foreignField: "_id", // Field in Company collection
+//           as: "company",
+//         },
+//       },
+//       {
+//         $unwind: {
+//           path: "$companyDetails",
+//           preserveNullAndEmptyArrays: true, // Keep job postings even if no company is found
+//         },
+//       },
+//       {
+//         $project: {
+//           createdAt: 0,
+//           updatedAt: 0,
+//           __v: 0,
+//           "companyDetails.__v": 0, // Exclude unnecessary fields from the company
+//         },
+//       },
+//       {
+//         $limit: 15,
+//       },
+//     ]);
+
+//     res.status(200).json(results);
+//   } catch (error) {
+//     return res.status(500).json({ status: false, message: error.message });
+//   }
+// };
+const handleSearchJob = async (req, res) => {
+  const search = req.params.search;
+
+  try {
+    const results = await JobPosting.aggregate([
+      {
+        $search: {
+          index: "jobs",
+          compound: {
+            should: [
+              {
+                text: {
+                  query: search,
+                  path: ["title"],
+                  fuzzy: {
+                    maxEdits: 2,
+                    prefixLength: 1,
+                  },
+                },
+              },
+            ],
+          },
+        },
+      },
+      {
+        $lookup: {
+          from: "companies", // Collection name of companies
+          localField: "company", // Field in JobPosting referencing Company
+          foreignField: "_id", // Field in Company collection
+          as: "company",
+        },
+      },
+      {
+        $unwind: {
+          path: "$company",
+          preserveNullAndEmptyArrays: true, // Keeps job even if no company is found
+        },
+      },
+      {
+        $lookup: {
+          from: "industries", // Collection name of industries
+          localField: "company.industry", // Field in Company referencing Industry
+          foreignField: "_id", // Field in Industry collection
+          as: "company.industry",
+        },
+      },
+      {
+        $unwind: {
+          path: "$company.industry",
+          preserveNullAndEmptyArrays: true, // Keeps company even if no industry is found
+        },
+      },
+      // {
+      //   $project: {
+      //     createdAt: 0,
+      //     updatedAt: 0,
+      //     __v: 0,
+      //     "companyDetails.__v": 0,
+      //     "companyDetails.createdAt": 0,
+      //     "companyDetails.updatedAt": 0,
+      //     "companyDetails.industry.__v": 0, // Exclude unnecessary fields from Industry
+      //     "companyDetails.industry.createdAt": 0,
+      //     "companyDetails.industry.updatedAt": 0,
+      //   },
+      // },
+      {
+        $limit: 15,
+      },
+    ]);
+
+    res.status(200).json(results);
+  } catch (error) {
+    return res.status(500).json({ status: false, message: error.message });
+  }
+};
+
 module.exports = {
   handleCreateJobPosting,
   handleGetAllJobPostings,
@@ -238,4 +419,5 @@ module.exports = {
   handleFilterJobPostings,
   handleGetJobsByDistrict,
   handleGetUniqueJobDistricts,
+  handleSearchJob,
 };
