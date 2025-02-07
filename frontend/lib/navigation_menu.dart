@@ -1,5 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_vector_icons/flutter_vector_icons.dart';
 import 'package:frontend/common/widgets/alert_box/alert_box.dart';
 import 'package:frontend/core/network/connectivity_checker.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
@@ -153,14 +155,40 @@ class _NavigationMenuState extends State<NavigationMenu> {
                             width: 16.w,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(100),
-                              child: Image.network(
-                                profileImage,
+                              child: CachedNetworkImage(
+                                imageUrl: profileImage,
                                 height: 16.h,
                                 width: 16.w,
                                 fit: BoxFit.cover,
+                                placeholder: (context, url) => Icon(
+                                  Iconsax.user,
+                                  size: 16.sp,
+                                  color: KColors.black,
+                                  weight: 3,
+                                ),
+                                errorWidget: (context, url, error) => Icon(
+                                  Iconsax.user,
+                                  size: 16.sp,
+                                  color: KColors.black,
+                                  weight: 3,
+                                ),
                               ),
                             ),
                           )
+
+                        //  SizedBox(
+                        //     height: 16.h,
+                        //     width: 16.w,
+                        //     child: ClipRRect(
+                        //       borderRadius: BorderRadius.circular(100),
+                        //       child: Image.network(
+                        //         profileImage,
+                        //         height: 16.h,
+                        //         width: 16.w,
+                        //         fit: BoxFit.cover,
+                        //       ),
+                        //     ),
+                        //   )
                         : Icon(
                             Iconsax.user,
                             size: 16.sp,

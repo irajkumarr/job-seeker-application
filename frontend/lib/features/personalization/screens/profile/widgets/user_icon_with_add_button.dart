@@ -40,13 +40,13 @@ class UserIconWithAddButton extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(100),
               child: localImage != null
-                  ? Image.network(
-                      localImage,
+                  ? CachedNetworkImage(
+                      imageUrl: localImage,
                       height: 100.h,
                       width: 100.w,
                       fit: BoxFit.cover,
-                      errorBuilder: (context, error, stackTrace) =>
-                          _defaultIcon(),
+                      placeholder: (context, url) => _defaultIcon(),
+                      errorWidget: (context, url, error) => _defaultIcon(),
                     )
                   : profileImage != null
                       ? CachedNetworkImage(
