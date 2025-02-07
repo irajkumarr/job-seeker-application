@@ -102,6 +102,51 @@ class FilterProvider with ChangeNotifier {
   //   }
   // }
 
+  // Future<void> getFilteredJobs({
+  //   String? location,
+  //   String? education,
+  //   String? salary,
+  //   String? experience,
+  //   String? category,
+  //   String? companyCategory,
+  // }) async {
+  //   setLoading(true);
+  //   try {
+  //     final String? token = _storage.read('token');
+
+  //     // Construct query parameters dynamically
+  //     final Map<String, String> queryParams = {};
+  //     if (location != null) queryParams['location'] = location;
+  //     if (education != null) queryParams['education'] = education;
+  //     if (salary != null) queryParams['salary'] = salary;
+  //     if (experience != null) queryParams['experience'] = experience;
+  //     if (category != null) queryParams['category'] = category;
+  //     if (companyCategory != null) queryParams['categories'] = companyCategory;
+
+  //     final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
+  //         .replace(queryParameters: queryParams);
+
+  //     final response = await http.get(
+  //       uri,
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //       },
+  //     );
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> filterJobsData = jsonDecode(response.body);
+  //       _filterJobs = filterJobsData
+  //           .map((jobData) => JobModel.fromJson(jobData))
+  //           .toList();
+  //       notifyListeners();
+  //     }
+  //   } catch (error) {
+  //     rethrow;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
   Future<void> getFilteredJobs({
     String? location,
     String? education,
@@ -109,6 +154,9 @@ class FilterProvider with ChangeNotifier {
     String? experience,
     String? category,
     String? companyCategory,
+    bool? employmentForWomen,
+    bool? urgentJobs,
+    bool? jobsWithoutExperience,
   }) async {
     setLoading(true);
     try {
@@ -122,6 +170,13 @@ class FilterProvider with ChangeNotifier {
       if (experience != null) queryParams['experience'] = experience;
       if (category != null) queryParams['category'] = category;
       if (companyCategory != null) queryParams['categories'] = companyCategory;
+
+      // ✅ Include boolean filters as query params (if true)
+      if (employmentForWomen == true)
+        queryParams['employmentForWomen'] = 'true';
+      if (urgentJobs == true) queryParams['urgentJobs'] = 'true';
+      if (jobsWithoutExperience == true)
+        queryParams['jobsWithoutExperience'] = 'true';
 
       final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
           .replace(queryParameters: queryParams);

@@ -102,6 +102,63 @@ const handleDeleteJobPosting = async (req, res) => {
   }
 };
 
+// const handleFilterJobPostings = async (req, res) => {
+//   try {
+//     const {
+//       location,
+//       categories, // Category from the `Company` model
+//       education,
+//       salary,
+//       experience,
+//       category, // Filter by industry title
+//     } = req.query;
+
+//     // Build the query dynamically
+//     const query = {};
+
+//     if (location) {
+//       // If location is provided, we will assume it's the district and filter based on that.
+//       query["location.district"] = location.trim(); // Directly match the district
+//     }
+
+//     // Filter by education
+//     if (education) {
+//       query["basicInformation.education"] = education;
+//     }
+
+//     // Filter by salary (greater than or equal to specified salary)
+//     if (salary) {
+//       query.salary = { $gte: parseFloat(salary) }; // Ensure salary is greater than or equal to the specified value
+//     }
+
+//     // Filter by experience (greater than or equal to specified experience)
+//     if (experience) {
+//       query["basicInformation.experience"] = { $gte: parseInt(experience) }; // Ensure experience is greater than or equal to the specified value
+//     }
+
+//     // Fetch and filter job postings with company category and industry title if provided
+//     const filteredJobs = await JobPosting.find(query).populate({
+//       path: "company",
+//       match: {
+//         ...(categories ? { categories } : {}), // Filter by company category if specified
+//       },
+//       populate: {
+//         path: "industry", // Populate the industry reference
+//         match: category ? { name: category } : {}, // Filter by industry title if specified
+//       },
+//     });
+
+//     // Remove jobs where the company or industry filter did not match
+//     const result = filteredJobs.filter(
+//       (job) => job.company && job.company.industry
+//     );
+
+//     res.status(200).json(result);
+//   } catch (error) {
+//     res.status(500).json({ message: error.message });
+//   }
+// };
+
 const handleFilterJobPostings = async (req, res) => {
   try {
     const {
@@ -111,39 +168,54 @@ const handleFilterJobPostings = async (req, res) => {
       salary,
       experience,
       category, // Filter by industry title
+      employmentForWomen,
+      urgentJobs,
+      jobsWithoutExperience,
     } = req.query;
 
     // Build the query dynamically
     const query = {};
 
     if (location) {
-      // If location is provided, we will assume it's the district and filter based on that.
       query["location.district"] = location.trim(); // Directly match the district
     }
 
-    // Filter by education
     if (education) {
       query["basicInformation.education"] = education;
     }
 
-    // Filter by salary (greater than or equal to specified salary)
     if (salary) {
-      query.salary = { $gte: parseFloat(salary) }; // Ensure salary is greater than or equal to the specified value
+      query.salary = { $gte: parseFloat(salary) };
     }
 
-    // Filter by experience (greater than or equal to specified experience)
     if (experience) {
-      query["basicInformation.experience"] = { $gte: parseInt(experience) }; // Ensure experience is greater than or equal to the specified value
+      query["basicInformation.experience"] = { $gte: parseInt(experience) };
     }
 
-    // Fetch and filter job postings with company category and industry title if provided
+    // ✅ Employment for Women
+    if (employmentForWomen === "true") {
+      query["basicInformation.gender"] = "Female";
+    }
+
+    // ✅ Urgent Jobs with Expiry Date Check
+    if (urgentJobs === "true") {
+      // query["isUrgent"] = true;
+      query["expiryDate"] = { $gte: new Date() }; // Only fetch jobs where expiryDate is in the future
+    }
+
+    // ✅ Jobs Without Experience
+    if (jobsWithoutExperience === "true") {
+      query["basicInformation.experience"] = 0;
+    }
+
+    // Fetch and filter job postings
     const filteredJobs = await JobPosting.find(query).populate({
       path: "company",
       match: {
         ...(categories ? { categories } : {}), // Filter by company category if specified
       },
       populate: {
-        path: "industry", // Populate the industry reference
+        path: "industry",
         match: category ? { name: category } : {}, // Filter by industry title if specified
       },
     });
@@ -158,6 +230,7 @@ const handleFilterJobPostings = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
 
 const handleGetJobsByDistrict = async (req, res) => {
   const { district } = req.query; // Expecting the district name from query parameters

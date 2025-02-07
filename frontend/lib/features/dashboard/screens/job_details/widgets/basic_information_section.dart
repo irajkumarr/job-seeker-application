@@ -59,8 +59,10 @@ class BasicInformationSection extends StatelessWidget {
                   value: job.basicInformation.education),
               InfoRow(
                   label: '${l10n.experience}',
-                  value:
-                      "${job.basicInformation.experience.toStringAsFixed(0)} ${l10n.years}"),
+                  value: job.basicInformation.experience.toStringAsFixed(0) !=
+                          "0"
+                      ? "${job.basicInformation.experience.toStringAsFixed(0)} ${l10n.years}"
+                      : "Not Required"),
               InfoRow(
                   label: '${l10n.shift}', value: job.basicInformation.shift),
             ],
