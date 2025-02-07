@@ -3,11 +3,8 @@ import 'package:flutter/material.dart';
 class KColors {
   // Color(0xFFFF9838),
   // App theme colors
-  static const Color primary = Color(0xffF3A92E);
-  // static const Color primary = Color(0xffE38C1D);
-  // static const Color primary = Color(0xffE39C38);
-  // static const Color primary = Color(0xffFF9501);
-  // static const Color primary = Color(0xffff0013);
+  // static const Color primary = Color(0xffF3A92E);
+  static const Color primary = Color(0xffFAA026);
   // static const Color secondary = Color(0xFFf6dde0);
   // static const Color secondary = Color.fromARGB(255, 248, 195, 201);
   static const Color secondary = Color(0xFFFEF5E6);

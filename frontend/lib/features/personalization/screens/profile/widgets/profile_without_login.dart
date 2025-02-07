@@ -106,7 +106,9 @@ class ProfileWithoutLogin extends StatelessWidget {
                       text: "${l10n.employer_zone}",
                       icon: Icons.business_outlined,
                       onTap: () async {
-                        await EmployerBottomSheet();
+                        // await EmployerBottomSheet();
+
+                        showEmployerBottomSheet(context);
                       },
                     ),
                   ],

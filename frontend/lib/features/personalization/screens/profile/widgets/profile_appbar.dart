@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/features/dashboard/widgets/employer_bottom_sheet.dart';
 import 'package:frontend/l10n/l10n.dart';
 
 class ProfileAppbar extends StatelessWidget {
@@ -21,7 +22,10 @@ class ProfileAppbar extends StatelessWidget {
         ),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              
+                    showEmployerBottomSheet(context);
+            },
             icon: Icon(
               Icons.business_outlined,
             ),

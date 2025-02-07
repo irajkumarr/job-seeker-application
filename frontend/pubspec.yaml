@@ -92,7 +92,7 @@ flutter_launcher_icons:
   android: true
   ios: true
   image_path: "assets/images/content/rojgari_icon.png"
-  adaptive_icon_background: "#F3A92E"
+  adaptive_icon_background: "#FAA026"
   adaptive_icon_foreground: "assets/images/content/rojgari_icon.png"
 # The following section is specific to Flutter packages.
 flutter:
