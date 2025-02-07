@@ -61,11 +61,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
     final box = GetStorage();
     final String? profileImage = box.read("profileImage");
     // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: () async {
-        return await CustomAlertBox.alertCloseApp(context);
-      },
-      child: ConnectivityChecker(
+    return ConnectivityChecker(
+      child: WillPopScope(
+        onWillPop: () async {
+          return await CustomAlertBox.alertCloseApp(context);
+        },
         child: Consumer<NavigationProvider>(
             builder: (context, navigationProvider, child) {
           return Scaffold(

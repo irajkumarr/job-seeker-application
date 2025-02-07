@@ -40,8 +40,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    // initialLocation: "/profilePersonalInformation",
-    initialLocation: "/navigationMenu",
+    initialLocation: "/",
+    // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
