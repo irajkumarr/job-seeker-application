@@ -19,12 +19,6 @@ class FilterScreen extends StatelessWidget {
   final bool isSearch;
   @override
   Widget build(BuildContext context) {
-    final List<String> locations = ["Lalitpur", "Kathmandu", "Bhaktapur"];
-    final List<String> categories = ["Cook", "Waiter", "Housekeeping"];
-    final List<String> educations = ["High School", "Bachelor's", "Master's"];
-    final List<String> experiences = ["0", "1", "2", "3+"];
-    final List<String> industries = ["Food", "Hospitality", "Retail"];
-
     final filterProvider = Provider.of<FilterProvider>(context);
     final searchProvider = Provider.of<SearchProvider>(context);
     int _calculateTotalVacancies(List<JobModel>? jobs) {
