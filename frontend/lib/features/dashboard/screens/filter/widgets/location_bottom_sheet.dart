@@ -17,6 +17,10 @@ void showLocationBottomSheet(
   final jobProvider = Provider.of<JobProvider>(context, listen: false);
   showModalBottomSheet(
     context: context,
+    sheetAnimationStyle: AnimationStyle(
+      duration: Duration(milliseconds: 700),
+      reverseDuration: Duration(milliseconds: 700),
+    ),
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(

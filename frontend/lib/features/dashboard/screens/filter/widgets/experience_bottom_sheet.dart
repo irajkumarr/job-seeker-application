@@ -14,6 +14,10 @@ void showExperienceBottomSheet(
   final l10n = AppLocalizations.of(context)!;
   showModalBottomSheet(
     context: context,
+    sheetAnimationStyle: AnimationStyle(
+      duration: Duration(milliseconds: 700),
+      reverseDuration: Duration(milliseconds: 700),
+    ),
     isScrollControlled: true, // Allow the sheet to be as large as needed
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
