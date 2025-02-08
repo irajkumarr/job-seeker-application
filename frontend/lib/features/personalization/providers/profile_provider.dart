@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/common/widgets/alert_box/snackbar.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/data/models/login_model.dart';
@@ -410,6 +411,7 @@ class ProfileProvider extends ChangeNotifier {
         final data = json.decode(response.body);
         KSnackbar.CustomSnackbar(context, data['message'], KColors.primary);
         context.pop();
+        context.pushNamed(RoutesConstant.login);
       } else {
         // Handle error
         _isLoading = false;
@@ -417,6 +419,7 @@ class ProfileProvider extends ChangeNotifier {
         final errorResponse = json.decode(response.body);
         KSnackbar.CustomSnackbar(
             context, errorResponse['message'], KColors.error);
+        context.pop();
       }
     } catch (error) {
       _isLoading = false;
@@ -424,6 +427,7 @@ class ProfileProvider extends ChangeNotifier {
       print('Error: $error');
       KSnackbar.CustomSnackbar(context,
           "An error occurred while changing the password", KColors.error);
+      context.pop();
     }
   }
 

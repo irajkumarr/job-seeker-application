@@ -16,7 +16,7 @@ class LanguageBottomSheet extends StatelessWidget {
 
     final languageProvider = Provider.of<LanguageProvider>(context);
     final currentLocale = languageProvider.locale.languageCode;
-    return Container(
+    return Container( 
       padding: EdgeInsets.symmetric(vertical: KSizes.md),
       decoration: BoxDecoration(
         color: Colors.white,
