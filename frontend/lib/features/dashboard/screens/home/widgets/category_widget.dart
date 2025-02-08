@@ -23,8 +23,8 @@ class CategoryWidget extends StatelessWidget {
     final filterProvider = Provider.of<FilterProvider>(context);
     return GestureDetector(
       onTap: () async {
-        context.pushNamed(RoutesConstant.filter,extra: false);
-
+        filterProvider.setCategory(category.name);
+        context.pushNamed(RoutesConstant.filter, extra: false);
         await filterProvider.getFilteredJobs(category: category.name);
       },
       child: Container(

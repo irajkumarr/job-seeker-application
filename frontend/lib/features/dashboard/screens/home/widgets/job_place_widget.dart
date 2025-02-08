@@ -24,6 +24,7 @@ class JobPlaceWidget extends StatelessWidget {
       padding: EdgeInsets.only(right: KSizes.md - 4),
       child: InkWell(
         onTap: () async {
+          filterProvider.setLocation(jobPlace);
           context.pushNamed(RoutesConstant.filter, extra: false);
           await filterProvider.getFilteredJobs(location: jobPlace);
         },

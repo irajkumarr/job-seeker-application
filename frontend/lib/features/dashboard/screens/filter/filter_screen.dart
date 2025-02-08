@@ -17,9 +17,32 @@ import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/search/search_result.dart';
 import 'package:provider/provider.dart';
 
-class FilterScreen extends StatelessWidget {
+class FilterScreen extends StatefulWidget {
   const FilterScreen({super.key, required this.isSearch});
   final bool isSearch;
+
+  @override
+  State<FilterScreen> createState() => _FilterScreenState();
+}
+
+class _FilterScreenState extends State<FilterScreen> {
+  // late FilterProvider filterProvider;
+
+  // @override
+  // void didChangeDependencies() {
+  //   super.didChangeDependencies();
+  //   WidgetsBinding.instance.addPostFrameCallback((_) {
+  //     Provider.of<FilterProvider>(context, listen: false).resetFilters();
+  //   });
+  // }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Future.microtask(() {
+  //     Provider.of<FilterProvider>(context, listen: false).resetFilters();
+  //   });
+  // }
+
   @override
   Widget build(BuildContext context) {
     final filterProvider = Provider.of<FilterProvider>(context);
@@ -30,162 +53,189 @@ class FilterScreen extends StatelessWidget {
           0, (sum, job) => sum + (job.basicInformation.noOfVacancy ?? 0));
     }
 
-    return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-        child: Appbar(isActionRequired: false),
-      ),
-      body: (isSearch && searchProvider.isLoading) || filterProvider.isLoading
-          ? const FilterShimmer()
-          : (isSearch &&
-                      (searchProvider.searchResults == null ||
-                          searchProvider.searchResults!.isEmpty)) ||
-                  (!isSearch && (filterProvider.filterJobs.isEmpty))
-              ? Center(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                        horizontal: KSizes.md,
-                        vertical: KSizes.spaceBtwSections),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        SvgPicture.asset(
-                            "assets/images/content/rojgari_logo_single.svg"),
-                        SizedBox(height: KSizes.md),
-                        Text(
-                          'No results found',
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(fontWeight: FontWeight.w600),
-                        ),
-                        SizedBox(height: KSizes.sm),
-                        Text("Your search returned no results"),
-                        Text("Try removing filters or rephrasing your search"),
-                        SizedBox(height: KSizes.md),
-                        OutlinedButton(
-                          style: OutlinedButton.styleFrom(
-                            side: BorderSide(color: KColors.primary),
-                            shape: RoundedRectangleBorder(
-                                borderRadius:
-                                    BorderRadius.circular(KSizes.defaultSpace)),
+    String _formatFilters(Map<String, dynamic> filters) {
+      if (filters.isEmpty) return "No filters selected"; // Handle empty filters
+
+      return filters.entries
+          .map((entry) =>
+              "${entry.key}: ${entry.value}") // Format each key-value pair
+          .join(" | "); // Separate filters with a "|"
+    }
+
+    return WillPopScope(
+      onWillPop: () async {
+        filterProvider.resetFilters();
+        return true;
+      },
+      child: Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
+          child: Appbar(isActionRequired: false),
+        ),
+        body: (widget.isSearch && searchProvider.isLoading) ||
+                filterProvider.isLoading
+            ? const FilterShimmer()
+            : (widget.isSearch &&
+                        (searchProvider.searchResults == null ||
+                            searchProvider.searchResults!.isEmpty)) ||
+                    (!widget.isSearch && (filterProvider.filterJobs.isEmpty))
+                ? Center(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: KSizes.md,
+                          vertical: KSizes.spaceBtwSections),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          SvgPicture.asset(
+                              "assets/images/content/rojgari_logo_single.svg"),
+                          SizedBox(height: KSizes.md),
+                          Text(
+                            'No results found',
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(fontWeight: FontWeight.w600),
                           ),
-                          onPressed: () {},
+                          SizedBox(height: KSizes.sm),
+                          Text("Your search returned no results"),
+                          Text(
+                              "Try removing filters or rephrasing your search"),
+                          SizedBox(height: KSizes.md),
+                          OutlinedButton(
+                            style: OutlinedButton.styleFrom(
+                              side: BorderSide(color: KColors.primary),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(
+                                      KSizes.defaultSpace)),
+                            ),
+                            onPressed: () {},
+                            child: Text(
+                              "Edit Search",
+                              style: TextStyle(color: KColors.primary),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                : SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(height: KSizes.md),
+                        Padding(
+                          padding:
+                              const EdgeInsets.symmetric(horizontal: KSizes.md),
                           child: Text(
-                            "Edit Search",
-                            style: TextStyle(color: KColors.primary),
+                            widget.isSearch
+                                ? "${searchProvider.searchText}"
+                                : _formatFilters(filterProvider.filters),
+                            style: Theme.of(context)
+                                .textTheme
+                                .headlineSmall!
+                                .copyWith(
+                                  fontSize: 22.sp,
+                                ),
+                          ),
+                        ),
+                        SizedBox(height: KSizes.defaultSpace),
+                        SizedBox(
+                          height: 40.h,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
+                            padding:
+                                EdgeInsets.symmetric(horizontal: KSizes.md),
+                            children: [
+                              DropDownWidget(
+                                title: "All Filters",
+                                icon: Icons.add,
+                                onTap: () {
+                                  showAllFiltersBottomSheet(
+                                    context,
+                                    () {},
+                                  );
+                                },
+                              ),
+                              DropDownWidget(
+                                title: filterProvider.selectedCategory ??
+                                    "Job Category",
+                                icon: Icons.keyboard_arrow_down_outlined,
+                                color: filterProvider.selectedCategory == null
+                                    ? KColors.secondaryBackground
+                                    : KColors.secondary,
+                                onTap: () {
+                                  showCategoryBottomSheet(
+                                    context,
+                                    () {},
+                                  );
+                                },
+                              ),
+                              DropDownWidget(
+                                title: filterProvider.selectedLocation ??
+                                    "Job Location",
+                                icon: Icons.keyboard_arrow_down_outlined,
+                                color: filterProvider.selectedCategory == null
+                                    ? KColors.secondaryBackground
+                                    : KColors.secondary,
+                                onTap: () {
+                                  showLocationBottomSheet(
+                                    context,
+                                    () {},
+                                  );
+                                },
+                              ),
+                              DropDownWidget(
+                                title: "Experience",
+                                icon: Icons.keyboard_arrow_down_outlined,
+                                onTap: () {
+                                  showExperienceBottomSheet(
+                                    context,
+                                    () {},
+                                  );
+                                },
+                              ),
+                              DropDownWidget(
+                                title: "Salary",
+                                icon: Icons.keyboard_arrow_down_outlined,
+                                onTap: () {},
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: KSizes.md),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: KSizes.md,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "We found ${widget.isSearch ? searchProvider.searchResults?.length ?? 0 : filterProvider.filterJobs.length} jobs with ${widget.isSearch ? _calculateTotalVacancies(searchProvider.searchResults) : _calculateTotalVacancies(filterProvider.filterJobs)} vacancies",
+                                style: Theme.of(context).textTheme.bodyLarge,
+                              ),
+                              SizedBox(height: KSizes.md),
+                              widget.isSearch
+                                  ? SearchResults()
+                                  : ListView.builder(
+                                      shrinkWrap: true,
+                                      physics: NeverScrollableScrollPhysics(),
+                                      itemCount:
+                                          filterProvider.filterJobs.length,
+                                      itemBuilder: (context, index) {
+                                        final JobModel job =
+                                            filterProvider.filterJobs[index];
+                                        return JobCard(job: job);
+                                      })
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                )
-              : SingleChildScrollView(
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(height: KSizes.md),
-                      Padding(
-                        padding:
-                            const EdgeInsets.symmetric(horizontal: KSizes.md),
-                        child: Text(
-                          isSearch
-                              ? "${searchProvider.searchText}"
-                              : "Filtered Jobs",
-                          style: Theme.of(context)
-                              .textTheme
-                              .headlineSmall!
-                              .copyWith(
-                                fontSize: 22.sp,
-                              ),
-                        ),
-                      ),
-                      SizedBox(height: KSizes.defaultSpace),
-                      SizedBox(
-                        height: 40.h,
-                        child: ListView(
-                          scrollDirection: Axis.horizontal,
-                          padding: EdgeInsets.symmetric(horizontal: KSizes.md),
-                          children: [
-                            DropDownWidget(
-                              title: "All Filters",
-                              icon: Icons.add,
-                              onTap: () {
-                                showAllFiltersBottomSheet(
-                                  context,
-                                  () {},
-                                );
-                              },
-                            ),
-                            DropDownWidget(
-                              title: "Category",
-                              icon: Icons.keyboard_arrow_down_outlined,
-                              onTap: () {
-                                showCategoryBottomSheet(
-                                  context,
-                                  () {},
-                                );
-                              },
-                            ),
-                            DropDownWidget(
-                              title: "Location",
-                              icon: Icons.keyboard_arrow_down_outlined,
-                              onTap: () {
-                                showLocationBottomSheet(
-                                  context,
-                                  () {},
-                                );
-                              },
-                            ),
-                            DropDownWidget(
-                              title: "Experience",
-                              icon: Icons.keyboard_arrow_down_outlined,
-                              onTap: () {
-                                showExperienceBottomSheet(
-                                  context,
-                                  () {},
-                                );
-                              },
-                            ),
-                            DropDownWidget(
-                              title: "Salary",
-                              icon: Icons.keyboard_arrow_down_outlined,
-                              onTap: () {},
-                            ),
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: KSizes.md),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: KSizes.md,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "We found ${isSearch ? searchProvider.searchResults?.length ?? 0 : filterProvider.filterJobs.length} jobs with ${isSearch ? _calculateTotalVacancies(searchProvider.searchResults) : _calculateTotalVacancies(filterProvider.filterJobs)} vacancies",
-                              style: Theme.of(context).textTheme.bodyLarge,
-                            ),
-                            SizedBox(height: KSizes.md),
-                            isSearch
-                                ? SearchResults()
-                                : ListView.builder(
-                                    shrinkWrap: true,
-                                    physics: NeverScrollableScrollPhysics(),
-                                    itemCount: filterProvider.filterJobs.length,
-                                    itemBuilder: (context, index) {
-                                      final JobModel job =
-                                          filterProvider.filterJobs[index];
-                                      return JobCard(job: job);
-                                    })
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
+      ),
     );
   }
 }
@@ -196,10 +246,12 @@ class DropDownWidget extends StatelessWidget {
     required this.icon,
     required this.title,
     required this.onTap,
+    this.color = KColors.secondaryBackground,
   });
   final IconData icon;
   final String title;
   final VoidCallback onTap;
+  final Color color;
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +264,7 @@ class DropDownWidget extends StatelessWidget {
           padding:
               EdgeInsets.symmetric(horizontal: KSizes.md, vertical: KSizes.sm),
           decoration: BoxDecoration(
-            color: KColors.secondaryBackground,
+            color: color,
             borderRadius: BorderRadius.circular(KSizes.defaultSpace),
           ),
           child: Row(

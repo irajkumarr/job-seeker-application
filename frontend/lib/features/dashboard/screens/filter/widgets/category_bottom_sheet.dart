@@ -5,6 +5,7 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
+import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -17,10 +18,12 @@ void showCategoryBottomSheet(
   final l10n = AppLocalizations.of(context)!;
   final categoryProvider =
       Provider.of<CategoryProvider>(context, listen: false);
+  final filterProvider = Provider.of<FilterProvider>(context, listen: false);
   showModalBottomSheet(
-    context: context, sheetAnimationStyle: AnimationStyle(
+    context: context,
+    sheetAnimationStyle: AnimationStyle(
       duration: Duration(milliseconds: 600),
-      reverseDuration: Duration(milliseconds: 600),
+      reverseDuration: Duration(milliseconds: 300),
     ),
     isScrollControlled: true, // Allow the sheet to be as large as needed
     shape: RoundedRectangleBorder(
@@ -71,7 +74,12 @@ void showCategoryBottomSheet(
                               return Column(
                                 children: [
                                   ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      context.pop();
+                                      filterProvider.setCategory(category.name);
+                                      filterProvider.getFilteredJobs(
+                                          category: category.name);
+                                    },
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: KSizes.md),
                                     title: Text(
