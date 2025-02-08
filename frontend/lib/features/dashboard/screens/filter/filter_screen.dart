@@ -9,6 +9,7 @@ import 'package:frontend/core/utils/shimmers/filter_shimmer.dart';
 import 'package:frontend/data/models/job_model.dart';
 import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/features/dashboard/providers/search_provider.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/all_filters_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/category_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/experience_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/location_bottom_sheet.dart';
@@ -110,7 +111,12 @@ class FilterScreen extends StatelessWidget {
                             DropDownWidget(
                               title: "All Filters",
                               icon: Icons.add,
-                              onTap: () {},
+                              onTap: () {
+                                showAllFiltersBottomSheet(
+                                  context,
+                                  () {},
+                                );
+                              },
                             ),
                             DropDownWidget(
                               title: "Category",
@@ -199,7 +205,8 @@ class DropDownWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: KSizes.sm),
-      child: GestureDetector(
+      child: InkWell(
+        borderRadius: BorderRadius.circular(KSizes.defaultSpace),
         onTap: onTap,
         child: Container(
           padding:

@@ -15,8 +15,8 @@ void showExperienceBottomSheet(
   showModalBottomSheet(
     context: context,
     sheetAnimationStyle: AnimationStyle(
-      duration: Duration(milliseconds: 700),
-      reverseDuration: Duration(milliseconds: 700),
+      duration: Duration(milliseconds: 600),
+      reverseDuration: Duration(milliseconds: 600),
     ),
     isScrollControlled: true, // Allow the sheet to be as large as needed
     shape: RoundedRectangleBorder(
