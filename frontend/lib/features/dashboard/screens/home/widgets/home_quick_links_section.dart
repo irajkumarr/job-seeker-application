@@ -39,7 +39,7 @@ class HomeQuickLinksSection extends StatelessWidget {
                 title: l10n.employment_for_women,
                 onTap: () async {
                   context.pushNamed(RoutesConstant.filter, extra: false);
-
+                  filterProvider.setEmploymentForWomen("Employment for Women");
                   await filterProvider.getFilteredJobs(
                       employmentForWomen: true);
                 },
@@ -50,6 +50,7 @@ class HomeQuickLinksSection extends StatelessWidget {
                 onTap: () async {
                   context.pushNamed(RoutesConstant.filter, extra: false);
 
+                  filterProvider.setUrgent("Urgent Jobs");
                   await filterProvider.getFilteredJobs(urgentJobs: true);
                 },
               ),
@@ -59,6 +60,8 @@ class HomeQuickLinksSection extends StatelessWidget {
                 onTap: () async {
                   context.pushNamed(RoutesConstant.filter, extra: false);
 
+                  filterProvider
+                      .setJobsWithoutExperience("Jobs without experience");
                   await filterProvider.getFilteredJobs(
                       jobsWithoutExperience: true);
                 },

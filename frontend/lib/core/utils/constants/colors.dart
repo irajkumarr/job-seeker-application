@@ -9,7 +9,7 @@ class KColors {
   // static const Color secondary = Color.fromARGB(255, 248, 195, 201);
   static const Color secondary = Color(0xFFFEF5E6);
   // static const Color secondary = Color(0xFFc23844);
-  static const Color accent = Color(0xFFFDEED6);
+  static const Color accent = Color(0xFFFAD79F);
 //Color(0xFFb0c7ff);
   // Text colors
   static const Color textPrimary = Color(0xFF333333);

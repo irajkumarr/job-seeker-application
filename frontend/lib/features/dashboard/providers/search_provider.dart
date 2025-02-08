@@ -111,4 +111,12 @@ class SearchProvider with ChangeNotifier {
   void saveSearchHistory() {
     _storage.write(_historyKey, _searchHistory);
   }
+
+  void resetSearch() {
+    _searchText = '';
+    searchResults = null;
+    _isTextEmpty = true;
+
+    notifyListeners();
+  }
 }

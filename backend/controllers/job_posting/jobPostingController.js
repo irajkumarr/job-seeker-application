@@ -231,7 +231,6 @@ const handleFilterJobPostings = async (req, res) => {
   }
 };
 
-
 const handleGetJobsByDistrict = async (req, res) => {
   const { district } = req.query; // Expecting the district name from query parameters
 

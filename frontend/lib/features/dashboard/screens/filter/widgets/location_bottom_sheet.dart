@@ -4,6 +4,7 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
@@ -15,11 +16,12 @@ void showLocationBottomSheet(
 ) {
   final l10n = AppLocalizations.of(context)!;
   final jobProvider = Provider.of<JobProvider>(context, listen: false);
+  final filterProvider = Provider.of<FilterProvider>(context, listen: false);
   showModalBottomSheet(
     context: context,
     sheetAnimationStyle: AnimationStyle(
       duration: Duration(milliseconds: 600),
-      reverseDuration: Duration(milliseconds: 600),
+      reverseDuration: Duration(milliseconds: 300),
     ),
     isScrollControlled: true,
     shape: RoundedRectangleBorder(
@@ -68,7 +70,12 @@ void showLocationBottomSheet(
                               return Column(
                                 children: [
                                   ListTile(
-                                    onTap: () {},
+                                    onTap: () {
+                                      context.pop();
+                                      filterProvider.setLocation(place);
+                                      filterProvider.getFilteredJobs(
+                                          location: place);
+                                    },
                                     contentPadding: EdgeInsets.symmetric(
                                         horizontal: KSizes.md),
                                     title: Text(

@@ -65,13 +65,9 @@ import 'package:http/http.dart' as http;
 //     notifyListeners();
 //   }
 
- 
-
 //   List<JobModel> _filterJobs = [];
 
 //   List<JobModel> get filterJobs => _filterJobs;
-
-
 
 //   Future<void> getFilteredJobs({
 //     String? location,
@@ -141,7 +137,6 @@ import 'package:http/http.dart' as http;
 
 // }
 
-
 class FilterProvider with ChangeNotifier {
   String? selectedLocation;
   String? selectedCategory;
@@ -195,28 +190,98 @@ class FilterProvider with ChangeNotifier {
     selectedIndustryTitle = industryTitle;
     notifyListeners();
   }
+
   void setEmploymentForWomen(String? employmentForWomen) {
     selectedEmploymentForWomen = employmentForWomen;
     notifyListeners();
   }
+
   void setUrgent(String? urgent) {
     selectedUrgent = urgent;
     notifyListeners();
   }
+
   void setJobsWithoutExperience(String? withoutExperience) {
     selectedJobsWithoutExperience = withoutExperience;
     notifyListeners();
   }
 
+  // Map<String, String> get filters {
+  //   return {
+  //     if (selectedLocation != null) "location": selectedLocation!,
+  //     if (selectedCategory != null) "category": selectedCategory!,
+  //     if (selectedEducation != null) "education": selectedEducation!,
+  //     if (selectedSalary != null) "salary": selectedSalary!,
+  //     if (selectedExperience != null) "experience": selectedExperience!,
+  //     if (selectedIndustryTitle != null)
+  //       "industryTitle": selectedIndustryTitle!,
+  //     if (selectedEmploymentForWomen != null)
+  //       "employmentForWomen": selectedEmploymentForWomen!,
+  //     if (selectedUrgent != null) "urgentJobs": selectedUrgent!,
+  //     if (selectedJobsWithoutExperience != null)
+  //       "jobsWithoutExperience": selectedJobsWithoutExperience!,
+  //   };
+
+  // }
+
+  // Map<String, String> get filters {
+  //   final Map<String, String> activeFilters = {
+  //     if (selectedLocation != null) "location": selectedLocation!,
+  //     if (selectedCategory != null) "category": selectedCategory!,
+  //     if (selectedEducation != null) "education": selectedEducation!,
+  //     if (selectedSalary != null) "salary": selectedSalary!,
+  //     if (selectedExperience != null) "experience": selectedExperience!,
+  //     if (selectedIndustryTitle != null)
+  //       "industryTitle": selectedIndustryTitle!,
+  //     if (selectedEmploymentForWomen != null)
+  //       "employmentForWomen": selectedEmploymentForWomen!,
+  //     if (selectedUrgent != null) "urgentJobs": selectedUrgent!,
+  //     if (selectedJobsWithoutExperience != null)
+  //       "jobsWithoutExperience": selectedJobsWithoutExperience!,
+  //   };
+
+  //   // ✅ Show only if exactly one filter is selected
+  //   return activeFilters.length == 1 ? activeFilters : {};
+  // }
+
+  // Map<String, String> get filters {
+  //   return {
+  //     if (selectedLocation != null) "location": selectedLocation!,
+  //     if (selectedCategory != null) "category": selectedCategory!,
+  //     if (selectedEducation != null) "education": selectedEducation!,
+  //     if (selectedSalary != null) "salary": selectedSalary!,
+  //     if (selectedExperience != null) "experience": selectedExperience!,
+  //     if (selectedIndustryTitle != null)
+  //       "industryTitle": selectedIndustryTitle!,
+  //     if (selectedEmploymentForWomen != null)
+  //       "employmentForWomen": selectedEmploymentForWomen!,
+  //     if (selectedUrgent != null) "urgentJobs": selectedUrgent!,
+  //     if (selectedJobsWithoutExperience != null)
+  //       "jobsWithoutExperience": selectedJobsWithoutExperience!,
+  //   };
+  // }
+
   Map<String, String> get filters {
-    return {
-      if (selectedLocation != null) "location": selectedLocation!,
-      if (selectedCategory != null) "category": selectedCategory!,
-      if (selectedEducation != null) "education": selectedEducation!,
-      if (selectedSalary != null) "salary": selectedSalary!,
-      if (selectedExperience != null) "experience": selectedExperience!,
-      if (selectedIndustryTitle != null) "industryTitle": selectedIndustryTitle!,
-    };
+    final Map<String, String> activeFilters = {};
+
+    if (selectedLocation != null) activeFilters["Location"] = selectedLocation!;
+    if (selectedCategory != null) activeFilters["Category"] = selectedCategory!;
+    if (selectedEducation != null)
+      activeFilters["Education"] = selectedEducation!;
+    if (selectedSalary != null) activeFilters["Salary"] = selectedSalary!;
+    if (selectedExperience != null)
+      activeFilters["Experience"] = selectedExperience!;
+    if (selectedIndustryTitle != null)
+      activeFilters["Industry"] = selectedIndustryTitle!;
+
+    // Handle boolean filters
+    if (selectedEmploymentForWomen != null)
+      activeFilters["For Women"] = "Employment for Women";
+    if (selectedUrgent != null) activeFilters["Urgent Jobs"] = "Urgent Jobs";
+    if (selectedJobsWithoutExperience != null)
+      activeFilters["No Experience"] = "Jobs without experience";
+
+    return activeFilters;
   }
 
   /// ✅ Reset all filters when navigating back
@@ -227,6 +292,9 @@ class FilterProvider with ChangeNotifier {
     selectedSalary = null;
     selectedExperience = null;
     selectedIndustryTitle = null;
+    selectedEmploymentForWomen = null;
+    selectedUrgent = null;
+    selectedJobsWithoutExperience = null;
     _filterJobs = [];
     notifyListeners();
   }
@@ -253,18 +321,23 @@ class FilterProvider with ChangeNotifier {
       if (category != null) queryParams['category'] = category;
       if (companyCategory != null) queryParams['categories'] = companyCategory;
 
-      if (employmentForWomen == true) queryParams['employmentForWomen'] = 'true';
+      if (employmentForWomen == true)
+        queryParams['employmentForWomen'] = 'true';
       if (urgentJobs == true) queryParams['urgentJobs'] = 'true';
-      if (jobsWithoutExperience == true) queryParams['jobsWithoutExperience'] = 'true';
+      if (jobsWithoutExperience == true)
+        queryParams['jobsWithoutExperience'] = 'true';
 
       final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
           .replace(queryParameters: queryParams);
 
-      final response = await http.get(uri, headers: {'Content-Type': 'application/json'});
+      final response =
+          await http.get(uri, headers: {'Content-Type': 'application/json'});
 
       if (response.statusCode == 200) {
         final List<dynamic> filterJobsData = jsonDecode(response.body);
-        _filterJobs = filterJobsData.map((jobData) => JobModel.fromJson(jobData)).toList();
+        _filterJobs = filterJobsData
+            .map((jobData) => JobModel.fromJson(jobData))
+            .toList();
         notifyListeners();
       }
     } catch (error) {

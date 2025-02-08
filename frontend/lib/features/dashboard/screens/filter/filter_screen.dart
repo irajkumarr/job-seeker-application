@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:frontend/common/widgets/appbar/appbar.dart';
+import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/core/utils/device/device_utility.dart';
@@ -15,6 +16,7 @@ import 'package:frontend/features/dashboard/screens/filter/widgets/experience_bo
 import 'package:frontend/features/dashboard/screens/filter/widgets/location_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/search/search_result.dart';
+import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
 class FilterScreen extends StatefulWidget {
@@ -53,14 +55,57 @@ class _FilterScreenState extends State<FilterScreen> {
           0, (sum, job) => sum + (job.basicInformation.noOfVacancy ?? 0));
     }
 
-    String _formatFilters(Map<String, dynamic> filters) {
-      if (filters.isEmpty) return "No filters selected"; // Handle empty filters
+    // String _formatFilters(Map<String, dynamic> filters) {
+    //   if (filters.isEmpty) return "No filters selected"; // Handle empty filters
 
-      return filters.entries
-          .map((entry) =>
-              "${entry.key}: ${entry.value}") // Format each key-value pair
-          .join(" | "); // Separate filters with a "|"
+    //   return filters.entries
+    //       .map((entry) => "${entry.value}") // Format each key-value pair
+    //       .join(" | "); // Separate filters with a "|"
+    // }
+
+    // String _formatFilters(
+    //     Map<String, String> filters, FilterProvider provider) {
+    //   List<String> selectedFilters = [];
+
+    //   // Add all selected filters from the map
+    //   filters.forEach((key, value) {
+    //     selectedFilters.add("$value");
+    //   });
+
+    //   // Add Employment, Urgent Jobs, and Jobs Without Experience if selected
+    //   if (provider.selectedEmploymentForWomen != null) {
+    //     selectedFilters.add("Employment for Women");
+    //   }
+    //   if (provider.selectedUrgent != null) {
+    //     selectedFilters.add("Urgent Jobs");
+    //   }
+    //   if (provider.selectedJobsWithoutExperience != null) {
+    //     selectedFilters.add("Jobs Without Experience");
+    //   }
+
+    //   return selectedFilters.isNotEmpty
+    //       ? selectedFilters.join(", ")
+    //       : "No filters selected";
+    // }
+
+    // String _formatFilters(Map<String, String> filters) {
+    //   if (filters.isEmpty) return ""; // Show nothing if multiple or no filters
+
+    //   return filters.values.first; // ✅ Show only the first (single) filter
+    // }
+    String _formatFilters(Map<String, String> filters) {
+      if (filters.length != 1)
+        return ""; // Show nothing if no or more than one filter is selected
+
+      return filters.values
+          .first; // Show only the first filter when exactly one filter is selected
     }
+//    String get displayedFilter {
+//   if (filters.length == 1) {
+//     return filters.values.first; // Show only the single filter
+//   }
+//   return ""; // Hide if multiple filters are selected
+// }
 
     return WillPopScope(
       onWillPop: () async {
@@ -109,7 +154,14 @@ class _FilterScreenState extends State<FilterScreen> {
                                   borderRadius: BorderRadius.circular(
                                       KSizes.defaultSpace)),
                             ),
-                            onPressed: () {},
+                            onPressed: widget.isSearch
+                                ? () {
+                                    context.pushNamed(RoutesConstant.search);
+                                  }
+                                : () {
+                                    filterProvider.resetFilters();
+                                    filterProvider.getFilteredJobs();
+                                  },
                             child: Text(
                               "Edit Search",
                               style: TextStyle(color: KColors.primary),
@@ -125,22 +177,30 @@ class _FilterScreenState extends State<FilterScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         SizedBox(height: KSizes.md),
-                        Padding(
-                          padding:
-                              const EdgeInsets.symmetric(horizontal: KSizes.md),
-                          child: Text(
-                            widget.isSearch
-                                ? "${searchProvider.searchText}"
-                                : _formatFilters(filterProvider.filters),
-                            style: Theme.of(context)
-                                .textTheme
-                                .headlineSmall!
-                                .copyWith(
-                                  fontSize: 22.sp,
+                        (filterProvider.filters.isEmpty ||
+                                    filterProvider.filters.length != 1) &&
+                                searchProvider.searchText.isEmpty
+                            ? SizedBox()
+                            : Padding(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: KSizes.md),
+                                child: Text(
+                                  widget.isSearch
+                                      ? "${searchProvider.searchText}"
+                                      : _formatFilters(filterProvider.filters),
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .headlineSmall!
+                                      .copyWith(
+                                        fontSize: 22.sp,
+                                      ),
                                 ),
-                          ),
-                        ),
-                        SizedBox(height: KSizes.defaultSpace),
+                              ),
+                        (filterProvider.filters.isEmpty ||
+                                    filterProvider.filters.length != 1) &&
+                                !widget.isSearch
+                            ? SizedBox()
+                            : SizedBox(height: KSizes.defaultSpace),
                         SizedBox(
                           height: 40.h,
                           child: ListView(
@@ -164,7 +224,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 color: filterProvider.selectedCategory == null
                                     ? KColors.secondaryBackground
-                                    : KColors.secondary,
+                                    : KColors.accent,
                                 onTap: () {
                                   showCategoryBottomSheet(
                                     context,
@@ -176,9 +236,9 @@ class _FilterScreenState extends State<FilterScreen> {
                                 title: filterProvider.selectedLocation ??
                                     "Job Location",
                                 icon: Icons.keyboard_arrow_down_outlined,
-                                color: filterProvider.selectedCategory == null
+                                color: filterProvider.selectedLocation == null
                                     ? KColors.secondaryBackground
-                                    : KColors.secondary,
+                                    : KColors.accent,
                                 onTap: () {
                                   showLocationBottomSheet(
                                     context,
@@ -187,8 +247,12 @@ class _FilterScreenState extends State<FilterScreen> {
                                 },
                               ),
                               DropDownWidget(
-                                title: "Experience",
                                 icon: Icons.keyboard_arrow_down_outlined,
+                                title: filterProvider.selectedExperience ??
+                                    "Experience",
+                                color: filterProvider.selectedExperience == null
+                                    ? KColors.secondaryBackground
+                                    : KColors.accent,
                                 onTap: () {
                                   showExperienceBottomSheet(
                                     context,
@@ -201,6 +265,35 @@ class _FilterScreenState extends State<FilterScreen> {
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 onTap: () {},
                               ),
+                              DropDownWidget(
+                                title: "Education",
+                                icon: Icons.keyboard_arrow_down_outlined,
+                                onTap: () {},
+                              ),
+                              Center(
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(
+                                      KSizes.defaultSpace),
+                                  onTap: () {
+                                    filterProvider.resetFilters();
+                                    filterProvider.getFilteredJobs();
+                                  },
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal: KSizes.md,
+                                        vertical: KSizes.sm),
+                                    child: Text(
+                                      "Clear filters",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .titleMedium!
+                                          .copyWith(
+                                            color: KColors.primary,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              )
                             ],
                           ),
                         ),
@@ -285,50 +378,3 @@ class DropDownWidget extends StatelessWidget {
     );
   }
 }
-
-
-  // DropdownButton<String>(
-  //             value: filterProvider.selectedLocation,
-  //             hint: Text("Select Location"),
-  //             isExpanded: true,
-  //             items: locations.map((String location) {
-  //               return DropdownMenuItem(value: location, child: Text(location));
-  //             }).toList(),
-  //             onChanged: (value) => filterProvider.setLocation(value),
-  //           ),
-  //           DropdownButton<String>(
-  //             value: filterProvider.selectedCategory,
-  //             hint: Text("Select Category"),
-  //             isExpanded: true,
-  //             items: categories.map((String category) {
-  //               return DropdownMenuItem(value: category, child: Text(category));
-  //             }).toList(),
-  //             onChanged: (value) => filterProvider.setCategory(value),
-  //           ),
-  //           DropdownButton<String>(
-  //             value: filterProvider.selectedEducation,
-  //             hint: Text("Select Education"),
-  //             isExpanded: true,
-  //             items: educations.map((String education) {
-  //               return DropdownMenuItem(value: education, child: Text(education));
-  //             }).toList(),
-  //             onChanged: (value) => filterProvider.setEducation(value),
-  //           ),
-  //           DropdownButton<String>(
-  //             value: filterProvider.selectedExperience,
-  //             hint: Text("Select Experience"),
-  //             isExpanded: true,
-  //             items: experiences.map((String exp) {
-  //               return DropdownMenuItem(value: exp, child: Text(exp));
-  //             }).toList(),
-  //             onChanged: (value) => filterProvider.setExperience(value),
-  //           ),
-  //           DropdownButton<String>(
-  //             value: filterProvider.selectedIndustryTitle,
-  //             hint: Text("Select Industry"),
-  //             isExpanded: true,
-  //             items: industries.map((String industry) {
-  //               return DropdownMenuItem(value: industry, child: Text(industry));
-  //             }).toList(),
-  //             onChanged: (value) => filterProvider.setIndustryTitle(value),
-  //           ),

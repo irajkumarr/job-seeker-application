@@ -4,14 +4,17 @@ import 'package:frontend/common/widgets/buttons/custom_button.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 
 void showExperienceBottomSheet(
   BuildContext context,
   VoidCallback onPressed,
 ) {
   final l10n = AppLocalizations.of(context)!;
+  final filterProvider = Provider.of<FilterProvider>(context, listen: false);
   showModalBottomSheet(
     context: context,
     sheetAnimationStyle: AnimationStyle(
@@ -62,7 +65,16 @@ void showExperienceBottomSheet(
                         return Column(
                           children: [
                             ListTile(
-                              onTap: () {},
+                              onTap: () {
+                                context.pop();
+                                filterProvider.setExperience(index == 0
+                                    ? "No experience"
+                                    : index == 10
+                                        ? "10 years or More"
+                                        : "$index year${index > 1 ? 's' : ''}");
+                                filterProvider.getFilteredJobs(
+                                    experience: "$index");
+                              },
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: KSizes.md),
                               title: Text(
