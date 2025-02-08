@@ -17,14 +17,14 @@ void showLocationBottomSheet(
   final jobProvider = Provider.of<JobProvider>(context, listen: false);
   showModalBottomSheet(
     context: context,
-    // isScrollControlled: true, // Allow the sheet to be as large as needed
+    isScrollControlled: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(KSizes.md),
       ),
     ),
     builder: (context) => Container(
-      // height: MediaQuery.of(context).size.height * 0.7,
+      height: MediaQuery.of(context).size.height * 0.7,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

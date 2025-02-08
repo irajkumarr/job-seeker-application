@@ -9,6 +9,7 @@ import 'package:frontend/core/utils/shimmers/filter_shimmer.dart';
 import 'package:frontend/data/models/job_model.dart';
 import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/features/dashboard/providers/search_provider.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/category_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/experience_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/location_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
@@ -114,7 +115,12 @@ class FilterScreen extends StatelessWidget {
                             DropDownWidget(
                               title: "Category",
                               icon: Icons.keyboard_arrow_down_outlined,
-                              onTap: () {},
+                              onTap: () {
+                                showCategoryBottomSheet(
+                                  context,
+                                  () {},
+                                );
+                              },
                             ),
                             DropDownWidget(
                               title: "Location",
