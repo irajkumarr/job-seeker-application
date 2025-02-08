@@ -12,8 +12,10 @@ import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/features/dashboard/providers/search_provider.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/all_filters_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/category_bottom_sheet.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/education_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/experience_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/location_bottom_sheet.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/salary_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/search/search_result.dart';
 import 'package:go_router/go_router.dart';
@@ -55,14 +57,6 @@ class _FilterScreenState extends State<FilterScreen> {
           0, (sum, job) => sum + (job.basicInformation.noOfVacancy ?? 0));
     }
 
-    // String _formatFilters(Map<String, dynamic> filters) {
-    //   if (filters.isEmpty) return "No filters selected"; // Handle empty filters
-
-    //   return filters.entries
-    //       .map((entry) => "${entry.value}") // Format each key-value pair
-    //       .join(" | "); // Separate filters with a "|"
-    // }
-
     // String _formatFilters(
     //     Map<String, String> filters, FilterProvider provider) {
     //   List<String> selectedFilters = [];
@@ -100,12 +94,6 @@ class _FilterScreenState extends State<FilterScreen> {
       return filters.values
           .first; // Show only the first filter when exactly one filter is selected
     }
-//    String get displayedFilter {
-//   if (filters.length == 1) {
-//     return filters.values.first; // Show only the single filter
-//   }
-//   return ""; // Hide if multiple filters are selected
-// }
 
     return WillPopScope(
       onWillPop: () async {
@@ -261,14 +249,34 @@ class _FilterScreenState extends State<FilterScreen> {
                                 },
                               ),
                               DropDownWidget(
-                                title: "Salary",
+                                title:
+                                    filterProvider.selectedSalary ?? "Salary",
                                 icon: Icons.keyboard_arrow_down_outlined,
-                                onTap: () {},
+                                color: filterProvider.selectedSalary == null
+                                    ? KColors.secondaryBackground
+                                    : KColors.accent,
+                                onTap: () {
+                                  // context.pop();
+                                  showSalaryBottomSheet(
+                                    context,
+                                    () {},
+                                  );
+                                },
                               ),
                               DropDownWidget(
-                                title: "Education",
+                                title: filterProvider.selectedEducation ??
+                                    "Education",
                                 icon: Icons.keyboard_arrow_down_outlined,
-                                onTap: () {},
+                                color: filterProvider.selectedEducation == null
+                                    ? KColors.secondaryBackground
+                                    : KColors.accent,
+                                onTap: () {
+                                  // context.pop();
+                                  showEducationBottomSheet(
+                                    context,
+                                    () {},
+                                  );
+                                },
                               ),
                               Center(
                                 child: InkWell(

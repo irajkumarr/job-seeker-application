@@ -185,7 +185,7 @@ const handleFilterJobPostings = async (req, res) => {
     }
 
     if (salary) {
-      query.salary = { $gte: parseFloat(salary) };
+      query.salary = { $lte: parseFloat(salary) };
     }
 
     if (experience) {

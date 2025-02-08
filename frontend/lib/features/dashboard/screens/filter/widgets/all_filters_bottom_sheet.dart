@@ -7,8 +7,10 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/dashboard/providers/job_provider.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/category_bottom_sheet.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/education_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/experience_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/filter/widgets/location_bottom_sheet.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/salary_bottom_sheet.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -93,11 +95,23 @@ void showAllFiltersBottomSheet(
                   ),
                   FilterTile(
                     title: "Salary",
-                    onTap: () {},
+                    onTap: () {
+                      context.pop();
+                      showSalaryBottomSheet(
+                        context,
+                        () {},
+                      );
+                    },
                   ),
                   FilterTile(
                     title: "Education",
-                    onTap: () {},
+                    onTap: () {
+                      context.pop();
+                      showEducationBottomSheet(
+                        context,
+                        () {},
+                      );
+                    },
                   ),
                 ],
               ),
