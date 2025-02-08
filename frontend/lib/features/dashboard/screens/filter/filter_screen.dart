@@ -9,6 +9,8 @@ import 'package:frontend/core/utils/shimmers/filter_shimmer.dart';
 import 'package:frontend/data/models/job_model.dart';
 import 'package:frontend/features/dashboard/providers/filter_provider.dart';
 import 'package:frontend/features/dashboard/providers/search_provider.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/experience_bottom_sheet.dart';
+import 'package:frontend/features/dashboard/screens/filter/widgets/location_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/search/search_result.dart';
 import 'package:provider/provider.dart';
@@ -107,22 +109,37 @@ class FilterScreen extends StatelessWidget {
                             DropDownWidget(
                               title: "All Filters",
                               icon: Icons.add,
+                              onTap: () {},
                             ),
                             DropDownWidget(
                               title: "Category",
                               icon: Icons.keyboard_arrow_down_outlined,
+                              onTap: () {},
                             ),
                             DropDownWidget(
                               title: "Location",
                               icon: Icons.keyboard_arrow_down_outlined,
+                              onTap: () {
+                                showLocationBottomSheet(
+                                  context,
+                                  () {},
+                                );
+                              },
                             ),
                             DropDownWidget(
                               title: "Experience",
                               icon: Icons.keyboard_arrow_down_outlined,
+                              onTap: () {
+                                showExperienceBottomSheet(
+                                  context,
+                                  () {},
+                                );
+                              },
                             ),
                             DropDownWidget(
                               title: "Salary",
                               icon: Icons.keyboard_arrow_down_outlined,
+                              onTap: () {},
                             ),
                           ],
                         ),
@@ -166,33 +183,38 @@ class DropDownWidget extends StatelessWidget {
     super.key,
     required this.icon,
     required this.title,
+    required this.onTap,
   });
   final IconData icon;
   final String title;
+  final VoidCallback onTap;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.only(right: KSizes.sm),
-      child: Container(
-        padding:
-            EdgeInsets.symmetric(horizontal: KSizes.md, vertical: KSizes.sm),
-        decoration: BoxDecoration(
-          color: KColors.secondaryBackground,
-          borderRadius: BorderRadius.circular(KSizes.defaultSpace),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          spacing: KSizes.sm,
-          children: [
-            Text(
-              title,
-              style: Theme.of(context).textTheme.headlineSmall!.copyWith(
-                  // fontSize: 22.sp,
-                  ),
-            ),
-            Icon(icon),
-          ],
+      child: GestureDetector(
+        onTap: onTap,
+        child: Container(
+          padding:
+              EdgeInsets.symmetric(horizontal: KSizes.md, vertical: KSizes.sm),
+          decoration: BoxDecoration(
+            color: KColors.secondaryBackground,
+            borderRadius: BorderRadius.circular(KSizes.defaultSpace),
+          ),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            spacing: KSizes.sm,
+            children: [
+              Text(
+                title,
+                style: Theme.of(context).textTheme.headlineSmall!.copyWith(
+                    // fontSize: 22.sp,
+                    ),
+              ),
+              Icon(icon),
+            ],
+          ),
         ),
       ),
     );
