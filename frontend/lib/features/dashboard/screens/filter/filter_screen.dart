@@ -18,6 +18,7 @@ import 'package:frontend/features/dashboard/screens/filter/widgets/location_bott
 import 'package:frontend/features/dashboard/screens/filter/widgets/salary_bottom_sheet.dart';
 import 'package:frontend/features/dashboard/screens/home/widgets/job_card.dart';
 import 'package:frontend/features/dashboard/screens/search/search_result.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
@@ -30,25 +31,9 @@ class FilterScreen extends StatefulWidget {
 }
 
 class _FilterScreenState extends State<FilterScreen> {
-  // late FilterProvider filterProvider;
-
-  // @override
-  // void didChangeDependencies() {
-  //   super.didChangeDependencies();
-  //   WidgetsBinding.instance.addPostFrameCallback((_) {
-  //     Provider.of<FilterProvider>(context, listen: false).resetFilters();
-  //   });
-  // }
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   Future.microtask(() {
-  //     Provider.of<FilterProvider>(context, listen: false).resetFilters();
-  //   });
-  // }
-
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     final filterProvider = Provider.of<FilterProvider>(context);
     final searchProvider = Provider.of<SearchProvider>(context);
     int _calculateTotalVacancies(List<JobModel>? jobs) {
@@ -95,6 +80,7 @@ class _FilterScreenState extends State<FilterScreen> {
           .first; // Show only the first filter when exactly one filter is selected
     }
 
+    // ignore: deprecated_member_use
     return WillPopScope(
       onWillPop: () async {
         filterProvider.resetFilters();
@@ -124,16 +110,15 @@ class _FilterScreenState extends State<FilterScreen> {
                               "assets/images/content/rojgari_logo_single.svg"),
                           SizedBox(height: KSizes.md),
                           Text(
-                            'No results found',
+                            '${l10n.no_results_found}',
                             style: Theme.of(context)
                                 .textTheme
                                 .headlineSmall!
                                 .copyWith(fontWeight: FontWeight.w600),
                           ),
                           SizedBox(height: KSizes.sm),
-                          Text("Your search returned no results"),
-                          Text(
-                              "Try removing filters or rephrasing your search"),
+                          Text("${l10n.your_search_returned_no_results}"),
+                          Text("${l10n.try_remove_filter}"),
                           SizedBox(height: KSizes.md),
                           OutlinedButton(
                             style: OutlinedButton.styleFrom(
@@ -151,7 +136,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                     filterProvider.getFilteredJobs();
                                   },
                             child: Text(
-                              "Edit Search",
+                              "${l10n.edit_search}",
                               style: TextStyle(color: KColors.primary),
                             ),
                           ),
@@ -197,7 +182,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                 EdgeInsets.symmetric(horizontal: KSizes.md),
                             children: [
                               DropDownWidget(
-                                title: "All Filters",
+                                title: "${l10n.all_filters}",
                                 icon: Icons.add,
                                 onTap: () {
                                   showAllFiltersBottomSheet(
@@ -208,7 +193,7 @@ class _FilterScreenState extends State<FilterScreen> {
                               ),
                               DropDownWidget(
                                 title: filterProvider.selectedCategory ??
-                                    "Job Category",
+                                    "${l10n.job_category}",
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 color: filterProvider.selectedCategory == null
                                     ? KColors.secondaryBackground
@@ -222,7 +207,7 @@ class _FilterScreenState extends State<FilterScreen> {
                               ),
                               DropDownWidget(
                                 title: filterProvider.selectedLocation ??
-                                    "Job Location",
+                                    "${l10n.job_location}",
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 color: filterProvider.selectedLocation == null
                                     ? KColors.secondaryBackground
@@ -237,7 +222,7 @@ class _FilterScreenState extends State<FilterScreen> {
                               DropDownWidget(
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 title: filterProvider.selectedExperience ??
-                                    "Experience",
+                                    "${l10n.experience}",
                                 color: filterProvider.selectedExperience == null
                                     ? KColors.secondaryBackground
                                     : KColors.accent,
@@ -249,8 +234,8 @@ class _FilterScreenState extends State<FilterScreen> {
                                 },
                               ),
                               DropDownWidget(
-                                title:
-                                    filterProvider.selectedSalary ?? "Salary",
+                                title: filterProvider.selectedSalary ??
+                                    "${l10n.salary}",
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 color: filterProvider.selectedSalary == null
                                     ? KColors.secondaryBackground
@@ -265,7 +250,7 @@ class _FilterScreenState extends State<FilterScreen> {
                               ),
                               DropDownWidget(
                                 title: filterProvider.selectedEducation ??
-                                    "Education",
+                                    "${l10n.education}",
                                 icon: Icons.keyboard_arrow_down_outlined,
                                 color: filterProvider.selectedEducation == null
                                     ? KColors.secondaryBackground
@@ -291,7 +276,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                         horizontal: KSizes.md,
                                         vertical: KSizes.sm),
                                     child: Text(
-                                      "Clear filters",
+                                      "${l10n.clear_filters}",
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleMedium!
