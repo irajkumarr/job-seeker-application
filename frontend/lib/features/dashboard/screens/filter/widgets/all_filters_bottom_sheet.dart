@@ -26,7 +26,7 @@ void showAllFiltersBottomSheet(
       duration: Duration(milliseconds: 600),
       reverseDuration: Duration(milliseconds: 600),
     ),
-    isScrollControlled: true, // Allow the sheet to be as large as needed
+    isScrollControlled: true,
     shape: RoundedRectangleBorder(
       borderRadius: BorderRadius.vertical(
         top: Radius.circular(KSizes.md),
@@ -42,14 +42,14 @@ void showAllFiltersBottomSheet(
             child: Column(
               children: [
                 Text(
-                  'All Filters',
+                  '${l10n.all_filters}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Select the preferred job filters to make the job search easy and quick.',
+                  '${l10n.easy_filter}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),
@@ -64,7 +64,7 @@ void showAllFiltersBottomSheet(
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   FilterTile(
-                    title: "Job Category",
+                    title: "${l10n.job_category}",
                     onTap: () {
                       context.pop();
                       showCategoryBottomSheet(
@@ -74,7 +74,7 @@ void showAllFiltersBottomSheet(
                     },
                   ),
                   FilterTile(
-                    title: "Job Location",
+                    title: "${l10n.job_location}",
                     onTap: () {
                       context.pop();
                       showLocationBottomSheet(
@@ -84,17 +84,14 @@ void showAllFiltersBottomSheet(
                     },
                   ),
                   FilterTile(
-                    title: "Experience",
+                    title: "${l10n.experience}",
                     onTap: () {
                       context.pop();
-                      showExperienceBottomSheet(
-                        context,
-                        () {},
-                      );
+                      showExperienceBottomSheet(context);
                     },
                   ),
                   FilterTile(
-                    title: "Salary",
+                    title: "${l10n.salary}",
                     onTap: () {
                       context.pop();
                       showSalaryBottomSheet(
@@ -104,7 +101,7 @@ void showAllFiltersBottomSheet(
                     },
                   ),
                   FilterTile(
-                    title: "Education",
+                    title: "${l10n.education}",
                     onTap: () {
                       context.pop();
                       showEducationBottomSheet(

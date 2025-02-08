@@ -227,10 +227,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                     ? KColors.secondaryBackground
                                     : KColors.accent,
                                 onTap: () {
-                                  showExperienceBottomSheet(
-                                    context,
-                                    () {},
-                                  );
+                                  showExperienceBottomSheet(context);
                                 },
                               ),
                               DropDownWidget(

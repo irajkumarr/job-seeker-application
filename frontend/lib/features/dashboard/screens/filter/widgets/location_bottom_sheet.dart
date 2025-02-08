@@ -39,14 +39,14 @@ void showLocationBottomSheet(
             child: Column(
               children: [
                 Text(
-                  'Select Preferred Job Location',
+                  '${l10n.select_preferred_location}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Select your district to get specific information',
+                  '${l10n.select_your_district}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),

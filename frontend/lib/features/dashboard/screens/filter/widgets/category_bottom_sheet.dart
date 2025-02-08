@@ -41,14 +41,14 @@ void showCategoryBottomSheet(
             child: Column(
               children: [
                 Text(
-                  'Select Preferred Job Category',
+                  '${l10n.select_preferred_category}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Select your desired job category to get specific information',
+                  '${l10n.select_your_desired_job_category}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),

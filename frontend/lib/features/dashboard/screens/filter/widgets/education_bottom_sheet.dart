@@ -50,14 +50,14 @@ void showEducationBottomSheet(
             child: Column(
               children: [
                 Text(
-                  'Select your educational level',
+                  '${l10n.select_your_education}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Select your highest educational level',
+                  '${l10n.select_your_highest_education}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),

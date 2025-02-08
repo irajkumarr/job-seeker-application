@@ -48,14 +48,14 @@ void showSalaryBottomSheet(
             child: Column(
               children: [
                 Text(
-                  'Select your expected salary',
+                  '${l10n.select_your_expected_salary}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Select your expected salary for the job',
+                  '${l10n.select_your_expected_salary_for_job}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),

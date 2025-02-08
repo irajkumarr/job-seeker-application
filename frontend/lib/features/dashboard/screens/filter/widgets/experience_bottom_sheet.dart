@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 
 void showExperienceBottomSheet(
   BuildContext context,
-  VoidCallback onPressed,
 ) {
   final l10n = AppLocalizations.of(context)!;
   final filterProvider = Provider.of<FilterProvider>(context, listen: false);
@@ -37,14 +36,14 @@ void showExperienceBottomSheet(
             child: Column(
               children: [
                 Text(
-                  'Select years of work experience',
+                  '${l10n.select_years_of_experience}',
                   style: Theme.of(context).textTheme.headlineMedium!.copyWith(
                         fontSize: 20.sp,
                       ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
-                  'Choose the number of years you have worked on your related job',
+                  '${l10n.choose_years_of_experience}',
                   style: Theme.of(context).textTheme.bodyLarge!.copyWith(
                         color: KColors.black,
                       ),
