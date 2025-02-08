@@ -14,6 +14,8 @@ class ProfileAppbar extends StatelessWidget {
     return Material(
       elevation: 0.2,
       child: AppBar(
+        
+        automaticallyImplyLeading: false,
         title: Text(
           "${l10n.profile}",
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(

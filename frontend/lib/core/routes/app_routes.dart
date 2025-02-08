@@ -42,8 +42,8 @@ final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 class AppRoutes {
   final box = GetStorage();
   late GoRouter router = GoRouter(
-    // initialLocation: "/filter",
-    initialLocation: "/navigationMenu",
+    initialLocation: "/",
+    // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
       GoRoute(
@@ -354,9 +354,11 @@ class AppRoutes {
         name: RoutesConstant.filter,
         path: "/filter",
         pageBuilder: (context, state) {
-          final bool isSearch=state.extra as bool;
+          final bool isSearch = state.extra as bool;
           return MaterialPage(
-            child: FilterScreen(isSearch: isSearch,),
+            child: FilterScreen(
+              isSearch: isSearch,
+            ),
           );
         },
       ),

@@ -18,6 +18,7 @@ class StatusAndSavedJobsAppbar extends StatelessWidget {
     return Material(
       elevation: 0.2,
       child: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           appbarText,
           style: Theme.of(context).textTheme.headlineSmall!.copyWith(

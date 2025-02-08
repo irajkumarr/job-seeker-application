@@ -19,6 +19,7 @@ class Appbar extends StatelessWidget {
     return Material(
       elevation: 0.2,
       child: AppBar(
+        automaticallyImplyLeading: false,
         title: SvgPicture.asset(
           "assets/images/content/rojgari_logo.svg",
           width: 110.w,

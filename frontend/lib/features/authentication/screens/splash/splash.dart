@@ -6,6 +6,7 @@ import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/services/notification_service.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
+import 'package:frontend/navigation_menu.dart';
 import 'package:go_router/go_router.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -60,7 +61,13 @@ class _SplashScreenState extends State<SplashScreen> {
     if (!mounted || _isNavigating) return;
 
     _isNavigating = true;
-    context.goNamed(RoutesConstant.navigationMenu);
+    // context.goNamed(RoutesConstant.navigationMenu);
+    Navigator.pushAndRemoveUntil(
+        context,
+        MaterialPageRoute(builder: (context) => NavigationMenu()),
+        (route) => true);
+    // Navigator.pushReplacement(
+    //     context, MaterialPageRoute(builder: (context) => NavigationMenu()));
   }
 
   @override
