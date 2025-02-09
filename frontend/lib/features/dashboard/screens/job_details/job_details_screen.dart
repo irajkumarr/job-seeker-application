@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/common/widgets/loaders/full_screen_overlay.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
+import 'package:frontend/core/utils/circular_progress_indicator/custom_loading.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
 import 'package:frontend/core/utils/constants/image_strings.dart';
 import 'package:frontend/core/utils/constants/sizes.dart';
@@ -375,7 +376,10 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                     Consumer<JobApplicationStatusProvider>(
                       builder: (context, provider, child) {
                         if (provider.isLoading) {
-                          return CircularProgressIndicator();
+                          return CustomLoading(
+                            isLoadingTextShowed: false,
+                            size: KSizes.iconSm,
+                          );
                         }
 
                         return Expanded(
