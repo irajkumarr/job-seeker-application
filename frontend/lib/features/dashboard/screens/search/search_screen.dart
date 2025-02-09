@@ -63,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen> {
   void _onSearchSubmitted(String value) {
     final searchProvider = Provider.of<SearchProvider>(context, listen: false);
     searchProvider.updateSearchText(value);
-    context.pushNamed(RoutesConstant.filter,extra: true);
+    context.pushNamed(RoutesConstant.filter, extra: true);
     searchProvider.searchJobs(value); // Trigger search on search action
   }
 
@@ -74,7 +74,7 @@ class _SearchScreenState extends State<SearchScreen> {
         child: Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-        child: Appbar(isActionRequired: false),
+        child: Appbar(isActionRequired: false, isHaveLeading: true),
       ),
       body: SingleChildScrollView(
         child: Padding(

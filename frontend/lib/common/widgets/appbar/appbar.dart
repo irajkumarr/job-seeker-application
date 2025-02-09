@@ -10,16 +10,17 @@ import 'package:provider/provider.dart';
 class Appbar extends StatelessWidget {
   const Appbar({
     super.key,
-    required this.isActionRequired,
+    required this.isActionRequired,  this.isHaveLeading=false,
   });
   final bool isActionRequired;
+  final bool isHaveLeading;
 
   @override
   Widget build(BuildContext context) {
     return Material(
       elevation: 0.2,
       child: AppBar(
-        automaticallyImplyLeading: false,
+        automaticallyImplyLeading: isHaveLeading,
         title: SvgPicture.asset(
           "assets/images/content/rojgari_logo.svg",
           width: 110.w,

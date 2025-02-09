@@ -253,7 +253,7 @@ class _JobDetailsScreenState extends State<JobDetailsScreen> {
                   // Info Items
                   InfoItem(
                     icon: Iconsax.location,
-                    text: job.company.location.fullAddress,
+                    text: "${job.company.location.fullAddress}",
                   ),
                   const SizedBox(height: KSizes.md),
                   InfoItem(

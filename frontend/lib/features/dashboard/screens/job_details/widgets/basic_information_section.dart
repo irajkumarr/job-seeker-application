@@ -38,7 +38,7 @@ class BasicInformationSection extends StatelessWidget {
                   value: job.basicInformation.noOfVacancy.toStringAsFixed(0)),
               InfoRow(
                 label: '${l10n.location}',
-                value: job.location.fullAddress,
+                value: "${job.location.district}",
               ),
               InfoRow(
                   label: '${l10n.salary}',

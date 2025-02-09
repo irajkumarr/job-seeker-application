@@ -89,7 +89,7 @@ class _FilterScreenState extends State<FilterScreen> {
       child: Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
-          child: Appbar(isActionRequired: false),
+          child: Appbar(isActionRequired: false, isHaveLeading: true),
         ),
         body: (widget.isSearch && searchProvider.isLoading) ||
                 filterProvider.isLoading
@@ -166,6 +166,7 @@ class _FilterScreenState extends State<FilterScreen> {
                                       .headlineSmall!
                                       .copyWith(
                                         fontSize: 22.sp,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                 ),
                               ),

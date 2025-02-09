@@ -5,7 +5,6 @@ import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/data/models/job_model.dart';
 import 'package:frontend/l10n/l10n.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
 // class FilterProvider with ChangeNotifier {
