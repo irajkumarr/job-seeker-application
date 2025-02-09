@@ -206,61 +206,7 @@ class FilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // Map<String, String> get filters {
-  //   return {
-  //     if (selectedLocation != null) "location": selectedLocation!,
-  //     if (selectedCategory != null) "category": selectedCategory!,
-  //     if (selectedEducation != null) "education": selectedEducation!,
-  //     if (selectedSalary != null) "salary": selectedSalary!,
-  //     if (selectedExperience != null) "experience": selectedExperience!,
-  //     if (selectedIndustryTitle != null)
-  //       "industryTitle": selectedIndustryTitle!,
-  //     if (selectedEmploymentForWomen != null)
-  //       "employmentForWomen": selectedEmploymentForWomen!,
-  //     if (selectedUrgent != null) "urgentJobs": selectedUrgent!,
-  //     if (selectedJobsWithoutExperience != null)
-  //       "jobsWithoutExperience": selectedJobsWithoutExperience!,
-  //   };
-
-  // }
-
-  // Map<String, String> get filters {
-  //   final Map<String, String> activeFilters = {
-  //     if (selectedLocation != null) "location": selectedLocation!,
-  //     if (selectedCategory != null) "category": selectedCategory!,
-  //     if (selectedEducation != null) "education": selectedEducation!,
-  //     if (selectedSalary != null) "salary": selectedSalary!,
-  //     if (selectedExperience != null) "experience": selectedExperience!,
-  //     if (selectedIndustryTitle != null)
-  //       "industryTitle": selectedIndustryTitle!,
-  //     if (selectedEmploymentForWomen != null)
-  //       "employmentForWomen": selectedEmploymentForWomen!,
-  //     if (selectedUrgent != null) "urgentJobs": selectedUrgent!,
-  //     if (selectedJobsWithoutExperience != null)
-  //       "jobsWithoutExperience": selectedJobsWithoutExperience!,
-  //   };
-
-  //   // ✅ Show only if exactly one filter is selected
-  //   return activeFilters.length == 1 ? activeFilters : {};
-  // }
-
-  // Map<String, String> get filters {
-  //   return {
-  //     if (selectedLocation != null) "location": selectedLocation!,
-  //     if (selectedCategory != null) "category": selectedCategory!,
-  //     if (selectedEducation != null) "education": selectedEducation!,
-  //     if (selectedSalary != null) "salary": selectedSalary!,
-  //     if (selectedExperience != null) "experience": selectedExperience!,
-  //     if (selectedIndustryTitle != null)
-  //       "industryTitle": selectedIndustryTitle!,
-  //     if (selectedEmploymentForWomen != null)
-  //       "employmentForWomen": selectedEmploymentForWomen!,
-  //     if (selectedUrgent != null) "urgentJobs": selectedUrgent!,
-  //     if (selectedJobsWithoutExperience != null)
-  //       "jobsWithoutExperience": selectedJobsWithoutExperience!,
-  //   };
-  // }
-
+// final l10n=AppLocaliza
   Map<String, String> get filters {
     final Map<String, String> activeFilters = {};
 
@@ -296,13 +242,146 @@ class FilterProvider with ChangeNotifier {
     selectedUrgent = null;
     selectedJobsWithoutExperience = null;
     _filterJobs = [];
+    _currentFilters.clear();
     notifyListeners();
   }
+
+  // Future<void> getFilteredJobs({
+  //   String? location,
+  //   String? education,
+  //   String? salary,
+  //   String? experience,
+  //   String? category,
+  //   String? companyCategory,
+  //   bool? employmentForWomen,
+  //   bool? urgentJobs,
+  //   bool? jobsWithoutExperience,
+  // }) async {
+  //   setLoading(true);
+  //   try {
+  //     final String? token = _storage.read('token');
+  //     final Map<String, String> queryParams = {};
+  //     if (location != null) queryParams['location'] = location;
+  //     if (education != null) queryParams['education'] = education;
+  //     if (salary != null) queryParams['salary'] = salary;
+  //     if (experience != null) queryParams['experience'] = experience;
+  //     if (category != null) queryParams['category'] = category;
+  //     if (companyCategory != null) queryParams['categories'] = companyCategory;
+
+  //     if (employmentForWomen == true)
+  //       queryParams['employmentForWomen'] = 'true';
+  //     if (urgentJobs == true) queryParams['urgentJobs'] = 'true';
+  //     if (jobsWithoutExperience == true)
+  //       queryParams['jobsWithoutExperience'] = 'true';
+
+  //     final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
+  //         .replace(queryParameters: queryParams);
+
+  //     final response =
+  //         await http.get(uri, headers: {'Content-Type': 'application/json'});
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> filterJobsData = jsonDecode(response.body);
+  //       _filterJobs = filterJobsData
+  //           .map((jobData) => JobModel.fromJson(jobData))
+  //           .toList();
+  //       notifyListeners();
+  //     }
+  //   } catch (error) {
+  //     rethrow;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+  // final Map<String, String> _currentFilters = {}; // Store applied filters
+
+  // Future<void> getFilteredJobs({
+  //   String? location,
+  //   String? education,
+  //   String? salary,
+  //   String? experience,
+  //   String? category,
+  //   String? companyCategory,
+  //   bool? employmentForWomen,
+  //   bool? urgentJobs,
+  //   bool? jobsWithoutExperience,
+  // }) async {
+  //   setLoading(true);
+  //   try {
+  //     // Update filters dynamically
+  //     if (location != null) {
+  //       _currentFilters['location'] = location;
+  //     }
+  //     if (education != null) {
+  //       _currentFilters['education'] = education;
+  //     }
+  //     if (salary != null) {
+  //       _currentFilters['salary'] = salary;
+  //     }
+  //     if (experience != null) {
+  //       _currentFilters['experience'] = experience;
+  //     }
+  //     if (category != null) {
+  //       _currentFilters['category'] = category;
+  //     }
+  //     if (companyCategory != null) {
+  //       _currentFilters['categories'] = companyCategory;
+  //     }
+
+  //     // Handle boolean filters
+  //     if (employmentForWomen == true) {
+  //       _currentFilters['employmentForWomen'] = 'true';
+  //     } else {
+  //       _currentFilters.remove('employmentForWomen'); // Remove if not selected
+  //     }
+
+  //     if (urgentJobs == true) {
+  //       _currentFilters['urgentJobs'] = 'true';
+  //     } else {
+  //       _currentFilters.remove('urgentJobs');
+  //     }
+
+  //     if (jobsWithoutExperience == true) {
+  //       _currentFilters['jobsWithoutExperience'] = 'true';
+  //     } else {
+  //       _currentFilters.remove('jobsWithoutExperience');
+  //     }
+
+  //     // Construct the URL with updated filters
+  //     final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
+  //         .replace(queryParameters: _currentFilters);
+
+  //     final response =
+  //         await http.get(uri, headers: {'Content-Type': 'application/json'});
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> filterJobsData = jsonDecode(response.body);
+  //       _filterJobs = filterJobsData
+  //           .map((jobData) => JobModel.fromJson(jobData))
+  //           .toList();
+  //       notifyListeners();
+  //     }
+  //   } catch (error) {
+  //     rethrow;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
+
+  // // Method to clear all filters
+  // void clearFilters() {
+  //   _currentFilters.clear();
+  //   _filterJobs = [];
+  //   notifyListeners();
+  // }
+
+  final Map<String, String> _currentFilters = {}; // Store applied filters
 
   Future<void> getFilteredJobs({
     String? location,
     String? education,
-    String? salary,
+    String? salary, // Now handles ranges like "30000-40000"
     String? experience,
     String? category,
     String? companyCategory,
@@ -312,23 +391,42 @@ class FilterProvider with ChangeNotifier {
   }) async {
     setLoading(true);
     try {
-      final String? token = _storage.read('token');
-      final Map<String, String> queryParams = {};
-      if (location != null) queryParams['location'] = location;
-      if (education != null) queryParams['education'] = education;
-      if (salary != null) queryParams['salary'] = salary;
-      if (experience != null) queryParams['experience'] = experience;
-      if (category != null) queryParams['category'] = category;
-      if (companyCategory != null) queryParams['categories'] = companyCategory;
+      // Update filters dynamically
+      if (location != null) {
+        _currentFilters['location'] = location;
+      }
+      if (education != null) {
+        _currentFilters['education'] = education;
+      }
+      if (salary != null) {
+        _currentFilters['salary'] = salary; // Keep salary as a single parameter
+      }
+      if (experience != null) {
+        _currentFilters['experience'] = experience;
+      }
+      if (category != null) {
+        _currentFilters['category'] = category;
+      }
+      if (companyCategory != null) {
+        _currentFilters['categories'] = companyCategory;
+      }
 
-      if (employmentForWomen == true)
-        queryParams['employmentForWomen'] = 'true';
-      if (urgentJobs == true) queryParams['urgentJobs'] = 'true';
-      if (jobsWithoutExperience == true)
-        queryParams['jobsWithoutExperience'] = 'true';
+      // Handle boolean filters
+      employmentForWomen == true
+          ? _currentFilters['employmentForWomen'] = 'true'
+          : _currentFilters.remove('employmentForWomen');
 
+      urgentJobs == true
+          ? _currentFilters['urgentJobs'] = 'true'
+          : _currentFilters.remove('urgentJobs');
+
+      jobsWithoutExperience == true
+          ? _currentFilters['jobsWithoutExperience'] = 'true'
+          : _currentFilters.remove('jobsWithoutExperience');
+
+      // Construct the URL with updated filters
       final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
-          .replace(queryParameters: queryParams);
+          .replace(queryParameters: _currentFilters);
 
       final response =
           await http.get(uri, headers: {'Content-Type': 'application/json'});
@@ -346,4 +444,75 @@ class FilterProvider with ChangeNotifier {
       setLoading(false);
     }
   }
+
+// Method to clear all filters
+  void clearFilters() {
+    _currentFilters.clear();
+    _filterJobs = [];
+    notifyListeners();
+  }
+
+  // Future<void> getFilteredJobs({
+  //   String? location,
+  //   String? education,
+  //   String? salary, // Ensure salary is sent in the correct format
+  //   String? experience,
+  //   String? category,
+  //   String? companyCategory,
+  //   bool? employmentForWomen,
+  //   bool? urgentJobs,
+  //   bool? jobsWithoutExperience,
+  // }) async {
+  //   setLoading(true);
+  //   try {
+  //     final Map<String, String> filters = {};
+
+  //     if (location != null) filters['location'] = location;
+  //     if (education != null) filters['education'] = education;
+  //     if (experience != null) filters['experience'] = experience;
+  //     if (category != null) filters['category'] = category;
+  //     if (companyCategory != null) filters['categories'] = companyCategory;
+
+  //     // ✅ Convert boolean filters to string
+  //     if (employmentForWomen == true) {
+  //       filters['employmentForWomen'] = 'true';
+  //     }
+
+  //     if (urgentJobs == true) {
+  //       filters['urgentJobs'] = 'true';
+  //     }
+
+  //     if (jobsWithoutExperience == true) {
+  //       filters['jobsWithoutExperience'] = 'true';
+  //     }
+
+  //     // ✅ Salary filter handling
+  //     if (salary != null && salary.isNotEmpty) {
+  //       if (salary == "100001 and above") {
+  //         filters['salary'] = "100001-"; // No upper limit case
+  //       } else {
+  //         filters['salary'] =
+  //             salary.replaceAll("Rs. ", "").replaceAll(" and above", "");
+  //       }
+  //     }
+
+  //     final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
+  //         .replace(queryParameters: filters);
+
+  //     final response =
+  //         await http.get(uri, headers: {'Content-Type': 'application/json'});
+
+  //     if (response.statusCode == 200) {
+  //       final List<dynamic> filterJobsData = jsonDecode(response.body);
+  //       _filterJobs = filterJobsData
+  //           .map((jobData) => JobModel.fromJson(jobData))
+  //           .toList();
+  //       notifyListeners();
+  //     }
+  //   } catch (error) {
+  //     rethrow;
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // }
 }

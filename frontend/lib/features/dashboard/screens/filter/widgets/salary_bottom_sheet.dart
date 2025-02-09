@@ -15,15 +15,17 @@ void showSalaryBottomSheet(
   final l10n = AppLocalizations.of(context)!;
   final jobProvider = Provider.of<JobProvider>(context, listen: false);
   final filterProvider = Provider.of<FilterProvider>(context, listen: false);
+
   final salaryRanges = [
-    {'label': 'Rs. 15000 or less', 'value': 15000},
-    {'label': 'Rs. 15001 - Rs. 25000', 'value': 25000},
-    {'label': 'Rs. 25001 - Rs. 35000', 'value': 35000},
-    {'label': 'Rs. 35001 - Rs. 50000', 'value': 50000},
-    {'label': 'Rs. 50001 - Rs. 75000', 'value': 75000},
-    {'label': 'Rs. 75001 - Rs. 100000', 'value': 100000},
-    {'label': 'Rs. 100001 and above', 'value': 300000},
+    {'label': 'Rs. 15000 or less', 'value': '0-15000'},
+    {'label': 'Rs. 15001 - Rs. 25000', 'value': '15001-25000'},
+    {'label': 'Rs. 25001 - Rs. 35000', 'value': '25001-35000'},
+    {'label': 'Rs. 35001 - Rs. 50000', 'value': '35001-50000'},
+    {'label': 'Rs. 50001 - Rs. 75000', 'value': '50001-75000'},
+    {'label': 'Rs. 75001 - Rs. 100000', 'value': '75001-100000'},
+    {'label': 'Rs. 100001 and above', 'value': '100001'}
   ];
+
   showModalBottomSheet(
     context: context,
     sheetAnimationStyle: AnimationStyle(
@@ -81,6 +83,8 @@ void showSalaryBottomSheet(
                                     .setSalary(salary['label'].toString());
                                 filterProvider.getFilteredJobs(
                                     salary: salary['value'].toString());
+                                // filterProvider.getFilteredJobs(
+                                //     salary: salary['value'].toString());
                               },
                               contentPadding:
                                   EdgeInsets.symmetric(horizontal: KSizes.md),

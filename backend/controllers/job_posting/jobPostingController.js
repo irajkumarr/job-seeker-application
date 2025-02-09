@@ -102,63 +102,6 @@ const handleDeleteJobPosting = async (req, res) => {
   }
 };
 
-// const handleFilterJobPostings = async (req, res) => {
-//   try {
-//     const {
-//       location,
-//       categories, // Category from the `Company` model
-//       education,
-//       salary,
-//       experience,
-//       category, // Filter by industry title
-//     } = req.query;
-
-//     // Build the query dynamically
-//     const query = {};
-
-//     if (location) {
-//       // If location is provided, we will assume it's the district and filter based on that.
-//       query["location.district"] = location.trim(); // Directly match the district
-//     }
-
-//     // Filter by education
-//     if (education) {
-//       query["basicInformation.education"] = education;
-//     }
-
-//     // Filter by salary (greater than or equal to specified salary)
-//     if (salary) {
-//       query.salary = { $gte: parseFloat(salary) }; // Ensure salary is greater than or equal to the specified value
-//     }
-
-//     // Filter by experience (greater than or equal to specified experience)
-//     if (experience) {
-//       query["basicInformation.experience"] = { $gte: parseInt(experience) }; // Ensure experience is greater than or equal to the specified value
-//     }
-
-//     // Fetch and filter job postings with company category and industry title if provided
-//     const filteredJobs = await JobPosting.find(query).populate({
-//       path: "company",
-//       match: {
-//         ...(categories ? { categories } : {}), // Filter by company category if specified
-//       },
-//       populate: {
-//         path: "industry", // Populate the industry reference
-//         match: category ? { name: category } : {}, // Filter by industry title if specified
-//       },
-//     });
-
-//     // Remove jobs where the company or industry filter did not match
-//     const result = filteredJobs.filter(
-//       (job) => job.company && job.company.industry
-//     );
-
-//     res.status(200).json(result);
-//   } catch (error) {
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
 const handleFilterJobPostings = async (req, res) => {
   try {
     const {
@@ -176,18 +119,29 @@ const handleFilterJobPostings = async (req, res) => {
     // Build the query dynamically
     const query = {};
 
+    // ✅ Location Filter
     if (location) {
-      query["location.district"] = location.trim(); // Directly match the district
+      query["location.district"] = location.trim(); // Match district directly
     }
 
+    // ✅ Education Filter
     if (education) {
       query["basicInformation.education"] = education;
     }
 
     if (salary) {
-      query.salary = { $lte: parseFloat(salary) };
+      const salaryRange = salary.split("-").map(Number);
+
+      if (salaryRange.length === 2) {
+        // If salary contains both min and max
+        query.salary = { $gte: salaryRange[0], $lte: salaryRange[1] };
+      } else if (salaryRange.length === 1) {
+        // If only minimum salary is provided (no upper limit)
+        query.salary = { $gte: salaryRange[0] };
+      }
     }
 
+    // ✅ Experience Filter
     if (experience) {
       query["basicInformation.experience"] = { $gte: parseInt(experience) };
     }
@@ -197,9 +151,8 @@ const handleFilterJobPostings = async (req, res) => {
       query["basicInformation.gender"] = "Female";
     }
 
-    // ✅ Urgent Jobs with Expiry Date Check
+    // ✅ Urgent Jobs (Expiry Date Check)
     if (urgentJobs === "true") {
-      // query["isUrgent"] = true;
       query["expiryDate"] = { $gte: new Date() }; // Only fetch jobs where expiryDate is in the future
     }
 
@@ -211,16 +164,14 @@ const handleFilterJobPostings = async (req, res) => {
     // Fetch and filter job postings
     const filteredJobs = await JobPosting.find(query).populate({
       path: "company",
-      match: {
-        ...(categories ? { categories } : {}), // Filter by company category if specified
-      },
+      match: categories ? { categories } : {}, // Filter by company category if specified
       populate: {
         path: "industry",
         match: category ? { name: category } : {}, // Filter by industry title if specified
       },
     });
 
-    // Remove jobs where the company or industry filter did not match
+    // ✅ Remove jobs where the company or industry filter did not match
     const result = filteredJobs.filter(
       (job) => job.company && job.company.industry
     );
@@ -302,110 +253,7 @@ const handleGetUniqueJobDistricts = async (req, res) => {
 };
 
 //handle search product
-// const handleSearchJob = async (req, res) => {
-//   const search = req.params.search;
 
-//   try {
-//     const results = await JobPosting.aggregate([
-//       {
-//         $search: {
-//           index: "jobs",
-//           compound: {
-//             should: [
-//               {
-//                 text: {
-//                   query: search,
-//                   path: ["title"],
-//                   fuzzy: {
-//                     maxEdits: 2,
-//                     prefixLength: 1,
-//                   },
-//                 },
-//               },
-//             ],
-//           },
-//         },
-//       },
-//       {
-//         $project: {
-//           createdAt: 0,
-//           updatedAt: 0,
-//           __v: 0,
-//         },
-//       },
-//       {
-//         $limit: 15,
-//       },
-//     ]);
-//     // if (!results.length) {
-//     //   return res.status(404).json({
-//     //     status: false,
-//     //     message: "No products found matching your search query.",
-//     //   });
-//     // }
-
-//     res.status(200).json(results);
-//   } catch (error) {
-//     return res.status(500).json({ status: false, message: error.message });
-//   }
-// };
-
-// const handleSearchJob = async (req, res) => {
-//   const search = req.params.search;
-
-//   try {
-//     const results = await JobPosting.aggregate([
-//       {
-//         $search: {
-//           index: "jobs",
-//           compound: {
-//             should: [
-//               {
-//                 text: {
-//                   query: search,
-//                   path: ["title"],
-//                   fuzzy: {
-//                     maxEdits: 2,
-//                     prefixLength: 1,
-//                   },
-//                 },
-//               },
-//             ],
-//           },
-//         },
-//       },
-//       {
-//         $lookup: {
-//           from: "companies", // Name of the company collection
-//           localField: "company", // Field in JobPosting referencing Company
-//           foreignField: "_id", // Field in Company collection
-//           as: "company",
-//         },
-//       },
-//       {
-//         $unwind: {
-//           path: "$companyDetails",
-//           preserveNullAndEmptyArrays: true, // Keep job postings even if no company is found
-//         },
-//       },
-//       {
-//         $project: {
-//           createdAt: 0,
-//           updatedAt: 0,
-//           __v: 0,
-//           "companyDetails.__v": 0, // Exclude unnecessary fields from the company
-//         },
-//       },
-//       {
-//         $limit: 15,
-//       },
-//     ]);
-
-//     res.status(200).json(results);
-//   } catch (error) {
-//     return res.status(500).json({ status: false, message: error.message });
-//   }
-// };
 const handleSearchJob = async (req, res) => {
   const search = req.params.search;
 

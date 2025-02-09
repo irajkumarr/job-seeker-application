@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
+import 'package:frontend/core/services/app_state.dart';
 import 'package:frontend/data/models/profile_detail_model.dart';
 import 'package:frontend/features/authentication/screens/login/login.dart';
 import 'package:frontend/features/authentication/screens/password_confimation/forgot_password.dart';
@@ -46,13 +47,24 @@ class AppRoutes {
     // initialLocation: "/navigationMenu",
     navigatorKey: navigatorKey,
     routes: [
-      GoRoute(
+      // GoRoute(
+      //   name: RoutesConstant.splash,
+      //   path: "/",
+      //   pageBuilder: (context, state) {
+      //     return MaterialPage(
+      //       child: SplashScreen(),
+      //     );
+      //   },
+      // ),
+         GoRoute(
+        path: '/',
         name: RoutesConstant.splash,
-        path: "/",
-        pageBuilder: (context, state) {
-          return MaterialPage(
-            child: SplashScreen(),
-          );
+        builder: (context, state) => const SplashScreen(),
+        redirect: (context, state) {
+          if (AppStateService.isInitialized) {
+            return '/navigationMenu';
+          }
+          return null;
         },
       ),
       GoRoute(
