@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/data/models/job_model.dart';
+import 'package:frontend/l10n/l10n.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:http/http.dart' as http;
 
@@ -154,8 +156,6 @@ class FilterProvider with ChangeNotifier {
   List<JobModel> get filterJobs => _filterJobs;
   bool get isLoading => _isLoading;
 
-  final GetStorage _storage = GetStorage();
-
   void setLoading(bool value) {
     _isLoading = value;
     notifyListeners();
@@ -206,7 +206,7 @@ class FilterProvider with ChangeNotifier {
     notifyListeners();
   }
 
-// final l10n=AppLocaliza
+  final l10n = AppLocalizations.of(navigatorKey.currentState!.context)!;
   Map<String, String> get filters {
     final Map<String, String> activeFilters = {};
 
@@ -221,11 +221,17 @@ class FilterProvider with ChangeNotifier {
       activeFilters["Industry"] = selectedIndustryTitle!;
 
     // Handle boolean filters
+    // if (selectedEmploymentForWomen != null)
+    //   activeFilters["For Women"] = "Employment for Women";
+    // if (selectedUrgent != null) activeFilters["Urgent Jobs"] = "Urgent Jobs";
+    // if (selectedJobsWithoutExperience != null)
+    //   activeFilters["No Experience"] = "Jobs without experience";
     if (selectedEmploymentForWomen != null)
-      activeFilters["For Women"] = "Employment for Women";
-    if (selectedUrgent != null) activeFilters["Urgent Jobs"] = "Urgent Jobs";
+      activeFilters["For Women"] = "${l10n.employment_for_women}";
+    if (selectedUrgent != null)
+      activeFilters["Urgent Jobs"] = "${l10n.urgent_jobs}";
     if (selectedJobsWithoutExperience != null)
-      activeFilters["No Experience"] = "Jobs without experience";
+      activeFilters["No Experience"] = "${l10n.jobs_without_experience}";
 
     return activeFilters;
   }
@@ -292,88 +298,6 @@ class FilterProvider with ChangeNotifier {
   //   } finally {
   //     setLoading(false);
   //   }
-  // }
-
-  // final Map<String, String> _currentFilters = {}; // Store applied filters
-
-  // Future<void> getFilteredJobs({
-  //   String? location,
-  //   String? education,
-  //   String? salary,
-  //   String? experience,
-  //   String? category,
-  //   String? companyCategory,
-  //   bool? employmentForWomen,
-  //   bool? urgentJobs,
-  //   bool? jobsWithoutExperience,
-  // }) async {
-  //   setLoading(true);
-  //   try {
-  //     // Update filters dynamically
-  //     if (location != null) {
-  //       _currentFilters['location'] = location;
-  //     }
-  //     if (education != null) {
-  //       _currentFilters['education'] = education;
-  //     }
-  //     if (salary != null) {
-  //       _currentFilters['salary'] = salary;
-  //     }
-  //     if (experience != null) {
-  //       _currentFilters['experience'] = experience;
-  //     }
-  //     if (category != null) {
-  //       _currentFilters['category'] = category;
-  //     }
-  //     if (companyCategory != null) {
-  //       _currentFilters['categories'] = companyCategory;
-  //     }
-
-  //     // Handle boolean filters
-  //     if (employmentForWomen == true) {
-  //       _currentFilters['employmentForWomen'] = 'true';
-  //     } else {
-  //       _currentFilters.remove('employmentForWomen'); // Remove if not selected
-  //     }
-
-  //     if (urgentJobs == true) {
-  //       _currentFilters['urgentJobs'] = 'true';
-  //     } else {
-  //       _currentFilters.remove('urgentJobs');
-  //     }
-
-  //     if (jobsWithoutExperience == true) {
-  //       _currentFilters['jobsWithoutExperience'] = 'true';
-  //     } else {
-  //       _currentFilters.remove('jobsWithoutExperience');
-  //     }
-
-  //     // Construct the URL with updated filters
-  //     final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
-  //         .replace(queryParameters: _currentFilters);
-
-  //     final response =
-  //         await http.get(uri, headers: {'Content-Type': 'application/json'});
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> filterJobsData = jsonDecode(response.body);
-  //       _filterJobs = filterJobsData
-  //           .map((jobData) => JobModel.fromJson(jobData))
-  //           .toList();
-  //       notifyListeners();
-  //     }
-  //   } catch (error) {
-  //     rethrow;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
-
-  // // Method to clear all filters
-  // void clearFilters() {
-  //   _currentFilters.clear();
-  //   _filterJobs = [];
-  //   notifyListeners();
   // }
 
   final Map<String, String> _currentFilters = {}; // Store applied filters
@@ -451,68 +375,4 @@ class FilterProvider with ChangeNotifier {
     _filterJobs = [];
     notifyListeners();
   }
-
-  // Future<void> getFilteredJobs({
-  //   String? location,
-  //   String? education,
-  //   String? salary, // Ensure salary is sent in the correct format
-  //   String? experience,
-  //   String? category,
-  //   String? companyCategory,
-  //   bool? employmentForWomen,
-  //   bool? urgentJobs,
-  //   bool? jobsWithoutExperience,
-  // }) async {
-  //   setLoading(true);
-  //   try {
-  //     final Map<String, String> filters = {};
-
-  //     if (location != null) filters['location'] = location;
-  //     if (education != null) filters['education'] = education;
-  //     if (experience != null) filters['experience'] = experience;
-  //     if (category != null) filters['category'] = category;
-  //     if (companyCategory != null) filters['categories'] = companyCategory;
-
-  //     // ✅ Convert boolean filters to string
-  //     if (employmentForWomen == true) {
-  //       filters['employmentForWomen'] = 'true';
-  //     }
-
-  //     if (urgentJobs == true) {
-  //       filters['urgentJobs'] = 'true';
-  //     }
-
-  //     if (jobsWithoutExperience == true) {
-  //       filters['jobsWithoutExperience'] = 'true';
-  //     }
-
-  //     // ✅ Salary filter handling
-  //     if (salary != null && salary.isNotEmpty) {
-  //       if (salary == "100001 and above") {
-  //         filters['salary'] = "100001-"; // No upper limit case
-  //       } else {
-  //         filters['salary'] =
-  //             salary.replaceAll("Rs. ", "").replaceAll(" and above", "");
-  //       }
-  //     }
-
-  //     final uri = Uri.parse('$kAppBaseUrl/api/jobs/filter/')
-  //         .replace(queryParameters: filters);
-
-  //     final response =
-  //         await http.get(uri, headers: {'Content-Type': 'application/json'});
-
-  //     if (response.statusCode == 200) {
-  //       final List<dynamic> filterJobsData = jsonDecode(response.body);
-  //       _filterJobs = filterJobsData
-  //           .map((jobData) => JobModel.fromJson(jobData))
-  //           .toList();
-  //       notifyListeners();
-  //     }
-  //   } catch (error) {
-  //     rethrow;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // }
 }
