@@ -10,6 +10,7 @@ import 'package:frontend/core/utils/constants/sizes.dart';
 import 'package:frontend/features/dashboard/screens/home/home.dart';
 import 'package:frontend/features/dashboard/screens/jobs/saved_jobs.dart';
 import 'package:frontend/features/dashboard/screens/status/status.dart';
+import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
 import 'package:frontend/l10n/l10n.dart';
@@ -60,8 +61,11 @@ class _NavigationMenuState extends State<NavigationMenu> {
 
     final box = GetStorage();
     final String? profileImage = box.read("profileImage");
+    final profileProvider = Provider.of<ProfileProvider>(context);
+    final userImage = profileProvider.profile?.profileImage;
     // ignore: deprecated_member_use
     return ConnectivityChecker(
+      // ignore: deprecated_member_use
       child: WillPopScope(
         onWillPop: () async {
           return await CustomAlertBox.alertCloseApp(context);
@@ -139,7 +143,7 @@ class _NavigationMenuState extends State<NavigationMenu> {
                   icon: Icon(Iconsax.user),
                   label: "${l10n.profile}",
                   activeIcon: Container(
-                    padding: profileImage != null
+                    padding: profileImage != null || userImage != null
                         ? EdgeInsets.all(0)
                         : EdgeInsets.all(KSizes.xs - 2),
                     decoration: BoxDecoration(
@@ -174,26 +178,38 @@ class _NavigationMenuState extends State<NavigationMenu> {
                               ),
                             ),
                           )
-
-                        //  SizedBox(
-                        //     height: 16.h,
-                        //     width: 16.w,
-                        //     child: ClipRRect(
-                        //       borderRadius: BorderRadius.circular(100),
-                        //       child: Image.network(
-                        //         profileImage,
-                        //         height: 16.h,
-                        //         width: 16.w,
-                        //         fit: BoxFit.cover,
-                        //       ),
-                        //     ),
-                        //   )
-                        : Icon(
-                            Iconsax.user,
-                            size: 16.sp,
-                            color: KColors.black,
-                            weight: 3,
-                          ),
+                        : userImage != null
+                            ? SizedBox(
+                                height: 16.h,
+                                width: 16.w,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(100),
+                                  child: CachedNetworkImage(
+                                    imageUrl: userImage,
+                                    height: 16.h,
+                                    width: 16.w,
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) => Icon(
+                                      Iconsax.user,
+                                      size: 16.sp,
+                                      color: KColors.black,
+                                      weight: 3,
+                                    ),
+                                    errorWidget: (context, url, error) => Icon(
+                                      Iconsax.user,
+                                      size: 16.sp,
+                                      color: KColors.black,
+                                      weight: 3,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            : Icon(
+                                Iconsax.user,
+                                size: 16.sp,
+                                color: KColors.black,
+                                weight: 3,
+                              ),
                   ),
                 ),
               ],
