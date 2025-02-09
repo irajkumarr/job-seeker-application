@@ -11,7 +11,6 @@ import 'package:frontend/features/authentication/providers/details_provider.dart
 import 'package:frontend/features/authentication/providers/location_provider.dart';
 import 'package:frontend/features/authentication/providers/signup_provider.dart';
 import 'package:frontend/features/dashboard/providers/category_provider.dart';
-import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
@@ -47,8 +46,6 @@ class SignupStatusLastScreen extends StatelessWidget {
           Provider.of<CategoryProvider>(context, listen: false);
       final locationProvider =
           Provider.of<LocationProvider>(context, listen: false);
-      final profileProvider =
-          Provider.of<ProfileProvider>(context, listen: false);
 
       if (!_validateInputs(context, detailProvider)) return;
 

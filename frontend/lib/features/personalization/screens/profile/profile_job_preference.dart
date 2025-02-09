@@ -8,9 +8,6 @@ import 'package:frontend/core/utils/divider/dotted_divider.dart';
 import 'package:frontend/core/utils/validators/validation.dart';
 import 'package:frontend/data/models/user_profile_request.dart';
 import 'package:frontend/features/authentication/providers/details_provider.dart';
-import 'package:frontend/features/authentication/providers/location_provider.dart';
-import 'package:frontend/features/authentication/providers/signup_provider.dart';
-import 'package:frontend/features/dashboard/providers/category_provider.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/text_editor_widget.dart';
 import 'package:go_router/go_router.dart';
@@ -94,10 +91,7 @@ class _ProfileJobPreferenceState extends State<ProfileJobPreference> {
   @override
   Widget build(BuildContext context) {
     final detailProvider = Provider.of<DetailsProvider>(context);
-    final signupProvider = Provider.of<SignupProvider>(context);
-    final categoryProvider = Provider.of<CategoryProvider>(context);
     final profileProvider = Provider.of<ProfileProvider>(context);
-    final locationProvider = Provider.of<LocationProvider>(context);
 
     bool _validateInputs(BuildContext context, DetailsProvider detailProvider) {
       if (detailProvider.selectedPreferredShift == null ||
