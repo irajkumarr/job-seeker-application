@@ -201,6 +201,8 @@ class ExpandableProfileSection extends StatelessWidget {
                           fontSize: 14.sp,
                           fontWeight: FontWeight.w700,
                         ),
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
                   ),
                 ],
               ),

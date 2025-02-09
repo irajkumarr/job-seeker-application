@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 class Appbar extends StatelessWidget {
   const Appbar({
     super.key,
-    required this.isActionRequired,  this.isHaveLeading=false,
+    required this.isActionRequired,
+    this.isHaveLeading = true,
   });
   final bool isActionRequired;
   final bool isHaveLeading;

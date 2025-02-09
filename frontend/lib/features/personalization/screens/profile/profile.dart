@@ -991,7 +991,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                               final bool isJobPreferencesCompleted =
                                   profile?.profile != null &&
                                       profile!.profile!.isNotEmpty &&
-                                      profile.profile?[0] == null &&
                                       profile.profile?[0].jobPreference !=
                                           null &&
                                       profile.profile?[0].jobPreference
@@ -1014,7 +1013,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                           null;
 
                               if (!isJobPreferencesCompleted) {
-                                // Show a message if job preferences are not completed
                                 KSnackbar.CustomSnackbar(
                                     context,
                                     "${l10n.to_edit_other_info_set_your_job_preference}",

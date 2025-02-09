@@ -56,6 +56,7 @@ class HomeScreen extends StatelessWidget {
         preferredSize: Size.fromHeight(KDeviceUtils.getAppBarHeight()),
         child: Appbar(
           isActionRequired: true,
+          isHaveLeading: false,
         ),
       ),
       body: RefreshIndicator(
