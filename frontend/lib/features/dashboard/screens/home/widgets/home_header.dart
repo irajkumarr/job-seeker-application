@@ -49,16 +49,13 @@ class HomeHeader extends StatelessWidget {
           ? Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                AnimatedSwitcher(
-                  duration: const Duration(milliseconds: 500),
-                  child: Text(
-                    getGreeting(),
-                    key: ValueKey<String>(getGreeting()),
-                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
-                          height: 1.2,
-                          letterSpacing: -0.5,
-                        ),
-                  ),
+                Text(
+                  getGreeting(),
+                  key: ValueKey<String>(getGreeting()),
+                  style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        height: 1.2,
+                        letterSpacing: -0.5,
+                      ),
                 ),
                 SizedBox(height: KSizes.xs),
                 Text(
