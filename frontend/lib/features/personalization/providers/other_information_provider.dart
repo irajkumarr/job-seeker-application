@@ -38,7 +38,7 @@ class OtherInformationProvider with ChangeNotifier {
       if (response.statusCode == 200 || response.statusCode == 201) {
         // _otherInformation = OtherInformationModel.fromJson(data);
         KSnackbar.CustomSnackbar(
-            context, "Successfully uploaded!", KColors.primary);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         KSnackbar.CustomSnackbar(context, data['message'], KColors.error);

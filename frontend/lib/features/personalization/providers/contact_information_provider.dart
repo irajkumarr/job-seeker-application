@@ -34,7 +34,7 @@ class ContactInformationProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
-            context, "Contact Information added successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -63,8 +63,8 @@ class ContactInformationProvider with ChangeNotifier {
         body: updatedata,
       );
       if (response.statusCode == 200) {
-        KSnackbar.CustomSnackbar(context,
-            "Contact Information updated successfully", KColors.success);
+        KSnackbar.CustomSnackbar(
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -93,7 +93,7 @@ class ContactInformationProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(context,
-            "Contact Information deleted successfully", KColors.success);
+            "Successfully deleted!", KColors.primary);
         onSuccess();
         context.pop();
       } else {

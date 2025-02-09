@@ -34,7 +34,7 @@ class ReferenceProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
-            context, "Reference added successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -67,7 +67,7 @@ class ReferenceProvider with ChangeNotifier {
       print(response.body);
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
-            context, "Reference updated successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -99,8 +99,8 @@ class ReferenceProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        KSnackbar.CustomSnackbar(
-            context, "Reference deleted successfully", KColors.success);
+        KSnackbar.CustomSnackbar(context,
+            "Successfully deleted!", KColors.primary);
         onSuccess();
         context.pop();
       } else {

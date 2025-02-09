@@ -95,8 +95,8 @@ class EducationProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        KSnackbar.CustomSnackbar(
-            context, "Education deleted successfully", KColors.success);
+        KSnackbar.CustomSnackbar(context,
+            "Successfully deleted!", KColors.primary);
         onSuccess();
         context.pop();
       } else {

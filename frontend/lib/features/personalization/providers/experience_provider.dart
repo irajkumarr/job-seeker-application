@@ -34,7 +34,7 @@ class ExperienceProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
-            context, "Experience added successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -64,7 +64,7 @@ class ExperienceProvider with ChangeNotifier {
       );
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
-            context, "Experience updated successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -95,8 +95,8 @@ class ExperienceProvider with ChangeNotifier {
       );
 
       if (response.statusCode == 200) {
-        KSnackbar.CustomSnackbar(
-            context, "Experience deleted successfully", KColors.success);
+        KSnackbar.CustomSnackbar(context,
+            "Successfully deleted!", KColors.primary);
         onSuccess();
         context.pop();
       } else {

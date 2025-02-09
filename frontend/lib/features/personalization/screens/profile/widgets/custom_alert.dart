@@ -513,7 +513,6 @@ Future<void> showTokenExpiredDialog(
   );
 }
 
-
 Future<void> showProfileIncompleteDialog(
     BuildContext context, VoidCallback onPressed) async {
   final l10n = AppLocalizations.of(context)!;

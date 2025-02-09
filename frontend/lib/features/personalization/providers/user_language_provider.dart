@@ -34,7 +34,7 @@ class UserLanguageProvider with ChangeNotifier {
 
       if (response.statusCode == 201) {
         KSnackbar.CustomSnackbar(
-            context, "Language added successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -67,7 +67,7 @@ class UserLanguageProvider with ChangeNotifier {
       print(response.body);
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
-            context, "Language updated successfully", KColors.success);
+            context, "Successfully updated!", KColors.primary);
         onSuccess();
       } else {
         var error = jsonDecode(response.body)['message'];
@@ -100,7 +100,7 @@ class UserLanguageProvider with ChangeNotifier {
 
       if (response.statusCode == 200) {
         KSnackbar.CustomSnackbar(
-            context, "Language deleted successfully", KColors.success);
+            context, "Successfully deleted!", KColors.primary);
         onSuccess();
         context.pop();
       } else {
