@@ -28,8 +28,7 @@ class LoginRedirect extends StatelessWidget {
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
-            horizontal: KSizes.spaceBtwSections * 1.5,
-            vertical: KSizes.defaultSpace),
+            horizontal: KSizes.spaceBtwSections * 1.5, vertical: KSizes.md),
         child: SizedBox(
           width: double.infinity,
           child: Column(

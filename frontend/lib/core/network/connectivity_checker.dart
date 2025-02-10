@@ -50,33 +50,23 @@ class ConnectivityChecker extends StatelessWidget {
                     ),
                     SizedBox(height: KSizes.sm),
                     Text(
-                      'No internet connection Found\n Check your Connection',
-                      style: Theme.of(context).textTheme.titleSmall,
+                      'Check your internet connnection and try again.',
+                      style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: KSizes.spaceBtwSections),
+                    SizedBox(height: KSizes.md),
                     InkWell(
                       borderRadius: BorderRadius.circular(50),
                       onTap: () async {
                         try {
-                          // showToast("You're not connected");
-                          // KSnackbar.Snackbar(
-                          //     context,
-                          //     "You're not connected...",
-                          //     false,
-                          //     KColors.error);
-                          // showCustomToast(context, "You're not connected");
-
                           await connectivityProvider.checkConnectivity();
-                        } catch (e) {
-                          // showToast("Server Error");
-                        }
+                        } catch (e) {}
                       },
                       child: Container(
-                          padding: EdgeInsets.all(KSizes.sm),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: KSizes.md, vertical: KSizes.sm),
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            // color: KColors.primary,
                           ),
                           child: Text(
                             "Try Again",
@@ -86,13 +76,7 @@ class ConnectivityChecker extends StatelessWidget {
                                 .copyWith(
                                   color: KColors.primary,
                                 ),
-                          )
-                          // child: Icon(
-                          //   Icons.refresh_outlined,
-                          //   size: 35.sp,
-                          //   color: KColors.primary,
-                          // ),
-                          ),
+                          )),
                     )
                   ],
                 ),

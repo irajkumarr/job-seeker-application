@@ -23,7 +23,7 @@ class SavedJobsScreen extends StatefulWidget {
 }
 
 class _SavedJobsScreenState extends State<SavedJobsScreen> {
-   @override
+  @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       final matchedJobProvider =
@@ -35,6 +35,7 @@ class _SavedJobsScreenState extends State<SavedJobsScreen> {
     });
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
