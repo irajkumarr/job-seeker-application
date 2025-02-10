@@ -73,6 +73,8 @@ class LoginProvider with ChangeNotifier {
   }
 
   /// **Login API Call**
+
+
   Future<void> login(
       BuildContext context, String data, String mobile, String password) async {
     setLoading = true;
@@ -96,20 +98,27 @@ class LoginProvider with ChangeNotifier {
         await Provider.of<ProfileProvider>(context, listen: false)
             .fetchProfile(forceRefresh: true);
 
-        // Provider.of<ProfileProvider>(context, listen: false).user = data;
         setLoading = false;
         context.pop();
-        // context.read<NavigationProvider>().onTap(3);
         KSnackbar.CustomSnackbar(
             context, "Login Successfully!", KColors.primary);
+      } else if (response.statusCode == 400 || response.statusCode == 401) {
+        var error = errorModelFromJson(response.body);
+        setLoading = false;
+        KSnackbar.CustomSnackbar(context, error.message, KColors.error);
+      } else if (response.statusCode >= 500) {
+        setLoading = false;
+        KSnackbar.CustomSnackbar(
+            context, "Server error! Please try again later.", KColors.error);
       } else {
         setLoading = false;
-        var error = errorModelFromJson(response.body);
-        KSnackbar.CustomSnackbar(context, error.message, KColors.error);
+        KSnackbar.CustomSnackbar(
+            context, "Something went wrong. Please try again.", KColors.error);
       }
     } catch (e) {
       setLoading = false;
-      showToast(e.toString());
+      KSnackbar.CustomSnackbar(context,
+          "No internet connection. Please check your network.", KColors.error);
     }
   }
 
