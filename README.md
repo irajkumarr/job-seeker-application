@@ -17,7 +17,7 @@ Get the latest version of the app and start your job search today!
 ## 📸 Screenshots  
 | Home Screen | Job Details | Profile |  
 |-------------|------------|---------|  
-| ![Home](https://res.cloudinary.com/dbfocstdc/image/upload/v1739208281/8b68bd2e-3792-4802-af0c-fd21535595fc_ytjtfl.jpg) | ![Job Details](https://res.cloudinary.com/dbfocstdc/image/upload/v1739208292/866f6398-6354-40a5-b079-76f88b8526d8_lykirx.jpg) | ![Profile](https://res.cloudinary.com/dbfocstdc/image/upload/v1739208292/866f6398-6354-40a5-b079-76f88b8526d8_lykirx.jpg) |  
+| ![Home](https://res.cloudinary.com/dbfocstdc/image/upload/v1739208281/8b68bd2e-3792-4802-af0c-fd21535595fc_ytjtfl.jpg) | ![Job Details](https://res.cloudinary.com/dbfocstdc/image/upload/v1739208292/866f6398-6354-40a5-b079-76f88b8526d8_lykirx.jpg) | ![Profile](https://res.cloudinary.com/dbfocstdc/image/upload/v1739208306/f2e1d2d6-4527-4943-8287-0932078d7ecc_rhbor1.jpg) |  
 
 ## 🔧 Installation  
 1. **Download the APK** from the link above.  
