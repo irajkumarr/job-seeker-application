@@ -41,11 +41,13 @@ class SignupProvider with ChangeNotifier {
   }
 
   // Check if mobile number exists
+
   Future<bool> checkMobileNumber(String mobileNumber) async {
     try {
       setLoading = true;
       _error = '';
       notifyListeners();
+
       final response = await http.post(
         Uri.parse('$kAppBaseUrl/check-mobile'),
         headers: {'Content-Type': 'application/json'},
@@ -54,16 +56,29 @@ class SignupProvider with ChangeNotifier {
 
       final data = json.decode(response.body);
 
-      if (response.statusCode == 400) {
-        _error = data['message'] ?? 'Mobile number already exists';
+      // Handle invalid credentials (400/401)
+      if (response.statusCode == 400 || response.statusCode == 401) {
+        _error = data['message'] ?? 'Mobile number already exists.';
         notifyListeners();
+
         return false;
       }
 
+      // Handle server errors (500+)
+      if (response.statusCode >= 500) {
+        _error = 'Server error. Please try again later.';
+        notifyListeners();
+
+        return false;
+      }
+
+      // Handle successful case (valid mobile number)
       return true;
     } catch (e) {
-      _error = 'Something went wrong. Please try again.';
+      // Handle network errors (e.g., no internet)
+      _error = 'No internet connection. Please check your network.';
       notifyListeners();
+
       return false;
     } finally {
       setLoading = false;
@@ -97,17 +112,23 @@ class SignupProvider with ChangeNotifier {
         // KSnackbar.Snackbar(
         //     context, "Registered Sucessfully!", false, Colors.green);
         context.goNamed(RoutesConstant.signupPreferred);
+      } else if (response.statusCode == 400 || response.statusCode == 401) {
+        var error = errorModelFromJson(response.body);
+        setLoading = false;
+        KSnackbar.CustomSnackbar(context, error.message, KColors.error);
+      } else if (response.statusCode >= 500) {
+        setLoading = false;
+        KSnackbar.CustomSnackbar(
+            context, "Server error! Please try again later.", KColors.error);
       } else {
         setLoading = false;
-        var error = errorModelFromJson(response.body);
-
-        // showToast(error.message);
-        KSnackbar.CustomSnackbar(context, error.message, KColors.error);
+        KSnackbar.CustomSnackbar(
+            context, "Something went wrong. Please try again.", KColors.error);
       }
     } catch (e) {
       setLoading = false;
-      showToast(e.toString());
-      print(e.toString());
+      KSnackbar.CustomSnackbar(context,
+          "No internet connection. Please check your network.", KColors.error);
     }
   }
 
@@ -115,7 +136,8 @@ class SignupProvider with ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
   //create profile forms
-  Future<bool> createProfile(BuildContext context,UserProfileRequest profile) async {
+  Future<bool> createProfile(
+      BuildContext context, UserProfileRequest profile) async {
     setLoading = true;
     _errorMessage = null;
     notifyListeners();
