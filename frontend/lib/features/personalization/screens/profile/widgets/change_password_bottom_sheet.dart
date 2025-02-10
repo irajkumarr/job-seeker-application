@@ -11,7 +11,6 @@ import 'package:frontend/l10n/l10n.dart';
 import 'package:provider/provider.dart';
 
 void showChangePasswordBottomSheet(BuildContext context) {
-  final profileProvider = Provider.of<ProfileProvider>(context, listen: false);
   showModalBottomSheet(
     context: context,
     isDismissible: true,

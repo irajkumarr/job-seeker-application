@@ -391,13 +391,14 @@ class ProfileProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     final url = Uri.parse('$kAppBaseUrl/api/users/change-password');
-
+    final box = GetStorage();
+    final String? token = box.read("token");
     try {
       final response = await http.put(
         url,
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': 'Bearer ${user!.userToken}',
+          'Authorization': 'Bearer $token',
         },
         body: json.encode({
           'oldPassword': oldPassword,
