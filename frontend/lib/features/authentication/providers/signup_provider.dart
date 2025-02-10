@@ -5,7 +5,6 @@ import 'package:frontend/common/widgets/alert_box/snackbar.dart';
 import 'package:frontend/core/routes/routes_constant.dart';
 import 'package:frontend/core/utils/constants/api_constants.dart';
 import 'package:frontend/core/utils/constants/colors.dart';
-import 'package:frontend/core/utils/popups/toast.dart';
 import 'package:frontend/data/models/error_model.dart';
 import 'package:frontend/data/models/login_model.dart';
 import 'package:frontend/data/models/user_profile_request.dart';
