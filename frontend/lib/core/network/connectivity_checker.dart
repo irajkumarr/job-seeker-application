@@ -1,6 +1,7 @@
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:frontend/l10n/l10n.dart';
 
 import 'package:provider/provider.dart';
 import '../../common/widgets/alert_box/alert_box.dart';
@@ -16,6 +17,7 @@ class ConnectivityChecker extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Consumer<ConnectivityProvider>(
       builder: (context, connectivityProvider, _) {
         if (connectivityProvider.isChecking) {
@@ -45,12 +47,12 @@ class ConnectivityChecker extends StatelessWidget {
                         child: Image.asset(KImages.noInternet)),
                     const SizedBox(height: KSizes.md),
                     Text(
-                      'Ooops!',
+                      '${l10n.oops}',
                       style: TextStyle(fontSize: 30.sp, color: Colors.black),
                     ),
                     SizedBox(height: KSizes.sm),
                     Text(
-                      'Check your internet connnection and try again.',
+                      '${l10n.check_internet}',
                       style: Theme.of(context).textTheme.headlineSmall,
                       textAlign: TextAlign.center,
                     ),
@@ -69,7 +71,7 @@ class ConnectivityChecker extends StatelessWidget {
                             shape: BoxShape.circle,
                           ),
                           child: Text(
-                            "Try Again",
+                            "${l10n.try_again}",
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
