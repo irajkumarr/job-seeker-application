@@ -7,7 +7,7 @@ const {
   handleUpdateCompany,
   hanldeDeleteCompany,
   handleGetVerifiedCompanies,
-} = require("../../controllers/company/companyController");
+} = require("../../controllers/Company/companyController");
 const { verifyEmployer } = require("../../middlewares/jwt");
 
 router.post("/", verifyEmployer, handleAddCompany);

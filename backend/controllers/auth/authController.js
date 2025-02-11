@@ -1,6 +1,6 @@
-// const User = require(".../../../models/user/User.js");
-const path = require("path");
-const User = require(path.join(__dirname, "../../models/user/User.js"));
+const User = require("../../models/User/User.js");
+// const path = require("path");
+// const User = require(path.join(__dirname, "../../models/user/User.js"));
 
 const { generateToken } = require("../../middlewares/jwt.js");
 

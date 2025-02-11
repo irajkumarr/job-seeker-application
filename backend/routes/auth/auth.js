@@ -3,7 +3,7 @@ const {
   handleCreateUser,
   handleCheckMobileNumber,
   handleLoginUser,
-} = require("../../controllers/auth/authController");
+} = require("../../controllers/Auth/authController");
 const router = express.Router();
 
 router.post("/register", handleCreateUser);

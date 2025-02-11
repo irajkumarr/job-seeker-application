@@ -1,5 +1,5 @@
-const Profile = require("../../models/user/Profile");
-const JobPosting = require("../../models/job_posting/JobPosting");
+const Profile = require("../../models/User/Profile");
+const JobPosting = require("../../models/JobPosting/JobPosting");
 const handleCreateProfile = async (req, res) => {
   const {
     preferredCategories,

@@ -9,7 +9,7 @@ const {
   handleGetJobsByDistrict,
   handleGetUniqueJobDistricts,
   handleSearchJob,
-} = require("../../controllers/job_posting/jobPostingController");
+} = require("../../controllers/JobPosting/jobPostingController");
 const { verifyEmployer } = require("../../middlewares/jwt");
 const router = express.Router();
 
