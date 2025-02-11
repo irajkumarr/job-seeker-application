@@ -5,7 +5,7 @@ The **Job Seeker App** is designed to help job seekers find employment opportuni
 ## 📲 Download the App  
 Get the latest version of the app and start your job search today!  
 
-[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/learnwithraj/job-seeker-application/releases/download/v1.0.0/app-release.apk)  
+[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/learnwithraj/job-seeker-application/releases/download/v1.0.1/app-release.apk)  
 
 ## ✨ Features  
 ✅ Browse job listings based on categories and locations  
