@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 //routes
-const authRoutes = require("./routes/Auth/auth");
+const authRoutes = require("./routes/Authentication/auth");
 const userRoutes = require("./routes/User/user");
 const userProfileRoutes = require("./routes/User/profile");
 const userLanguageRoutes = require("./routes/User/language");
