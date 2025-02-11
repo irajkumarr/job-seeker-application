@@ -39,7 +39,7 @@ class _FilterScreenState extends State<FilterScreen> {
     int _calculateTotalVacancies(List<JobModel>? jobs) {
       if (jobs == null || jobs.isEmpty) return 0;
       return jobs.fold<int>(
-          0, (sum, job) => sum + (job.basicInformation.noOfVacancy ?? 0));
+          0, (sum, job) => sum + (job.basicInformation.noOfVacancy));
     }
 
     // String _formatFilters(

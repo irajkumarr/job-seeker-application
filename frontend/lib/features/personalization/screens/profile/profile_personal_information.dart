@@ -24,29 +24,10 @@ class ProfilePersonalInformation extends StatefulWidget {
 
 class _ProfilePersonalInformationState
     extends State<ProfilePersonalInformation> {
-  String? _selectedCurrentSalaryCurrency;
-  String? _selectedExpectedSalaryCurrency;
-  String? _selectedCurrentSalaryValue;
-  String? _selectedExpectedSalaryValue;
-  String? _selectedCurrentSalaryDuration;
-  String? _selectedExpectedSalaryDuration;
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  // List of months
-  final List<String> _currency = ["NPR."];
-  final List<String> _value = [
-    "Above",
-    "Equals",
-    "Below",
-  ];
-  final List<String> _duration = [
-    "per Hour",
-    "per Day",
-    "per Week",
-    "per Month",
-    "per Year",
-  ];
+ 
 
   bool _haveDisability = false;
 
