@@ -29,7 +29,12 @@ Get the latest version of the app and start your job search today!
 - **Flutter** (Frontend)  
 - **Node.js & Express** (Backend)  
 - **MongoDB** (Database)  
-- **Firebase** (Push Notifications)  
+- **Firebase** (Push Notifications)
+
+## ⚡ Performance
+- App Size: 30 MB
+- Average Load Time: 4 seconds
+- Supported Android Versions: 6.0 and above    
 
 ## 📬 Contact  
 For feedback or support, reach out to us:  
