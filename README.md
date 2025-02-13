@@ -7,7 +7,7 @@ The **Job Seeker App** is designed to help job seekers find employment opportuni
 - **Easy Application Process**: Apply to jobs with just a few taps.  
 - **Secure & Private**: Your data is safe with us.
 
-  
+
 ## 📲 Download the App  
 Get the latest version of the app and start your job search today!  
 
