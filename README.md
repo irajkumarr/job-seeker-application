@@ -38,7 +38,7 @@ Get the latest version of the app and start your job search today!
 - **Firebase** (Push Notifications)
 
 ## ⚡ Performance
-- App Size: 30 MB
+- App Size: 29.8 MB
 - Average Load Time: 4 seconds
 - Supported Android Versions: 6.0 and above    
 
