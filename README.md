@@ -39,7 +39,7 @@ Get the latest version of the app and start your job search today!
 ## ⚡ Performance
 - App Size: 29.8 MB
 - Average Load Time: 4 seconds
-- Supported Android Versions: 6.0 and above    
+- Supported Android Versions: 7.0 and above    
 
 ## 📬 Contact  
 For feedback or support, reach out to us:  
