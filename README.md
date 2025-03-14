@@ -1,6 +1,6 @@
 # 🏆 Job Seeker App – Find Your Dream Job! 🚀  
 
-The **Job Seeker App** is designed to help job seekers find employment opportunities effortlessly. Browse job listings, apply directly, and stay updated on the latest openings.  
+The **Job Seeker App** is designed to help job seekers find employment opportunities effortlessly. Browse jobs listings, apply directly do you like the most, and stay updated on the latest openings.  
 
 ## 🌟 Why Choose Job Seeker App?  
 - **Personalized Job Recommendations**: Tailored job suggestions based on your skills and preferences.  
