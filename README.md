@@ -28,7 +28,7 @@ Get the latest version of the app and start your job search today!
 1. **Download the APK** from the link above.  
 2. Open the file on your Android device.  
 3. Allow installations from unknown sources if prompted.  
-4. Install and start your job search!  
+4. Install and start your job search today!  
 
 ## 🛠️ Tech Stack  
 - **Flutter** (Frontend)  
