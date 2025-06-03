@@ -1,11 +1,16 @@
 # 🏆 Job Seeker App – Find Your Dream Job! 🚀  
 
-The **Job Seeker App** is designed to help job seekers find employment opportunities effortlessly. Browse job listings, apply directly, and stay updated on the latest openings.  
+The **Job Seeker App** is designed to help job seekers find employment opportunities effortlessly. Browse jobs listings, apply directly do you like the most, and stay updated on the latest openings.  
+
+## 🌟 Why Choose Job Seeker App?  
+- **Personalized Job Recommendations**: Tailored job suggestions based on your skills and preferences.  
+- **Easy Application Process**: Apply to jobs with just a few taps.  
+- **Secure & Private**: Your data is safe with us.
 
 ## 📲 Download the App  
 Get the latest version of the app and start your job search today!  
 
-[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/learnwithraj/job-seeker-application/releases/download/v1.0.0/app-release.apk)  
+[![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/learnwithraj/job-seeker-application/releases/download/v1.0.1/app-release.apk)  
 
 ## ✨ Features  
 ✅ Browse job listings based on categories and locations  
@@ -23,13 +28,18 @@ Get the latest version of the app and start your job search today!
 1. **Download the APK** from the link above.  
 2. Open the file on your Android device.  
 3. Allow installations from unknown sources if prompted.  
-4. Install and start your job search!  
+4. Install and start your job search today!  
 
 ## 🛠️ Tech Stack  
 - **Flutter** (Frontend)  
 - **Node.js & Express** (Backend)  
 - **MongoDB** (Database)  
-- **Firebase** (Push Notifications)  
+- **Firebase** (Push Notifications)
+
+## ⚡ Performance
+- App Size: 29.8 MB
+- Average Load Time: 4 seconds
+- Supported Android Versions: 7.0 and above    
 
 ## 📬 Contact  
 For feedback or support, reach out to us:  
