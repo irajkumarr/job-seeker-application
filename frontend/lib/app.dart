@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:frontend/core/providers/app_providers.dart';
 import 'package:frontend/core/routes/app_routes.dart';
 import 'package:frontend/core/utils/theme/theme.dart';
+import 'package:frontend/l10n/app_localizations.dart';
 import 'package:frontend/l10n/l10n.dart';
 import 'package:frontend/l10n/language_provider.dart';
 import 'package:provider/provider.dart';

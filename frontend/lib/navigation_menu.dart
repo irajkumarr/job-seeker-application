@@ -13,6 +13,7 @@ import 'package:frontend/features/dashboard/screens/status/status.dart';
 import 'package:frontend/features/personalization/providers/profile_provider.dart';
 import 'package:frontend/features/personalization/screens/profile/profile.dart';
 import 'package:frontend/features/personalization/screens/profile/widgets/custom_alert.dart';
+
 import 'package:frontend/l10n/l10n.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:go_router/go_router.dart';
