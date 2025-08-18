@@ -1,14 +1,10 @@
 # 🏆 Job Seeker App – Find Your Dream Job! 🚀  
 
-The **Job Seeker App** is designed to help job seekers find employment opportunities effortlessly. Browse jobs listings, apply directly do you like the most, and stay updated on the latest openings.  
-
-## 🌟 Why Choose Job Seeker App?  
-- **Personalized Job Recommendations**: Tailored job suggestions based on your skills and preferences.  
-- **Easy Application Process**: Apply to jobs with just a few taps.  
-- **Secure & Private**: Your data is safe with us.
+A **Job Portal App** inspired by [Rojgari App](https://play.google.com/store/apps/details?id=com.rojgaripasal.rojgariapp&hl=en).  
+This project is a **clone built for learning and practice purposes**, replicating the core features of a job search and application platform. 
 
 ## 📲 Download the App  
-Get the latest version of the app and start your job search today!  
+Get the latest version of the app. 
 
 [![Download APK](https://img.shields.io/badge/Download-APK-blue?style=for-the-badge&logo=android)](https://github.com/learnwithraj/job-seeker-application/releases/download/v1.0.1/app-release.apk)  
 
@@ -45,6 +41,3 @@ Get the latest version of the app and start your job search today!
 For feedback or support, reach out to us:  
 📧 Email: contact@timalsinarajkumar.com.np
 
----
-
-🚀 **Find Your Next Job with Job Seeker App!**  
