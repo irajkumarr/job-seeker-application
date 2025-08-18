@@ -31,7 +31,8 @@
 
 //   // final String apiKey = 'AIzaSyACJcraRqL3WWJwgh2gdwF64Mtpnu_VLY0';
 //   //go maps api key
-//   final String apiKey = 'AlzaSyV7Ms7bExqXp1qePyfjE4vZz2JfpLSmrLL';
+//   // final String apiKey = 'AlzaSyV7Ms7bExqXp1qePyfjE4vZz2JfpLSmrLL';
+//   final String apiKey = 'AlzaSyY2Kj3Yw1weCUSZjubkAt7aY4m7psWr9rV';
 
 //   @override
 //   void initState() {
@@ -570,42 +571,3 @@ class _AddressSelectionSectionState extends State<AddressSelectionSection> {
     );
   }
 }
-
-//  Wrap(
-//                 spacing: 10,
-//                 runSpacing: 10,
-//                 children: widget.locationProvider.selectedMunicipality!.streets
-//                     .map((street) {
-//                   final isSelected =
-//                       widget.locationProvider.selectedStreet == street;
-
-//                   return GestureDetector(
-//                     onTap: () {
-//                       if (widget.locationProvider.selectedStreet == street) {
-//                         widget.locationProvider.setSelectedStreet(null);
-//                       } else {
-//                         widget.locationProvider.setSelectedStreet(street);
-//                       }
-//                     },
-//                     child: Container(
-//                       padding: const EdgeInsets.symmetric(
-//                         horizontal: 16.0,
-//                         vertical: 8.0,
-//                       ),
-//                       decoration: BoxDecoration(
-//                         color: isSelected ? KColors.secondary : Colors.white,
-//                         borderRadius: BorderRadius.circular(20),
-//                         border: Border.all(
-//                           color: isSelected ? KColors.primary : KColors.grey,
-//                         ),
-//                       ),
-//                       child: Text(
-//                         street,
-//                         style: TextStyle(
-//                           color: Colors.black,
-//                         ),
-//                       ),
-//                     ),
-//                   );
-//                 }).toList(),
-//               ),
